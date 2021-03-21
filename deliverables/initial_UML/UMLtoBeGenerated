@@ -5,21 +5,19 @@ FaithTrail *-- "25" FaithCell
 InternalModel *-- "1..4" Player
 FaithTrail <-- FaithTile
 Player <-- CardDevelopmentMarket
-CardLeader <-- PersonalBoard
-PersonalBoard <-- Player
-PersonalBoard <-- Deposit
-PersonalBoard <-- Stronghold
+Player <-- CardLeader
+Player <-- Deposit
+Player <-- Stronghold
 InternalModel <-- FaithTrail
 InternalModel <-- Lorenzo
 InternalModel <-- Market
 InternalModel <-- CardLeaderDeck
 InternalModel <-- CardDevelopmentMarket
-Player <-- MarketHandler
-MarketHandler <-- Market
+Player <-- Market
+Player *-- "3" CardDevelopmentSlot
 Market <-- Marble
 Lorenzo <-- ActionCardDeck
 ActionCardDeck o-- "7" ActionCard
-PersonalBoard *-- "3" CardDevelopmentSlot
 CardDevelopmentSlot o-- "0..3" CardDevelopment
 CardDevelopmentMarket o-- CardDevelopmentStack
 CardDevelopmentStack o-- CardDevelopment
@@ -34,6 +32,11 @@ CardLeader <|-- CardLeaderDiscount
 ActionCard <|-- ActionCardShuffle
 ActionCard <|-- ActionCardDiscard
 ActionCard <|-- ActionCardAdvance
+MarbleRed<|-- Marble
+MarbleWhite<|-- Marble
+MarbleYellow<|-- Marble
+MarbleBlue<|-- Marble
+MarbleViolet<|-- Marble
 enum Selection{
 ROW
 COLUMN
@@ -63,14 +66,6 @@ BLUE
 PURPLE
 YELLOW
 GREY
-}
-enum MarbleColor{
-BLUE
-PURPLE
-YELLOW
-GREY
-RED
-WHITE
 }
 enum ActionCardType{
 DISCARD
@@ -149,9 +144,6 @@ class Market {
 +getCol(integer) : List<Marble>
 +getRow(integer) : List<Marble>
 }
-class MarketHandler {
-+useMarket(Selection, integer, Resource):List<Rescource>
-}
 class Player{
 -nickName: String
 -calamaio: boolean
@@ -161,15 +153,16 @@ class Player{
 -favorTiles: ArrayList<FavorTile>
 -hasProducitonJolly: boolean
 -setPlayerState(PlayerState)
-+getters
-+setters
-+useMarket(Section, integer): Map<Resource, integer>
-+buyDevelopmentCard(integer, integer): CardDevelopment
-+activateProduction(): Map<Resource, integer>
-+getVictoryPoints(): integer
-}
-class PersonalBoard{
+-market: Market
 -leaderCards: List<CardLeader>
++getters()
++setters()
++getMarketRow(Integer): List<Marble>
++getMarketCol(Integer): List<Marble>
+-marbleConsumer(List<Marble>):
++buyDevelopmentCard(integer, integer): CardDevelopment
++activateProduction(List<CardDevelopment>): Map<Resource, integer>
++getVictoryPoints(): integer
 +getLeaderCards(): List<CardLeader>
 }
 class CardDevelopmentMarket{
@@ -221,10 +214,6 @@ class CardLeaderProduction{
 -resourceToBeDiscounted: Resource
 +activate():
 }
-class Marble{
-+field: type
-+method(type): type
-}
 class Deposit{
 +field: type
 +addResources(Resource,integer)
@@ -234,5 +223,26 @@ class Deposit{
 class CardLeaderDeck{
 +field: type
 +method(type): type
+}
+abstract Marble {
+ - color: MarbleColor
+ + activate(Player):
+ + getColor(): MarbleColor
+}
+class MarbleRed {
+ - faithTrail: FaithTrail
+ + activate(Player):
+}
+class MarbleWhite {
+ + activate(Player):
+}
+class MarbleYellow {
+ + activate(Player):
+}
+class MarbleBlue {
+ + activate(Player):
+}
+class MarbleViolet {
+ + activate(Player):
 }
 @enduml
