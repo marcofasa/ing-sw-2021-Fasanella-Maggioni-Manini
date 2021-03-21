@@ -1,0 +1,238 @@
+@startuml
+scale 2000*2000
+Stronghold <|-- Deposit
+FaithTrail *-- "25" FaithCell
+InternalModel *-- "1..4" Player
+FaithTrail <-- FaithTile
+Player <-- CardDevelopmentMarket
+CardLeader <-- PersonalBoard
+PersonalBoard <-- Player
+PersonalBoard <-- Deposit
+PersonalBoard <-- Stronghold
+InternalModel <-- FaithTrail
+InternalModel <-- Lorenzo
+InternalModel <-- Market
+InternalModel <-- CardLeaderDeck
+InternalModel <-- CardDevelopmentMarket
+Player <-- MarketHandler
+MarketHandler <-- Market
+Market <-- Marble
+Lorenzo <-- ActionCardDeck
+ActionCardDeck o-- "7" ActionCard
+PersonalBoard *-- "3" CardDevelopmentSlot
+CardDevelopmentSlot o-- "0..3" CardDevelopment
+CardDevelopmentMarket o-- CardDevelopmentStack
+CardDevelopmentStack o-- CardDevelopment
+CardLeaderDeck o-- CardLeaderDiscount
+CardLeaderDeck o-- CardLeaderMarble
+CardLeaderDeck o-- CardLeaderDeposit
+CardLeaderDeck o-- CardLeaderProduction
+CardLeader <|-- CardLeaderProduction
+CardLeader <|-- CardLeaderDeposit
+CardLeader <|-- CardLeaderMarble
+CardLeader <|-- CardLeaderDiscount
+ActionCard <|-- ActionCardShuffle
+ActionCard <|-- ActionCardDiscard
+ActionCard <|-- ActionCardAdvance
+enum Selection{
+ROW
+COLUMN
+}
+enum FaithSection{
+1
+2
+3
+}
+enum CellType{
+NORMAL
+REPORT
+POPE_SPACE
+}
+enum FaithTileStatus{
+NOT_REACHED
+VALID
+DISCARDED
+}
+enum CardDevelopmentLevel{
+1
+2
+3
+}
+enum Resource{
+BLUE
+PURPLE
+YELLOW
+GREY
+}
+enum MarbleColor{
+BLUE
+PURPLE
+YELLOW
+GREY
+RED
+WHITE
+}
+enum ActionCardType{
+DISCARD
+SHUFFLE
+ADVANCE
+}
+enum CardDevelopmentType{
+BLUE
+PURPLE
+YELLOW
+GREEN
+}
+class InternalModel {
+ +field : tyoe
+ +method1(type): type
+}
+class Stronghold{
++content: Map<Resource,integer>
++useResources(Resource, integer)
++hasResources(Resource, integer): boolean
++getContent(): Map<Resource, integer>
++addResources(Resource, integer)
+
+}
+class FaithTrail {
+-lenght: integer
+-cells: ArrayList<FaithCell>[length]
+-playerPosition: Map<Player, Integer>
++getCell(integer): FaithCell
++getVictoryPoints(): integer
++movePlayer(Player, integer)
+}
+class FaithTile {
+-status: FaithTileStatus
+-section: FaithSectiona
++getStatus(): FaithTileStatus
++setStatus()
++getVictoryPoints(): integer
+}
+class FaithCell {
+-type: CellType
+-section: FaithSection
+-victoryPoints: integer
++ isPope(): integer
++ getSection(): Section
+}
+class Lorenzo {
+-faithPosition: integer
++moveFaithPawn(): integer
++pickActionCard(): ActionCard
+}
+class ActionCardDeck {
+-usedStack: List<ActionCard>
+-availableStack: List<ActionCard>
++getCard(): ActionCard
++shuffleDeck():
+}
+abstract ActionCard{
+-type: ActionCardType
++getType(): ActionCardType
++activate():
+}
+class ActionCardAdvance {
++activate()
+}
+class ActionCardShuffle {
++activate()
+}
+class ActionCardDiscard {
++activate()
+}
+class Market {
+-marbles: Marble[3][4]
+-spareMarble: Marble
++generateTable() :
++getCol(integer) : List<Marble>
++getRow(integer) : List<Marble>
+}
+class MarketHandler {
++useMarket(Selection, integer, Resource):List<Rescource>
+}
+class Player{
+-nickName: String
+-calamaio: boolean
+-developmentCards: List<CardDevelopment>
+-leaderCards: List<CardLeader>
+-playerState: PlayerState
+-favorTiles: ArrayList<FavorTile>
+-hasProducitonJolly: boolean
+-setPlayerState(PlayerState)
++getters
++setters
++useMarket(Section, integer): Map<Resource, integer>
++buyDevelopmentCard(integer, integer): CardDevelopment
++activateProduction(): Map<Resource, integer>
++getVictoryPoints(): integer
+}
+class PersonalBoard{
+-leaderCards: List<CardLeader>
++getLeaderCards(): List<CardLeader>
+}
+class CardDevelopmentMarket{
++market: List<CardDevelopmentStack>
++popStack(integer): CardDevelopment
+}
+class CardDevelopmentSlot{
+-cards: List<CardDevelopment>
++getTop(): CardDevelopment
++placeCard(CardDevelopment):
+}
+class CardDevelopment{
+-level: CardDevelopmentLevel
+-cost: Map<Resource, integer>
+-type: CardDevelopmentType
+-productionInput: Map<Resource, integer>
+-productionOutput: Map<Resource, integer>
+-victoryPoints: integer
++getters
++activate():
++canActivate(): boolean
+}
+class CardDevelopmentStack{
++pop(): CardDevelopment
+}
+abstract CardLeader{
+-type : CardLeaderType
+-victoryPoints: integer
+-requirements: Map<Resource, integer>
++getters
++canActivate(): boolean
++activate():
++discard():
++getType():CardLeaderType
+}
+class CardLeaderDiscount{
+-resourceToBeDiscounted: Resource
++activate():
+}
+class CardLeaderMarble{
+-resourceToBeDiscounted: Resource
++activate():
+}
+class CardLeaderDeposit{
+-resourceToBeDiscounted: Resource
++activate():
+}
+class CardLeaderProduction{
+-resourceToBeDiscounted: Resource
++activate():
+}
+class Marble{
++field: type
++method(type): type
+}
+class Deposit{
++field: type
++addResources(Resource,integer)
+-discard(Map<Resource, integer>) : integer
+-discard(Resource): boolean
+}
+class CardLeaderDeck{
++field: type
++method(type): type
+}
+@enduml
