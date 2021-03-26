@@ -1,5 +1,12 @@
 package it.polimi.ingsw.model;
 
+/**
+ * Abstract class for ActionCards
+ */
 public abstract class ActionCard {
-    public abstract void activate(GameTable gameTable);
+
+    /**
+     * Action of the card
+     */
+    public abstract void activate();
 }

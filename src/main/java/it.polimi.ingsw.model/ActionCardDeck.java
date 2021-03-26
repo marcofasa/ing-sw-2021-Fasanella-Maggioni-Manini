@@ -2,27 +2,26 @@ package it.polimi.ingsw.model;
 
 import java.util.*;
 
-/**
- *
- */
+
 public class ActionCardDeck {
 
     private GameTable gameTable;
+    private Stack<ActionCard> usedStack;
+    private Stack<ActionCard> availableStack;
 
+    /**
+     * Constructor, generates a new shuffled deck
+     */
     public ActionCardDeck(){
         usedStack = new Stack<ActionCard>();
         availableStack = new Stack<ActionCard>();
         ActionCard advance1 = new ActionCardAdvance(gameTable);
         ActionCard advance2 = new ActionCardAdvance(gameTable);
         ActionCard shuffle = new ActionCardShuffle(gameTable);
-        CardDevelopment green = new CardDevelopmentGreen();
-        CardDevelopment yellow = new CardDevelopmentYellow();
-        CardDevelopment purple = new CardDevelopmentPurple();
-        CardDevelopment blue = new CardDevelopmentBlue();
-        ActionCard discard1 = new ActionCardDiscard(gameTable, green);
-        ActionCard discard2 = new ActionCardDiscard(gameTable, yellow);
-        ActionCard discard3 = new ActionCardDiscard(gameTable, purple);
-        ActionCard discard4 = new ActionCardDiscard(gameTable, blue);
+        ActionCard discard1 = new ActionCardDiscard(gameTable, CardDevelopmentType.Green);
+        ActionCard discard2 = new ActionCardDiscard(gameTable, CardDevelopmentType.Yellow);
+        ActionCard discard3 = new ActionCardDiscard(gameTable, CardDevelopmentType.Purple);
+        ActionCard discard4 = new ActionCardDiscard(gameTable, CardDevelopmentType.Blue);
         availableStack.push(advance1);
         availableStack.push(advance2);
         availableStack.push(shuffle);
@@ -30,15 +29,12 @@ public class ActionCardDeck {
         availableStack.push(discard2);
         availableStack.push(discard3);
         availableStack.push(discard4);
+        shuffle.activate();
         Collections.shuffle(availableStack);
     }
 
-    private Stack<ActionCard> usedStack;
-    private Stack<ActionCard> availableStack;
-
     /**
-     * get action card from available deck.
-     * @
+     * get action card from available deck
      * @return ActionCard
      */
     public ActionCard getCard(){
@@ -48,7 +44,7 @@ public class ActionCardDeck {
     }
 
     /**
-     *
+     *  shuffles the deck and puts back in the already used cards
      */
     public void shuffleDeck(){
         Stack<ActionCard> temp = new Stack<ActionCard>();

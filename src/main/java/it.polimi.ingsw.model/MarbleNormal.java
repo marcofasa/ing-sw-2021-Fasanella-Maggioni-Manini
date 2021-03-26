@@ -3,20 +3,20 @@ package it.polimi.ingsw.model;
 /**
  * Concrete Marble
  */
-public class MarbleRed extends Marble {
+public class MarbleNormal extends Marble {
 
-    private FaithTrail faithTrail;
+    private final Resource resource;
 
     /**
      * Constructor of the class
-     * @param faithTrail instance of FaithTrail where to move players
+     * @param resource type of resurce represented by the marble
      */
-    MarbleRed(FaithTrail faithTrail){
-        this.faithTrail = faithTrail;
+    MarbleNormal(Resource resource){
+        this.resource = resource;
     }
 
     /**
-     * Moves player forward by 1 faith cell
+     * Adds one resource to a player
      * @param playerBoard player where to activate marble
      */
     @Override

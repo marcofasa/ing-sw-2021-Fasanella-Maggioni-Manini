@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model;
 
-public abstract class CardDevelopment {
+public class CardDevelopment {
+    CardDevelopmentType type;
 }
