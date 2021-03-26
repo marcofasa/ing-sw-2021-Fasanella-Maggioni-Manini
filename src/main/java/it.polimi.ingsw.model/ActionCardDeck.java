@@ -10,7 +10,11 @@ public class ActionCardDeck {
     public ActionCardDeck(){
         usedStack = new Stack<ActionCard>();
         availableStack = new Stack<ActionCard>();
-        /* TODO */
+        ActionCard advance1 = new ActionCardAdvance();
+        ActionCard advance2 = new ActionCardAdvance();
+        availableStack.push(advance1);
+        availableStack.push(advance2);
+        Collections.shuffle(availableStack);
     }
 
     private Stack<ActionCard> usedStack;
