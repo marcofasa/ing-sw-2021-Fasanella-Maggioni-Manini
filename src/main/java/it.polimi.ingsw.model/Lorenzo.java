@@ -3,8 +3,17 @@ package it.polimi.ingsw.model;
 import jdk.jshell.spi.ExecutionControl;
 
 public class Lorenzo {
-    private ActionCardDeck actionCardDeck;
-    private GameTable gameTable;
+    private final ActionCardDeck actionCardDeck;
+    private final GameTable gameTable;
+
+    /**
+     * Initializes Lorenzo and the ActionCardDeck
+     * @param gameTable this
+     */
+    Lorenzo(GameTable gameTable){
+        this.gameTable = gameTable;
+        actionCardDeck = new ActionCardDeck();
+    }
 
     /**
      * move Lorenzo forward in the faith trail

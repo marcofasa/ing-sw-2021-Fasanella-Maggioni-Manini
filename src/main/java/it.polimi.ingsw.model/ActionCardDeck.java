@@ -37,10 +37,15 @@ public class ActionCardDeck {
     private Stack<ActionCard> availableStack;
 
     /**
-     *
+     * get action card from available deck.
+     * @
      * @return ActionCard
      */
-    public ActionCard getCard(){return null;}
+    public ActionCard getCard(){
+        ActionCard tempActionCard = availableStack.pop();
+        usedStack.push(tempActionCard);
+        return tempActionCard;
+    }
 
     /**
      *
