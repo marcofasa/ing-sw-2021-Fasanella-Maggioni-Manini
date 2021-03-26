@@ -1,21 +1,8 @@
-http://www.plantuml.com/plantuml/uml/hLZVRzku3t_NNs7qALcMeli1VBzd5CMwjZViaAr1scuOXZseDjiOKooV9BVevUv_Fz6CorYrdEBkNbgR_92YFgH5Ak-iayRLAoLi9XKahmyE3bxW7t7XZ2vlbrhboU6Vqsbo2fMsXHE_oi8jBuqiLAAzk7czWCmLkjpe2WLaylXwLHgGsHBoAE94oM8re3yjV7mcRn2y88DQoNa9CGIwsM5zUQzt8PO6G0GhDaJi_R97o1DGIWHU2V7_A0AznZ3ur0J2Yi_Qh6HSlO1A6nTLptK5ucFfm9HIVT8vgEG5BlrgV__jNZ9NyW6Ce7_9eLUSUE9FuGwKhbPGka_I_0GN0cOWywuP5Km7o3KLh8zABgmUvKmRAF_GFHeAfqV1KPr2zZC26DnNHq8SlTaBpIwKTeAGhT6r0h49k14TDqacEnz9zvNI_h-zBPJeMO9W1_lxJoCGVHiXWz2HatxzFc4VMdGP90YB2flfUXUAs1Z6j8Ko29eRdTTqoh2G2ditAB9S1C51Hm2yTyuPGVZzObdVt2WOG6oEj074SNudomm4nRE0lD7JsqRuTLauU2h-1ahf-wVozwhkGNyfj0At9GzB15M123qz0pQlJVKiVnJnCu0V340feAnNoGKeEZ_NOd7-LPoSpwu-VHP_aJ8mc-7ZMhmIhyMR5h80gskJmLgydrsTYVdLOZux4z_EPZFlxSFYx9i7PafQctGFZxL89ZS5g3n94_UWmR-km2rr_cha7YeOexI2HsC-zTPYacdlgdIfPxewR0DuMNZXBPWZCQajj58xUjGd6y1OJ9RI3W7Iv5fh1R8Karjm9xJQQ1oib_22Ciy75sotmUSp4Z1LuBVaqXOdfXaePTFas1ZvC2kiEtpiDqVV4UoMFyIqQexIkRO5fes2ekFr9N9C8M7WQ3VYFN5BHEMN8dFQFCor1zZHc8EOhFGTaByH_UED-7t8Q-kCp1pF0xWJIpMKTlhyy3geR85CJpZi9Ej1BsmP347Fjmk7ersMJ04pYXJSRHimF4PDKbYS8JgC94m9oWC3wH_kf4EJRX2CmZXmCxPJ5Ln9g3iwwlfYAeA1R3s8ux4iZWk7iq4apsJ3E1xETkEGuHYg7OUGiniqu2-gyoaqpkRolkoagYgodznaKCLlxGh1p88BrHRoPbP8aoOhZ3WIKtad2oMl5SGGM9SzoqqizKbS92WEHdaMUaXusYYJ3Z34SLCUnd5hZk1ela9ALjWjgMBnuVkR7z_V-bFELj80YLeLxhy4unrT8akZSP8I9PgFkMH36raGPGjz7zMtyT2duiCfVM8_onMas7AAybPCCwdaIXQQky8qvvw8MxKRfq6xz2bLpQWJOcW0EcgFSfzkvzURymjMv9qs-Bbssq4hzRPBQMbKAvmkVzDAFMm5QC5jkHjjFO-HSUG-tUHWE4XYq86nFdaJouzUYlR4xiSDkrro6OGfYe3Q0l1TrjOhCADjvTWd-Bf-EEtItIPpks47r7FDyJWxwirHlAllx5upvWrL0NDSMxrN2_zPK1xOyCc5miTGwQfv7CMt6ba6BpnhhDveVT8MBtKrwYEmKZA3Xkv0rPmUn-q94oXngi6tj7TszE5ewwACJt7aUs9vwOLYMZtcyMDPrGC-67XUkm5aj6Et1TyzC2UPB8_vlVtKOkpZQB-EAMcWZwffZ8-fQNYFQQbmrbWuVMdTxWrSgcjYFactPCXwVAWny7jT642NDaOm4ndXBY0ufuQ1psZf0q1v417lEhn7hZ4gYk5IluTM37cQjB7rjy3mplfl7V7r-3_mnCVNFtRs60pTj-XY5RkpjCSCfwC_kRwHjiyCRM6HpuD_bmXZePjVz-B7XKffmHlZDCcqqgOT24xmHIIRyOuRtJX58Kq6sep6NNmR4iaMEF7t-c0W_qhmF2XzmC_3ua6n6yc_CCInxw3CwvNw6m00
 @startuml
 scale 2000*2000
+FaithTrail <-- FaithTile
+FaithTrail *-- "25" FaithCell
 Stronghold <|-- Deposit
-FaithTrail o-- FaithSection
-FaithTile <|-- FaithTileUnreached
-FaithTile <|-- FaithTileClaimed
-FaithTile <|-- FaithTileDiscarded
-FaithSection <|-- FaithSectionOne
-FaithSection <|-- FaithTile
-FaithSection <|-- FaithSectionTwo
-FaithSection <|-- FaithSectionThree
-FaithSectionOne o-- "9" FaithCell
-FaithSectionTwo o-- "8" FaithCell
-FaithSectionThree o-- "8" FaithCell
-FaithCell <|-- FaithCellNormal
-FaithCell <|-- FaithCellReport
-FaithCell <|-- FaithCellPope
 InternalModel *-- "1..4" Player
 Player <-- CardDevelopmentMarket
 Player <-- CardLeader
@@ -54,16 +41,30 @@ CardDevelopment<|--CardDevelopmentBlue
 CardDevelopment<|--CardDevelopmentPurple
 CardDevelopment<|--CardDevelopmentYellow
 CardDevelopment<|--CardDevelopmentGreen
-enum Selection{
-ROW
-COLUMN
+skinparam  class {
+    BackgroundColor<<Enumeration>> #A9DCDF
+    BackgroundColor<<Abstract>> #f7d305
 }
-enum CardDevelopmentLevel{
+enum FaithSection <<Enumeration>> {
 1
 2
 3
 }
-enum Resource{
+enum FaithTileStatus <<Enumeration>>{
+NOT_REACHED
+VALID
+DISCARDED
+} 
+enum Selection{
+ROW
+COLUMN
+}
+enum CardDevelopmentLevel <<Enumeration>>{
+1
+2
+3
+}
+enum Resource <<Enumeration>>{
 BLUE
 PURPLE
 YELLOW
@@ -89,48 +90,19 @@ class FaithTrail {
 +getVictoryPoints(): integer
 +movePlayer(Player, integer)
 }
-abstract FaithTile {
+class FaithTile {
+-status: FaithTileStatus
+-section: FaithSectiona
++getStatus(): FaithTileStatus
++setStatus()
++getVictoryPoints(): integer
+}
+class FaithCell {
+-type: CellType
 -section: FaithSection
-+getVictoryPoints(): integer
-+getSection
-}
-class FaithTileUnreached {
-+getVictoryPoints(): integer
-}
-class FaithTileClaimed {
-+getVictoryPoints(): integer
-}
-class FaithTileDiscarded {
-+getVictoryPoints(): integer
-}
-abstract FaithCell {
 -victoryPoints: integer
--section: FaithSection
 + isPope(): integer
-+ getSection(): FaithSection
-+ activate():
-}
-abstract FaithSection {
--Tiles: Map<Player,List<FaithTile>>
-+ activate():
-}
-class FaithSectionOne {
-+ activate():
-}
-class FaithSectionTwo {
-+ activate():
-}
-class FaithSectionThree {
-+ activate():
-}
-class FaithCellNormal {
-+ activate():
-}
-class FaithCellReport {
-+ activate():
-}
-class FaithCellPope {
-+ activate():
++ getSection(): Section
 }
 class Lorenzo {
 -faithPosition: integer
@@ -143,7 +115,7 @@ class ActionCardDeck {
 +getCard(): ActionCard
 +shuffleDeck():
 }
-abstract ActionCard{
+abstract ActionCard <<Abstract>>{
 +activate():
 }
 class ActionCardAdvance {
@@ -192,7 +164,7 @@ class CardDevelopmentSlot{
 +getTop(): CardDevelopment
 +placeCard(CardDevelopment):
 }
-Abstract CardDevelopment{
+Abstract CardDevelopment <<Abstract>>{
 -level: CardDevelopmentLevel
 -cost: Map<Resource, integer>
 -type: CardDevelopmentType
@@ -214,7 +186,7 @@ class CardDevelopmentGreen{
 class CardDevelopmentStack{
 +pop(): CardDevelopment
 }
-abstract CardLeader{
+abstract CardLeader <<Abstract>>{
 -type : CardLeaderType
 -victoryPoints: integer
 -requirements: Map<Resource, integer>
@@ -250,7 +222,7 @@ class CardLeaderDeck{
 +field: type
 +method(type): type
 }
-abstract Marble {
+abstract Marble <<Abstract>>{
  - color: MarbleColor
  + activate(Player):
  + getColor(): MarbleColor

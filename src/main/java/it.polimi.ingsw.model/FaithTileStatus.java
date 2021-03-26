@@ -1,4 +1,4 @@
 package it.polimi.ingsw.model;
 
-public enum FaithSection {
+public enum FaithTileStatus {
 }
