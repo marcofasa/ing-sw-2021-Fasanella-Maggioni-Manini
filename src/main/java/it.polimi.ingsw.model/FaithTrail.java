@@ -14,6 +14,8 @@ public class FaithTrail {
         return 1;
     }
 
-    void movePlayer(PlayerBoard p,int n){
+
+
+    void movePlayer(PlayerBoard p, int n){
     }
 }
