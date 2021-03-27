@@ -7,6 +7,8 @@ public class GameTable {
 
     private Lorenzo lorenzo;
 
+    private FaithTrail faithTrail;
+
     public Lorenzo getLorenzoInstance() {
         return lorenzo;
     }
@@ -14,4 +16,8 @@ public class GameTable {
     public ArrayList<PlayerBoard> getPlayerBoards() {
         return new ArrayList<>(players);
     }
+
+    public FaithTrail getFaithTrail() {
+        return faithTrail;
+    };
 }
