@@ -35,10 +35,6 @@ MarbleWhite<|-- Marble
 MarbleYellow<|-- Marble
 MarbleBlue<|-- Marble
 MarbleViolet<|-- Marble
-CardDevelopment<|--CardDevelopmentBlue
-CardDevelopment<|--CardDevelopmentPurple
-CardDevelopment<|--CardDevelopmentYellow
-CardDevelopment<|--CardDevelopmentGreen
 skinparam  class {
     BackgroundColor<<Enumeration>> #A9DCDF
     BackgroundColor<<Abstract>> #f7d305
@@ -52,7 +48,7 @@ enum FaithTileStatus <<Enumeration>>{
 NOT_REACHED
 VALID
 DISCARDED
-} 
+}
 enum Selection{
 ROW
 COLUMN
@@ -162,7 +158,7 @@ class CardDevelopmentSlot{
 +getTop(): CardDevelopment
 +placeCard(CardDevelopment):
 }
-Abstract CardDevelopment <<Abstract>>{
+class  CardDevelopment{
 -level: CardDevelopmentLevel
 -cost: Map<Resource, integer>
 -type: CardDevelopmentType
@@ -172,6 +168,8 @@ Abstract CardDevelopment <<Abstract>>{
 +getters
 +activate():
 +canActivate(): boolean
+}
+Enum CardDevelopmentType {
 }
 class CardDevelopmentBlue{
 }
