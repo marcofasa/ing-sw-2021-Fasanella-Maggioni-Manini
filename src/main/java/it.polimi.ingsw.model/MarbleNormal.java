@@ -15,6 +15,10 @@ public class MarbleNormal extends Marble {
         this.resource = resource;
     }
 
+    public Marble clone(){
+        return new MarbleNormal(resource);
+    };
+
     /**
      * Adds one resource to a player
      * @param playerBoard player where to activate marble

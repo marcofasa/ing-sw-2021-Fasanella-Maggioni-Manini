@@ -13,4 +13,8 @@ public class MarbleWhite extends Marble {
     @Override
     public void activate (PlayerBoard playerBoard) {
     }
+
+    public Marble clone(){
+        return new MarbleWhite();
+    };
 }

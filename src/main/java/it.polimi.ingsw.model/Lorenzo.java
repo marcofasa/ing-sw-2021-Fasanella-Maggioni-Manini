@@ -8,11 +8,11 @@ public class Lorenzo {
 
     /**
      * Initializes Lorenzo and the ActionCardDeck
-     * @param gameTable this
+     * @param gameTable caller of the constructor
      */
     Lorenzo(GameTable gameTable){
         this.gameTable = gameTable;
-        actionCardDeck = new ActionCardDeck();
+        actionCardDeck = new ActionCardDeck(gameTable);
     }
 
     /**
