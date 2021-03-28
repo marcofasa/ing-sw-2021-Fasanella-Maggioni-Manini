@@ -5,14 +5,13 @@ import java.util.*;
 
 public class ActionCardDeck {
 
-    private GameTable gameTable;
     private Stack<ActionCard> usedStack;
     private Stack<ActionCard> availableStack;
 
     /**
      * Constructor, generates a new shuffled deck
      */
-    public ActionCardDeck(){
+    public ActionCardDeck(GameTable gameTable){
         usedStack = new Stack<ActionCard>();
         availableStack = new Stack<ActionCard>();
         ActionCard advance1 = new ActionCardAdvance(gameTable);

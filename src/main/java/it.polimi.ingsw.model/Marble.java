@@ -9,4 +9,11 @@ public abstract class Marble {
      * @param playerBoard player where to activate marble
      */
     public abstract void activate(PlayerBoard playerBoard); /*TODO in every child class*/
+
+    /**
+     * cloner of the class
+     * @return a deep clone of Marble
+     */
+    @Override
+    public abstract Marble clone();
 }

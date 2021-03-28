@@ -20,4 +20,5 @@ public class GameTable {
     public FaithTrail getFaithTrail() {
         return faithTrail;
     };
+
 }
