@@ -9,6 +9,12 @@ public class GameTable {
 
     private FaithTrail faithTrail;
 
+    private CardLeaderDeck cardLeaderDeck;
+
+    public CardLeader getCardLeader(PlayerBoard playerBoard){
+        return cardLeaderDeck.getCardLeader(playerBoard);
+    };
+
     public Lorenzo getLorenzoInstance() {
         return lorenzo;
     }
@@ -20,5 +26,6 @@ public class GameTable {
     public FaithTrail getFaithTrail() {
         return faithTrail;
     };
+
 
 }

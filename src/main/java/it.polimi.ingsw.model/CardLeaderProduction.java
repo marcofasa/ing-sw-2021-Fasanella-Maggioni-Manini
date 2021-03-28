@@ -1,9 +1,12 @@
 package it.polimi.ingsw.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CardLeaderProduction extends CardLeader{
 
     private Resource resource;
-    CardLeaderProduction(Resource resource){
+    CardLeaderProduction(Resource resource, HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements){
         this.resource = resource;
     }
 
@@ -14,21 +17,5 @@ public class CardLeaderProduction extends CardLeader{
 
     @Override
     public void activate() {
-
-    }
-
-    @Override
-    public void discard() {
-
-    }
-
-    @Override
-    public void boughtBy(PlayerBoard playerBoard) {
-
-    }
-
-    @Override
-    public PlayerBoard ownedBy() throws CardLeaderNotSoldException {
-        return null;
     }
 }

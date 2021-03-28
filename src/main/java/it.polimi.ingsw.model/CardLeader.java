@@ -1,9 +1,23 @@
 package it.polimi.ingsw.model;
 
 public abstract class CardLeader  {
+
+    private PlayerBoard playerBoard;
+
     public abstract boolean canActivate();
+
     public abstract void activate();
-    public abstract void discard();
-    public abstract void boughtBy(PlayerBoard playerBoard);
-    public abstract PlayerBoard ownedBy() throws CardLeaderNotSoldException;
+
+    public void discard(){
+        playerBoard.moveFaith(1);
+    };
+
+
+    public CardLeader draw(PlayerBoard playerBoard){
+        if (playerBoard == null) {
+            throw new CardAlreadyDrawnException();
+        }
+        this.playerBoard = playerBoard;
+        return this;
+        }
 }

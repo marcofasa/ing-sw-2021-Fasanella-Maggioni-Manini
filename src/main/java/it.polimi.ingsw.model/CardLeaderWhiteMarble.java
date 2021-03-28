@@ -1,10 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CardLeaderWhiteMarble extends CardLeader {
 
     private Resource resource;
 
-    public CardLeaderWhiteMarble(Resource resource){
+    public CardLeaderWhiteMarble(Resource resource, HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements){
         this.resource = resource;
     }
 
@@ -16,20 +19,5 @@ public class CardLeaderWhiteMarble extends CardLeader {
     @Override
     public void activate() {
 
-    }
-
-    @Override
-    public void discard() {
-
-    }
-
-    @Override
-    public void boughtBy(PlayerBoard playerBoard) {
-
-    }
-
-    @Override
-    public PlayerBoard ownedBy() throws CardLeaderNotSoldException {
-        return null;
     }
 }
