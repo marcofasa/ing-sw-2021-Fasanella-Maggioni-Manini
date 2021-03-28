@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
-public class CardLeaderProduction extends CardLeader{
+public class CardLeaderWhiteMarble extends CardLeader {
 
     private Resource resource;
-    CardLeaderProduction(Resource resource){
+
+    public CardLeaderWhiteMarble(Resource resource){
         this.resource = resource;
     }
 
