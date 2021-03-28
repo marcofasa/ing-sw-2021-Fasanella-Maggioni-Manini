@@ -1,4 +1,4 @@
 package it.polimi.ingsw.model;
 
-public class Deposit extends StrongHold {
+public class Deposit extends Strongbox {
 }

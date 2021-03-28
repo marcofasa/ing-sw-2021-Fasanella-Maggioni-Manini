@@ -2,29 +2,27 @@
 scale 2000*2000
 FaithTrail <-- FaithTile
 FaithTrail *-- "25" FaithCell
-Stronghold <|-- Deposit
-InternalModel *-- "1..4" Player
-Player <-- CardDevelopmentMarket
-Player <-- CardLeader
-Player <-- Deposit
-Player <-- Stronghold
-InternalModel <-- FaithTrail
-InternalModel <-- Lorenzo
-InternalModel <-- Market
-InternalModel <-- CardLeaderDeck
-InternalModel <-- CardDevelopmentMarket
-Player <-- Market
-Player *-- "3" CardDevelopmentSlot
+Strongbox <|-- Deposit
+GameTable *-- "1..4" PlayerBoard
+PlayerBoard <-- CardDevelopmentMarket
+PlayerBoard <-- CardLeader
+PlayerBoard <-- Deposit
+PlayerBoard <-- Strongbox
+GameTable <-- FaithTrail
+GameTable <-- Lorenzo
+GameTable <-- Market
+GameTable <-- CardLeaderDeck
+GameTable <-- CardDevelopmentMarket
+PlayerBoard <-- CardLeaderDeck
+PlayerBoard <-- Market
+PlayerBoard *-- "3" CardDevelopmentSlot
 Market <-- Marble
 Lorenzo <-- ActionCardDeck
 ActionCardDeck o-- "7" ActionCard
 CardDevelopmentSlot o-- "0..3" CardDevelopment
 CardDevelopmentMarket o-- CardDevelopmentStack
 CardDevelopmentStack o-- CardDevelopment
-CardLeaderDeck o-- CardLeaderDiscount
-CardLeaderDeck o-- CardLeaderMarble
-CardLeaderDeck o-- CardLeaderDeposit
-CardLeaderDeck o-- CardLeaderProduction
+CardLeaderDeck o-- "16" CardLeader
 CardLeader <|-- CardLeaderProduction
 CardLeader <|-- CardLeaderDeposit
 CardLeader <|-- CardLeaderMarble
@@ -70,11 +68,11 @@ PURPLE
 YELLOW
 GREY
 }
-class InternalModel {
+class GameTable {
  +field : tyoe
  +method1(type): type
 }
-class Stronghold{
+class Strongbox{
 +content: Map<Resource,integer>
 +useResources(Resource, integer)
 +hasResources(Resource, integer): boolean
@@ -85,10 +83,10 @@ class Stronghold{
 class FaithTrail {
 -lenght: integer
 -cells: ArrayList<FaithCell>[length]
--playerPosition: Map<Player, Integer>
+-playerPosition: Map<PlayerBoard, Integer>
 +getCell(integer): FaithCell
 +getVictoryPoints(): integer
-+movePlayer(Player, integer)
++movePlayer(PlayerBoard, integer)
 }
 class FaithTile {
 -status: FaithTileStatus
@@ -134,7 +132,7 @@ class Market {
 +getCol(integer) : List<Marble>
 +getRow(integer) : List<Marble>
 }
-class Player{
+class PlayerBoard{
 -nickName: String
 -calamaio: boolean
 -developmentCards: List<CardDevelopment>
@@ -142,7 +140,7 @@ class Player{
 -playerState: PlayerState
 -favorTiles: ArrayList<FavorTile>
 -hasProducitonJolly: boolean
--setPlayerState(PlayerState)
+-setPlayerBoardState(PlayerState)
 -market: Market
 -leaderCards: List<CardLeader>
 +getters()
@@ -224,22 +222,22 @@ class CardLeaderDeck{
 }
 abstract Marble <<Abstract>>{
  - color: MarbleColor
- + activate(Player):
+ + activate(PlayerBoard):
  + getColor(): MarbleColor
 }
 class MarbleRed {
- + activate(Player):
+ + activate(PlayerBoard):
 }
 class MarbleWhite {
- + activate(Player):
+ + activate(PlayerBoard):
 }
 class MarbleYellow {
- + activate(Player):
+ + activate(PlayerBoard):
 }
 class MarbleBlue {
- + activate(Player):
+ + activate(PlayerBoard):
 }
 class MarbleViolet {
- + activate(Player):
+ + activate(PlayerBoard):
 }
 @enduml
