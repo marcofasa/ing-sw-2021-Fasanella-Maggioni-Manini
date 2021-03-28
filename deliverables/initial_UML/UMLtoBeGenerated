@@ -171,14 +171,6 @@ class  CardDevelopment{
 }
 Enum CardDevelopmentType {
 }
-class CardDevelopmentBlue{
-}
-class CardDevelopmentPurple{
-}
-class CardDevelopmentYellow{
-}
-class CardDevelopmentGreen{
-}
 class CardDevelopmentStack{
 +pop(): CardDevelopment
 }
