@@ -5,14 +5,14 @@ package it.polimi.ingsw.model;
  */
 public class ActionCardShuffle extends ActionCard{
 
-    private GameTable gameTable;
+    private Lorenzo lorenzo;
 
     /**
-     * Constructor of the glass
-     * @param gameTable
+     * Constructor of the class
+     * @param lorenzo istance of Lorenzo
      */
-    ActionCardShuffle(GameTable gameTable){
-        this.gameTable = gameTable;
+    ActionCardShuffle(Lorenzo lorenzo){
+        this.lorenzo = lorenzo;
     }
 
     /**
@@ -20,7 +20,7 @@ public class ActionCardShuffle extends ActionCard{
      */
     @Override
     public void activate() {
-        gameTable.getLorenzoInstance().advanceFaith(1);
-        gameTable.getLorenzoInstance().getActionCardDeck().shuffleDeck();
+        lorenzo.advanceFaith(1);
+        lorenzo.getActionCardDeck().shuffleDeck();
     }
 }

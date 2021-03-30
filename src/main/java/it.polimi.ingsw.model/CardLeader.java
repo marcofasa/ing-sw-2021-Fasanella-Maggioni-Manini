@@ -10,12 +10,12 @@ public abstract class CardLeader  {
 
     public void discard(){
         playerBoard.moveFaith(1);
-    };
+    }
 
 
     public CardLeader draw(PlayerBoard playerBoard){
-        if (playerBoard == null) {
-            throw new CardAlreadyDrawnException();
+        if (this.playerBoard != null) {
+            throw new CardLeaderAlreadyDrawnException();
         }
         this.playerBoard = playerBoard;
         return this;

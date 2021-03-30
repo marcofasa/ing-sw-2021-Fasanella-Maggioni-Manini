@@ -4,21 +4,21 @@ package it.polimi.ingsw.model;
  * Concrete ActionCard
  */
 public class ActionCardAdvance extends ActionCard{
-    private GameTable gameTable;
+    private Lorenzo lorenzo;
 
     /**
      * Constructor of the class
-     * @param gameTable instance of game whereto activate the card
+     * @param lorenzo instance of Lorenzo
      */
-    public ActionCardAdvance(GameTable gameTable){
-        this.gameTable = gameTable;
-    };
+    public ActionCardAdvance(Lorenzo lorenzo){
+        this.lorenzo = lorenzo;
+    }
 
     /**
      * moves Lorenzo forward 2 times
      */
     @Override
     public void activate() {
-        gameTable.getLorenzoInstance().advanceFaith(2);
+        lorenzo.advanceFaith(2);
     }
 }
