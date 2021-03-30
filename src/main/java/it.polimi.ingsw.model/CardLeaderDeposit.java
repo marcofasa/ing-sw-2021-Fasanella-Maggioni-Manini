@@ -10,7 +10,7 @@ public class CardLeaderDeposit extends CardLeader{
 
     private HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements;
 
-    public CardLeaderDeposit(Resource resource, HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements){
+    public CardLeaderDeposit(Resource resource, CardLeaderRequirements requirements){
         this.resource = resource;
     }
 

@@ -1,32 +1,51 @@
 package it.polimi.ingsw.model;
 
-import java.util.ArrayList;
+
+import jdk.jshell.spi.ExecutionControl;
+
 import java.util.HashMap;
 
 public class CardLeaderRequirements {
-    public HashMap<CardDevelopmentType, CardDevelopmentLevel> getRequirements(CardLeaderType production, Resource resource) {
-        HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements = new HashMap<>();
-        switch (production) {
-            case Production:
-                switch (resource) {
-                    case Coins:
-                        requirements.put(CardDevelopmentType.Purple, CardDevelopmentLevel.One);
-                        requirements.put(CardDevelopmentType.Green, CardDevelopmentLevel.One);
-                        return requirements;
-                    case Stone:
-                        break;
-                    case Servants:
-                        break;
-                    case Shields:
-                        break;
-                }
+    private CardLeaderRequirementsType cardLeaderRequirementsType;
+
+    private HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel;
+
+    private HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardType;
+
+    private HashMap<Resource, Integer> numberOfResurces;
+
+    public CardLeaderRequirements(CardLeaderRequirementsType cardLeaderRequirementsType,
+                                  HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel,
+                                  HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardType,
+                                  HashMap<Resource, Integer> numberOfResources
+                                  ) throws IllegalArgumentException {
+        this.cardLeaderRequirementsType = cardLeaderRequirementsType;
+        switch (cardLeaderRequirementsType){
+            case NumberOfDevelopmentCardType:
+                if(numberOfDevelopmentCardType == null)
+                    throw new IllegalArgumentException();
+                this.numberOfDevelopmentCardType = numberOfDevelopmentCardType;
                 break;
-            case Deposit:
+            case NumberOfDevelopmentCardLevel:
+                if(numberOfDevelopmentCardLevel == null)
+                    throw new IllegalArgumentException();
+                this.numberOfDevelopmentCardLevel = numberOfDevelopmentCardLevel;
                 break;
-            case WhiteMarble:
-                break;
-            case Discount:
+            case NumberOfResurces:
+                if(numberOfResources == null)
+                    throw new IllegalArgumentException();
+                this.numberOfResurces = numberOfResources;
                 break;
         }
-    return requirements;}
+    }
+
+    public boolean meetsRequirements(PlayerBoard playerBoard){
+        try {
+            throw new ExecutionControl.NotImplementedException("meets requirements has not been implemented yet");
+        } catch (ExecutionControl.NotImplementedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

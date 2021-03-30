@@ -7,7 +7,7 @@ public class CardLeaderDiscount extends CardLeader {
 
     private Resource resource;
 
-    public CardLeaderDiscount(Resource resource, HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements){
+    public CardLeaderDiscount(Resource resource, CardLeaderRequirements requirements){
         this.resource = resource;
     }
 
