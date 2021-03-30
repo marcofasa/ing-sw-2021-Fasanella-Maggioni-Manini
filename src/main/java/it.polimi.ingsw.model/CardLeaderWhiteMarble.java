@@ -7,7 +7,7 @@ public class CardLeaderWhiteMarble extends CardLeader {
 
     private Resource resource;
 
-    public CardLeaderWhiteMarble(Resource resource, HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements){
+    public CardLeaderWhiteMarble(Resource resource, CardLeaderRequirements requirements){
         this.resource = resource;
     }
 

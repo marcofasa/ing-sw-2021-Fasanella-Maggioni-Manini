@@ -6,7 +6,7 @@ import java.util.Map;
 public class CardLeaderProduction extends CardLeader{
 
     private Resource resource;
-    CardLeaderProduction(Resource resource, HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements){
+    CardLeaderProduction(Resource resource, CardLeaderRequirements requirements){
         this.resource = resource;
     }
 

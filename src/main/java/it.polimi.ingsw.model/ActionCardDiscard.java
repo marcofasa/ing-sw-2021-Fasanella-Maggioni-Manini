@@ -9,7 +9,7 @@ public class ActionCardDiscard extends ActionCard{
      * @param gameTable instance of game whereto activate the card
      * @param cardDevelopmentType type of card to discard when activated
      */
-    public ActionCardDiscard(GameTable gameTable ,CardDevelopmentType cardDevelopmentType){
+    public ActionCardDiscard(GameTable gameTable, CardDevelopmentType cardDevelopmentType){
         this.cardDevelopmentType = cardDevelopmentType;
         this.gameTable = gameTable;
     }
@@ -19,7 +19,6 @@ public class ActionCardDiscard extends ActionCard{
      */
     @Override
     public void activate() {
-        PlayerBoard players = gameTable.getPlayerBoards().get(0);
-        players.discardDevelopmentCard(cardDevelopmentType, 2);
+        gameTable.discardDevelopmentCard(cardDevelopmentType, 2);
     }
 }
