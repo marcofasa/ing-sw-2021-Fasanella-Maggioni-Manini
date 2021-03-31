@@ -70,9 +70,6 @@ public class FaithTrail {
 
     }
 
-
-    private void checkPoints(int pos, PlayerBoard)
-
     /**
      * All players from current to the first have one last round
      */
