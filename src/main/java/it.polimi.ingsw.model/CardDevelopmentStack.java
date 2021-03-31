@@ -12,12 +12,16 @@ public class CardDevelopmentStack {
     final int MAX_STACK_SIZE = 4;
     private Stack<CardDevelopment> cards;
 
-    public CardDevelopmentStack() {
+    public CardDevelopmentStack(int row, int col) {
 
-        cards = new Stack<CardDevelopment>();
+        cards = new Stack<>();
 
-        // Need to populate the stack
+        // Populate the stack
+        for (int i = MAX_STACK_SIZE - 1; i >= 0; i--) {
 
+            // The for-loop loops backwards, in order to have the most expensive cards at the bottom of the stack.
+            cards.push(new CardDevelopment(row ,col, i));
+        }
     }
 
     /* METHODS */
@@ -36,17 +40,18 @@ public class CardDevelopmentStack {
 
     // Class methods
 
-    CardDevelopment push(CardDevelopment item) {
-        if (cards.size() < MAX_STACK_SIZE) return cards.push(item);
-        else return cards.peek();
+    void push(CardDevelopment item) {
+        if (cards.size() < MAX_STACK_SIZE) cards.push(item);
     }
 
-    CardDevelopment getTop() {
+    CardDevelopment peek() {
         return cards.peek();
     }
 
     CardDevelopment pop() {
         return cards.pop();
     }
+
+
 
 }
