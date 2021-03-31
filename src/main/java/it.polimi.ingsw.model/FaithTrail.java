@@ -55,6 +55,7 @@ public class FaithTrail {
           }
           s = getSection(pos);
           this.checkCell(cells.get(pos).getType(),playerTiles.get(p).getStatus(s),s);
+
     }
 
     /**
@@ -64,9 +65,13 @@ public class FaithTrail {
      * @param section
      */
     private void checkCell(FaithCellType celltype,FaithTileStatus tilestatus, FaithSection section){
-           if (celltype==FaithCellType.Pope && tilestatus==FaithTileStatus.Not_Reached) popeActive(section);
+          if(section==FaithSection.Outside) return;
+          else if (celltype==FaithCellType.Pope && tilestatus==FaithTileStatus.Not_Reached) popeActive(section);
 
     }
+
+
+    private void checkPoints(int pos, PlayerBoard)
 
     /**
      * All players from current to the first have one last round
