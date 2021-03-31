@@ -1,8 +1,7 @@
 package it.polimi.ingsw.model;
 
-import jdk.jshell.spi.ExecutionControl;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlayerBoard {
 
@@ -16,6 +15,39 @@ public class PlayerBoard {
 
     private ArrayList<CardLeader> cardLeader;
 
+    private HashMap<Resource, Integer> tempDeposit;
+
+    private Deposit deposit;
+
+    public ArrayList<Marble> getMarketRow(Integer integer) {
+        return gameTable.getMarketInstance().getRow(integer);
+    }
+
+    public ArrayList<Marble> getMarketCol(Integer integer) {
+        return gameTable.getMarketInstance().getCol(integer);
+    }
+
+    public void addToTemporaryDeposit(Resource resource){
+        Integer numberOfResourcesOrNull = tempDeposit.get(resource);
+        if(numberOfResourcesOrNull == null) {
+            tempDeposit.putIfAbsent(resource, 1);
+        } else {
+            tempDeposit.replace(resource, numberOfResourcesOrNull + 1);
+        }
+    }
+
+    public void resetTemporaryDeposit(){
+        tempDeposit = new HashMap<>();
+    }
+
+    public boolean tryAddMarbles(ArrayList<Marble> marbles){
+        resetTemporaryDeposit();
+        for (Marble marble: marbles
+             ) {
+            marble.activate(this);
+        }
+        return deposit.tryAdd(tempDeposit);
+    }
 
     public void getCardLeader(){
         gameTable.getCardLeader(this);

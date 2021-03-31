@@ -13,6 +13,8 @@ public class GameTable {
 
     private CardLeaderDeck cardLeaderDeck;
 
+    private Market market;
+
     public CardLeader getCardLeader(PlayerBoard playerBoard) {
         return cardLeaderDeck.getCardLeader(playerBoard);
     }
@@ -32,6 +34,9 @@ public class GameTable {
     }
 
     public Lorenzo getLorenzoInstance() {
+        if (lorenzo == null) {
+            lorenzo = new Lorenzo(this);
+        }
         return lorenzo;
     }
 
@@ -43,5 +48,10 @@ public class GameTable {
         return faithTrail;
     }
 
-
+    public Market getMarketInstance() {
+        if (market == null) {
+            market = new Market(this);
+        }
+        return market;
+    }
 }
