@@ -12,9 +12,12 @@ public class FaithTrail {
     FaithCell getCell(int i){
         return cells.get(i);
     }
-    int getVictoryPoints(){
-        return 1;
+
+    /*
+    int getVictoryPoints(PlayerBoard p){
+        return cells.get(playerPosition.get(p)).getVictoryPoints();
     }
+    */
 
     /**
      * Moving a player p through n positions
@@ -29,14 +32,13 @@ public class FaithTrail {
 
     /**
      * Return enum FaithSection depending on pos
-     * @param pos
+     * @param pos  0<=pos<=24
      * @return
      */
     public FaithSection getSection(int pos){
-        if (5<=pos && pos<=8) return FaithSection.One;
-            else if (12<=pos && pos<=16) return FaithSection.Two;
-               else  if (19<=pos && pos<=24) return FaithSection.Three;
-               else return FaithSection.Outside;
+        if (0<=pos && pos<=8) return FaithSection.One;
+            else if (9<=pos && pos<=16) return FaithSection.Two;
+               else return FaithSection.Three;
     }
 
     /**
@@ -65,8 +67,8 @@ public class FaithTrail {
      * @param section
      */
     private void checkCell(FaithCellType celltype,FaithTileStatus tilestatus, FaithSection section){
-          if(section==FaithSection.Outside) return;
-          else if (celltype==FaithCellType.Pope && tilestatus==FaithTileStatus.Not_Reached) popeActive(section);
+
+        if (celltype==FaithCellType.Pope && tilestatus==FaithTileStatus.Not_Reached) popeActive(section);
 
     }
 

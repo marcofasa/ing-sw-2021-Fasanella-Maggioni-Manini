@@ -8,17 +8,25 @@ public class FaithTilePack {
     /**
      *
      * @param f
-     * @return Value of corresponding FaithSection
+     * @return Status of corresponding FaithSection
      */
     public FaithTileStatus getStatus(FaithSection f){
         return tiles.get(f);
     }
 
-    // Private??
+    /**
+     * Constructor
+     */
+    public FaithTilePack(){
+        this.tiles.put(FaithSection.One,FaithTileStatus.Not_Reached);
+        this.tiles.put(FaithSection.Two,FaithTileStatus.Not_Reached);
+        this.tiles.put(FaithSection.Three,FaithTileStatus.Not_Reached);
+    }
+
     void setReached(FaithSection section){
         tiles.replace(section,FaithTileStatus.Reached);
     }
-    // Private??
+
     void setDiscarded(FaithSection section){
         tiles.replace(section,FaithTileStatus.Discarded);
     }
