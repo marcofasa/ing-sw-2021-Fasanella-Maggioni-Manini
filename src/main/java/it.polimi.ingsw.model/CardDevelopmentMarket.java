@@ -14,12 +14,27 @@ public class CardDevelopmentMarket {
     2. The market is a 3-by-4 matrix. Same conventions as above apply.
 
      */
-    private CardDevelopmentStack[][] market = new CardDevelopmentStack[3][4];
+
+    private final int NUMBER_OF_ROWS;
+    private final int NUMBER_OF_COLUMNS;
+    private final CardDevelopmentStack[][] market;
+
 
     public CardDevelopmentMarket() {
 
-        // Need to populate market
+        NUMBER_OF_ROWS = 3;
+        NUMBER_OF_COLUMNS = 4;
+        market = new CardDevelopmentStack[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 
+        initializeMarket(market);
+    }
+
+    public int getNUMBER_OF_COLUMNS() {
+        return NUMBER_OF_COLUMNS;
+    }
+
+    public int getNUMBER_OF_ROWS() {
+        return NUMBER_OF_ROWS;
     }
 
     public CardDevelopmentStack[][] getMarket() {
@@ -33,5 +48,11 @@ public class CardDevelopmentMarket {
         return market[rowIndex][colIndex].pop();
     }
 
-
+    private void initializeMarket(CardDevelopmentStack[][] market) {
+        for (int i = 0; i < getNUMBER_OF_ROWS(); i++) {
+            for (int j = 0; j < getNUMBER_OF_COLUMNS(); j++) {
+                market[i][j] = new CardDevelopmentStack(i, j);
+            }
+        }
+    }
 }

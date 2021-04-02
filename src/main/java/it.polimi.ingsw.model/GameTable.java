@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import jdk.jshell.spi.ExecutionControl;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -53,5 +54,10 @@ public class GameTable {
             market = new Market(this);
         }
         return market;
+    }
+
+    public void activateEndGame(PlayerBoard p) {
+        throw new NotImplementedException();
+
     }
 }
