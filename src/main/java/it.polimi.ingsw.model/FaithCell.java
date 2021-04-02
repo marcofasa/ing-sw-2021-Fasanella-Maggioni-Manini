@@ -6,7 +6,16 @@ public class FaithCell {
     private FaithCellType type;
 
     FaithSection getSection(){
+
         return this.section;
+    }
+
+    public FaithCellType getType() {
+        return this.type;
+    }
+
+    public int getVictoryPoints() {
+        return this.victoryPoints;
     }
 
     /**
@@ -16,12 +25,12 @@ public class FaithCell {
     public FaithCell(int index){
         switch(index){
             case 0:case 1:case 2:
-                this.type=FaithCellType.Normal;
+                this.type=FaithCellType.Not_Report;
                 this.section=FaithSection.One;
                 this.victoryPoints=0;
                 break;
             case 3:case 4:
-                this.type=FaithCellType.Normal;
+                this.type=FaithCellType.Not_Report;
                 this.section=FaithSection.One;
                 this.victoryPoints=1;
                 break;
@@ -41,7 +50,7 @@ public class FaithCell {
                 this.victoryPoints=2;
                 break;
             case 9:case 10:case 11:
-                this.type=FaithCellType.Normal;
+                this.type=FaithCellType.Not_Report;
                 this.section=FaithSection.Two;
                 this.victoryPoints=4;
                 break;
@@ -61,12 +70,12 @@ public class FaithCell {
                 this.victoryPoints=9;
                 break;
             case 17:
-                this.type=FaithCellType.Normal;
+                this.type=FaithCellType.Not_Report;
                 this.section=FaithSection.Three;
                 this.victoryPoints=9;
                 break;
             case 18:
-                this.type=FaithCellType.Normal;
+                this.type=FaithCellType.Not_Report;
                 this.section=FaithSection.Three;
                 this.victoryPoints=12;
                 break;
@@ -101,8 +110,8 @@ public class FaithCell {
     /**
      *Returns 1 if the type of FaithCell is Normal
      */
-    public int isNormal(){
-        if(this.type==FaithCellType.Normal) return 1;
+    public int isNotReport(){
+        if(this.type==FaithCellType.Not_Report) return 1;
         else return 0;
     }
 
@@ -114,12 +123,4 @@ public class FaithCell {
         else return 0;
     }
 
-
-    public FaithCellType getType() {
-        return this.type;
-    }
-
-    public int getVictoryPoints() {
-        return this.victoryPoints;
-    }
 }
