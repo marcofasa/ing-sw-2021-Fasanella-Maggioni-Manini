@@ -18,9 +18,9 @@ public class FaithTilePack {
      * Constructor
      */
     public FaithTilePack(){
-        this.tiles.put(FaithSection.One,FaithTileStatus.Not_Reached);
-        this.tiles.put(FaithSection.Two,FaithTileStatus.Not_Reached);
-        this.tiles.put(FaithSection.Three,FaithTileStatus.Not_Reached);
+        tiles.put(FaithSection.One,FaithTileStatus.Not_Reached);
+        tiles.put(FaithSection.Two,FaithTileStatus.Not_Reached);
+        tiles.put(FaithSection.Three,FaithTileStatus.Not_Reached);
     }
 
     void setReached(FaithSection section){

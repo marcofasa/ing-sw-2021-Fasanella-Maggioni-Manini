@@ -25,6 +25,6 @@ public class MarbleRed extends Marble {
      */
     @Override
     public void activate(PlayerBoard playerBoard) {
-
+        playerBoard.moveFaith(1);
     }
 }

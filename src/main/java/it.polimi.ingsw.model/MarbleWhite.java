@@ -12,6 +12,9 @@ public class MarbleWhite extends Marble {
      */
     @Override
     public void activate (PlayerBoard playerBoard) {
+        if(playerBoard.getWhiteEffect() == null)
+            return;
+       playerBoard.addToTemporaryDeposit(playerBoard.getWhiteEffect());
     }
 
     public Marble clone(){

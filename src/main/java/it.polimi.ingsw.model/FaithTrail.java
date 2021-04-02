@@ -56,7 +56,7 @@ public class FaithTrail {
               return;
           }
           s = getSection(pos);
-          this.checkCell(cells.get(pos).getType(),playerTiles.get(p).getStatus(s),s);
+          checkCell(cells.get(pos).getType(),playerTiles.get(p).getStatus(s),s);
 
     }
 
@@ -89,7 +89,6 @@ public class FaithTrail {
             if(isReached(iterator.next().getKey(),section))  iterator.next().getValue().setReached(section);
             else iterator.next().getValue().setDiscarded(section);
         }
-
     }
 
     /**

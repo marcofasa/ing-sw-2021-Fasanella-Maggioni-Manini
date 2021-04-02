@@ -36,7 +36,7 @@ public class PlayerBoard {
         }
     }
 
-    public void resetTemporaryDeposit(){
+    private void resetTemporaryDeposit(){
         tempDeposit = new HashMap<>();
     }
 

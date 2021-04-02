@@ -25,6 +25,6 @@ public class MarbleNormal extends Marble {
      */
     @Override
     public void activate(PlayerBoard playerBoard) {
-
+        playerBoard.addToTemporaryDeposit(resource);
     }
 }

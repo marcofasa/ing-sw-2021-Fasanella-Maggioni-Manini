@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 
 import jdk.jshell.spi.ExecutionControl;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
@@ -15,9 +16,9 @@ public class CardLeaderRequirements {
     private HashMap<Resource, Integer> numberOfResurces;
 
     public CardLeaderRequirements(CardLeaderRequirementsType cardLeaderRequirementsType,
-                                  HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel,
-                                  HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardType,
-                                  HashMap<Resource, Integer> numberOfResources
+                                  @Nullable HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel,
+                                  @Nullable HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardType,
+                                  @Nullable HashMap<Resource, Integer> numberOfResources
                                   ) throws IllegalArgumentException {
         this.cardLeaderRequirementsType = cardLeaderRequirementsType;
         switch (cardLeaderRequirementsType){
