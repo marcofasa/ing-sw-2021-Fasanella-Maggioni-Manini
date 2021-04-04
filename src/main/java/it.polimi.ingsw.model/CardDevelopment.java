@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class CardDevelopment {
@@ -15,7 +14,7 @@ public class CardDevelopment {
     private HashMap<Resource, Integer> productionInput;
     private HashMap<Resource, Integer> productionOutput;
 
-    Integer numberOfRedResourceProduced;
+    private Integer numberOfRedResourceProduced;
 
     /* Constructor(s) */
 
@@ -71,14 +70,17 @@ public class CardDevelopment {
         return numberOfRedResourceProduced;
     }
 
-    // Setters
-
-    // Non present because once the CardDevelopment has been created, it will never be modified
-
     // Class methods
 
-    //Checks if PlayerBoard has enough resources in his Stronghold and Deposit to activate production
-    boolean canActivate(Strongbox strongbox, Deposit deposit) {
+    /**
+     * Method used to check if player has enough resources in his deposit and strongbox to activate this card
+     * @param board The PlayerBoard that owns the card.
+     * @return true if PlayerBoard holds enough resources, false otherwise.
+     */
+    boolean canActivateProduction(PlayerBoard board) {
+
+        Strongbox strongbox = board.getStrongbox();
+        Deposit deposit = board.getDeposit();
 
         //temp is initialized with the content of Strongbox, then it is added Deposit's content one resource at a time
         HashMap<Resource, Integer> temp = new HashMap<>(strongbox.getContent());
@@ -87,6 +89,7 @@ public class CardDevelopment {
             temp.put(resource, temp.get(resource) + deposit.getContent().get(resource));
         }
 
+        // Check if card can be activated
         for (Resource resource : Resource.values()) {
             if (getProductionInput().get(resource) > temp.get(resource)) return false;
         }
@@ -94,17 +97,24 @@ public class CardDevelopment {
         return true;
     }
 
-    // Consumes by default starting from the deposit, if not enough resources were found in deposit, the rest is taken
-    // from the strongbox. This comes from the logic by which it is always convenient to free space in the deposit rather than strongbox
-    // if the choice is available.
-    void activate(Strongbox strongbox, Deposit deposit) {
+    /**
+     * Method to consume resources from deposit and strongbox, and activate the card's production power.
+     * Consumes resources by default starting from the deposit, if not enough resources were found in deposit,
+     * the rest is taken from the strongbox.
+     * This comes from the logic by which it is always convenient to free space in the deposit rather than strongbox.
+     * @param board The PlayerBoard that owns the card.
+     */
+    void activateProduction(PlayerBoard board) {
+
+        Strongbox strongbox = board.getStrongbox();
+        Deposit deposit = board.getDeposit();
 
         // Local variables to make methods less verbose
         HashMap<Resource, Integer> prodInput = getProductionInput();
         HashMap<Resource, Integer> prodOutput = getProductionOutput();
         HashMap<Resource, Integer> depContent = deposit.getContent();
 
-        // Consume inputs
+        // Consume inputs from deposit first, if deposit can't cover the whole cost, the rest is taken from strongbox
         for (Resource resource : Resource.values()) {
 
             if (deposit.hasResource(resource, prodInput.get(resource))) {
@@ -119,9 +129,30 @@ public class CardDevelopment {
         // Insert outputs in strongbox
         strongbox.tryAdd(prodOutput);
 
+        // Move pawn on faith trail for the amount of red resources produced by this card
+        board.moveFaith(this.numberOfRedResourceProduced);
     }
 
-    // Private enumeration that contains the information about every development card in the game
+
+    /**
+     * Method to activate the production power of this card
+     * @param board PlayerBoard that owns the CardDevelopment and wishes to activate the production power
+     * @return true if activation went well, false otherwise.
+     */
+    boolean tryActivateProduction(PlayerBoard board) {
+
+        if (canActivateProduction(board)) {
+            activateProduction(board);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Private enum that holds the information on all CardDevelopment present in the game.
+     */
     private enum CardDevelopmentInfo {
 
         // TYPE, LEVEL, VICTORY POINTS, COST, INPUT, OUTPUT, REDS PRODUCED
@@ -533,7 +564,7 @@ public class CardDevelopment {
                 case "COIN":
                     return Resource.Coins;
                 case "STONE":
-                    return Resource.Stone;
+                    return Resource.Stones;
                 case "SERVANT":
                     return Resource.Servants;
                 case "SHIELD":
