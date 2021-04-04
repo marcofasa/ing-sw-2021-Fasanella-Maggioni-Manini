@@ -133,6 +133,23 @@ public class CardDevelopment {
         board.moveFaith(this.numberOfRedResourceProduced);
     }
 
+
+    /**
+     * Method to activate the production power of this card
+     * @param board PlayerBoard that owns the CardDevelopment and wishes to activate the production power
+     * @return true if activation went well, false otherwise.
+     */
+    boolean tryActivateProduction(PlayerBoard board) {
+
+        if (canActivateProduction(board)) {
+            activateProduction(board);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     /**
      * Private enum that holds the information on all CardDevelopment present in the game.
      */

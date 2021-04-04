@@ -22,7 +22,7 @@ public class Deposit extends Strongbox {
     @Override
     boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
 
-        // Creating a temporary copy of deposit
+        // Create a temporary copy of deposit
         Deposit temp = new Deposit();
         temp.getContent().putAll(this.getContent());
 
@@ -54,7 +54,7 @@ public class Deposit extends Strongbox {
     void discard(Resource choice) {
 
         //Discard 1 item of chosen resource
-        getContent().put(choice, getContent().get(choice) - 1);
+        useResource(choice, 1);
     }
 
     /**
