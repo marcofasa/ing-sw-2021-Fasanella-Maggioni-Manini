@@ -4,16 +4,19 @@ import java.util.HashMap;
 
 public class CardLeaderFactory {
     public CardLeader produce(CardLeaderType type, Resource resource) {
-        HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements = null;
         switch (type){
             case Production:
-                return new CardLeaderProduction(resource, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.Production, resource));
+                return new CardLeaderProduction(resource, CardLeaderRequirementsFinder.getRequirements(type, resource),
+                        CardLeaderRequirementsFinder.getVictoryPoints(type));
             case Deposit:
-                return new CardLeaderDeposit(resource, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.Deposit, resource));
+                return new CardLeaderDeposit(resource, CardLeaderRequirementsFinder.getRequirements(type, resource),
+                        CardLeaderRequirementsFinder.getVictoryPoints(type));
             case WhiteMarble:
-                return new CardLeaderWhiteMarble(resource, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, resource));
+                return new CardLeaderWhiteMarble(resource, CardLeaderRequirementsFinder.getRequirements(type, resource),
+                        CardLeaderRequirementsFinder.getVictoryPoints(type));
             case Discount:
-                return new CardLeaderDiscount(resource, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.Discount, resource));
+                return new CardLeaderDiscount(resource, CardLeaderRequirementsFinder.getRequirements(type, resource),
+                        CardLeaderRequirementsFinder.getVictoryPoints(type));
             default:
                 throw new IllegalArgumentException();
         }

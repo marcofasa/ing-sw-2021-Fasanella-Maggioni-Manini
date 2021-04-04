@@ -2,10 +2,28 @@ package it.polimi.ingsw.model;
 
 public abstract class CardLeader  {
 
-    private PlayerBoard playerBoard;
+    protected Integer victoryPoints;
 
-    public abstract boolean canActivate();
+    protected CardLeaderRequirements requirements;
 
+    protected PlayerBoard playerBoard;
+
+    protected boolean active;
+
+    protected Resource resource;
+
+
+    /**
+     * Check if requirements are met
+     * @return true if activate() can be called, false otherwise
+     */
+    public boolean canActivate() {
+        return requirements.meetsRequirements(playerBoard);
+    }
+
+    /**
+     * Activate the cards if the requirements are met
+     */
     public abstract void activate();
 
     /**
@@ -25,7 +43,18 @@ public abstract class CardLeader  {
         if (this.playerBoard != null) {
             throw new CardLeaderAlreadyDrawnException();
         }
+        if (playerBoard == null) {
+            throw new IllegalArgumentException("playerBoard cannot be null");
+        }
         this.playerBoard = playerBoard;
         return this;
-        }
+    }
+
+    /**
+     * returns victory points value of the card
+     * @return number of victory points worth
+     */
+    public Integer getVictoryPoints(){
+        return active? victoryPoints : 0;
+    }
 }

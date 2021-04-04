@@ -1,26 +1,20 @@
 package it.polimi.ingsw.model;
 
-import java.util.HashMap;
-
 public class CardLeaderDeposit extends CardLeader{
 
-    private Resource resource;
-
-    private PlayerBoard playerBoard;
-
-    private HashMap<CardDevelopmentType, CardDevelopmentLevel> requirements;
-
-    public CardLeaderDeposit(Resource resource, CardLeaderRequirements requirements){
+    public CardLeaderDeposit(Resource resource, CardLeaderRequirements requirements, Integer victoryPoints){
         this.resource = resource;
-    }
-
-    @Override
-    public boolean canActivate() {
-        return false;
+        this.requirements = requirements;
+        this.victoryPoints = victoryPoints;
+        active = false;
     }
 
     @Override
     public void activate() {
-
+        if(!canActivate()) throw new CardLeaderRequirementsNotMetException();
+        if(!active) {
+            playerBoard.addLeaderDepositType(resource);
+            active = true;
+        }
     }
 }

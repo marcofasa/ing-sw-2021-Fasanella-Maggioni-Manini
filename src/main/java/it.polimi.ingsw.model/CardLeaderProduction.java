@@ -5,17 +5,18 @@ import java.util.Map;
 
 public class CardLeaderProduction extends CardLeader{
 
-    private Resource resource;
-    CardLeaderProduction(Resource resource, CardLeaderRequirements requirements){
+    CardLeaderProduction(Resource resource, CardLeaderRequirements requirements, Integer victoryPoints){
         this.resource = resource;
-    }
-
-    @Override
-    public boolean canActivate() {
-        return false;
+        this.requirements = requirements;
+        this.victoryPoints = victoryPoints;
     }
 
     @Override
     public void activate() {
+        if(!canActivate()) throw new CardLeaderRequirementsNotMetException();
+        active = true;
+        HashMap<Resource, Integer> resources = new HashMap<>();
+        resources.put(playerBoard.getCardLeaderProductionResource(), 1);
+        playerBoard.addToStrongbox(resource);
     }
 }

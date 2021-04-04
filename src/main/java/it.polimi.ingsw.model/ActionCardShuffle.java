@@ -5,7 +5,7 @@ package it.polimi.ingsw.model;
  */
 public class ActionCardShuffle extends ActionCard{
 
-    private Lorenzo lorenzo;
+    private final Lorenzo lorenzo;
 
     /**
      * Constructor of the class

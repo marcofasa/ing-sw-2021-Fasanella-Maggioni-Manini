@@ -21,6 +21,15 @@ public class PlayerBoard {
 
     private Strongbox strongbox;
 
+    /**
+     * Tutte le risorse sono inizializzate a 0 sempre!
+     */
+    private HashMap<Resource, Integer> cardLeaderDeposit;
+
+    private ArrayList<Resource> cardLeaderDepositTypes;
+    
+    private Resource cardLeaderProductionResource;
+
 
     public PlayerBoard(GameTable gameTable) {
         this.gameTable = gameTable;
@@ -61,6 +70,7 @@ public class PlayerBoard {
         tempDeposit = new HashMap<>();
     }
 
+    //QUESTA FUNZIONE VA RIFATTA, NON TIENE CONTO DEL DEPOSITO LEADER!
     public boolean tryAddMarbles(ArrayList<Marble> marbles){
         resetTemporaryDeposit();
         for (Marble marble: marbles
@@ -83,5 +93,36 @@ public class PlayerBoard {
     }
 
     public void moveFaith(int i) {
+    }
+
+    public boolean canAddLeaderDeposit(HashMap<Resource, Integer> resources){
+        for (Resource resource: resources.keySet()) {
+            if(!cardLeaderDepositTypes.contains(resource)) return false;
+            if(resources.get(resource) + cardLeaderDeposit.get(resource) > 2) return false;
+        }
+        return true;
+    }
+
+    public boolean tryAddLeaderDeposit(HashMap<Resource, Integer> resources){
+        if (!canAddLeaderDeposit(resources)) return false;
+        for (Resource resource : resources.keySet()) {
+            cardLeaderDeposit.replace(resource, cardLeaderDeposit.get(resource) + resources.get(resource));
+        }
+        return true;
+    }
+
+    public void addLeaderDepositType(Resource resource) {
+        cardLeaderDepositTypes.add(resource);
+    }
+
+    public Resource getCardLeaderProductionResource() {
+        return cardLeaderProductionResource;
+    }
+
+    public void setCardLeaderProductionResource(Resource resource) {
+        cardLeaderProductionResource = resource;
+    }
+
+    public void addToStrongbox(Resource cardLeaderProductionResource) {
     }
 }

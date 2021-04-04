@@ -7,25 +7,25 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 public class CardLeaderRequirements {
-    private CardLeaderRequirementsType cardLeaderRequirementsType;
+    private final CardLeaderRequirementsType cardLeaderRequirementsType;
 
     private HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel;
 
-    private HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardType;
+    private HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes;
 
     private HashMap<Resource, Integer> numberOfResurces;
 
-    public CardLeaderRequirements(CardLeaderRequirementsType cardLeaderRequirementsType,
+    public CardLeaderRequirements(CardLeaderRequirementsType cardLeaderRequirementsTypes,
                                   @Nullable HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel,
-                                  @Nullable HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardType,
+                                  @Nullable HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes,
                                   @Nullable HashMap<Resource, Integer> numberOfResources
-                                  ) throws IllegalArgumentException {
-        this.cardLeaderRequirementsType = cardLeaderRequirementsType;
-        switch (cardLeaderRequirementsType){
-            case NumberOfDevelopmentCardType:
-                if(numberOfDevelopmentCardType == null)
+                                  ){
+        this.cardLeaderRequirementsType = cardLeaderRequirementsTypes;
+        switch (cardLeaderRequirementsTypes){
+            case NumberOfDevelopmentCardTypes:
+                if(numberOfDevelopmentCardTypes == null)
                     throw new IllegalArgumentException();
-                this.numberOfDevelopmentCardType = numberOfDevelopmentCardType;
+                this.numberOfDevelopmentCardTypes = numberOfDevelopmentCardTypes;
                 break;
             case NumberOfDevelopmentCardLevel:
                 if(numberOfDevelopmentCardLevel == null)
