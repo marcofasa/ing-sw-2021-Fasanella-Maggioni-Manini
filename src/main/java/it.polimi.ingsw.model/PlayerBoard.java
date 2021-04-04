@@ -19,12 +19,29 @@ public class PlayerBoard {
 
     private Deposit deposit;
 
+    private Strongbox strongbox;
+
+
+    public PlayerBoard(GameTable gameTable) {
+        this.gameTable = gameTable;
+        this.strongbox = new Strongbox();
+        this.deposit = new Deposit();
+    }
+
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
     }
 
     public ArrayList<Marble> getMarketCol(Integer integer) {
         return gameTable.getMarketInstance().getCol(integer);
+    }
+
+    public Strongbox getStrongbox() {
+        return this.strongbox;
+    }
+
+    public Deposit getDeposit() {
+        return deposit;
     }
 
     public void addToTemporaryDeposit(Resource resource){
@@ -63,4 +80,6 @@ public class PlayerBoard {
 
     public void moveFaith(int i) {
     }
+
+
 }

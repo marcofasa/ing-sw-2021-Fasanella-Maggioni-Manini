@@ -7,7 +7,9 @@ public class Deposit extends Strongbox {
     // Local variables to check if Deposit's invariant is always verified
     private final int singleOccurrenceLimit, doubleOccurrenceLimit, tripleOccurrenceLimit;
 
-    // Deposit is initialized just like a Strongbox: with an empty HashMap
+    /**
+     * Class constructor : initializes content just like Strongbox's
+     */
     public Deposit() {
 
         super();
@@ -15,11 +17,6 @@ public class Deposit extends Strongbox {
         doubleOccurrenceLimit = 2;
         tripleOccurrenceLimit = 1;
 
-    }
-
-    @Override
-    protected void addResource(Resource resourceToBeAdded, int amount) {
-        super.addResource(resourceToBeAdded, amount);
     }
 
     @Override
@@ -36,7 +33,7 @@ public class Deposit extends Strongbox {
 
         if (temp.checkInvariant()) {
 
-            // If invariant is valid for temp, apply changes to real content and return true
+            // If invariant is valid for temp, apply changes to real deposit content and return true
             for (Resource res : Resource.values()) {
                 addResource(res, resourcesToBeAdded.get(res));
             }
@@ -50,12 +47,20 @@ public class Deposit extends Strongbox {
 
     }
 
+    /**
+     * Method to decrement Resource of choice by 1 item
+     * @param choice Resource to be decremented
+     */
     void discard(Resource choice) {
 
         //Discard 1 item of chosen resource
         getContent().put(choice, getContent().get(choice) - 1);
     }
 
+    /**
+     * Method to check if Deposit's invariant is valid.
+     * @return true if Deposit is in a valid state, false if otherwise.
+     */
     private boolean checkInvariant() {
 
         /*

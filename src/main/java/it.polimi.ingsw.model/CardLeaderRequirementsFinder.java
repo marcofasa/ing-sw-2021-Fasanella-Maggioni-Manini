@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.HashMap;
-
 public class CardLeaderRequirementsFinder {
     public static CardLeaderRequirements getRequirements(CardLeaderType type, Resource resource) {
         switch (type) {
@@ -9,7 +7,7 @@ public class CardLeaderRequirementsFinder {
                 switch (resource) {
                     case Coins:
                         return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfDevelopmentCardType, null, null, null);
-                    case Stone:
+                    case Stones:
                         break;
                     case Servants:
                         break;

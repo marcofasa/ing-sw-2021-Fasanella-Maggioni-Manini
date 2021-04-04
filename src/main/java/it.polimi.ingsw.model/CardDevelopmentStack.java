@@ -20,7 +20,7 @@ public class CardDevelopmentStack {
         for (int i = MAX_STACK_SIZE - 1; i >= 0; i--) {
 
             // The for-loop loops backwards, in order to have the most expensive cards at the bottom of the stack.
-            cards.push(new CardDevelopment(row ,col, i));
+            this.push(new CardDevelopment(row ,col, i));
         }
     }
 
@@ -51,7 +51,6 @@ public class CardDevelopmentStack {
     CardDevelopment pop() {
         return cards.pop();
     }
-
 
 
 }

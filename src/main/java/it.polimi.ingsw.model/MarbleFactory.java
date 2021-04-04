@@ -22,7 +22,7 @@ public class MarbleFactory {
             case MarblePurple:
                 return new MarbleNormal(Resource.Servants);
             case MarbleGrey:
-                return new MarbleNormal(Resource.Stone);
+                return new MarbleNormal(Resource.Stones);
             case MarbleYellow:
                 return new MarbleNormal(Resource.Coins);
             default:

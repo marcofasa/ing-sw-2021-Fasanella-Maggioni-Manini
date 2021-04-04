@@ -8,19 +8,29 @@ public class Strongbox {
 
     /* METHODS */
 
-    //Constructor
+    /**
+     * Initialize content to the following HashMap:
+     *
+     * Coins : 0
+     * Stones : 0
+     * Servants : 0
+     * Shields : 0
+     */
 
     public Strongbox() {
 
         content = new HashMap<>();
 
         content.put(Resource.Coins, 0);
-        content.put(Resource.Stone, 0);
+        content.put(Resource.Stones, 0);
         content.put(Resource.Servants, 0);
         content.put(Resource.Shields, 0);
     }
 
-    //Getter
+    /**
+     * Getter method for content
+     * @return this.content
+     */
 
     public HashMap<Resource, Integer> getContent() {
         return content;
@@ -28,28 +38,43 @@ public class Strongbox {
 
     /* Class methods */
 
-    //Check if Strongbox contains enough resources to be used
+    /**
+     *
+     * @param resourceToBeChecked resource whose amount we want to check
+     * @param amount amount of resourceToBeChecked needed
+     * @return content.get(resourceToBeChecked) >= amount
+     */
     boolean hasResource(Resource resourceToBeChecked, int amount) {
         return content.get(resourceToBeChecked) >= amount;
     }
 
-    //Consume amount resourceToBeUsed from the Strongbox
+    /**
+     * Must be called after hasResource(resourceToBeUsed, amount) returns true
+     * @param resourceToBeUsed resource the player wants to consume from the storage
+     * @param amount amount of resourceToBeUsed the player wants to consume
+     */
     void useResource(Resource resourceToBeUsed, int amount) {
         content.put(resourceToBeUsed, content.get(resourceToBeUsed) - amount);
     }
 
-    //Exposed method to add resources to the strongbox, always returns true
+    /**
+     * Method that adds resources to strongbox
+     * @param resourcesToBeAdded Map of <Resource,Integer> to be added to content
+     * @return true, because Strongbox's content has no boundaries
+     */
     boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
 
         for (Resource res : Resource.values()) {
             addResource(res, resourcesToBeAdded.get(res));
         }
-
         return true;
-
     }
 
-    //Add amount resourceToBeAdded to the Strongbox, does not throw the exception! It is only thrown in subclass.
+    /**
+     * Add an arbitrary amount of a single resource to content
+     * @param resourceToBeAdded resource to be added to content
+     * @param amount amount of resource to be added to content
+     */
     protected void addResource(Resource resourceToBeAdded, int amount) {
         content.put(resourceToBeAdded, content.get(resourceToBeAdded) + amount);
     }
