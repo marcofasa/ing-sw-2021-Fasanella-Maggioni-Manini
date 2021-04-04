@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import jdk.jshell.spi.ExecutionControl;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -23,8 +22,9 @@ public class GameTable {
 
     /**
      * discard development card from PlayerBoard
+     *
      * @param discardType type of development card
-     * @param i number of dev. cards to discard
+     * @param i           number of dev. cards to discard
      */
     public void discardDevelopmentCard(CardDevelopmentType discardType, int i) {
         try {
@@ -32,6 +32,7 @@ public class GameTable {
         } catch (ExecutionControl.NotImplementedException e) {
             e.printStackTrace();
         }
+        //THIS FUNCTION SHOULD ACTIVATE ENDGAME
     }
 
     public Lorenzo getLorenzoInstance() {
@@ -57,7 +58,10 @@ public class GameTable {
     }
 
     public void activateEndGame(PlayerBoard p) {
-        throw new NotImplementedException();
-
+        try {
+            throw new ExecutionControl.NotImplementedException("Activate Endgame has not been implemented yet");
+        } catch (ExecutionControl.NotImplementedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -11,9 +11,9 @@ public class PlayerBoard {
 
     private GameTable gameTable;
 
-    private ArrayList<CardLeader> cardLeaderBeforeSelecting;
+    private ArrayList<CardLeader> cardsLeaderBeforeSelecting;
 
-    private ArrayList<CardLeader> cardLeader;
+    private ArrayList<CardLeader> cardsLeader;
 
     private HashMap<Resource, Integer> tempDeposit;
 
@@ -25,6 +25,10 @@ public class PlayerBoard {
 
     public ArrayList<Marble> getMarketCol(Integer integer) {
         return gameTable.getMarketInstance().getCol(integer);
+    }
+
+    public void discardCardLeader(CardLeader cardLeader){
+        cardsLeader.remove(cardLeader);
     }
 
     public void addToTemporaryDeposit(Resource resource){

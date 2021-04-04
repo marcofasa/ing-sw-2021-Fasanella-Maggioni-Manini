@@ -46,11 +46,8 @@ public class ActionCardDeck {
      *  shuffles the deck and puts back in the already used cards
      */
     public void shuffleDeck(){
-        Stack<ActionCard> temp = new Stack<>();
-        temp.addAll(0, usedStack);
-        temp.addAll(0, availableStack);
-        Collections.shuffle(temp);
-        usedStack = temp;
-        availableStack = new Stack<>();
+        availableStack.addAll(0, usedStack);
+        Collections.shuffle(availableStack);
+        usedStack = new Stack<>();
     }
 }

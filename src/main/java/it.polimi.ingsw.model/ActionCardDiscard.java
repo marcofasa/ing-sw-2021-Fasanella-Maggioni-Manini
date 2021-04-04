@@ -15,7 +15,7 @@ public class ActionCardDiscard extends ActionCard{
     }
 
     /**
-     * Discard two development cards of the type selected when constructed
+     * Discard two development cards of the type selected when activated
      */
     @Override
     public void activate() {
