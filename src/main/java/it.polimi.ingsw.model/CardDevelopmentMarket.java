@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import javax.naming.spi.ResolveResult;
-
 public class CardDevelopmentMarket {
 
     private final int NUMBER_OF_ROWS;
