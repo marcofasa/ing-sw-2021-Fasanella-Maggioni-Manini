@@ -6,7 +6,6 @@ package it.polimi.ingsw.model;
 public class MarbleWhite extends Marble {
 
     /**
-     * REQUIRES: playerBoard.getWhiteEffect() == Resource
      * gets White Marble conversion from PlayerBoard and adds one resource of the desired one
      * @param playerBoard player where to activate marble
      */
@@ -17,7 +16,12 @@ public class MarbleWhite extends Marble {
        playerBoard.addToTemporaryDeposit(playerBoard.getWhiteEffect());
     }
 
+    /**
+     * cloner of the class
+     * @return a deep clone of Marble
+     */
+    @Override
     public Marble clone(){
         return new MarbleWhite();
-    };
+    }
 }

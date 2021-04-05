@@ -15,9 +15,14 @@ public class MarbleRed extends Marble {
         this.faithTrail = faithTrail;
     }
 
+    /**
+     * cloner of the class
+     * @return a deep clone of Marble
+     */
+    @Override
     public Marble clone(){
         return new MarbleRed(faithTrail);
-    };
+    }
 
     /**
      * Moves player forward by 1 faith cell

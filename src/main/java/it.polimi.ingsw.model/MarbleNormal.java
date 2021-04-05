@@ -15,9 +15,14 @@ public class MarbleNormal extends Marble {
         this.resource = resource;
     }
 
+    /**
+     * cloner of the class
+     * @return a deep clone of Marble
+     */
+    @Override
     public Marble clone(){
         return new MarbleNormal(resource);
-    };
+    }
 
     /**
      * Adds one resource to a player
