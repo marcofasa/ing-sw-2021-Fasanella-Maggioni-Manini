@@ -2,7 +2,17 @@ package it.polimi.ingsw.model;
 
 import java.util.HashMap;
 
+/**
+ * Utility Class to find CardLeader Requirements and victory points
+ */
 public class CardLeaderRequirementsFinder {
+
+    /**
+     * static method, finds the requirements of the card
+     * @param type specifier of the card
+     * @param resource specifier of the card
+     * @return CardLeaderRequirements to be assigned to the CardLeader's requirements
+     */
     public static CardLeaderRequirements getRequirements(CardLeaderType type, Resource resource) {
         switch (type) {
             case Production:
@@ -31,19 +41,19 @@ public class CardLeaderRequirementsFinder {
                 switch (resource) {
                     case Coins:
                         numberOfResources.put(Resource.Shields, 5);
-                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResurces, null,
+                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResources, null,
                                 null, numberOfResources);
                     case Stones:
                         numberOfResources.put(Resource.Coins, 5);
-                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResurces, null,
+                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResources, null,
                                 null, numberOfResources);
                     case Servants:
                         numberOfResources.put(Resource.Stones, 5);
-                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResurces, null,
+                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResources, null,
                                 null, numberOfResources);
                     case Shields:
                         numberOfResources.put(Resource.Servants, 5);
-                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResurces, null,
+                        return new CardLeaderRequirements(CardLeaderRequirementsType.NumberOfResources, null,
                                 null, numberOfResources);
                 }
                 break;
@@ -101,6 +111,11 @@ public class CardLeaderRequirementsFinder {
         throw new IllegalArgumentException();
     }
 
+    /**
+     * static method to find victory points assigned to a card
+     * @param type required to find victoryPoints
+     * @return victoryPoints of the card
+     */
     public static Integer getVictoryPoints(CardLeaderType type) {
         switch (type) {
             case Production:

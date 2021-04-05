@@ -22,7 +22,7 @@ public abstract class CardLeader  {
     }
 
     /**
-     * Activate the cards if the requirements are met
+     * Activate the cards if the requirements are met. activate() should be called only if canActivate() == true
      */
     public abstract void activate();
 

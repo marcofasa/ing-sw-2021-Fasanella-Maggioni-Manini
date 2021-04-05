@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 
-import jdk.jshell.spi.ExecutionControl;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -13,8 +12,19 @@ public class CardLeaderRequirements {
 
     private HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes;
 
-    private HashMap<Resource, Integer> numberOfResurces;
+    private HashMap<Resource, Integer> numberOfResources;
 
+    /**
+     * Constructor of the class, takes null values for numberOfDevelopmentCardLevel, numberOfDevelopmentCardTypes, numberOfResources. The param
+     * specified in the CardLeaderRequirementsType must no be null.
+     * @param cardLeaderRequirementsTypes Type of the requirements
+     * @param numberOfDevelopmentCardLevel Map describing requirements of the LeaderCard if cardLeaderRequirementsTypes == NumberOfDevelopmentCardLevel.
+     *                                     Can be multiple CardDevelopmentType with assigned level required
+     * @param numberOfDevelopmentCardTypes Map describing requirements of the LeaderCard if cardLeaderRequirementsTypes == NumberOfDevelopmentCardTypes.
+     *                                     Can be multiple CardDevelopmentType with assigned the number of each type required
+     * @param numberOfResources Map describing requirements of the LeaderCard if cardLeaderRequirementsTypes == NumberOfResources.
+     *                                     Can be multiple Resources with the assigned number required
+     */
     public CardLeaderRequirements(CardLeaderRequirementsType cardLeaderRequirementsTypes,
                                   @Nullable HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel,
                                   @Nullable HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes,
@@ -32,21 +42,29 @@ public class CardLeaderRequirements {
                     throw new IllegalArgumentException();
                 this.numberOfDevelopmentCardLevel = numberOfDevelopmentCardLevel;
                 break;
-            case NumberOfResurces:
+            case NumberOfResources:
                 if(numberOfResources == null)
                     throw new IllegalArgumentException();
-                this.numberOfResurces = numberOfResources;
+                this.numberOfResources = numberOfResources;
                 break;
         }
     }
 
+    /**
+     * Establish if a playerBoard has the necessary requirements to activate this LeaderCard
+     * @param playerBoard must be the owner of the card
+     * @return boolean if requirements are met
+     */
     public boolean meetsRequirements(PlayerBoard playerBoard){
-        try {
-            throw new ExecutionControl.NotImplementedException("meets requirements has not been implemented yet");
-        } catch (ExecutionControl.NotImplementedException e) {
-            e.printStackTrace();
+        switch (cardLeaderRequirementsType) {
+            case NumberOfDevelopmentCardTypes:
+                /*TODO*/
+            case NumberOfDevelopmentCardLevel:
+                /*TODO*/
+            case NumberOfResources:
+                return playerBoard.hasResources(numberOfResources);
         }
-        return false;
+        throw new IllegalArgumentException();
     }
 
 }

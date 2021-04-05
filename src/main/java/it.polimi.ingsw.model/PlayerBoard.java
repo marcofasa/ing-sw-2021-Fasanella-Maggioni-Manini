@@ -123,6 +123,13 @@ public class PlayerBoard {
         cardLeaderProductionResource = resource;
     }
 
-    public void addToStrongbox(Resource cardLeaderProductionResource) {
+    public void addToStrongbox(HashMap<Resource, Integer> cardLeaderProductionResource) {
+    }
+
+    public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
+        return true;
+    }
+
+    public void discountResource(Resource resource) {
     }
 }

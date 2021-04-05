@@ -2,7 +2,16 @@ package it.polimi.ingsw.model;
 
 import java.util.HashMap;
 
+/**
+ * Implements Factory Pattern
+ */
 public class CardLeaderFactory {
+    /**
+     * produce a CardLeader of the desired CardLeaderType and resource
+     * @param type CardLeaderType desired
+     * @param resource resource master of the card
+     * @return concrete CardLeader's child
+     */
     public CardLeader produce(CardLeaderType type, Resource resource) {
         switch (type){
             case Production:
