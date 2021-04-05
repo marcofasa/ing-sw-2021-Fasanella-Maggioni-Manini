@@ -21,15 +21,9 @@ public class PlayerBoard {
 
     private Strongbox strongbox;
 
-    /**
-     * Tutte le risorse sono inizializzate a 0 sempre!
-     */
-    private HashMap<Resource, Integer> cardLeaderDeposit;
-
-    private ArrayList<Resource> cardLeaderDepositTypes;
-    
     private Resource cardLeaderProductionResource;
 
+    private DepositLeaderCard depositLeaderCard;
 
     public PlayerBoard(GameTable gameTable) {
         this.gameTable = gameTable;
@@ -68,15 +62,24 @@ public class PlayerBoard {
 
     private void resetTemporaryDeposit(){
         tempDeposit = new HashMap<>();
+        for (Resource resource:
+             Resource.values()) {
+            tempDeposit.put(resource, 0);
+        }
     }
 
-    //QUESTA FUNZIONE VA RIFATTA, NON TIENE CONTO DEL DEPOSITO LEADER!
+    public void discardFromTemporaryDeposit(Resource resource){
+        tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
+        /*TODO avanzare tutti gli altri giocatori*/
+    }
+
     public boolean tryAddMarbles(ArrayList<Marble> marbles){
         resetTemporaryDeposit();
         for (Marble marble: marbles
              ) {
             marble.activate(this);
         }
+        getDepositLeaderCard().add(tempDeposit);
         return deposit.tryAdd(tempDeposit);
     }
 
@@ -95,26 +98,6 @@ public class PlayerBoard {
     public void moveFaith(int i) {
     }
 
-    public boolean canAddLeaderDeposit(HashMap<Resource, Integer> resources){
-        for (Resource resource: resources.keySet()) {
-            if(!cardLeaderDepositTypes.contains(resource)) return false;
-            if(resources.get(resource) + cardLeaderDeposit.get(resource) > 2) return false;
-        }
-        return true;
-    }
-
-    public boolean tryAddLeaderDeposit(HashMap<Resource, Integer> resources){
-        if (!canAddLeaderDeposit(resources)) return false;
-        for (Resource resource : resources.keySet()) {
-            cardLeaderDeposit.replace(resource, cardLeaderDeposit.get(resource) + resources.get(resource));
-        }
-        return true;
-    }
-
-    public void addLeaderDepositType(Resource resource) {
-        cardLeaderDepositTypes.add(resource);
-    }
-
     public Resource getCardLeaderProductionResource() {
         return cardLeaderProductionResource;
     }
@@ -131,5 +114,11 @@ public class PlayerBoard {
     }
 
     public void discountResource(Resource resource) {
+    }
+
+    public DepositLeaderCard getDepositLeaderCard(){
+        if (depositLeaderCard == null)
+            depositLeaderCard = new DepositLeaderCard();
+        return depositLeaderCard;
     }
 }
