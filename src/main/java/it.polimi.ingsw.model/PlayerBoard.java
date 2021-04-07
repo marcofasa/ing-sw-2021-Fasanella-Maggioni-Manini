@@ -49,6 +49,14 @@ public class PlayerBoard {
         return gameTable.getMarketInstance().getCol(integer);
     }
 
+    public ArrayList<CardLeader> getCardsLeader() {
+        return cardsLeader;
+    }
+
+    public ArrayList<CardLeader> getCardsLeaderBeforeSelecting() {
+        return cardsLeaderBeforeSelecting;
+    }
+
     //mettere instance
     public Strongbox getStrongbox() {
         return this.strongbox;

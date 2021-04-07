@@ -68,7 +68,7 @@ public class FaithTrail {
              for(;n>0;n--){
                  moveP(p);
                  if(checkEndGame(getPosition(p))) {
-                     gameTable.activateEndGame(p);
+                     gameTable.activateEndGame();
                      break;
                  }
              }
