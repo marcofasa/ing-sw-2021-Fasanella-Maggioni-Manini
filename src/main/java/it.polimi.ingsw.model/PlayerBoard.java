@@ -5,6 +5,12 @@ import java.util.HashMap;
 
 public class PlayerBoard {
 
+    private String nickname;
+
+    private boolean first;
+
+    private PlayerState playerState;
+
     private Resource whiteEffect;
 
     private CardDevelopmentSlot cardSlot;
@@ -25,8 +31,10 @@ public class PlayerBoard {
 
     private DepositLeaderCard depositLeaderCard;
 
-    public PlayerBoard(GameTable gameTable) {
-        this.gameTable = gameTable;
+    public PlayerBoard(String nickname,boolean first,PlayerState playerState) {
+        this.nickname=nickname;
+        this.playerState=playerState;
+        this.first=first;
         this.strongbox = new Strongbox();
         this.deposit = new Deposit();
     }
