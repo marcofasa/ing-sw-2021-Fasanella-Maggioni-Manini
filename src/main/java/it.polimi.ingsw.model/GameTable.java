@@ -15,6 +15,8 @@ public class GameTable {
 
     private Market market;
 
+
+
     public CardLeader getCardLeader(PlayerBoard playerBoard) {
         return cardLeaderDeck.getCardLeader(playerBoard);
     }
@@ -26,7 +28,7 @@ public class GameTable {
      * @param discardType type of development card
      * @param i           number of dev. cards to discard
      */
-    public void discardDevelopmentCard(CardDevelopmentType discardType, int i) {
+    public void discardDevelopmentCardFromSlot(CardDevelopmentType discardType, int i) {
         try {
             throw new ExecutionControl.NotImplementedException("discardDevCard has not been implemented yet");
         } catch (ExecutionControl.NotImplementedException e) {

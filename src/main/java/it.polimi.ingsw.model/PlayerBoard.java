@@ -21,7 +21,7 @@ public class PlayerBoard {
 
     private Strongbox strongbox;
 
-    private Resource cardLeaderProductionResource;
+    private Resource cardLeaderProductionOutput;
 
     private DepositLeaderCard depositLeaderCard;
 
@@ -31,6 +31,8 @@ public class PlayerBoard {
         this.deposit = new Deposit();
     }
 
+    //TODO getter card development
+
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
     }
@@ -39,19 +41,26 @@ public class PlayerBoard {
         return gameTable.getMarketInstance().getCol(integer);
     }
 
+    //mettere instance
     public Strongbox getStrongbox() {
         return this.strongbox;
     }
 
+    //mettere instance
     public Deposit getDeposit() {
         return deposit;
     }
 
-    public void discardCardLeader(CardLeader cardLeader){
-        cardsLeader.remove(cardLeader);
+    //RISOLVERE IN QUALCHE MODO QUESTE DUE
+    void discardCardLeaderController(CardLeader cardLeader){
+        cardLeader.discard();
     }
 
-    public void addToTemporaryDeposit(Resource resource){
+    void discardCardLeader(CardLeader cardLeader){
+        cardsLeader.remove(cardLeader);
+    }
+    
+    void addToTemporaryDeposit(Resource resource){
         Integer numberOfResourcesOrNull = tempDeposit.get(resource);
         if(numberOfResourcesOrNull == null) {
             tempDeposit.putIfAbsent(resource, 1);
@@ -70,10 +79,10 @@ public class PlayerBoard {
 
     public void discardFromTemporaryDeposit(Resource resource){
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
-        /*TODO avanzare tutti gli altri giocatori*/
+        //MOVE FORWARD BY 1 TODO
     }
 
-    public boolean tryAddMarbles(ArrayList<Marble> marbles){
+    boolean tryAddMarbles(ArrayList<Marble> marbles){
         resetTemporaryDeposit();
         for (Marble marble: marbles
              ) {
@@ -91,22 +100,24 @@ public class PlayerBoard {
         return whiteEffect;
     }
 
-    public void setWhiteEffect(Resource whiteEffect) {
+    void setWhiteEffect(Resource whiteEffect) {
         this.whiteEffect = whiteEffect;
     }
 
+    //AGGIUSTARE IN QUALCHE MODO
     public void moveFaith(int i) {
+        //gameTable.faiqualcosafaith()
     }
 
-    public Resource getCardLeaderProductionResource() {
-        return cardLeaderProductionResource;
+    public Resource getCardLeaderProductionOutput() {
+        return cardLeaderProductionOutput;
     }
 
-    public void setCardLeaderProductionResource(Resource resource) {
-        cardLeaderProductionResource = resource;
+    public void setCardLeaderProductionOutput(Resource resource) {
+        cardLeaderProductionOutput = resource;
     }
 
-    public void addToStrongbox(HashMap<Resource, Integer> cardLeaderProductionResource) {
+    void addToStrongbox(HashMap<Resource, Integer> cardLeaderProductionResource) {
     }
 
     public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
@@ -114,6 +125,7 @@ public class PlayerBoard {
     }
 
     public void discountResource(Resource resource) {
+        //???
     }
 
     public DepositLeaderCard getDepositLeaderCard(){
@@ -121,4 +133,8 @@ public class PlayerBoard {
             depositLeaderCard = new DepositLeaderCard();
         return depositLeaderCard;
     }
+
+
+    //FUNZIONI GROSSE
+
 }
