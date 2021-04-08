@@ -6,40 +6,49 @@ import java.util.HashMap;
 public class PlayerBoard {
 
     private String nickname;
-
     private boolean first;
-
     private PlayerState playerState;
-
     private Resource whiteEffect;
-
-    private CardDevelopmentSlot cardSlot;
-
+    private CardDevelopmentSlot[] cardSlotArray;
     private GameTable gameTable;
-
     private ArrayList<CardLeader> cardsLeaderBeforeSelecting;
-
     private ArrayList<CardLeader> cardsLeader;
-
     private HashMap<Resource, Integer> tempDeposit;
-
     private Deposit deposit;
-
     private Strongbox strongbox;
-
     private Resource cardLeaderProductionOutput;
-
     private DepositLeaderCard depositLeaderCard;
 
-    public PlayerBoard(String nickname,boolean first,PlayerState playerState) {
-        this.nickname=nickname;
-        this.playerState=playerState;
-        this.first=first;
-        this.strongbox = new Strongbox();
-        this.deposit = new Deposit();
+
+    public PlayerBoard(String _nickname, boolean _first, PlayerState _playerState, GameTable _gameTable) {
+        nickname = _nickname;
+        first = _first;
+        playerState = _playerState;
+
+        strongbox = getStrongboxInstance();
+        deposit = getDepositInstance();
+        cardSlotArray = new CardDevelopmentSlot[3];
+
+        gameTable = _gameTable;
+        cardsLeaderBeforeSelecting = new ArrayList<>();
+        cardsLeader = new ArrayList<>();
     }
 
-    //TODO getter card development
+    //TODO getter card development : FATTO
+    public ArrayList<CardDevelopment> getAllDevelopmentCards() {
+
+        ArrayList<CardDevelopment> outputList = new ArrayList<>();
+        ArrayList<CardDevelopment> tempList;
+
+        for (CardDevelopmentSlot cardDevelopmentSlot : cardSlotArray) {
+
+            // Il costruttore di ArrayList puo' prendere una Collection: crea una lista con gli elementi della collezione ricevuta
+            tempList = new ArrayList<>(cardDevelopmentSlot.getCards());
+            outputList.addAll(tempList);
+        }
+
+        return outputList;
+    }
 
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
@@ -57,58 +66,68 @@ public class PlayerBoard {
         return cardsLeaderBeforeSelecting;
     }
 
-    //mettere instance
-    public Strongbox getStrongbox() {
-        return this.strongbox;
+    //TODO mettere instance : FATTO
+    public Strongbox getStrongboxInstance() {
+
+        if (strongbox == null) strongbox = new Strongbox();
+
+        return strongbox;
     }
 
-    //mettere instance
-    public Deposit getDeposit() {
+    //TODO mettere instance : FATTO
+    public Deposit getDepositInstance() {
+
+        if (deposit == null) deposit = new Deposit();
+
         return deposit;
     }
 
     //RISOLVERE IN QUALCHE MODO QUESTE DUE
-    void discardCardLeaderController(CardLeader cardLeader){
+    void discardCardLeaderController(CardLeader cardLeader) {
         cardLeader.discard();
     }
 
-    void discardCardLeader(CardLeader cardLeader){
+    void discardCardLeader(CardLeader cardLeader) {
         cardsLeader.remove(cardLeader);
     }
-    
-    void addToTemporaryDeposit(Resource resource){
+
+    void addToTemporaryDeposit(Resource resource) {
         Integer numberOfResourcesOrNull = tempDeposit.get(resource);
-        if(numberOfResourcesOrNull == null) {
+        if (numberOfResourcesOrNull == null) {
             tempDeposit.putIfAbsent(resource, 1);
         } else {
             tempDeposit.replace(resource, numberOfResourcesOrNull + 1);
         }
     }
 
-    private void resetTemporaryDeposit(){
+    private void resetTemporaryDeposit() {
         tempDeposit = new HashMap<>();
-        for (Resource resource:
-             Resource.values()) {
+        for (Resource resource :
+                Resource.values()) {
             tempDeposit.put(resource, 0);
         }
     }
 
-    public void discardFromTemporaryDeposit(Resource resource){
+    public void discardFromTemporaryDeposit(Resource resource) {
+
+        //Remove 1 Resource from the temporary deposit
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
-        //MOVE FORWARD BY 1 TODO
+
+        //TODO Move all other players forward by 1 position on the faith trail : FATTO
+        gameTable.moveOthersFaithTrail(this);
     }
 
-    boolean tryAddMarbles(ArrayList<Marble> marbles){
+    boolean tryAddMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
-        for (Marble marble: marbles
-             ) {
+        for (Marble marble : marbles
+        ) {
             marble.activate(this);
         }
         getDepositLeaderCard().add(tempDeposit);
         return deposit.tryAdd(tempDeposit);
     }
 
-    public void getCardLeader(){
+    public void getCardLeader() {
         gameTable.getCardLeader(this);
     }
 
@@ -120,9 +139,9 @@ public class PlayerBoard {
         this.whiteEffect = whiteEffect;
     }
 
-    //AGGIUSTARE IN QUALCHE MODO
+    //TODO AGGIUSTARE IN QUALCHE MODO : FATTO
     public void moveFaith(int i) {
-        //gameTable.faiqualcosafaith()
+        gameTable.moveFaithTrail(this, i);
     }
 
     public Resource getCardLeaderProductionOutput() {
@@ -133,10 +152,28 @@ public class PlayerBoard {
         cardLeaderProductionOutput = resource;
     }
 
+    //TODO Confermare che questo metodo deve solamente aggiungere risorse allo strongbox
     void addToStrongbox(HashMap<Resource, Integer> cardLeaderProductionResource) {
+        getStrongboxInstance().tryAdd(cardLeaderProductionResource);
     }
 
+    /**
+     * Checks if strongbox and deposit COMBINED hold enough resources as specified in the param numberOfResources
+     * @param numberOfResources A HashMap of the amounts to be met in order to return true
+     * @return true if strongbox + deposit hold enough resources, false otherwise
+     */
     public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
+
+        HashMap<Resource, Integer> temp = new HashMap<>(getStrongboxInstance().getContent());
+
+        for (Resource res : Resource.values()) {
+            temp.replace(res, temp.get(res) + getDepositInstance().getContent().get(res));
+        }
+
+        for (Resource res : Resource.values()) {
+            if (numberOfResources.get(res) > temp.get(res)) return false;
+        }
+
         return true;
     }
 
@@ -144,7 +181,7 @@ public class PlayerBoard {
         //???
     }
 
-    public DepositLeaderCard getDepositLeaderCard(){
+    public DepositLeaderCard getDepositLeaderCard() {
         if (depositLeaderCard == null)
             depositLeaderCard = new DepositLeaderCard();
         return depositLeaderCard;

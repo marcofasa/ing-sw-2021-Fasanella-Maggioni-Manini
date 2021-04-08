@@ -79,8 +79,8 @@ public class CardDevelopment {
      */
     boolean canActivateProduction(PlayerBoard board) {
 
-        Strongbox strongbox = board.getStrongbox();
-        Deposit deposit = board.getDeposit();
+        Strongbox strongbox = board.getStrongboxInstance();
+        Deposit deposit = board.getDepositInstance();
 
         //temp is initialized with the content of Strongbox, then it is added Deposit's content one resource at a time
         HashMap<Resource, Integer> temp = new HashMap<>(strongbox.getContent());
@@ -106,8 +106,8 @@ public class CardDevelopment {
      */
     void activateProduction(PlayerBoard board) {
 
-        Strongbox strongbox = board.getStrongbox();
-        Deposit deposit = board.getDeposit();
+        Strongbox strongbox = board.getStrongboxInstance();
+        Deposit deposit = board.getDepositInstance();
 
         // Local variables to make methods less verbose
         HashMap<Resource, Integer> prodInput = getProductionInput();

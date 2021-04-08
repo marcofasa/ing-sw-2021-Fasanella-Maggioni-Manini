@@ -19,13 +19,13 @@ public class GameTable {
 
     //Constructor
 
-    public GameTable(ArrayList<String> nicknames){
-        numberOfPlayers=nicknames.size();
-        players=new ArrayList<PlayerBoard>();
+    public GameTable(ArrayList<String> nicknames) {
+        numberOfPlayers = nicknames.size();
+        players = new ArrayList<>();
 
-        for (int i=0;i<numberOfPlayers;i++){
-            if (i==0) players.add(new PlayerBoard(nicknames.get(i),true,PlayerState.PLAYING));
-            else players.add(new PlayerBoard(nicknames.get(i),false,PlayerState.IDLE));
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if (i == 0) players.add(new PlayerBoard(nicknames.get(i), true, PlayerState.PLAYING, this));
+            else players.add(new PlayerBoard(nicknames.get(i), false, PlayerState.IDLE, this));
         }
 
         isSinglePlayer = (numberOfPlayers == 1);
@@ -44,7 +44,6 @@ public class GameTable {
         distributeLeaderCards();
 
     }
-
 
 
     public CardLeader getCardLeader(PlayerBoard playerBoard) {
@@ -72,16 +71,15 @@ public class GameTable {
         return new ArrayList<>(players);
     }
 
-    public PlayerBoard getPlayerByIndex(int i){
+    public PlayerBoard getPlayerByIndex(int i) {
         return players.get(i);
     }
 
-    public PlayerBoard getNextPlayer(PlayerBoard currPlayer){
-        int i= players.indexOf(currPlayer);
-        if(i<numberOfPlayers-1){
-            return  players.get(i+1); //next Player
-        }
-        else return players.get(0); //first Player
+    public PlayerBoard getNextPlayer(PlayerBoard currPlayer) {
+        int i = players.indexOf(currPlayer);
+        if (i < numberOfPlayers - 1) {
+            return players.get(i + 1); //next Player
+        } else return players.get(0); //first Player
     }
 
     public FaithTrail getFaithTrail() {
@@ -116,8 +114,6 @@ public class GameTable {
 
     /**
      * This method should only notify the controller that an EndGame condition has been met.
-     *
-     *
      */
     public void activateEndGame() {
 
@@ -134,40 +130,41 @@ public class GameTable {
         }
     }
 
-    public void moveFaithTrail(PlayerBoard player, int steps){
-        faithTrail.movePlayer(player,steps);
+    public void moveFaithTrail(PlayerBoard player, int steps) {
+        faithTrail.movePlayer(player, steps);
     }
 
-    public void moveOthersFaithTrail(PlayerBoard notMovingPlayer){
+    public void moveOthersFaithTrail(PlayerBoard notMovingPlayer) {
         ListIterator<PlayerBoard> iterator = players.listIterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             if (iterator.next().equals(notMovingPlayer)) continue;
-            else faithTrail.movePlayer(iterator.next(),1);
+            else faithTrail.movePlayer(iterator.next(), 1);
         }
     }
 
     /**
-     * THIS METHOD MUST BE CALLED BY THE CONTROLLER, AFTER RECEIVING PLAYER RESOURCE SELECTIONS
-     *
+     * THIS METHOD MUST BE CALLED INSIDE THE CONTROLLER, AFTER RECEIVING PLAYER RESOURCE SELECTIONS
+     * <p>
      * Method to place initial resources and initial advances for players except for the first one.
+     *
      * @param playerIndex An int the player's position within the game turn order.
-     * @param bonus1 First bonus resource selected by the player
-     * @param bonus2 Second bonus resource selected by the player
+     * @param bonus1      First bonus resource selected by the player
+     * @param bonus2      Second bonus resource selected by the player
      */
-    public void setupHelper(int playerIndex,Resource bonus1,Resource bonus2){
+    public void setupHelper(int playerIndex, Resource bonus1, Resource bonus2) {
 
         switch (playerIndex) {
 
             case 1:
-                players.get(playerIndex).getDeposit().addResource(bonus1, 1);
+                players.get(playerIndex).getDepositInstance().addResource(bonus1, 1);
                 break;
             case 2:
-                players.get(playerIndex).getDeposit().addResource(bonus1, 1);
+                players.get(playerIndex).getDepositInstance().addResource(bonus1, 1);
                 moveFaithTrail(players.get(playerIndex), 1);
                 break;
             case 3:
-                players.get(playerIndex).getDeposit().addResource(bonus1, 1);
-                players.get(playerIndex).getDeposit().addResource(bonus2, 1);
+                players.get(playerIndex).getDepositInstance().addResource(bonus1, 1);
+                players.get(playerIndex).getDepositInstance().addResource(bonus2, 1);
                 moveFaithTrail(players.get(playerIndex), 1);
                 break;
             // Not applicable for first player -> 0 index
@@ -177,10 +174,11 @@ public class GameTable {
         }
     }
 
-    private void distributeLeaderCards(){
+    private void distributeLeaderCards() {
 
         for (PlayerBoard player : players) {
-            for (int i = 0; i < 4; i++) player.getCardsLeaderBeforeSelecting().add(cardLeaderDeck.getCardLeader(player));
+            for (int i = 0; i < 4; i++)
+                player.getCardsLeaderBeforeSelecting().add(cardLeaderDeck.getCardLeader(player));
         }
 
     }
