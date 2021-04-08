@@ -187,6 +187,14 @@ public class PlayerBoard {
         return depositLeaderCard;
     }
 
+    public boolean isFirst(){
+        return first;
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
 
     //FUNZIONI GROSSE
 
