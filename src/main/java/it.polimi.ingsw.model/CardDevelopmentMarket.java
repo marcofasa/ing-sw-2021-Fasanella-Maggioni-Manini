@@ -72,6 +72,46 @@ public class CardDevelopmentMarket {
 
     }
 
+    void discardCards(CardDevelopmentType typeToBeDiscarded) {
+
+        int columnIndex = typeToBeDiscarded.ordinal();
+
+        for (int rowIndex = 0; rowIndex < NUMBER_OF_ROWS; rowIndex++) {
+
+            // General case : The first stack found to have 2 or more card is popped twice.
+            if (market[rowIndex][columnIndex].getCards().size() > 1) {
+                market[rowIndex][columnIndex].pop();
+                market[rowIndex][columnIndex].pop();
+            }
+
+            /*
+             Rare case : 1 card left in current stack, pop it and check if the next stack of same type but next level
+               has cards inside.
+             If true pop it once.
+             In all other cases there is nothing to pop for the specified cardType
+             */
+            else if (market[rowIndex][columnIndex].getCards().size() == 1) {
+
+                market[rowIndex][columnIndex].pop();
+
+                if (rowIndex != NUMBER_OF_ROWS - 1 && market[rowIndex + 1][columnIndex].getCards().size() > 0) {
+                    market[rowIndex + 1][columnIndex].pop();
+                }
+            }
+        }
+    }
+
+    boolean isColumnEmpty(CardDevelopmentType columnType) {
+
+        int columnIndex = columnType.ordinal();
+
+        for (int rowIndex = 0; rowIndex < NUMBER_OF_ROWS; rowIndex++) {
+            if (market[rowIndex][columnIndex].getCards().size() > 0) return false;
+        }
+
+        return true;
+    }
+
     /**
      * Initialization function, creates 12 CardDevelopmentStack.
      * Each CardDevelopmentStack creates 4 CardDevelopment with same type and level.
@@ -81,6 +121,7 @@ public class CardDevelopmentMarket {
         for (int i = 0; i < getNUMBER_OF_ROWS(); i++) {
             for (int j = 0; j < getNUMBER_OF_COLUMNS(); j++) {
                 market[i][j] = new CardDevelopmentStack(i, j);
+
             }
         }
     }
