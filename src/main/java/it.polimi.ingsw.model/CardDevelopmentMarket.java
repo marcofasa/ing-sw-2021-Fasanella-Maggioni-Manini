@@ -47,8 +47,8 @@ public class CardDevelopmentMarket {
          the rest is taken from strongbox
          */
 
-        Strongbox strongbox = board.getStrongbox();
-        Deposit deposit = board.getDeposit();
+        Strongbox strongbox = board.getStrongboxInstance();
+        Deposit deposit = board.getDepositInstance();
         CardDevelopment desiredCard = market[rowIndex][colIndex].peek();
 
         // Consume the card cost for each resource

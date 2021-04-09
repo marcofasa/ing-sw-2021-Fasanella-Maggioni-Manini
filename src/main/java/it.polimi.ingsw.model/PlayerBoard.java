@@ -41,13 +41,17 @@ public class PlayerBoard {
         return gameTable.getMarketInstance().getCol(integer);
     }
 
-    //mettere instance
-    public Strongbox getStrongbox() {
-        return this.strongbox;
+    public Strongbox getStrongboxInstance() {
+        if(strongbox == null){
+            strongbox = new Strongbox();
+        }
+        return strongbox;
     }
 
-    //mettere instance
-    public Deposit getDeposit() {
+    public Deposit getDepositInstance() {
+        if(deposit == null){
+            deposit = new Deposit();
+        }
         return deposit;
     }
 
@@ -109,11 +113,11 @@ public class PlayerBoard {
         //gameTable.faiqualcosafaith()
     }
 
-    public Resource getCardLeaderProductionOutput() {
+    Resource getCardLeaderProductionOutput() {
         return cardLeaderProductionOutput;
     }
 
-    public void setCardLeaderProductionOutput(Resource resource) {
+    private void setCardLeaderProductionOutput(Resource resource) {
         cardLeaderProductionOutput = resource;
     }
 
@@ -134,7 +138,33 @@ public class PlayerBoard {
         return depositLeaderCard;
     }
 
+    /*
 
+    public canActivateProduction(ProductionChoice choice){
+
+    }
+
+    public activateProduction(ProductionChoice choice
+    {
+
+    }
+     */
+
+    private void activateBasicProduction(Resource input1, Resource input2, Resource output){
+        getDepositInstance().discard(input1);
+        getDepositInstance().discard(input2);
+        getStrongboxInstance().addResource(output, 1);
+    }
+
+    private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate){
+        cardDevelopmentSlotToActivate.getTop().activateProduction(this);
+    }
+
+    private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output){
+        if(cardLeaderToBeActivated.getClass() != CardLeaderProduction.class) throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
+        setCardLeaderProductionOutput(output);
+        cardLeaderToBeActivated.activate();
+    }
     //FUNZIONI GROSSE
 
 }
