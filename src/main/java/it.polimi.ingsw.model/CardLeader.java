@@ -27,7 +27,7 @@ public abstract class CardLeader  {
     public abstract void activate();
 
     /**
-     * discard this actionCard from the player's deck
+     * discard this CardLeader from the player's deck
      */
     public void discard(){
         playerBoard.moveFaith(1);

@@ -34,7 +34,6 @@ public class PlayerBoard {
         cardsLeader = new ArrayList<>();
     }
 
-    //TODO getter card development : FATTO
     public ArrayList<CardDevelopment> getAllDevelopmentCards() {
 
         ArrayList<CardDevelopment> outputList = new ArrayList<>();
@@ -66,7 +65,6 @@ public class PlayerBoard {
         return cardsLeaderBeforeSelecting;
     }
 
-    //TODO mettere instance : FATTO
     public Strongbox getStrongboxInstance() {
 
         if (strongbox == null) strongbox = new Strongbox();
@@ -74,7 +72,6 @@ public class PlayerBoard {
         return strongbox;
     }
 
-    //TODO mettere instance : FATTO
     public Deposit getDepositInstance() {
 
         if (deposit == null) deposit = new Deposit();
@@ -113,7 +110,6 @@ public class PlayerBoard {
         //Remove 1 Resource from the temporary deposit
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
 
-        //TODO Move all other players forward by 1 position on the faith trail : FATTO
         gameTable.moveOthersFaithTrail(this);
     }
 
@@ -123,7 +119,7 @@ public class PlayerBoard {
         ) {
             marble.activate(this);
         }
-        getDepositLeaderCard().add(tempDeposit);
+        getDepositLeaderCardInstance().add(tempDeposit);
         return deposit.tryAdd(tempDeposit);
     }
 
@@ -139,7 +135,6 @@ public class PlayerBoard {
         this.whiteEffect = whiteEffect;
     }
 
-    //TODO AGGIUSTARE IN QUALCHE MODO : FATTO
     public void moveFaith(int i) {
         gameTable.moveFaithTrail(this, i);
     }
@@ -150,11 +145,6 @@ public class PlayerBoard {
 
     private void setCardLeaderProductionOutput(Resource resource) {
         cardLeaderProductionOutput = resource;
-    }
-
-    //TODO Confermare che questo metodo deve solamente aggiungere risorse allo strongbox
-    void addToStrongbox(HashMap<Resource, Integer> cardLeaderProductionResource) {
-        getStrongboxInstance().tryAdd(cardLeaderProductionResource);
     }
 
     /**
@@ -181,7 +171,7 @@ public class PlayerBoard {
         //???
     }
 
-    public DepositLeaderCard getDepositLeaderCard() {
+    public DepositLeaderCard getDepositLeaderCardInstance() {
         if (depositLeaderCard == null)
             depositLeaderCard = new DepositLeaderCard();
         return depositLeaderCard;
@@ -210,6 +200,46 @@ public class PlayerBoard {
         if(cardLeaderToBeActivated.getClass() != CardLeaderProduction.class) throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
         setCardLeaderProductionOutput(output);
         cardLeaderToBeActivated.activate();
+    }
+
+    public Integer getVictoryPoints(){
+        Integer victoryPoints = 0;
+
+        //Faith Trail
+        victoryPoints += gameTable.getFaithTrailInstance().getVictoryPoints(this);
+
+        //Carte leader
+        for (CardLeader cardLeader :
+                cardsLeader) {
+            victoryPoints += cardLeader.getVictoryPoints();
+        }
+
+        //Deposit
+        for (Resource resource:
+             getDepositInstance().getContent().keySet()) {
+            victoryPoints += getDepositInstance().getContent().get(resource);
+        }
+
+        //Strongbox
+        for (Resource resource:
+                getStrongboxInstance().getContent().keySet()) {
+            victoryPoints += getStrongboxInstance().getContent().get(resource);
+        }
+
+        //CardLeaderProduction
+        for (Resource resource:
+                getDepositLeaderCardInstance().getContent().keySet()) {
+            victoryPoints += getStrongboxInstance().getContent().get(resource);
+        }
+
+        //CardDevelopment
+        for (CardDevelopment cardDevelopment:
+                getAllDevelopmentCards()) {
+            victoryPoints += cardDevelopment.getVictoryPoints();
+        }
+
+        return victoryPoints;
+
     }
     //FUNZIONI GROSSE
 

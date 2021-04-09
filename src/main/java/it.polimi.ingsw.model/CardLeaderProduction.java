@@ -25,9 +25,8 @@ public class CardLeaderProduction extends CardLeader{
         if(canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
         active = true;
         if (playerBoard.getCardLeaderProductionOutput() == null) throw new IllegalArgumentException();
-        HashMap<Resource, Integer> resources = new HashMap<>();
-        resources.put(playerBoard.getCardLeaderProductionOutput(), 1);
-        playerBoard.addToStrongbox(resources);
+        playerBoard.getDepositInstance().discard(resource);
+        playerBoard.getStrongboxInstance().addResource(playerBoard.getCardLeaderProductionOutput(), 1);
         playerBoard.moveFaith(1);
     }
 }

@@ -19,6 +19,6 @@ public class ActionCardDiscard extends ActionCard{
      */
     @Override
     public void activate() {
-        gameTable.discardDevelopmentCardFromSlot(cardDevelopmentType, 2);
+        gameTable.discardDevelopmentCardFromSlot(cardDevelopmentType);
     }
 }

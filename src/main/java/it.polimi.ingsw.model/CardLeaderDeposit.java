@@ -22,7 +22,7 @@ public class CardLeaderDeposit extends CardLeader{
     public void activate() {
         if(canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
         if(!active) {
-            playerBoard.getDepositLeaderCard().addLeaderDepositType(resource);
+            playerBoard.getDepositLeaderCardInstance().addLeaderDepositType(resource);
             active = true;
         }
     }

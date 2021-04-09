@@ -14,7 +14,7 @@ public class MarbleFactory {
     public Marble produce(MarbleType marbleType, GameTable gameTable){
         switch (marbleType) {
             case MarbleRed:
-                new MarbleRed(gameTable.getFaithTrail());
+                new MarbleRed(gameTable.getFaithTrailInstance());
             case MarbleWhite:
                 return new MarbleWhite();
             case MarbleBlue:

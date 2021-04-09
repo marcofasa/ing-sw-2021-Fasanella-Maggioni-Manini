@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import jdk.jshell.spi.ExecutionControl;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -30,14 +31,7 @@ public class GameTable {
 
         isSinglePlayer = (numberOfPlayers == 1);
 
-        /*
-         The following statements could not be necessary if we should chose to use more Singleton patterns, yet
-         they serve as a defensive line to assure we do not run into NullPointerExceptions
-         */
-        faithTrail = new FaithTrail(this, players);
         cardLeaderDeck = new CardLeaderDeck(this);
-        market = getMarketInstance();
-        cardDevelopmentMarket = new CardDevelopmentMarket();
 
         //setupHelper() non puo' essere chiamato qui, va chiamato nel controller dopo aver ricevuto le risorse scelte dai giocatori
 
@@ -56,6 +50,8 @@ public class GameTable {
     }
 
     public CardDevelopmentMarket getCardDevelopmentMarketInstance() {
+        if(cardDevelopmentMarket == null)
+            cardDevelopmentMarket = new CardDevelopmentMarket();
         return cardDevelopmentMarket;
     }
 
@@ -82,7 +78,9 @@ public class GameTable {
         } else return players.get(0); //first Player
     }
 
-    public FaithTrail getFaithTrail() {
+    public FaithTrail getFaithTrailInstance() {
+        if (faithTrail == null)
+            faithTrail = new FaithTrail(this, players);
         return faithTrail;
     }
 
@@ -103,7 +101,7 @@ public class GameTable {
      *
      * @param discardType type of development card
      */
-    private void discardDevelopmentCardFromSlot(CardDevelopmentType discardType) {
+    void discardDevelopmentCardFromSlot(CardDevelopmentType discardType) {
 
         cardDevelopmentMarket.discardCards(discardType);
 
@@ -148,10 +146,19 @@ public class GameTable {
      * Method to place initial resources and initial advances for players except for the first one.
      *
      * @param playerIndex An int the player's position within the game turn order.
-     * @param bonus1      First bonus resource selected by the player
-     * @param bonus2      Second bonus resource selected by the player
+     * @param bonus1      First bonus resource selected by the player, can be null for playerIndex 0 or 1
+     * @param bonus2      Second bonus resource selected by the player, can be null for playerIndex 0 or 1 or 2
      */
-    public void setupHelper(int playerIndex, Resource bonus1, Resource bonus2) {
+    public void setupHelper(int playerIndex, //TODO non è meglio shiftare da 0->3 a 1->4?
+                            @Nullable Resource bonus1,
+                            @Nullable Resource bonus2) {
+
+        if(bonus1 == null && playerIndex > 0){
+            throw new IllegalArgumentException("bonus1 must be selected for this player: " + getPlayerByIndex(playerIndex));
+        }
+        if(bonus2 == null && playerIndex > 2){
+            throw new IllegalArgumentException("bonus2 must be selected for this player: " + getPlayerByIndex(playerIndex));
+        }
 
         switch (playerIndex) {
 

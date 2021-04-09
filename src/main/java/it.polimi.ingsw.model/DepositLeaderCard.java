@@ -10,11 +10,15 @@ public class DepositLeaderCard {
     private final HashMap<Resource, Integer> content;
 
     /**
-     * Class constructor, creates an empty list of resources so initial capacity = 0
+     * Class constructor, creates an empty list of resources so initial capacity = 0 and initializes all resources to 0
      */
     public DepositLeaderCard() {
         resourceTypes = new ArrayList<>();
         content = new HashMap<>();
+        for (Resource resource :
+                Resource.values()) {
+            content.put(resource, 0);
+        }
     }
 
     public void addLeaderDepositType(Resource resource) {
