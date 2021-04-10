@@ -537,7 +537,13 @@ public class CardDevelopment {
         }
 
 
-        // Converts a string of Resources and their amount to a HashMap<Resource, Integer>
+
+
+        /**
+         * Converts a string of Resources and their amount to a HashMap<Resource, Integer>
+         * @param str
+         * @return
+         */
         private static HashMap<Resource, Integer> toHashMap(String str) {
 
             HashMap<Resource, Integer> outputMap = new HashMap<>();
@@ -557,7 +563,12 @@ public class CardDevelopment {
             return outputMap;
         }
 
-        // Converts a string in all caps to its corresponding Resource
+
+        /**
+         * Converts a string in all caps to its corresponding Resource
+         * @param str
+         * @return
+         */
         private static Resource toResource(String str) {
 
             switch (str) {

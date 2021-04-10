@@ -8,6 +8,10 @@ public class CardDevelopmentSlot {
     final CardDevelopmentSlotID id;
     private final Stack<CardDevelopment> cards;
 
+    /**
+     * Constructor
+     * @param _id
+     */
     public CardDevelopmentSlot(CardDevelopmentSlotID _id) {
         cards = new Stack<>();
         id = _id;

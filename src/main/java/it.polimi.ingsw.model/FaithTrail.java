@@ -11,7 +11,7 @@ public class FaithTrail {
     private GameTable gameTable;
 
     /**
-     * Constructor
+     * Constructor, sets all players at starting position and creates all cells
      * @param gameTable
      * @param players
      */
@@ -34,7 +34,7 @@ public class FaithTrail {
     /**
      *
      * @param p
-     * @return
+     * @return position of player must be 0<=value<=24
      */
     private int getPosition(PlayerBoard p) {
         return playerPosition.get(p);
@@ -42,17 +42,17 @@ public class FaithTrail {
 
     /**
      *
-     * @param p
-     * @return
+     * @param p Player
+     * @return TilePack of corresponding Player
      */
     private FaithTilePack getTilePack(PlayerBoard p) {
         return playerTiles.get(p);
     }
 
     /**
-     * Return total points of player (in Trail)
-     * @param p
-     * @return
+     *
+     * @param p Player
+     * @return total points of player (in Trail)
      */
     int getVictoryPoints(PlayerBoard p){
         return cells.get(playerPosition.get(p)).getVictoryPoints() + playerTiles.get(p).getVictoryPoints();

@@ -20,6 +20,10 @@ public class GameTable {
 
     //Constructor
 
+    /**
+     * Constructor that creates player, cardLeaderDeck and distributes them
+     * @param nicknames
+     */
     public GameTable(ArrayList<String> nicknames) {
         numberOfPlayers = nicknames.size();
         players = new ArrayList<>();
@@ -49,6 +53,7 @@ public class GameTable {
         return numberOfPlayers;
     }
 
+
     public CardDevelopmentMarket getCardDevelopmentMarketInstance() {
         if(cardDevelopmentMarket == null)
             cardDevelopmentMarket = new CardDevelopmentMarket();
@@ -71,6 +76,11 @@ public class GameTable {
         return players.get(i);
     }
 
+    /**
+     * If player is the last of players list then returns from the first
+     * @param currPlayer
+     * @return next Player
+     */
     public PlayerBoard getNextPlayer(PlayerBoard currPlayer) {
         int i = players.indexOf(currPlayer);
         if (i < numberOfPlayers - 1) {
@@ -128,6 +138,11 @@ public class GameTable {
         }
     }
 
+    /**
+     * Calls movePlayer() method in FaithTrail
+     * @param player to be moved
+     * @param steps
+     */
     public void moveFaithTrail(PlayerBoard player, int steps) {
         faithTrail.movePlayer(player, steps);
     }

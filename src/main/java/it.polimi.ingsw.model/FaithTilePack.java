@@ -6,15 +6,15 @@ public class FaithTilePack {
     private HashMap<FaithSection,FaithTileStatus> tiles;
 
     /**
-     * @param s
+     * @param section of FaithTrail
      * @return Status of corresponding FaithSection
      */
-    public FaithTileStatus getStatus(FaithSection s){
-        return tiles.get(s);
+    public FaithTileStatus getStatus(FaithSection section){
+        return tiles.get(section);
     }
 
     /**
-     * Constructor
+     * Constructor creates a map whith the three FaithSection as Not Reached
      */
     public FaithTilePack(){
         this.tiles=new HashMap<FaithSection,FaithTileStatus>();

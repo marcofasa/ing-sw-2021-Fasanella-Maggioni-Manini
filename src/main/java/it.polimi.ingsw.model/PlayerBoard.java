@@ -92,10 +92,6 @@ public class PlayerBoard {
         cardLeader.discard();
     }
 
-    /**
-     * Discards a given Card Leader
-     * @param cardLeader
-     */
     void discardCardLeader(CardLeader cardLeader) {
         cardsLeader.remove(cardLeader);
     }
@@ -124,6 +120,10 @@ public class PlayerBoard {
         }
     }
 
+    /**
+     * For each call all the players move of one step except this player
+     * @param resource
+     */
     public void discardFromTemporaryDeposit(Resource resource) {
 
         //Remove 1 Resource from the temporary deposit
@@ -213,17 +213,31 @@ public class PlayerBoard {
         return playerState;
     }
 
-
+    /**
+     * Giving two resources you can get one of any type
+     * @param input1
+     * @param input2
+     * @param output
+     */
     private void activateBasicProduction(Resource input1, Resource input2, Resource output){
         getDepositInstance().discard(input1);
         getDepositInstance().discard(input2);
         getStrongboxInstance().addResource(output, 1);
     }
 
+    /**
+     *
+     * @param cardDevelopmentSlotToActivate
+     */
     private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate){
         cardDevelopmentSlotToActivate.getTop().activateProduction(this);
     }
 
+    /**
+     * Checks if cardLeader can be activated and calls activate() on it
+     * @param cardLeaderToBeActivated
+     * @param output
+     */
     private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output){
         if(cardLeaderToBeActivated.getClass() != CardLeaderProduction.class) throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
         setCardLeaderProductionOutput(output);

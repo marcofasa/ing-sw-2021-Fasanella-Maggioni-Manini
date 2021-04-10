@@ -19,7 +19,7 @@ public class FaithCell {
     }
 
     /**
-     * Constructor
+     * Constructor of each cell, the values of points and type of FaithSection depend on index
      * @param index of Arraylist cells in FaithTrail
      */
     public FaithCell(int index){

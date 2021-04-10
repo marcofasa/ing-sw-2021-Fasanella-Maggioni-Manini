@@ -21,10 +21,18 @@ public class DepositLeaderCard {
         }
     }
 
+    /**
+     * Adds a given deposit type
+     * @param resource to be added
+     */
     public void addLeaderDepositType(Resource resource) {
         resourceTypes.add(resource);
     }
 
+    /**
+     * Adds a resource to content
+     * @param resourcesToBeAdded
+     */
     public void add(HashMap<Resource, Integer> resourcesToBeAdded) {
         for (Resource resource : resourceTypes) {
             while(content.get(resource) <= 2 && resourcesToBeAdded.get(resource) > 0 ){

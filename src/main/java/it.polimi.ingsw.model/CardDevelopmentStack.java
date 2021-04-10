@@ -15,6 +15,11 @@ public class CardDevelopmentStack {
     final int MAX_STACK_SIZE = 4;
     private Stack<CardDevelopment> cards;
 
+    /**
+     * Constructor
+     * @param row
+     * @param col
+     */
     public CardDevelopmentStack(int row, int col) {
 
         cards = new Stack<>();
@@ -43,6 +48,10 @@ public class CardDevelopmentStack {
 
     // Class methods
 
+    /**
+     * Pushes a given card
+     * @param item
+     */
     void push(CardDevelopment item) {
         if (cards.size() < MAX_STACK_SIZE) cards.push(item);
     }

@@ -72,6 +72,10 @@ public class CardDevelopmentMarket {
 
     }
 
+    /**
+     * Discards a given card type
+     * @param typeToBeDiscarded
+     */
     void discardCards(CardDevelopmentType typeToBeDiscarded) {
 
         int columnIndex = typeToBeDiscarded.ordinal();
@@ -101,6 +105,11 @@ public class CardDevelopmentMarket {
         }
     }
 
+    /**
+     * Return true if the column type is empty
+     * @param columnType
+     * @return
+     */
     boolean isColumnEmpty(CardDevelopmentType columnType) {
 
         int columnIndex = columnType.ordinal();
