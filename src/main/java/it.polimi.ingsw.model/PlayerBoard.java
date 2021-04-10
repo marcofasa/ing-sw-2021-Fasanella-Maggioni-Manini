@@ -19,7 +19,13 @@ public class PlayerBoard {
     private Resource cardLeaderProductionOutput;
     private DepositLeaderCard depositLeaderCard;
 
-
+    /**
+     *Constructor
+     * @param _nickname of the player
+     * @param _first true if is the first player
+     * @param _playerState if the player is Playing or Idle
+     * @param _gameTable
+     */
     public PlayerBoard(String _nickname, boolean _first, PlayerState _playerState, GameTable _gameTable) {
         nickname = _nickname;
         first = _first;
@@ -33,6 +39,7 @@ public class PlayerBoard {
         cardsLeaderBeforeSelecting = new ArrayList<>();
         cardsLeader = new ArrayList<>();
     }
+
 
     public ArrayList<CardDevelopment> getAllDevelopmentCards() {
 
@@ -48,6 +55,7 @@ public class PlayerBoard {
 
         return outputList;
     }
+
 
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
@@ -84,10 +92,18 @@ public class PlayerBoard {
         cardLeader.discard();
     }
 
+    /**
+     * Discards a given Card Leader
+     * @param cardLeader
+     */
     void discardCardLeader(CardLeader cardLeader) {
         cardsLeader.remove(cardLeader);
     }
 
+    /**
+     * Adds a resource to the Temporary Deposit
+     * @param resource
+     */
     void addToTemporaryDeposit(Resource resource) {
         Integer numberOfResourcesOrNull = tempDeposit.get(resource);
         if (numberOfResourcesOrNull == null) {
@@ -97,6 +113,9 @@ public class PlayerBoard {
         }
     }
 
+    /**
+     * Resets the Temporary Deposit
+     */
     private void resetTemporaryDeposit() {
         tempDeposit = new HashMap<>();
         for (Resource resource :
@@ -113,6 +132,11 @@ public class PlayerBoard {
         gameTable.moveOthersFaithTrail(this);
     }
 
+    /**
+     * Resets the Temporary Deposit and tries to add the given arraylist of marbles
+     * @param marbles to be added
+     * @return
+     */
     boolean tryAddMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
         for (Marble marble : marbles
@@ -135,6 +159,10 @@ public class PlayerBoard {
         this.whiteEffect = whiteEffect;
     }
 
+    /**
+     * Moves this player of i steps
+     * @param i number of steps
+     */
     public void moveFaith(int i) {
         gameTable.moveFaithTrail(this, i);
     }
