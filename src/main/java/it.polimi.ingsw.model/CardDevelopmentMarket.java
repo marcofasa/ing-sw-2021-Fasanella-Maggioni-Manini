@@ -74,33 +74,34 @@ public class CardDevelopmentMarket {
 
     /**
      * Discards a given card type
-     * @param typeToBeDiscarded
+     * @param typeToBeDiscarded Type of the card specified on the drawn ActionCard that triggered discardCards
      */
     void discardCards(CardDevelopmentType typeToBeDiscarded) {
 
         int columnIndex = typeToBeDiscarded.ordinal();
+        int rowIndex = 0;
 
-        for (int rowIndex = 0; rowIndex < NUMBER_OF_ROWS; rowIndex++) {
+        while (market[rowIndex][columnIndex].getCards().size() == 0) {
+            rowIndex++;
 
-            // General case : The first stack found to have 2 or more card is popped twice.
-            if (market[rowIndex][columnIndex].getCards().size() > 1) {
-                market[rowIndex][columnIndex].pop();
-                market[rowIndex][columnIndex].pop();
+            //No cards are present in this column!
+            if (rowIndex == 3) return;
+        }
+
+        if (market[rowIndex][columnIndex].getCards().size() > 1) {
+            market[rowIndex][columnIndex].getCards().pop();
+            market[rowIndex][columnIndex].getCards().pop();
+        }
+
+        else  {
+
+            if (rowIndex == 2) {
+                market[rowIndex][columnIndex].getCards().pop();
             }
 
-            /*
-             Rare case : 1 card left in current stack, pop it and check if the next stack of same type but next level
-               has cards inside.
-             If true pop it once.
-             In all other cases there is nothing to pop for the specified cardType
-             */
-            else if (market[rowIndex][columnIndex].getCards().size() == 1) {
-
-                market[rowIndex][columnIndex].pop();
-
-                if (rowIndex != NUMBER_OF_ROWS - 1 && market[rowIndex + 1][columnIndex].getCards().size() > 0) {
-                    market[rowIndex + 1][columnIndex].pop();
-                }
+            else {
+                market[rowIndex][columnIndex].getCards().pop();
+                market[rowIndex + 1][columnIndex].getCards().pop();
             }
         }
     }

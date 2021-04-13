@@ -29,6 +29,6 @@ public class CardLeaderDeck {
      * @return CardLeader bought
      */
     public CardLeader getCardLeader(PlayerBoard playerBoard){
-        return cardsLeader.get(0).draw(playerBoard);
+        return cardsLeader.remove(0).draw(playerBoard);
     }
 }

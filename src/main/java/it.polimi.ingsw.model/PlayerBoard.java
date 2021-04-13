@@ -56,7 +56,6 @@ public class PlayerBoard {
         return outputList;
     }
 
-
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
     }
@@ -85,6 +84,13 @@ public class PlayerBoard {
         if (deposit == null) deposit = new Deposit();
 
         return deposit;
+    }
+
+    public CardDevelopmentSlot getCardDevelopmentSlotByIndex(int index) throws InvalidSlotIndexException {
+
+        if (index < 0 || index > 2) throw new InvalidSlotIndexException();
+
+        return cardSlotArray[index];
     }
 
     //RISOLVERE IN QUALCHE MODO QUESTE DUE
@@ -283,6 +289,36 @@ public class PlayerBoard {
         return victoryPoints;
 
     }
+
     //FUNZIONI GROSSE
 
+    public CardDevelopment buyCardDevelopmentCardFromMarket(int rowIndex, int colIndex) throws NotEnoughResourcesException {
+
+        CardDevelopmentMarket marketInstance = gameTable.getCardDevelopmentMarketInstance();
+        CardDevelopmentStack desiredStack = marketInstance.getMarket()[rowIndex][colIndex];
+        CardDevelopment desiredCard  = desiredStack.peek();
+
+        if (hasResources(desiredCard.getCardCosts())) {
+            return marketInstance.buyCardFromStack(this, rowIndex, colIndex);
+        } else {
+            throw new NotEnoughResourcesException(this.nickname, rowIndex, colIndex);
+        }
+    }
+
+    public void placeCardDevelopmentCardOnBoard(CardDevelopment cardToBePlaced, int cardSlotIndex) throws InvalidCardDevelopmentPlacementException, FullSlotException, InvalidSlotIndexException {
+
+        /*
+        Exception should not be handled here : it should float to the Controller, where if it is caught the
+        Controller must select a valid index.
+         */
+        CardDevelopmentSlot targetSlot = getCardDevelopmentSlotByIndex(cardSlotIndex);
+
+
+        /*
+        Exceptions should be handled in the Controller :
+        FullSlotException is thrown when a card is added to a stack that already contains 3 cards
+        InvalidPlacementException is thrown when the placement logic is not respected
+         */
+        targetSlot.placeCard(cardToBePlaced);
+    }
 }
