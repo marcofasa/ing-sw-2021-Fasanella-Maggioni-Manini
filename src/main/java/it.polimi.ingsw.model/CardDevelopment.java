@@ -19,7 +19,7 @@ public class CardDevelopment {
     /* Constructor(s) */
 
     /**
-     *
+     * Base constructor
      * @param row index of the market row, must be : row >= 0 && row <= 2
      * @param column index of the market column, must be : column >= 0 && column <= 3
      * @param index number of the card that has to be created within the market stack, must be : index >= 0 && index <= 3
@@ -35,6 +35,21 @@ public class CardDevelopment {
         this.productionInput = information.productionInput;
         this.productionOutput = information.productionOutput;
         this.numberOfRedResourceProduced = information.numberOfRedResourceProduced;
+    }
+
+    /**
+     * Constructor to make a deep copy of a CardDevelopment
+     * @param cardToBeCloned card to be cloned
+     */
+    public CardDevelopment(CardDevelopment cardToBeCloned) {
+
+        cardType = cardToBeCloned.cardType;
+        cardLevel = cardToBeCloned.cardLevel;
+        victoryPoints = cardToBeCloned.victoryPoints;
+        cardCosts = new HashMap<>(cardToBeCloned.cardCosts);
+        productionInput = new HashMap<>(cardToBeCloned.productionInput);
+        productionOutput = new HashMap<>(cardToBeCloned.productionOutput);
+        numberOfRedResourceProduced = cardToBeCloned.numberOfRedResourceProduced;
     }
 
 
@@ -55,15 +70,15 @@ public class CardDevelopment {
     }
 
     public HashMap<Resource, Integer> getCardCosts() {
-        return cardCosts;
+        return new HashMap<>(cardCosts);
     }
 
     public HashMap<Resource, Integer> getProductionInput() {
-        return productionInput;
+        return new HashMap<>(productionInput);
     }
 
     public HashMap<Resource, Integer> getProductionOutput() {
-        return productionOutput;
+        return  new HashMap<>(productionOutput);
     }
 
     public Integer getNumberOfRedResourceProduced() {

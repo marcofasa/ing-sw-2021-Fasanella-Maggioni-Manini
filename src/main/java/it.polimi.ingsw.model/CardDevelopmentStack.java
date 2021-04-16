@@ -16,9 +16,9 @@ public class CardDevelopmentStack {
     private Stack<CardDevelopment> cards;
 
     /**
-     * Constructor
-     * @param row
-     * @param col
+     * Base constructor
+     * @param row row of stack in the market matrix
+     * @param col column of stack in the market matrix
      */
     public CardDevelopmentStack(int row, int col) {
 
@@ -32,6 +32,16 @@ public class CardDevelopmentStack {
         }
     }
 
+    /**
+     * Constructor to create a deep copy of a CardDevelopmentStack
+     * @param stackToBeCloned stack to be cloned
+     */
+    public CardDevelopmentStack(CardDevelopmentStack stackToBeCloned) {
+
+        cards = new Stack<>();
+        for (CardDevelopment card : stackToBeCloned.getCards()) cards.push(new CardDevelopment(card));
+    }
+
     /* METHODS */
 
     //Getters
@@ -40,8 +50,14 @@ public class CardDevelopmentStack {
         return MAX_STACK_SIZE;
     }
 
+    /**
+     * Getter for the internal card stack, which represents up to 4 cards piled on each other in the card market
+     * @return a deep copy of the card stack
+     */
     public Stack<CardDevelopment> getCards() {
-        return cards;
+
+        CardDevelopmentStack clone = new CardDevelopmentStack(this);
+        return clone.cards;
     }
 
     // Setters

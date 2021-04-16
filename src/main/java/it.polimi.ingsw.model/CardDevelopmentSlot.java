@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+
 import java.util.Stack;
 
 public class CardDevelopmentSlot {
@@ -17,12 +18,31 @@ public class CardDevelopmentSlot {
         id = _id;
     }
 
+    /**
+     * Constructor to create a copy of the CardDevelopmentSlot
+     * @param slotToBeCloned a deep copy of the CardDevelopmentSlot
+     */
+    public CardDevelopmentSlot(CardDevelopmentSlot slotToBeCloned) {
+        cards = new Stack<>();
+        id = slotToBeCloned.id;
+
+        for (CardDevelopment card : slotToBeCloned.getCards()) {
+            cards.push(new CardDevelopment(card));
+        }
+    }
+
     public CardDevelopmentSlotID getId() {
         return id;
     }
 
+    /**
+     * Getter for the cards held by the player in this CardDevelopmentslot
+     * @return a deep copy of the card stack
+     */
     Stack<CardDevelopment> getCards() {
-        return cards;
+
+        CardDevelopmentSlot clone = new CardDevelopmentSlot(this);
+        return clone.cards;
     }
 
     CardDevelopment getTop() {

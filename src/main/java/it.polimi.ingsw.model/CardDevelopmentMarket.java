@@ -2,8 +2,8 @@ package it.polimi.ingsw.model;
 
 public class CardDevelopmentMarket {
 
-    private final int NUMBER_OF_ROWS;
-    private final int NUMBER_OF_COLUMNS;
+    private final int NUMBER_OF_ROWS = 3;
+    private final int NUMBER_OF_COLUMNS = 4;
     private final CardDevelopmentStack[][] market;
 
 
@@ -13,11 +13,25 @@ public class CardDevelopmentMarket {
      */
     public CardDevelopmentMarket() {
 
-        NUMBER_OF_ROWS = 3;
-        NUMBER_OF_COLUMNS = 4;
         market = new CardDevelopmentStack[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 
         initializeMarket(market);
+    }
+
+    /**
+     * Constructor to create a deep copy of the market
+     * @param marketToBeCloned deep copy of marketToBeCloned
+     */
+    public CardDevelopmentMarket(CardDevelopmentMarket marketToBeCloned) {
+
+        market = new CardDevelopmentStack[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
+
+        for (int i = 0 ; i < NUMBER_OF_ROWS; i++) {
+            for (int j = 0; j < NUMBER_OF_COLUMNS; j++) {
+
+                market[i][j] = new CardDevelopmentStack(marketToBeCloned.market[i][j]);
+            }
+        }
     }
 
     public int getNUMBER_OF_COLUMNS() {
@@ -29,7 +43,9 @@ public class CardDevelopmentMarket {
     }
 
     public CardDevelopmentStack[][] getMarket() {
-        return market;
+
+        CardDevelopmentMarket clone = new CardDevelopmentMarket(this);
+        return clone.market;
     }
 
     /**

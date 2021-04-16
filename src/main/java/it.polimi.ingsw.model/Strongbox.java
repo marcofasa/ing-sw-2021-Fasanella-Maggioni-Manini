@@ -33,7 +33,7 @@ public class Strongbox {
      */
 
     public HashMap<Resource, Integer> getContent() {
-        return content;
+        return new HashMap<>(content);
     }
 
     /* Class methods */
