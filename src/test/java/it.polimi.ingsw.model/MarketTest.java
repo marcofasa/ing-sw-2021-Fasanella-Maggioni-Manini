@@ -1,12 +1,25 @@
 package it.polimi.ingsw.model;
 
-//import junit.framework.TestCase;
-//import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.ArrayList;
+import static org.junit.Assert.*;
 
 public class MarketTest {
 
-    public void testMarket(){
+    @Test
+    public void getCol() {
+        assertEquals(1,1);
+    }
+
+    @Test
+    public void getRow() {
+    }
+
+    @Test
+    public void getMarket() {
+    }
+
+    @Test
+    public void getSpareMarble() {
     }
 }
