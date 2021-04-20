@@ -83,7 +83,7 @@ public class Market {
     public ArrayList<Marble> getRow(Integer rowNumber) throws IllegalArgumentException{
         if(rowNumber<1 || rowNumber>3)
             throw new IllegalArgumentException();
-        ArrayList<Marble> oldRow = market.get(rowNumber - 1);
+        ArrayList<Marble> oldRow = new ArrayList<>(market.get(rowNumber - 1));
         market.get(rowNumber - 1).add(0, spareMarble);
         spareMarble = market.get(rowNumber - 1).remove(4);
         return oldRow;

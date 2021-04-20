@@ -40,7 +40,7 @@ public class CardDevelopmentMarketTest {
         This test creates a GameTable with a single player, deposits 100 of each resource in his deposit and buys
         a card from the market.
         The development card placement logic is still missing.
-         */
+        */
 
         ArrayList<String> nicknames = new ArrayList<>();
         nicknames.add("test");
