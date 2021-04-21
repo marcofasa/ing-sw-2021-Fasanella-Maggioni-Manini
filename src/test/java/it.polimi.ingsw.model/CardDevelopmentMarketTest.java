@@ -10,6 +10,11 @@ import java.util.ArrayList;
 public class CardDevelopmentMarketTest {
 
 
+    @BeforeEach
+    void before() {
+        CardDevelopmentMarket market = new CardDevelopmentMarket();
+    }
+
     @Test
     void getNUMBER_OF_COLUMNS() {
 

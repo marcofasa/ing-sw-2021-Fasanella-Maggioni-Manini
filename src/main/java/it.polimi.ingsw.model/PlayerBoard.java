@@ -38,6 +38,10 @@ public class PlayerBoard {
         gameTable = _gameTable;
         cardsLeaderBeforeSelecting = new ArrayList<>();
         cardsLeader = new ArrayList<>();
+
+        cardSlotArray = new CardDevelopmentSlot[3];
+
+        for (int i = 0; i < 3; i++) cardSlotArray[i] = new CardDevelopmentSlot(CardDevelopmentSlotID.values()[i]);
     }
 
 

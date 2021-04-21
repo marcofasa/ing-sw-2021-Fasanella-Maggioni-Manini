@@ -26,7 +26,7 @@ public class CardDevelopmentSlot {
         cards = new Stack<>();
         id = slotToBeCloned.id;
 
-        for (CardDevelopment card : slotToBeCloned.getCards()) {
+        for (CardDevelopment card : slotToBeCloned.cards) {
             cards.push(new CardDevelopment(card));
         }
     }
