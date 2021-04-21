@@ -2,11 +2,12 @@ package it.polimi.ingsw.model;
 
 public abstract class CardLeader  {
 
-    protected Integer victoryPoints;
+
+    protected PlayerBoard playerBoard;
 
     protected CardLeaderRequirements requirements;
 
-    protected PlayerBoard playerBoard;
+    protected Integer victoryPoints;
 
     protected boolean active;
 
@@ -56,5 +57,13 @@ public abstract class CardLeader  {
      */
     public Integer getVictoryPoints(){
         return active? victoryPoints : 0;
+    }
+
+    /**
+     * Returns owner of the card, null if this card is still in the deck
+     * @return PlayerBoard associated to the card
+     */
+    public PlayerBoard getPlayerBoard() {
+        return playerBoard;
     }
 }

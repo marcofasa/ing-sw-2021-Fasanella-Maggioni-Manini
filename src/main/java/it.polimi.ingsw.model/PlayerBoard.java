@@ -64,12 +64,20 @@ public class PlayerBoard {
         return gameTable.getMarketInstance().getCol(integer);
     }
 
+    /**
+     * Deck of cards leader owned by this player
+     * @return CardLeader s
+     */
     public ArrayList<CardLeader> getCardsLeader() {
-        return cardsLeader;
+        return new ArrayList<>(cardsLeader);
     }
 
+    /**
+     * Deck of cards leader owned by this player before choosing, if this player have already selected his cards, returns null
+     * @return CardLeader s or null
+     */
     public ArrayList<CardLeader> getCardsLeaderBeforeSelecting() {
-        return cardsLeaderBeforeSelecting;
+        return new ArrayList<>(cardsLeaderBeforeSelecting);
     }
 
     public Strongbox getStrongboxInstance() {
@@ -141,7 +149,7 @@ public class PlayerBoard {
     /**
      * Resets the Temporary Deposit and tries to add the given arraylist of marbles
      * @param marbles to be added
-     * @return
+     * @return True if action has succeeded, False otherwise
      */
     boolean tryAddMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
@@ -153,8 +161,33 @@ public class PlayerBoard {
         return deposit.tryAdd(tempDeposit);
     }
 
-    public void getCardLeader() {
-        gameTable.getCardLeader(this);
+    protected void activateCardLeader(CardLeader cardLeader){
+        if(!cardLeader.canActivate())
+            throw new CardLeaderRequirementsNotMetException();
+        if(cardLeader.getPlayerBoard() != this)
+           throw new CardLeaderWrongOwnerException();
+        cardLeader.activate();
+    }
+
+    /**
+     * Draw a CardLeader, must be done in the initial phases of the game
+     */
+    public void drawCardLeaderFromDeck() {
+        cardsLeaderBeforeSelecting.add(gameTable.getCardLeader(this));
+    }
+
+    /**
+     * select 2 cards leader from the 4 owned
+     * @param cardLeader1 first selection
+     * @param cardLeader2 second selection
+     */
+    public void selectCardsLeader(CardLeader cardLeader1, CardLeader cardLeader2){
+        if (cardLeader1.getPlayerBoard() != this || cardLeader2.getPlayerBoard() != this) {
+            throw new CardLeaderWrongOwnerException();
+        }
+        cardsLeader.add(cardLeader1);
+        cardsLeader.add(cardLeader2);
+        cardsLeaderBeforeSelecting = null;
     }
 
     public Resource getWhiteEffect() {

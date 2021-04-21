@@ -58,9 +58,25 @@ public class CardLeaderRequirements {
     public boolean meetsRequirements(PlayerBoard playerBoard){
         switch (cardLeaderRequirementsType) {
             case NumberOfDevelopmentCardTypes:
-                /*TODO*/
+                for (CardDevelopmentType type :
+                        numberOfDevelopmentCardTypes.keySet()) {
+                    if (playerBoard.getAllDevelopmentCards().stream().filter(x -> x.getCardType() == type).count() < numberOfDevelopmentCardTypes.get(type))
+                        return false;
+                }
+                return true;
             case NumberOfDevelopmentCardLevel:
-                /*TODO*/
+                for (var type :
+                        numberOfDevelopmentCardLevel.keySet()) {
+                    boolean reached = false;
+                    for (var card:
+                         playerBoard.getAllDevelopmentCards()) {
+                        if (card.getCardLevel().ordinal() >= numberOfDevelopmentCardLevel.get(type).ordinal())
+                            reached = true;
+                    }
+                    if (!reached)
+                            return false;
+                }
+                return true;
             case NumberOfResources:
                 return playerBoard.hasResources(numberOfResources);
         }

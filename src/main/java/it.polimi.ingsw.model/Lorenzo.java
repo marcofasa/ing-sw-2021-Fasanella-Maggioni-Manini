@@ -18,6 +18,7 @@ public class Lorenzo {
     /**
      * move Lorenzo forward in the faith trail
      * @param i number of moves
+     *          TODO
      */
     public void advanceFaith(int i) {
         try {
