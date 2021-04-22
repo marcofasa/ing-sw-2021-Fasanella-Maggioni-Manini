@@ -90,7 +90,10 @@ public class GameTable {
 
     public FaithTrail getFaithTrailInstance() {
         if (faithTrail == null)
-            faithTrail = new FaithTrail(this, players);
+            if(isSinglePlayer){
+                faithTrail= new FaithTrail(this,players,getLorenzoInstance());
+            }
+            else faithTrail = new FaithTrail(this, players);
         return faithTrail;
     }
 
@@ -145,6 +148,9 @@ public class GameTable {
      */
     public void moveFaithTrail(PlayerBoard player, int steps) {
         faithTrail.movePlayer(player, steps);
+    }
+    public void moveFaithTrailLorenzo(){
+        faithTrail.moveLorenzo();
     }
 
     public void moveOthersFaithTrail(PlayerBoard notMovingPlayer) {
@@ -205,4 +211,13 @@ public class GameTable {
 
     }
 
+    public void activateEndGame(Lorenzo lorenzo,int pos) {
+        //end instantly the game: Lorenzo wins
+        if(pos==24) {try {
+            throw new ExecutionControl.NotImplementedException("Activate Endgame has not been implemented yet");
+        } catch (ExecutionControl.NotImplementedException e) {
+            e.printStackTrace();
+        }}
+
+    }
 }

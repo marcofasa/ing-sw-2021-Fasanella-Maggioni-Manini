@@ -18,14 +18,11 @@ public class Lorenzo {
     /**
      * move Lorenzo forward in the faith trail
      * @param i number of moves
-     *          TODO
+     *
      */
     public void advanceFaith(int i) {
-        try {
-            throw new ExecutionControl.NotImplementedException("Lorenzo advance faith is not implemented yet");
-        } catch (ExecutionControl.NotImplementedException e) {
-            e.printStackTrace();
-        }
+        for(int n = 0; n<i; n++){
+        gameTable.moveFaithTrailLorenzo();}
     }
 
     public ActionCardDeck getActionCardDeck() {

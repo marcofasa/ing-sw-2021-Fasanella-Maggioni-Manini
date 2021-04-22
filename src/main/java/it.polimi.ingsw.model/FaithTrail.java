@@ -9,6 +9,31 @@ public class FaithTrail {
     private HashMap<PlayerBoard, Integer> playerPosition;
     private HashMap<PlayerBoard, FaithTilePack> playerTiles;
     private GameTable gameTable;
+    private Lorenzo lorenzo;
+    private int lorenzoPosition;
+
+    /**
+     * Constructor for Single Player
+     * @param gameTable
+     * @param players there will be only one player
+     * @param lorenzo
+     */
+    public FaithTrail(GameTable gameTable,ArrayList<PlayerBoard> players,Lorenzo lorenzo){
+        this.gameTable = gameTable;
+        this.cells= new ArrayList<FaithCell>();
+        this.lorenzo=lorenzo;
+        this.playerTiles= new HashMap<PlayerBoard, FaithTilePack>();
+        this.playerPosition= new HashMap<PlayerBoard, Integer>();
+        lorenzoPosition=0;
+        for (PlayerBoard p : players
+        ) {
+            this.playerPosition.put(p, 0);
+            this.playerTiles.put(p, new FaithTilePack());
+        }
+        for (int i = 0; i < lenght; i++) {
+            cells.add(new FaithCell(i));
+        }
+    }
 
     /**
      * Constructor, sets all players at starting position and creates all cells
@@ -36,7 +61,7 @@ public class FaithTrail {
      * @param p
      * @return position of player must be 0<=value<=24
      */
-    private int getPosition(PlayerBoard p) {
+    public int getPosition(PlayerBoard p) {
         return playerPosition.get(p);
     }
 
@@ -45,6 +70,7 @@ public class FaithTrail {
      * @param p Player
      * @return TilePack of corresponding Player
      */
+
     private FaithTilePack getTilePack(PlayerBoard p) {
         return playerTiles.get(p);
     }
@@ -73,6 +99,17 @@ public class FaithTrail {
                  }
              }
     }
+
+    public int getLorenzoPosition() {
+        return lorenzoPosition;
+    }
+
+    public void moveLorenzo(){
+        lorenzoPosition++;
+        if(checkPopeCellLorenzo(getSection(lorenzoPosition))) popeActive(getSection(lorenzoPosition));
+        if(checkEndGame(lorenzoPosition)) gameTable.activateEndGame(lorenzo,lorenzoPosition);
+    }
+
 
     /**
      * Checks if player is in the last position
@@ -115,6 +152,17 @@ public class FaithTrail {
         FaithCellType cellType = cells.get(getPosition(p)).getType();
         FaithTileStatus tileStatus= playerTiles.get(p).getStatus(section);
         if (cellType == FaithCellType.Pope && tileStatus == FaithTileStatus.Not_Reached) popeActive(section);
+    }
+
+    /**
+     * Checks if Lorenzo is on a Pope Cell
+     * @param section
+     * @return
+     */
+    private boolean checkPopeCellLorenzo(FaithSection section) {
+        FaithCellType cellType = cells.get(lorenzoPosition).getType();
+        if (cellType == FaithCellType.Pope) return true;
+        else return false;
     }
 
     /**
