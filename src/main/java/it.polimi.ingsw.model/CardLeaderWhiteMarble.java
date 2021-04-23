@@ -19,7 +19,7 @@ public class CardLeaderWhiteMarble extends CardLeader {
      */
     @Override
     public void activate() {
-        if(canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
         playerBoard.setWhiteEffect(resource);
         active = true;
     }

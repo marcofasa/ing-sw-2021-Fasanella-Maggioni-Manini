@@ -36,7 +36,7 @@ public class CardDevelopmentSlot {
     }
 
     /**
-     * Getter for the cards held by the player in this CardDevelopmentslot
+     * Getter for the cards held by the player in this CardDevelopmentSlot
      * @return a deep copy of the card stack
      */
     Stack<CardDevelopment> getCards() {

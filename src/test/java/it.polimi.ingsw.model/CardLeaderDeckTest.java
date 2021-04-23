@@ -28,7 +28,15 @@ public class CardLeaderDeckTest {
         }
     }
 
-    @Test
+    @Test (expected = CardLeaderRequirementsNotMetException.class)
+    public void cardLeaderActivationTest_shouldThrowExceptionCannotActivate(){
+        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
+        PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
+        CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
+        cardleaderWhite.playerBoard = playerBoard;
+        cardleaderWhite.activate();
+    }
+
     public void cardLeaderActivationTest(){
         GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
@@ -36,7 +44,7 @@ public class CardLeaderDeckTest {
         cardleaderWhite.playerBoard = playerBoard;
         MarbleWhite marbleWhite = new MarbleWhite();
         var marblelist = new ArrayList<Marble>();
-        cardleaderWhite.activate();
+        //test
         marblelist.add(marbleWhite);
         var deposit = new HashMap<>(playerBoard.getDepositInstance().getContent());
         playerBoard.tryAddMarbles(marblelist);

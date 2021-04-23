@@ -19,7 +19,7 @@ public class CardLeaderDiscount extends CardLeader {
      */
     @Override
     public void activate() {
-        if(canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
         if(!active) {
             playerBoard.discountResource(resource);
             active = true;

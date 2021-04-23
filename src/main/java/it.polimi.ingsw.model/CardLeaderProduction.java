@@ -22,7 +22,7 @@ public class CardLeaderProduction extends CardLeader{
      */
     @Override
     public void activate() {
-        if(canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
         active = true;
         if (playerBoard.getCardLeaderProductionOutput() == null) throw new IllegalArgumentException();
         playerBoard.getDepositInstance().discard(resource);

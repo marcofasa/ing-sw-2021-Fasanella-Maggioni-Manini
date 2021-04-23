@@ -20,7 +20,7 @@ public class CardLeaderDeposit extends CardLeader{
      */
     @Override
     public void activate() {
-        if(canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
         if(!active) {
             playerBoard.getDepositLeaderCardInstance().addLeaderDepositType(resource);
             active = true;

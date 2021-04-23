@@ -46,7 +46,6 @@ public class PlayerBoard {
 
 
     public ArrayList<CardDevelopment> getAllDevelopmentCards() {
-
         ArrayList<CardDevelopment> outputList = new ArrayList<>();
         ArrayList<CardDevelopment> tempList;
 
@@ -56,7 +55,6 @@ public class PlayerBoard {
             tempList = new ArrayList<>(cardDevelopmentSlot.getCards());
             outputList.addAll(tempList);
         }
-
         return outputList;
     }
 
