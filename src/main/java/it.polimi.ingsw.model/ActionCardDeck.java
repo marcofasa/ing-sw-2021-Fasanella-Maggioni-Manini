@@ -11,12 +11,12 @@ public class ActionCardDeck {
     /**
      * Constructor, generates a new shuffled deck
      */
-    public ActionCardDeck(GameTable gameTable){
+    public ActionCardDeck(Lorenzo lorenzo, GameTable gameTable){
         usedStack = new Stack<>();
         availableStack = new Stack<>();
-        ActionCard advance1 = new ActionCardAdvance(gameTable.getLorenzoInstance());
-        ActionCard advance2 = new ActionCardAdvance(gameTable.getLorenzoInstance());
-        ActionCard shuffle = new ActionCardShuffle(gameTable.getLorenzoInstance());
+        ActionCard advance1 = new ActionCardAdvance(lorenzo);
+        ActionCard advance2 = new ActionCardAdvance(lorenzo);
+        ActionCard shuffle = new ActionCardShuffle(lorenzo);
         ActionCard discard1 = new ActionCardDiscard(gameTable, CardDevelopmentType.Green);
         ActionCard discard2 = new ActionCardDiscard(gameTable, CardDevelopmentType.Yellow);
         ActionCard discard3 = new ActionCardDiscard(gameTable, CardDevelopmentType.Purple);
@@ -28,7 +28,6 @@ public class ActionCardDeck {
         availableStack.push(discard2);
         availableStack.push(discard3);
         availableStack.push(discard4);
-        shuffle.activate();
         Collections.shuffle(availableStack);
     }
 

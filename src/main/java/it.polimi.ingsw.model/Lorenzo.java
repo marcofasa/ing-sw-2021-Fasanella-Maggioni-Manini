@@ -12,7 +12,7 @@ public class Lorenzo {
      */
     Lorenzo(GameTable gameTable){
         this.gameTable = gameTable;
-        actionCardDeck = new ActionCardDeck(gameTable);
+        actionCardDeck = new ActionCardDeck(this, gameTable);
     }
 
     /**
