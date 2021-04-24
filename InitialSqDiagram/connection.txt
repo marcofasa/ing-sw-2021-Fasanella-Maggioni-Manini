@@ -1,0 +1,21 @@
+@startuml
+Client-> Server: Ping()
+Client<- Server: Ack()
+Client-> Server: SetupConnection()
+alt nickname not available
+    Client<- Server: ConnectionError()
+end
+alt first player
+
+    Client<- Server: RequestPlayersNumber()
+    Client-> Server: PlayersNumber()
+else subsequent players
+    Client<- Server: CurrentPlayersAndSlotsLeft()
+end
+group lobby full
+
+    Client <- Server: GameIsStarting()
+    Client <- Server: GameHasStarted()
+
+end
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+Client-> Server: UseMarket()
+alt can add to deposit
+    Client<- Server: AnswerUseMarket()  
+else can't add to deposit
+        loop until can add to deposit
+            Client<- Server: RequestDiscardResourceMarket()
+            Client-> Server: DiscardResourceMarket()
+        end
+    Client<- Server: AnswerUseMarket()  
+end
+@enduml
