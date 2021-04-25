@@ -20,9 +20,10 @@ public class PlayerBoard {
     private DepositLeaderCard depositLeaderCard;
 
     /**
-     *Constructor
-     * @param _nickname of the player
-     * @param _first true if is the first player
+     * Constructor
+     *
+     * @param _nickname    of the player
+     * @param _first       true if is the first player
      * @param _playerState if the player is Playing or Idle
      * @param _gameTable
      */
@@ -67,6 +68,7 @@ public class PlayerBoard {
 
     /**
      * Deck of cards leader owned by this player
+     *
      * @return CardLeader s
      */
     public ArrayList<CardLeader> getCardsLeader() {
@@ -75,6 +77,7 @@ public class PlayerBoard {
 
     /**
      * Deck of cards leader owned by this player before choosing, if this player have already selected his cards, returns null
+     *
      * @return CardLeader s or null
      */
     public ArrayList<CardLeader> getCardsLeaderBeforeSelecting() {
@@ -113,6 +116,7 @@ public class PlayerBoard {
 
     /**
      * Adds a resource to the Temporary Deposit
+     *
      * @param resource
      */
     void addToTemporaryDeposit(Resource resource) {
@@ -137,6 +141,7 @@ public class PlayerBoard {
 
     /**
      * For each call all the players move of one step except this player
+     *
      * @param resource
      */
     public void discardFromTemporaryDeposit(Resource resource) {
@@ -149,6 +154,7 @@ public class PlayerBoard {
 
     /**
      * Resets the Temporary Deposit and tries to add the given arraylist of marbles
+     *
      * @param marbles to be added
      * @return True if action has succeeded, False otherwise
      */
@@ -162,11 +168,11 @@ public class PlayerBoard {
         return deposit.tryAdd(tempDeposit);
     }
 
-    protected void activateCardLeader(CardLeader cardLeader){
-        if(!cardLeader.canActivate())
+    protected void activateCardLeader(CardLeader cardLeader) {
+        if (!cardLeader.canActivate())
             throw new CardLeaderRequirementsNotMetException();
-        if(cardLeader.getPlayerBoard() != this)
-           throw new CardLeaderWrongOwnerException();
+        if (cardLeader.getPlayerBoard() != this)
+            throw new CardLeaderWrongOwnerException();
         cardLeader.activate();
     }
 
@@ -179,10 +185,11 @@ public class PlayerBoard {
 
     /**
      * select 2 cards leader from the 4 owned
+     *
      * @param cardLeader1 first selection
      * @param cardLeader2 second selection
      */
-    public void selectCardsLeader(CardLeader cardLeader1, CardLeader cardLeader2){
+    public void selectCardsLeader(CardLeader cardLeader1, CardLeader cardLeader2) {
         if (cardLeader1.getPlayerBoard() != this || cardLeader2.getPlayerBoard() != this) {
             throw new CardLeaderWrongOwnerException();
         }
@@ -201,6 +208,7 @@ public class PlayerBoard {
 
     /**
      * Moves this player of i steps
+     *
      * @param i number of steps
      */
     public void moveFaith(int i) {
@@ -217,6 +225,7 @@ public class PlayerBoard {
 
     /**
      * Checks if strongbox and deposit COMBINED hold enough resources as specified in the param numberOfResources
+     *
      * @param numberOfResources A HashMap of the amounts to be met in order to return true
      * @return true if strongbox + deposit hold enough resources, false otherwise
      */
@@ -245,7 +254,7 @@ public class PlayerBoard {
         return depositLeaderCard;
     }
 
-    public boolean isFirst(){
+    public boolean isFirst() {
         return first;
     }
 
@@ -261,7 +270,7 @@ public class PlayerBoard {
      * @param input2
      * @param output
      */
-    private void activateBasicProduction(Resource input1, Resource input2, Resource output){
+    private void activateBasicProduction(Resource input1, Resource input2, Resource output) {
         getDepositInstance().useResource(input1, 1);
         getDepositInstance().useResource(input2, 1);
         getStrongboxInstance().addResource(output, 1);
@@ -284,13 +293,14 @@ public class PlayerBoard {
      * @param cardLeaderToBeActivated
      * @param output
      */
-    private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output){
-        if(cardLeaderToBeActivated.getClass() != CardLeaderProduction.class) throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
+    private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
+        if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
+            throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
         setCardLeaderProductionOutput(output);
         cardLeaderToBeActivated.activate();
     }
 
-    public Integer getVictoryPoints(){
+    public Integer getVictoryPoints() {
         Integer victoryPoints = 0;
 
         //Faith Trail
@@ -302,29 +312,24 @@ public class PlayerBoard {
             victoryPoints += cardLeader.getVictoryPoints();
         }
 
+        //Deposit + Strongbox
+        int totalResources = 0;
 
-        //TODO I punti vittoria dati da deposito e strongbox sono = floor(risorse totali / 5)
-
-        //Deposit
-        for (Resource resource:
-             getDepositInstance().getContent().keySet()) {
-            victoryPoints += getDepositInstance().getContent().get(resource);
+        for (Resource res : Resource.values()) {
+            totalResources += getDepositInstance().getContent().get(res);
+            totalResources += getStrongboxInstance().getContent().get(res);
         }
 
-        //Strongbox
-        for (Resource resource:
-                getStrongboxInstance().getContent().keySet()) {
-            victoryPoints += getStrongboxInstance().getContent().get(resource);
-        }
+        victoryPoints += Math.floorDiv(totalResources, 5);
 
         //CardLeaderProduction
-        for (Resource resource:
+        for (Resource resource :
                 getDepositLeaderCardInstance().getContent().keySet()) {
             victoryPoints += getStrongboxInstance().getContent().get(resource);
         }
 
         //CardDevelopment
-        for (CardDevelopment cardDevelopment:
+        for (CardDevelopment cardDevelopment :
                 getAllDevelopmentCards()) {
             victoryPoints += cardDevelopment.getVictoryPoints();
         }
@@ -339,7 +344,7 @@ public class PlayerBoard {
 
         CardDevelopmentMarket marketInstance = gameTable.getCardDevelopmentMarketInstance();
         CardDevelopmentStack desiredStack = marketInstance.getMarket()[rowIndex][colIndex];
-        CardDevelopment desiredCard  = desiredStack.peek();
+        CardDevelopment desiredCard = desiredStack.peek();
 
         if (hasResources(desiredCard.getCardCosts())) {
             return marketInstance.buyCardFromStack(this, rowIndex, colIndex);
@@ -366,8 +371,12 @@ public class PlayerBoard {
     }
 
     /*
-    TODO Funzione per attivare la selezione di poteri di produzione,
+    TODO Implementare funzione per attivare la selezione di poteri di produzione,
      che prima controlli se il player possiede abbastanza risorse in una mappa generata da deposito + strongbox,
      se no lancia NotEnoughResourcesException che sara' gestita dal controller
      */
+    public void tryActivateProductions() {
+
+    }
+
 }
