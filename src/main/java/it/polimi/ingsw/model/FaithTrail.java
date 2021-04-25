@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FaithTrail {
-    final private int lenght = 25;
+    final private int length = 25;
     private ArrayList<FaithCell> cells;
     private HashMap<PlayerBoard, Integer> playerPosition;
     private HashMap<PlayerBoard, FaithTilePack> playerTiles;
@@ -30,7 +30,7 @@ public class FaithTrail {
             this.playerPosition.put(p, 0);
             this.playerTiles.put(p, new FaithTilePack());
         }
-        for (int i = 0; i < lenght; i++) {
+        for (int i = 0; i < length; i++) {
             cells.add(new FaithCell(i));
         }
     }
@@ -50,7 +50,7 @@ public class FaithTrail {
             this.playerPosition.put(p, 0);
             this.playerTiles.put(p, new FaithTilePack());
         }
-        for (int i = 0; i < lenght; i++) {
+        for (int i = 0; i < length; i++) {
             cells.add(new FaithCell(i));
         }
     }
