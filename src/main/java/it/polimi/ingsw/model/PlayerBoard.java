@@ -312,12 +312,13 @@ public class PlayerBoard {
             victoryPoints += cardLeader.getVictoryPoints();
         }
 
-        //Deposit + Strongbox
+        //Deposit + Strongbox + CardLeaderDeposit
         int totalResources = 0;
 
         for (Resource res : Resource.values()) {
             totalResources += getDepositInstance().getContent().get(res);
             totalResources += getStrongboxInstance().getContent().get(res);
+            totalResources += depositLeaderCard.getContent().get(res);
         }
 
         victoryPoints += Math.floorDiv(totalResources, 5);
