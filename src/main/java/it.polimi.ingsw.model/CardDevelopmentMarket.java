@@ -6,7 +6,6 @@ public class CardDevelopmentMarket {
     private final int NUMBER_OF_COLUMNS = 4;
     private final CardDevelopmentStack[][] market;
 
-
     /**
      * Constructor.
      * Initializes all objects involved with CardDevelopmentMarket
@@ -105,19 +104,19 @@ public class CardDevelopmentMarket {
         }
 
         if (market[rowIndex][columnIndex].getCards().size() > 1) {
-            market[rowIndex][columnIndex].getCards().pop();
-            market[rowIndex][columnIndex].getCards().pop();
+            market[rowIndex][columnIndex].pop();
+            market[rowIndex][columnIndex].pop();
         }
 
         else  {
 
             if (rowIndex == 2) {
-                market[rowIndex][columnIndex].getCards().pop();
+                market[rowIndex][columnIndex].pop();
             }
 
             else {
-                market[rowIndex][columnIndex].getCards().pop();
-                market[rowIndex + 1][columnIndex].getCards().pop();
+                market[rowIndex][columnIndex].pop();
+                market[rowIndex + 1][columnIndex].pop();
             }
         }
     }
@@ -136,6 +135,20 @@ public class CardDevelopmentMarket {
         }
 
         return true;
+    }
+
+    /**
+     * Method written for testing purposes
+     * @param rowIndex
+     * @param colIndex
+     * @return
+     */
+    CardDevelopment popFromStack(int rowIndex, int colIndex) {
+
+        if (rowIndex >= 0 && rowIndex <= 2 && colIndex >= 0 && colIndex <= 3)
+        return market[rowIndex][colIndex].pop();
+
+        else return null;
     }
 
     /**

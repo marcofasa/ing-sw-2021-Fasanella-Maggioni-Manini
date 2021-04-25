@@ -44,7 +44,6 @@ public class PlayerBoard {
         for (int i = 0; i < 3; i++) cardSlotArray[i] = new CardDevelopmentSlot(CardDevelopmentSlotID.values()[i]);
     }
 
-
     public ArrayList<CardDevelopment> getAllDevelopmentCards() {
         ArrayList<CardDevelopment> outputList = new ArrayList<>();
         ArrayList<CardDevelopment> tempList;
@@ -223,7 +222,7 @@ public class PlayerBoard {
      */
     public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
 
-        HashMap<Resource, Integer> temp = new HashMap<>(getStrongboxInstance().getContent());
+        HashMap<Resource, Integer> temp = getStrongboxInstance().getContent();
 
         for (Resource res : Resource.values()) {
             temp.replace(res, temp.get(res) + getDepositInstance().getContent().get(res));
@@ -256,26 +255,32 @@ public class PlayerBoard {
 
     /**
      * Giving two resources you can get one of any type
+     * This method assumes that the player hold enough resources to activate the production power.
+     *
      * @param input1
      * @param input2
      * @param output
      */
     private void activateBasicProduction(Resource input1, Resource input2, Resource output){
-        getDepositInstance().discard(input1);
-        getDepositInstance().discard(input2);
+        getDepositInstance().useResource(input1, 1);
+        getDepositInstance().useResource(input2, 1);
         getStrongboxInstance().addResource(output, 1);
     }
 
     /**
+     * Method to activate a single card's production power.
+     * This method assumes that the player holds enough resources to activate the production power.
      *
      * @param cardDevelopmentSlotToActivate
      */
-    private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate){
-        cardDevelopmentSlotToActivate.getTop().activateProduction(this);
+    private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate) {
+        boolean success = cardDevelopmentSlotToActivate.getTop().tryActivateProduction(this);
     }
 
     /**
      * Checks if cardLeader can be activated and calls activate() on it
+     * This method assumes that the player holds enough resources to activate the production power.
+     *
      * @param cardLeaderToBeActivated
      * @param output
      */
@@ -296,6 +301,9 @@ public class PlayerBoard {
                 cardsLeader) {
             victoryPoints += cardLeader.getVictoryPoints();
         }
+
+
+        //TODO I punti vittoria dati da deposito e strongbox sono = floor(risorse totali / 5)
 
         //Deposit
         for (Resource resource:
@@ -356,4 +364,10 @@ public class PlayerBoard {
          */
         targetSlot.placeCard(cardToBePlaced);
     }
+
+    /*
+    TODO Funzione per attivare la selezione di poteri di produzione,
+     che prima controlli se il player possiede abbastanza risorse in una mappa generata da deposito + strongbox,
+     se no lancia NotEnoughResourcesException che sara' gestita dal controller
+     */
 }

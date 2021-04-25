@@ -22,7 +22,8 @@ public class GameTable {
 
     /**
      * Constructor that creates player, cardLeaderDeck and distributes them
-     * @param nicknames
+     *
+     * @param nicknames ArrayList of nicknames chosen by the client(s)
      */
     public GameTable(ArrayList<String> nicknames) {
         numberOfPlayers = nicknames.size();
@@ -44,28 +45,47 @@ public class GameTable {
     }
 
 
-    public CardLeader getCardLeader(PlayerBoard playerBoard) {
-        return cardLeaderDeck.getCardLeader(playerBoard);
-    }
+    /* Getters */
 
-
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
-    }
-
+    //Singletons
 
     public CardDevelopmentMarket getCardDevelopmentMarketInstance() {
-        if(cardDevelopmentMarket == null)
+        if (cardDevelopmentMarket == null)
             cardDevelopmentMarket = new CardDevelopmentMarket();
         return cardDevelopmentMarket;
     }
-
 
     public Lorenzo getLorenzoInstance() {
         if (lorenzo == null) {
             lorenzo = new Lorenzo(this);
         }
         return lorenzo;
+    }
+
+    public FaithTrail getFaithTrailInstance() {
+        if (faithTrail == null)
+            if (isSinglePlayer) {
+                faithTrail = new FaithTrail(this, players, getLorenzoInstance());
+            } else faithTrail = new FaithTrail(this, players);
+        return faithTrail;
+    }
+
+    public Market getMarketInstance() {
+        if (market == null) {
+            market = new Market(this);
+        }
+        return market;
+    }
+
+    //Questi metodi andrebbero rinominati a dwarCardLeader imo, non sono veri e propri getter -Lucas
+    public CardLeader getCardLeader(PlayerBoard playerBoard) {
+        return cardLeaderDeck.getCardLeader(playerBoard);
+    }
+
+    //State getters
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
     public ArrayList<PlayerBoard> getPlayerBoards() {
@@ -78,38 +98,28 @@ public class GameTable {
 
     /**
      * If player is the last of players list then returns from the first
-     * @param currPlayer
-     * @return next Player
+     *
+     * @param currPlayer Active player
+     * @return next player in the turn queue
      */
     public PlayerBoard getNextPlayer(PlayerBoard currPlayer) {
         int i = players.indexOf(currPlayer);
         if (i < numberOfPlayers - 1) {
             return players.get(i + 1); //next Player
-        } else return players.get(0); //first Player
+        } else
+            return players.get(0); //first Player
     }
 
-    public FaithTrail getFaithTrailInstance() {
-        if (faithTrail == null)
-            if(isSinglePlayer){
-                faithTrail= new FaithTrail(this,players,getLorenzoInstance());
-            }
-            else faithTrail = new FaithTrail(this, players);
-        return faithTrail;
-    }
-
-    public Market getMarketInstance() {
-        if (market == null) {
-            market = new Market(this);
-        }
-        return market;
-    }
+    /* Setters */
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
 
+    /* Class methods */
+
     /**
-     * discard development card from PlayerBoard after a discardAction was drawn from Lorenzo.
+     * Discard development card from PlayerBoard after a discardAction was drawn from Lorenzo.
      * This method always discards 2 cards of discardType
      *
      * @param discardType type of development card
@@ -118,10 +128,8 @@ public class GameTable {
 
         cardDevelopmentMarket.discardCards(discardType);
 
-        //THIS FUNCTION SHOULD ACTIVATE ENDGAME
         if (cardDevelopmentMarket.isColumnEmpty(discardType)) activateEndGame();
     }
-
 
     /**
      * This method should only notify the controller that an EndGame condition has been met.
@@ -143,21 +151,23 @@ public class GameTable {
 
     /**
      * Calls movePlayer() method in FaithTrail
+     *
      * @param player to be moved
      * @param steps
      */
     public void moveFaithTrail(PlayerBoard player, int steps) {
-        faithTrail.movePlayer(player, steps);
+        getFaithTrailInstance().movePlayer(player, steps);
     }
-    public void moveFaithTrailLorenzo(){
-        faithTrail.moveLorenzo();
+
+    public void moveFaithTrailLorenzo() {
+        getFaithTrailInstance().moveLorenzo();
     }
 
     public void moveOthersFaithTrail(PlayerBoard notMovingPlayer) {
         ListIterator<PlayerBoard> iterator = players.listIterator();
         while (iterator.hasNext()) {
             if (iterator.next().equals(notMovingPlayer)) continue;
-            else faithTrail.movePlayer(iterator.next(), 1);
+            else getFaithTrailInstance().movePlayer(iterator.next(), 1);
         }
     }
 
@@ -174,10 +184,10 @@ public class GameTable {
                             @Nullable Resource bonus1,
                             @Nullable Resource bonus2) {
 
-        if(bonus1 == null && playerIndex > 0){
+        if (bonus1 == null && playerIndex > 0) {
             throw new IllegalArgumentException("bonus1 must be selected for this player: " + getPlayerByIndex(playerIndex));
         }
-        if(bonus2 == null && playerIndex > 2){
+        if (bonus2 == null && playerIndex > 2) {
             throw new IllegalArgumentException("bonus2 must be selected for this player: " + getPlayerByIndex(playerIndex));
         }
 
@@ -211,13 +221,18 @@ public class GameTable {
 
     }
 
-    public void activateEndGame(Lorenzo lorenzo,int pos) {
+    //Questo override non e' necessario imo -Lucas
+    public void activateEndGame(Lorenzo lorenzo, int pos) {
         //end instantly the game: Lorenzo wins
-        if(pos==24) {try {
-            throw new ExecutionControl.NotImplementedException("Activate Endgame has not been implemented yet");
-        } catch (ExecutionControl.NotImplementedException e) {
-            e.printStackTrace();
-        }}
+        if (pos == 24) {
+            try {
+                throw new ExecutionControl.NotImplementedException("Activate Endgame has not been implemented yet");
+            } catch (ExecutionControl.NotImplementedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
+
+
 }

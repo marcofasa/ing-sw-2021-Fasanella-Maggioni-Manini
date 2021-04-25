@@ -7,13 +7,12 @@ import java.util.Stack;
 
 /*
     A CardDevelopmentStack is a stack of at most 4 cards, all with same level and same type.
-
  */
 
 public class CardDevelopmentStack {
 
     final int MAX_STACK_SIZE = 4;
-    private Stack<CardDevelopment> cards;
+    private final Stack<CardDevelopment> cards;
 
     /**
      * Base constructor
@@ -39,7 +38,7 @@ public class CardDevelopmentStack {
     public CardDevelopmentStack(CardDevelopmentStack stackToBeCloned) {
 
         cards = new Stack<>();
-        for (CardDevelopment card : stackToBeCloned.getCards()) cards.push(new CardDevelopment(card));
+        for (CardDevelopment card : stackToBeCloned.cards) cards.push(new CardDevelopment(card));
     }
 
     /* METHODS */

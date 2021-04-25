@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Strongbox {
 
-    private HashMap<Resource, Integer> content;
+    protected final HashMap<Resource, Integer> content;
 
     /* METHODS */
 
@@ -64,7 +64,7 @@ public class Strongbox {
      */
     boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
 
-        for (Resource res : Resource.values()) {
+        for (Resource res : resourcesToBeAdded.keySet()) {
             addResource(res, resourcesToBeAdded.get(res));
         }
         return true;

@@ -117,6 +117,9 @@ public class CardDevelopment {
      * Consumes resources by default starting from the deposit, if not enough resources were found in deposit,
      * the rest is taken from the strongbox.
      * This comes from the logic by which it is always convenient to free space in the deposit rather than strongbox.
+     *
+     * This method assumes the player holds enough resources to activate the card's production power
+     *
      * @param board The PlayerBoard that owns the card.
      */
     void activateProduction(PlayerBoard board) {
