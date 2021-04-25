@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FaithTrail {
-    final private int lenght = 24;
+    final private int lenght = 25;
     private ArrayList<FaithCell> cells;
     private HashMap<PlayerBoard, Integer> playerPosition;
     private HashMap<PlayerBoard, FaithTilePack> playerTiles;
@@ -71,7 +71,7 @@ public class FaithTrail {
      * @return TilePack of corresponding Player
      */
 
-    private FaithTilePack getTilePack(PlayerBoard p) {
+    public FaithTilePack getTilePack(PlayerBoard p) {
         return playerTiles.get(p);
     }
 
@@ -116,7 +116,7 @@ public class FaithTrail {
      * @param position
      * @return
      */
-    private boolean checkEndGame(int position) {
+    public boolean checkEndGame(int position) {
         return position == 24;
     }
 
