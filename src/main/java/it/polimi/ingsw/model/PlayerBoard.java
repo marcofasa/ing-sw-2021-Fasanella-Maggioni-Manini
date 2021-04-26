@@ -58,6 +58,7 @@ public class PlayerBoard {
         return outputList;
     }
 
+
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
     }
@@ -322,12 +323,6 @@ public class PlayerBoard {
         }
 
         victoryPoints += Math.floorDiv(totalResources, 5);
-
-        //CardLeaderProduction
-        for (Resource resource :
-                getDepositLeaderCardInstance().getContent().keySet()) {
-            victoryPoints += getStrongboxInstance().getContent().get(resource);
-        }
 
         //CardDevelopment
         for (CardDevelopment cardDevelopment :

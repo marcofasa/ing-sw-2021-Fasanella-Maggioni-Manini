@@ -77,6 +77,18 @@ public class GameTable {
         return market;
     }
 
+    /**
+     *
+     * @return player with PlayerState Playing
+     */
+    public PlayerBoard getActivePlayer(){
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if (players.get(i).getPlayerState()==PlayerState.PLAYING) players.get(i);
+        }
+        //This return should never be reached
+        return null;
+    }
+
     //Questi metodi andrebbero rinominati a dwarCardLeader imo, non sono veri e propri getter -Lucas
     public CardLeader getCardLeader(PlayerBoard playerBoard) {
         return cardLeaderDeck.getCardLeader(playerBoard);
@@ -140,6 +152,17 @@ public class GameTable {
         Appunto di Lucas : Secondo me questo metodo non ha bisogno di prendere un player come parametro. Solo
         modifichera` lo stato di un suo attributo interno e ci chiamera .update(), notificando al Controller
         che inizia l'utimo giro di turni.
+         */
+
+        /*
+        Appunto di Marco: ci sono due tipi di endgame:
+        -- Endgame immediato (solo in single player con Lorenzo)
+             (getposition(Lorenzo)== 24  OR Colonna di Carte sviluppo di una certa tipologia è vuota) --> PERSO
+             (getposition(SinglePlayer)== 24 OR Settima carta Sviluppo comprata) --> VINTO
+        -- Endgame normale
+            getposition(Player)== 24
+            Settima carta Sviluppo comprata
+        In entrambi i casi andrebbe controllato se isSinglePlayer è true e terminare o fare l'ultimo giro.
          */
 
         try {
@@ -217,19 +240,6 @@ public class GameTable {
         for (PlayerBoard player : players) {
             for (int i = 0; i < 4; i++)
                 player.getCardsLeaderBeforeSelecting().add(cardLeaderDeck.getCardLeader(player));
-        }
-
-    }
-
-    //Questo override non e' necessario imo -Lucas
-    public void activateEndGame(Lorenzo lorenzo, int pos) {
-        //end instantly the game: Lorenzo wins
-        if (pos == 24) {
-            try {
-                throw new ExecutionControl.NotImplementedException("Activate Endgame has not been implemented yet");
-            } catch (ExecutionControl.NotImplementedException e) {
-                e.printStackTrace();
-            }
         }
 
     }
