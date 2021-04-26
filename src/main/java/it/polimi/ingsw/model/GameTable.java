@@ -83,7 +83,7 @@ public class GameTable {
      */
     public PlayerBoard getActivePlayer(){
         for (int i = 0; i < numberOfPlayers; i++) {
-            if (players.get(i).getPlayerState()==PlayerState.PLAYING) players.get(i);
+            if (players.get(i).getPlayerState()==PlayerState.PLAYING) return players.get(i);
         }
         //This return should never be reached
         return null;
