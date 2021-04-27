@@ -24,7 +24,9 @@ public class Server {
     }
 
     public Server(boolean SinglePlayer){
-        //si instanzia sempre lato client
+        currentGame = new Game();
+        currentLobbySize = null;
+        lobby = new WaitingLobby();
     }
 
     synchronized void registerClient(Socket clientSocket, VirtualClient virtualClient, Integer clientID){
