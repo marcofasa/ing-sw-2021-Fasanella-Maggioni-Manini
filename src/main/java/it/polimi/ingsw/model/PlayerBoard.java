@@ -18,6 +18,7 @@ public class PlayerBoard {
     private Strongbox strongbox;
     private Resource cardLeaderProductionOutput;
     private DepositLeaderCard depositLeaderCard;
+    private Resource discountedResource;
 
     /**
      * Constructor
@@ -246,7 +247,7 @@ public class PlayerBoard {
     }
 
     public void discountResource(Resource resource) {
-        //???
+        discountedResource = resource; /* TODO */
     }
 
     public DepositLeaderCard getDepositLeaderCardInstance() {

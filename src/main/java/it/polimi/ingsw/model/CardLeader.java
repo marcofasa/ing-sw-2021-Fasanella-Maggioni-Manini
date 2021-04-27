@@ -9,7 +9,7 @@ public abstract class CardLeader  {
 
     protected Integer victoryPoints;
 
-    protected boolean active;
+    protected boolean active = false;
 
     protected Resource resource;
 

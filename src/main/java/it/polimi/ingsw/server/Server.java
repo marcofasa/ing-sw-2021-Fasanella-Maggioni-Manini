@@ -13,27 +13,24 @@ public class Server {
     private SocketServer socketServer;
     private HashMap<VirtualClient, Integer> virtualClientIDMap;
     private HashMap<VirtualClient, Game> gameMap;
-    private ArrayList<VirtualClient> lobby;
+    private final WaitingLobby lobby;
     private Integer currentLobbySize;
     private Game currentGame;
 
     public Server(){
         currentGame = new Game();
         currentLobbySize = null;
+        lobby = new WaitingLobby();
+    }
+
+    public Server(boolean SinglePlayer){
+        //si instanzia sempre lato client
     }
 
     synchronized void registerClient(Socket clientSocket, VirtualClient virtualClient, Integer clientID){
         virtualClientIDMap.put(virtualClient, clientID);
-        lobby.add(virtualClient);
-        waitingRoomHandler();
-    }
-
-    void waitingRoomHandler(){
-        if(currentLobbySize == null)
-            //?
-        if(lobby.size() == currentLobbySize){
-
-        }
+        if(lobby.isEmpty())
+            lobby.addFirstPlayer(virtualClient);
     }
 
     public static void main(String[] args) {
