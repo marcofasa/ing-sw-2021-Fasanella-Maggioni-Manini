@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import jdk.jshell.spi.ExecutionControl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -106,8 +108,13 @@ public class FaithTrail {
 
     public void moveLorenzo(){
         lorenzoPosition++;
+        try {
+            throw new ExecutionControl.NotImplementedException("roba commentata qui, occhio");
+        } catch (ExecutionControl.NotImplementedException e) {
+            e.printStackTrace();
+        }
         if(checkPopeCellLorenzo(getSection(lorenzoPosition))) popeActive(getSection(lorenzoPosition));
-        if(checkEndGame(lorenzoPosition)) gameTable.activateEndGame(lorenzo,lorenzoPosition);
+     // --->  if(checkEndGame(lorenzoPosition)) gameTable.activateEndGame(lorenzo,lorenzoPosition);
     }
 
 
