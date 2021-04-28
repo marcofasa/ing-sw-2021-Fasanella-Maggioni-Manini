@@ -20,6 +20,7 @@ public class SocketServer implements Runnable{
     public SocketServer(Integer port, Server server) {
         this.port = port;
         this.server = server;
+        nextClientID = 0;
         executor = Executors.newCachedThreadPool();
         try {
             serverSocket = new ServerSocket(port);
@@ -30,9 +31,11 @@ public class SocketServer implements Runnable{
 
     @Override
     public void run() {
+        System.out.println("Server is now open");
         while (true) {
             try {
                 VirtualClient virtualClient = new VirtualClient(serverSocket.accept() , server, nextClientID);
+                System.out.println("Player " + virtualClient + " is now connected to the server");
                 nextClientID++;
                 executor.submit(virtualClient);
             } catch (IOException e) {

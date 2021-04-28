@@ -36,11 +36,11 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newCachedThreadPool();
         Server server = new Server();
         Integer port = 25580;
         server.socketServer = new SocketServer(port, server);
-        executor.submit(server.socketServer);
+        Thread thread = new Thread(server.socketServer);
+        thread.start();
     }
 
     void setCurrentLobbySize(Integer currentLobbySize) {

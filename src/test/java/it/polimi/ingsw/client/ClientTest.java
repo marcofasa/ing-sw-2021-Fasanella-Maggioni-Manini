@@ -23,12 +23,20 @@ class ClientTest {
     public void givenClient2_whenServerResponds_thenCorrect() {
         Client client2 = new Client();
         client2.startConnection("127.0.0.1", 25580);
+        Client client3 = new Client();
+        client3.startConnection("127.0.0.1", 25580);
         String msg1 = client2.sendMessage("hello");
         String msg2 = client2.sendMessage("world");
+        String msg21 = client3.sendMessage("hello");
+        String msg22 = client3.sendMessage("world");
+        String terminate2 = client3.sendMessage(".");
         String terminate = client2.sendMessage(".");
 
         assertEquals(msg1, "hello");
         assertEquals(msg2, "world");
         assertEquals(terminate, "bye");
+        assertEquals(msg21, "hello");
+        assertEquals(msg22, "world");
+        assertEquals(terminate2, "bye");
     }
 }
