@@ -20,30 +20,34 @@ public class Server {
     public Server(){
         currentGame = new Game();
         currentLobbySize = null;
-        lobby = new WaitingLobby();
+        lobby = new WaitingLobby(this);
     }
 
+    //Single Player Server
     public Server(boolean SinglePlayer){
         currentGame = new Game();
         currentLobbySize = null;
-        lobby = new WaitingLobby();
+        lobby = new WaitingLobby(this);
     }
 
-    synchronized void registerClient(Socket clientSocket, VirtualClient virtualClient, Integer clientID){
-        virtualClientIDMap.put(virtualClient, clientID);
-        if(lobby.isEmpty())
-            lobby.addFirstPlayer(virtualClient);
+    synchronized void registerClient(VirtualClient virtualClient){
+        virtualClientIDMap.put(virtualClient, virtualClient.getID());
+        lobby.addPlayer(virtualClient);
     }
 
     public static void main(String[] args) {
         ExecutorService executor = Executors.newCachedThreadPool();
-        Server server=new Server();
-        Integer port = 6666;
+        Server server = new Server();
+        Integer port = 25580;
         server.socketServer = new SocketServer(port, server);
         executor.submit(server.socketServer);
     }
 
     void setCurrentLobbySize(Integer currentLobbySize) {
         this.currentLobbySize = currentLobbySize;
+    }
+
+    public void startGame() {
+
     }
 }

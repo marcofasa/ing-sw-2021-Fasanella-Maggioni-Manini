@@ -11,7 +11,7 @@ class ClientTest {
     @Test
     public void givenClient1_whenServerResponds_thenCorrect() {
         Client client1 = new Client();
-        client1.startConnection("127.0.0.1", 6666);
+        client1.startConnection("127.0.0.1", 25580);
         String msg1 = client1.sendMessage("hello");
         String msg2 = client1.sendMessage("world");
 
@@ -22,7 +22,7 @@ class ClientTest {
     @Test
     public void givenClient2_whenServerResponds_thenCorrect() {
         Client client2 = new Client();
-        client2.startConnection("127.0.0.1", 6666);
+        client2.startConnection("127.0.0.1", 25580);
         String msg1 = client2.sendMessage("hello");
         String msg2 = client2.sendMessage("world");
         String terminate = client2.sendMessage(".");

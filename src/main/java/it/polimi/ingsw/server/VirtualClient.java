@@ -50,4 +50,8 @@ public class VirtualClient implements Runnable{
     public Integer askClient(String requestGameSize) {
         return 2;
     }
+
+    public Integer getID() {
+        return clientID;
+    }
 }
