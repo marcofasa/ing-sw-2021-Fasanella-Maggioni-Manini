@@ -37,7 +37,7 @@ public class Server {
 
     public static void main(String[] args) {
         Server server = new Server();
-        Integer port = 25580;
+        Integer port = 25556;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);
         thread.start();

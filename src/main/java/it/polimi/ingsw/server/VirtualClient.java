@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ClientDummy;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.server.ServerStringMessageForTesting;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.io.*;
 import java.net.Socket;
@@ -25,8 +25,8 @@ public class VirtualClient implements Runnable{
     public void send(String string){
         try {
             outputStream.reset();
-        outputStream.writeObject(new ServerStringMessageForTesting(string));
-        outputStream.flush();
+            outputStream.writeObject(new ServerStringMessageForTesting(string, null));
+            outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,15 +45,6 @@ public class VirtualClient implements Runnable{
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public Integer askClient(String requestGameSize) {
-        try {
-            throw new ExecutionControl.NotImplementedException("Non ancora implementato");
-        } catch (ExecutionControl.NotImplementedException e) {
-            e.printStackTrace();
-        }
-        return 2;
     }
 
     public Integer getID() {
