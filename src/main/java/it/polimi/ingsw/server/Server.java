@@ -2,25 +2,23 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.*;
 
-import java.net.*;
-import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Server {
     private SocketServer socketServer;
-    private HashMap<VirtualClient, Integer> virtualClientIDMap;
+    private HashMap<Integer, VirtualClient> virtualClientIDMap;
     private HashMap<VirtualClient, Game> gameMap;
+    private HashMap<String, VirtualClient> clientsNickname;
     private final WaitingLobby lobby;
     private Integer currentLobbySize;
-    private Game currentGame;
+    private final Game currentGame;
+    private final ServerCommandDispatcher serverCommandDispatcher;
 
     public Server(){
         currentGame = new Game();
         currentLobbySize = null;
         lobby = new WaitingLobby(this);
+        serverCommandDispatcher = new ServerCommandDispatcher(this);
     }
 
     //Single Player Server
@@ -28,10 +26,12 @@ public class Server {
         currentGame = new Game();
         currentLobbySize = null;
         lobby = new WaitingLobby(this);
+        serverCommandDispatcher = new ServerCommandDispatcher(this);
     }
 
-    synchronized void registerClient(VirtualClient virtualClient){
-        virtualClientIDMap.put(virtualClient, virtualClient.getID());
+    synchronized void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
+        if(clientsNickname.containsKey(nickname)) throw new NicknameAlreadyInUseException();
+        virtualClientIDMap.put(virtualClient.getID(), virtualClient);
         lobby.addPlayer(virtualClient);
     }
 
@@ -47,7 +47,15 @@ public class Server {
         this.currentLobbySize = currentLobbySize;
     }
 
+    Game getGameByPlayerID(Integer playerID){
+        return gameMap.get(virtualClientIDMap.get(playerID));
+    }
+
     public void startGame() {
 
+    }
+
+    public ServerCommandDispatcher getServerCommandDispatcher() {
+        return serverCommandDispatcher;
     }
 }

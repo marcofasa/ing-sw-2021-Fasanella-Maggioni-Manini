@@ -1,23 +1,28 @@
 package it.polimi.ingsw.communication.client;
 
 import it.polimi.ingsw.communication.SerializedNetworkMessage;
+import it.polimi.ingsw.server.ServerCommandDispatcher;
+import it.polimi.ingsw.server.VirtualClient;
 
 public abstract class ClientMessage extends SerializedNetworkMessage {
 
     private final String message;
 
-    private final String keyValues;
+    private final String key;
 
-    public ClientMessage(String message, String keyValues){
+    public ClientMessage(String message, String key){
         this.message = message;
-        this.keyValues = keyValues;
+        this.key = key;
     }
 
-    public String getKeyValues(){
-        return keyValues;
+    public String getKey(){
+        return key;
     }
 
     public String getPayload(){
         return message;
     }
+
+    public abstract void read(VirtualClient virtualClient);
+
 }

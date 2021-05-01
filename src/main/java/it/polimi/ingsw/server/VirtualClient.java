@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ClientDummy;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.server.ServerStringMessageForTesting;
+import it.polimi.ingsw.controller.Game;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,6 +11,7 @@ public class VirtualClient implements Runnable{
     private final Integer clientID;
     private final Socket clientSocket;
     private final Server server;
+    private Game game;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private boolean connected;
@@ -39,7 +40,7 @@ public class VirtualClient implements Runnable{
             ClientMessage inputClass;
             while (connected) {
                 inputClass = (ClientMessage) inputStream.readObject();
-                CommandDispatcher.parseInput(inputClass, this);
+                inputClass.read(this);
             }
             clientSocket.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -53,5 +54,17 @@ public class VirtualClient implements Runnable{
 
     public void setupConnection(String payload) {
 
+    }
+
+    void SetGame(Game game){
+        this.game = game;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

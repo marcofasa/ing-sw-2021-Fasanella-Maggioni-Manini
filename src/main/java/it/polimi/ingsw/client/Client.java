@@ -4,7 +4,6 @@ import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.PlayersNumber;
 import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
-import it.polimi.ingsw.server.CommandDispatcher;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,19 +14,24 @@ public class Client {
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Socket clientSocket;
+    private ClientCommandDispatcher clientCommandDispatcher;
 
-    public void startConnectionAndListen(String ip, int port) {
+    public Client(){
+        ClientCommandDispatcher clientCommandDispatcher = new ClientCommandDispatcher();
+    }
+
+    public void startConnectionAndListen(String ip, int port, String nickname) {
         try {
             clientSocket = new Socket(ip, port);
             connected = true;
             outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
-            send(new SetupConnection("prova", null));
+            send(new SetupConnection(nickname));
             ServerMessage inputClass;
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
-                    CommandDispatcherClient.parseInput(inputClass, this);
+                    inputClass.read(clientCommandDispatcher);
                 } catch (IOException | ClassNotFoundException ioException) {
                     ioException.printStackTrace();
                 }
@@ -61,7 +65,7 @@ public class Client {
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
-        new Thread(() -> client.startConnectionAndListen(ip,port)).start();
+        new Thread(() -> client.startConnectionAndListen(ip,port, "nickname")).start();
     }
 
     public void sendPlayersNumber() {
