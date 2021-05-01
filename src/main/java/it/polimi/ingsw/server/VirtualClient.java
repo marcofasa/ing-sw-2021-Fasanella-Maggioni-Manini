@@ -7,6 +7,9 @@ import it.polimi.ingsw.controller.Game;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class VirtualClient implements Runnable{
     private final Integer clientID;
@@ -16,12 +19,14 @@ public class VirtualClient implements Runnable{
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private boolean connected;
+    private final ExecutorService executors;
 
     public VirtualClient(Socket socket, Server server, Integer clientID) {
         this.clientSocket = socket;
         this.server = server;
         this.clientID = clientID;
         connected = true;
+        executors = Executors.newCachedThreadPool();
     }
 
     public void send(String string){
@@ -52,6 +57,8 @@ public class VirtualClient implements Runnable{
             while (connected) {
                 inputClass = (ClientMessage) inputStream.readObject();
                 inputClass.read(this);
+                ClientMessage finalInputClass = inputClass;
+                new Thread(() -> finalInputClass.read(this)).start();
             }
             clientSocket.close();
         } catch (IOException | ClassNotFoundException e) {

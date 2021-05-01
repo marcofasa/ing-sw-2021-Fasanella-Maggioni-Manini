@@ -5,7 +5,18 @@ import it.polimi.ingsw.communication.client.*;
 
 public class ClientCommandDispatcher {
 
+    private Client client;
+
+    public ClientCommandDispatcher(Client client){
+        this.client = client;
+    }
+
     public void clientAccepted() {
         System.out.println("Connected to server");
+    }
+
+    public void requestPlayersNumber() {
+        System.out.println("Request Players Number received");
+        client.send(new PlayersNumber(Integer.toString(client.askPlayersNumber())));
     }
 }

@@ -17,7 +17,7 @@ public class Client {
     private ClientCommandDispatcher clientCommandDispatcher;
 
     public Client(){
-        this.clientCommandDispatcher = new ClientCommandDispatcher();
+        this.clientCommandDispatcher = new ClientCommandDispatcher(this);
     }
 
     public void startConnectionAndListen(String ip, int port, String nickname) {
@@ -66,9 +66,5 @@ public class Client {
         int port = 25556;
         String ip = "127.0.0.1";
         new Thread(() -> client.startConnectionAndListen(ip,port, "nickname")).start();
-    }
-
-    public void sendPlayersNumber() {
-        send(new PlayersNumber(Integer.toString(askPlayersNumber()), null));
     }
 }

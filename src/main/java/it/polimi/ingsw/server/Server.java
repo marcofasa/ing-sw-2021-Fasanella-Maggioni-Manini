@@ -63,7 +63,7 @@ public class Server {
 
     }
 
-    public ServerCommandDispatcher getServerCommandDispatcher() {
+    public ServerCommandDispatcher getServerCommandDispatcher(VirtualClient virtualClient) {
         return serverCommandDispatcher;
     }
 }

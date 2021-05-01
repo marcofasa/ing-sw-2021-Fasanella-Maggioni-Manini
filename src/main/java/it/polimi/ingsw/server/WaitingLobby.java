@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.communication.server.RequestPlayersNumber;
+
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
@@ -25,7 +27,7 @@ public class WaitingLobby {
 
     private void addFirstPlayer(VirtualClient virtualClient) {
         try {
-            virtualClient.send("RequestPlayerSize");
+            virtualClient.send(new RequestPlayersNumber());
             semaphore.acquire(1);
             players.add(virtualClient);
             empty = false;

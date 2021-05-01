@@ -2,7 +2,7 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class ServerRequest extends ServerMessage {
+public abstract class ServerRequest extends ServerMessage {
     public ServerRequest(String message, String key) {
         super(message, key);
     }
@@ -13,8 +13,6 @@ public class ServerRequest extends ServerMessage {
      * @param commandDispatcher Game dispatcher
      */
     @Override
-    public void read(ClientCommandDispatcher commandDispatcher) {
-
-    }
+    public abstract void read(ClientCommandDispatcher commandDispatcher);
 }
 
