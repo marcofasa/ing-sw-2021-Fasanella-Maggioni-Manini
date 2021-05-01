@@ -17,7 +17,7 @@ public class Client {
     private ClientCommandDispatcher clientCommandDispatcher;
 
     public Client(){
-        ClientCommandDispatcher clientCommandDispatcher = new ClientCommandDispatcher();
+        this.clientCommandDispatcher = new ClientCommandDispatcher();
     }
 
     public void startConnectionAndListen(String ip, int port, String nickname) {

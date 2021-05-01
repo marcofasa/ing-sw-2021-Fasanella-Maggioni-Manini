@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.communication.client.ClientMessage;
+import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerStringMessageForTesting;
 import it.polimi.ingsw.controller.Game;
 
@@ -27,6 +28,16 @@ public class VirtualClient implements Runnable{
         try {
             outputStream.reset();
             outputStream.writeObject(new ServerStringMessageForTesting(string, null));
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void send(ServerMessage serverMessage){
+        try {
+            outputStream.reset();
+            outputStream.writeObject(serverMessage);
             outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

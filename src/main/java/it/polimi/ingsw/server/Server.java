@@ -1,14 +1,15 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.communication.server.ClientAccepted;
 import it.polimi.ingsw.controller.*;
 
 import java.util.HashMap;
 
 public class Server {
     private SocketServer socketServer;
-    private HashMap<Integer, VirtualClient> virtualClientIDMap;
-    private HashMap<VirtualClient, Game> gameMap;
-    private HashMap<String, VirtualClient> clientsNickname;
+    private final HashMap<Integer, VirtualClient> virtualClientIDMap;
+    private final HashMap<VirtualClient, Game> gameMap;
+    private final HashMap<String, VirtualClient> clientsNickname;
     private final WaitingLobby lobby;
     private Integer currentLobbySize;
     private final Game currentGame;
@@ -19,19 +20,26 @@ public class Server {
         currentLobbySize = null;
         lobby = new WaitingLobby(this);
         serverCommandDispatcher = new ServerCommandDispatcher(this);
+        clientsNickname = new HashMap<>();
+        gameMap = new HashMap<>();
+        virtualClientIDMap = new HashMap<>();
     }
 
+    /*
     //Single Player Server
     public Server(boolean SinglePlayer){
         currentGame = new Game();
         currentLobbySize = null;
         lobby = new WaitingLobby(this);
         serverCommandDispatcher = new ServerCommandDispatcher(this);
-    }
+        clientsNickname = new HashMap<>();
+    }*/
 
     synchronized void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
         if(clientsNickname.containsKey(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
+        clientsNickname.put(nickname, virtualClient);
+        virtualClient.send(new ClientAccepted());
         lobby.addPlayer(virtualClient);
     }
 

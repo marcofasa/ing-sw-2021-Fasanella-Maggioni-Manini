@@ -5,4 +5,7 @@ import it.polimi.ingsw.communication.client.*;
 
 public class ClientCommandDispatcher {
 
+    public void clientAccepted() {
+        System.out.println("Connected to server");
+    }
 }
