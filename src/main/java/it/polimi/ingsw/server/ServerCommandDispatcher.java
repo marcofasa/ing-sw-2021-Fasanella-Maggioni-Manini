@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.SetupConnection;
+import it.polimi.ingsw.communication.server.NicknameUnavailable;
+import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.net.Socket;
 
@@ -14,7 +17,11 @@ public class ServerCommandDispatcher {
     }
 
     public void setupConnection(String nickname, VirtualClient virtualClient) {
-        server.registerClient(virtualClient, nickname);
+        try {
+            server.registerClient(virtualClient, nickname);
+        } catch (NicknameAlreadyInUseException e) {
+            virtualClient.send(new NicknameUnavailable());
+        }
     }
 
     public void setLobbySize(VirtualClient virtualClient, Integer size){

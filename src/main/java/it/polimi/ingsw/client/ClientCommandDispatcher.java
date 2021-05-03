@@ -19,4 +19,8 @@ public class ClientCommandDispatcher {
         System.out.println("Request Players Number received");
         client.send(new PlayersNumber(Integer.toString(client.askPlayersNumber())));
     }
+
+    public void nicknameIsUnavailable(){ /* TODO */
+        System.out.println("Nickname is unavailable");
+    }
 }

@@ -17,14 +17,25 @@ public class GameTable {
     private int numberOfPlayers;
     private boolean isFirstRound;
     private boolean isSinglePlayer;
+    private boolean gameHasStarted;
 
     //Constructor
+
+    public GameTable(Boolean isSinglePlayer){
+        numberOfPlayers = 0;
+        players = new ArrayList<>();
+        this.isSinglePlayer = isSinglePlayer;
+        cardLeaderDeck = new CardLeaderDeck(this);
+        gameHasStarted = false;
+    }
 
     /**
      * Constructor that creates player, cardLeaderDeck and distributes them
      *
+     * @deprecated use {@link #GameTable(Boolean)} instead and add players via {@link #addPlayer(String)} then call {@link #startGame()}.
      * @param nicknames ArrayList of nicknames chosen by the client(s)
      */
+    @Deprecated
     public GameTable(ArrayList<String> nicknames) {
         numberOfPlayers = nicknames.size();
         players = new ArrayList<>();
@@ -41,9 +52,28 @@ public class GameTable {
         //setupHelper() non puo' essere chiamato qui, va chiamato nel controller dopo aver ricevuto le risorse scelte dai giocatori
 
         distributeLeaderCards();
+        gameHasStarted = true;
 
     }
 
+    /**
+     * Add player to the game. Do not use this method to resume a player connection
+     * @param nickname String of the new player's nickname
+     */
+    public void addPlayer(String nickname){
+        if (gameHasStarted) throw new RuntimeException("Cannot add players while game is running");
+        if (players.size() == 4) throw new GameIsFullException();
+        if (numberOfPlayers == 0) players.add(new PlayerBoard(nickname, true, PlayerState.PLAYING, this));
+        else players.add(new PlayerBoard(nickname, false, PlayerState.IDLE, this));
+    }
+
+    /**
+     * Starts a game with the current players in it
+     */
+    public void startGame(){
+        distributeLeaderCards();
+        gameHasStarted = true;
+    }
 
     /* Getters */
 
