@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
 
 public class Server {
     private SocketServer socketServer;
@@ -20,6 +21,7 @@ public class Server {
     private Game currentGame;
     private final ServerCommandDispatcher serverCommandDispatcher;
     private final ExecutorService executors;
+    private final ArrayList<Runnable> timeouts;
 
     public Server(){
         nextGameID = 1;
@@ -33,6 +35,7 @@ public class Server {
         executors = Executors.newCachedThreadPool();
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
+        timeouts = new ArrayList<>();
     }
 
     /*
@@ -93,5 +96,9 @@ public class Server {
 
     public ServerCommandDispatcher getServerCommandDispatcher() {
         return serverCommandDispatcher;
+    }
+
+    public void unregisterClient(VirtualClient virtualClient) {
+        System.out.println("Timeout exceeded, unregistering client");
     }
 }

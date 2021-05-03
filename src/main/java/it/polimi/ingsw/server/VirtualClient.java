@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerStringMessageForTesting;
@@ -29,15 +30,6 @@ public class VirtualClient implements Runnable{
         executors = Executors.newCachedThreadPool();
     }
 
-    public void send(String string){
-        try {
-            outputStream.reset();
-            outputStream.writeObject(new ServerStringMessageForTesting(string, null));
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void send(ServerMessage serverMessage){
         try {

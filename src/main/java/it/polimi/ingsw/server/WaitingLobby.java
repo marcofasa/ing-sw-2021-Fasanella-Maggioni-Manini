@@ -3,12 +3,15 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.communication.server.RequestPlayersNumber;
 import it.polimi.ingsw.communication.server.ServerMessage;
 
+import java.sql.Time;
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.Callable;
+import java.util.concurrent.*;
 
 public class WaitingLobby {
 
     private final Server server;
+    private final ExecutorService executors;
 
     private volatile boolean empty;
 
@@ -24,15 +27,24 @@ public class WaitingLobby {
         empty = true;
         semaphore = new Semaphore(0);
         players = new ArrayList<>();
+        executors = Executors.newCachedThreadPool();
     }
 
     private void addFirstPlayer(VirtualClient virtualClient) {
         try {
             virtualClient.send(new RequestPlayersNumber());
-            semaphore.acquire(1);
+            executors.submit((() -> {
+                try {
+                    semaphore.acquire(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            })).get(20, TimeUnit.SECONDS);
             players.add(virtualClient);
             empty = false;
-        } catch (InterruptedException e) {
+        } catch (TimeoutException e) {
+            server.unregisterClient(virtualClient);
+        }  catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
