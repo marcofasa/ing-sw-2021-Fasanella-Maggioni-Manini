@@ -59,9 +59,8 @@ public class Client {
 
     public int askPlayersNumber() { /* TODO */
         System.out.println("Insert players number");
-       // Scanner sc = new Scanner(System.in);
-       // return sc.nextInt();
-        return 4;
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 
     public static void main(String[] args) {
@@ -69,6 +68,12 @@ public class Client {
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
-        new Thread(() -> client.startConnectionAndListen(ip,port, "nickname")).start();
+        new Thread(() -> client.startConnectionAndListen(ip,port, askNickname())).start();
+    }
+
+    private static String askNickname() {
+        System.out.println("Insert your nickname");
+        Scanner sc = new Scanner(System.in);
+        return sc.nextLine();
     }
 }

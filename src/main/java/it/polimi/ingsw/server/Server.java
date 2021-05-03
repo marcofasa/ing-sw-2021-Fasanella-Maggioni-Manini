@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.communication.server.ClientAccepted;
+import it.polimi.ingsw.communication.server.GameHasStarted;
 import it.polimi.ingsw.controller.*;
 
 import java.util.ArrayList;
@@ -13,12 +14,16 @@ public class Server {
     private final HashMap<Integer, VirtualClient> virtualClientIDMap;
     private final HashMap<VirtualClient, Game> gameMap;
     private final HashMap<String, VirtualClient> clientsNickname;
-    private final WaitingLobby lobby;
+    private final HashMap<Game, Integer> gamesID;
+    private int nextGameID;
+    private WaitingLobby lobby;
     private Game currentGame;
     private final ServerCommandDispatcher serverCommandDispatcher;
     private final ExecutorService executors;
 
     public Server(){
+        nextGameID = 1;
+        gamesID = new HashMap<>();
         currentGame = new Game();
         lobby = new WaitingLobby(this);
         serverCommandDispatcher = new ServerCommandDispatcher(this);
@@ -26,6 +31,8 @@ public class Server {
         gameMap = new HashMap<>();
         virtualClientIDMap = new HashMap<>();
         executors = Executors.newCachedThreadPool();
+        gamesID.put(currentGame, nextGameID);
+        nextGameID++;
     }
 
     /*
@@ -65,6 +72,10 @@ public class Server {
         return gameMap.get(virtualClientIDMap.get(playerID));
     }
 
+    public Integer getIDbyGame(Game game){
+        return gamesID.get(game);
+    }
+
     public void startGame() {
         ArrayList<VirtualClient> players = lobby.getPlayers();
         currentGame.addAllPlayers(players);
@@ -73,7 +84,11 @@ public class Server {
                 players) {
             gameMap.put(player, currentGame);
         }
+        lobby.sendAll(new GameHasStarted(nextGameID - 1));
         currentGame = new Game();
+        gamesID.put(currentGame, nextGameID);
+        nextGameID++;
+        lobby = new WaitingLobby(this);
     }
 
     public ServerCommandDispatcher getServerCommandDispatcher() {

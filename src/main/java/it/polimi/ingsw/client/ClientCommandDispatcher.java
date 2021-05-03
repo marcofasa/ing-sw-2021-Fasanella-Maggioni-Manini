@@ -23,4 +23,8 @@ public class ClientCommandDispatcher {
     public void nicknameIsUnavailable(){ /* TODO */
         System.out.println("Nickname is unavailable");
     }
+
+    public void gameHasStarted(int gameID) {
+        System.out.println("Game Has Started. Game ID: " + gameID);
+    }
 }

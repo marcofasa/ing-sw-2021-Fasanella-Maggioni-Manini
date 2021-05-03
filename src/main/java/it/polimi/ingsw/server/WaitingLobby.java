@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.communication.server.RequestPlayersNumber;
+import it.polimi.ingsw.communication.server.ServerMessage;
 
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
@@ -64,5 +65,12 @@ public class WaitingLobby {
 
     public ArrayList<VirtualClient> getPlayers() {
         return players;
+    }
+
+    public void sendAll(ServerMessage serverMessage){
+        for (VirtualClient player :
+                players) {
+            player.send(serverMessage);
+        }
     }
 }
