@@ -62,4 +62,7 @@ public class WaitingLobby {
         semaphore.release();
     }
 
+    public ArrayList<VirtualClient> getPlayers() {
+        return players;
+    }
 }

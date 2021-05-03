@@ -7,6 +7,7 @@ import it.polimi.ingsw.communication.server.ServerMessage;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 
@@ -57,6 +58,9 @@ public class Client {
     }
 
     public int askPlayersNumber() { /* TODO */
+        System.out.println("Insert players number");
+       // Scanner sc = new Scanner(System.in);
+       // return sc.nextInt();
         return 4;
     }
 

@@ -3,7 +3,10 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.communication.server.ClientAccepted;
 import it.polimi.ingsw.controller.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     private SocketServer socketServer;
@@ -11,8 +14,9 @@ public class Server {
     private final HashMap<VirtualClient, Game> gameMap;
     private final HashMap<String, VirtualClient> clientsNickname;
     private final WaitingLobby lobby;
-    private final Game currentGame;
+    private Game currentGame;
     private final ServerCommandDispatcher serverCommandDispatcher;
+    private final ExecutorService executors;
 
     public Server(){
         currentGame = new Game();
@@ -21,6 +25,7 @@ public class Server {
         clientsNickname = new HashMap<>();
         gameMap = new HashMap<>();
         virtualClientIDMap = new HashMap<>();
+        executors = Executors.newCachedThreadPool();
     }
 
     /*
@@ -32,13 +37,16 @@ public class Server {
         clientsNickname = new HashMap<>();
     }*/
 
-    synchronized void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
+    void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
         if(clientsNickname.containsKey(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
         clientsNickname.put(nickname, virtualClient);
         virtualClient.send(new ClientAccepted());
-        lobby.addPlayer(virtualClient);
+        synchronized (lobby) {
+            lobby.addPlayer(virtualClient);
+        }
     }
+
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -58,7 +66,14 @@ public class Server {
     }
 
     public void startGame() {
-
+        ArrayList<VirtualClient> players = lobby.getPlayers();
+        currentGame.addAllPlayers(players);
+        executors.submit(currentGame);
+        for (VirtualClient player :
+                players) {
+            gameMap.put(player, currentGame);
+        }
+        currentGame = new Game();
     }
 
     public ServerCommandDispatcher getServerCommandDispatcher() {
