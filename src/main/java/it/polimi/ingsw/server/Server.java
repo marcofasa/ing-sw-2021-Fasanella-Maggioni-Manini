@@ -11,13 +11,11 @@ public class Server {
     private final HashMap<VirtualClient, Game> gameMap;
     private final HashMap<String, VirtualClient> clientsNickname;
     private final WaitingLobby lobby;
-    private Integer currentLobbySize;
     private final Game currentGame;
     private final ServerCommandDispatcher serverCommandDispatcher;
 
     public Server(){
         currentGame = new Game();
-        currentLobbySize = null;
         lobby = new WaitingLobby(this);
         serverCommandDispatcher = new ServerCommandDispatcher(this);
         clientsNickname = new HashMap<>();
@@ -29,7 +27,6 @@ public class Server {
     //Single Player Server
     public Server(boolean SinglePlayer){
         currentGame = new Game();
-        currentLobbySize = null;
         lobby = new WaitingLobby(this);
         serverCommandDispatcher = new ServerCommandDispatcher(this);
         clientsNickname = new HashMap<>();
@@ -51,8 +48,9 @@ public class Server {
         thread.start();
     }
 
-    void setCurrentLobbySize(Integer currentLobbySize) {
-        this.currentLobbySize = currentLobbySize;
+    void setCurrentLobbySize(VirtualClient virtualClient, Integer currentLobbySize) {
+        // IF ... /* TODO */
+        lobby.setLobbyCapacity(currentLobbySize);
     }
 
     Game getGameByPlayerID(Integer playerID){
@@ -63,7 +61,7 @@ public class Server {
 
     }
 
-    public ServerCommandDispatcher getServerCommandDispatcher(VirtualClient virtualClient) {
+    public ServerCommandDispatcher getServerCommandDispatcher() {
         return serverCommandDispatcher;
     }
 }

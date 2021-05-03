@@ -146,8 +146,8 @@ public class PlayerBoard {
      *
      * @param resource
      */
-    public void discardFromTemporaryDeposit(Resource resource) {
-
+    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected{
+        if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelected();
         //Remove 1 Resource from the temporary deposit
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
 

@@ -56,9 +56,8 @@ public class VirtualClient implements Runnable{
             ClientMessage inputClass;
             while (connected) {
                 inputClass = (ClientMessage) inputStream.readObject();
-                inputClass.read(this);
                 ClientMessage finalInputClass = inputClass;
-                new Thread(() -> finalInputClass.read(this)).start();
+                executors.submit(() -> finalInputClass.read(this));
             }
             clientSocket.close();
         } catch (IOException | ClassNotFoundException e) {

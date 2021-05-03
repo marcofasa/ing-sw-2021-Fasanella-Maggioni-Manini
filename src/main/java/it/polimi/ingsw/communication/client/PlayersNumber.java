@@ -10,6 +10,6 @@ public class PlayersNumber extends ClientResponse{
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getServer().getServerCommandDispatcher().setLobbySize();
+        virtualClient.getServer().getServerCommandDispatcher().setLobbySize(virtualClient, Integer.parseInt(super.getPayload()));
     }
 }
