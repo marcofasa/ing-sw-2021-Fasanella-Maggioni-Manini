@@ -1,12 +1,34 @@
 @startuml
 Client-> Server: UseMarket()
-alt can add to deposit
-    Client<- Server: AnswerUseMarket()  
-else can't add to deposit
-        loop until can add to deposit
+activate Server
+
+alt tryAdd() == true
+    Client<-- Server: AnswerUseMarket()  
+else tryAdd() == false
+        loop until tryAdd() == true
             Client<- Server: RequestDiscardResourceMarket()
+
             Client-> Server: DiscardResourceMarket()
+
+            Server-> GameHandler: DiscardResource()
+             activate GameHandler
+
+            GameHandler-> Controller: DiscardResource()
+            activate Controller 
+
+            Controller-> GameTable: DiscardResourceFromTemporaryDeposit()
+            deactivate Controller
+
+            Server<-- GameHandler: AnswerUseMarket()
+             deactivate GameHandler
+
+            Client<-- Server: AnswerUseMarket()
+
+
         end
-    Client<- Server: AnswerUseMarket()  
+
+deactivate Server
+
+
 end
 @enduml
