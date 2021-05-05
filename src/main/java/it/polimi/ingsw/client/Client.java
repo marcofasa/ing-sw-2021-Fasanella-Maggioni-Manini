@@ -71,7 +71,7 @@ public class Client {
         new Thread(() -> client.startConnectionAndListen(ip,port, askNickname())).start();
     }
 
-    private static String askNickname() {
+    public static String askNickname() {
         System.out.println("Insert your nickname");
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
