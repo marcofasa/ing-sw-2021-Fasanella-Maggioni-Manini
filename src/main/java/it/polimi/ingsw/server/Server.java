@@ -98,7 +98,12 @@ public class Server {
         return serverCommandDispatcher;
     }
 
-    public void unregisterClient(VirtualClient virtualClient) {
-        System.out.println("Timeout exceeded, unregistering client");
+    public void unregisterClientTimeoutExceeded(VirtualClient virtualClient) {
+        System.out.println("Timeout exceeded, unregistering client " + virtualClient);
+        unregisterClient(virtualClient);
+    }
+
+    private void unregisterClient(VirtualClient virtualClient) {
+        ;
     }
 }
