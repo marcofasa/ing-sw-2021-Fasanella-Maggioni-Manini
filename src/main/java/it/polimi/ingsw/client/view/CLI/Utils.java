@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.view.CLI;
 
-import it.polimi.ingsw.model.Marble;
-import it.polimi.ingsw.model.MarbleFactory;
 import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.Resource;
 
@@ -122,7 +120,15 @@ public class Utils {
             }
             if (choice=="r") return 1;
             else return 0;
+        }}
+
+        public String readString(){
+            synchronized (in){
+            String word;
+            word=in.nextLine();
+            return word;
+            }
         }
 
     }
-}
+
