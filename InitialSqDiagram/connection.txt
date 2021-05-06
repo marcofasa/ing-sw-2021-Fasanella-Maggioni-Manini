@@ -1,5 +1,7 @@
 @startuml
+
 Client-> Server: Ping()
+
 Client<- Server: Ack()
 Client-> Server: SetupConnection()
 Client<- Server: ClientAccepted()
@@ -9,12 +11,14 @@ end
 alt first player
 
     Client<- Server: RequestPlayersNumber()
+deactivate Client
 alt timeout is not reached
     Client-> Server: PlayersNumber()
 else timed out
     Client<- Server: ClientUnregistered()
 destroy Client
 end
+activate Client
 else subsequent players
     Client<- Server: CurrentPlayersAndSlotsLeft()
 end
