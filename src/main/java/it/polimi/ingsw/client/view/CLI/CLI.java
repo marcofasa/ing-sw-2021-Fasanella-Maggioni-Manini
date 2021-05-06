@@ -3,10 +3,7 @@ package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
-import it.polimi.ingsw.communication.client.ClientMessage;
-import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.server.VirtualClient;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -84,14 +81,15 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askNickName() {
-       model.setNickname(client.askNickname());
-       //client.send(new ClientMessage(model.getNickname());
+        out.println("NickName:");
+        //client.send(new ClientMessageNickName(utils.readString(););
     }
 
     @Override
     public void askPlayerNumber() {
-        model.setNumberOfPlayers(client.askPlayersNumber());
-        //client.send(new ClientMessage(model.getNumberOfPlayers());
+        out.println("How many players?");
+        int people= utils.readNumberWithBounds(1,4);
+        //client.send(new ClientMessageNumberOfPlayers(people);
     }
 
     @Override

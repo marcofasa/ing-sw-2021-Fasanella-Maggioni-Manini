@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client.view;
 
-import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ViewInterface {
