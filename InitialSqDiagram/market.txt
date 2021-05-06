@@ -11,7 +11,7 @@ alt tryAddMarbles() == true
             activate GameTable
             Controller-> GameTable: tryAddMarbles()
             Controller<- GameTable: true
-             deactivate GameTable
+            deactivate GameTable
             Controller -> GameHandler: true
             deactivate Controller
             
@@ -20,13 +20,13 @@ else tryAdd() == false
         loop until tryAdd() == true
             Server-> GameHandler: ??()
 
-
+            activate Controller
             GameHandler-> Controller: ??()
-
+            
             activate GameTable
             Controller-> GameTable: tryAddMarbles()
             Controller<- GameTable: false
-            deactivate GameTable           
+                       
       
             Controller -> GameHandler: false
 
@@ -42,16 +42,16 @@ else tryAdd() == false
 
 
             Controller-> GameTable: DiscardResourceFromTemporaryDeposit()
-
+            deactivate GameTable
+            deactivate Controller
 
 
         end
-            Server<-- GameHandler: AnswerUseMarket()
-           
-            deactivate GameHandler
-
-            Client<-- Server: AnswerUseMarket() 
-
-
 end
+Server<-- GameHandler: AnswerUseMarket()
+
+deactivate GameHandler
+
+Client<-- Server: AnswerUseMarket() 
+
 @enduml
