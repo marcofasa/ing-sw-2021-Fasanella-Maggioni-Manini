@@ -1,5 +1,12 @@
 @startuml
+Client-> View: askForMarket()
+View-> CLI: printMarket()
+View-> CLI: askMarketChoice()
+CLI-> View: Row/column,Number
+View->Client: sendMarketChoice()
+
 Client-> Server: UseMarket()
+
 
 
 alt tryAddMarbles() == true
@@ -32,6 +39,8 @@ else tryAdd() == false
 
             GameHandler->Server: RequestDiscardResourceMarket()
             Client<- Server: RequestDiscardResourceMarket()
+            View<-Client: askResourceToDiscard()
+            View->Client: sendResourceSelection()
 
             Client-> Server: DiscardResourceMarket()
 
@@ -52,6 +61,5 @@ Server<-- GameHandler: AnswerUseMarket()
 
 deactivate GameHandler
 
-Client<-- Server: AnswerUseMarket() 
-
+Client<-- Server: AnswerUseMarket()
 @enduml
