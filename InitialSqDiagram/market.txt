@@ -10,10 +10,10 @@ Client-> Server: UseMarket()
 
 
 alt tryAddMarbles() == true
-            Server-> GameHandler: ??()
+            Server-> GameHandler: makeAction()
              activate GameHandler
 
-            GameHandler-> Controller: ??()
+            GameHandler-> Controller: makeAction()
             activate Controller 
             activate GameTable
             Controller-> GameTable: tryAddMarbles()
@@ -25,10 +25,10 @@ alt tryAddMarbles() == true
 
 else tryAdd() == false
         loop until tryAdd() == true
-            Server-> GameHandler: ??()
+            Server-> GameHandler: makeAction()
 
             activate Controller
-            GameHandler-> Controller: ??()
+            GameHandler-> Controller: makeAction()
             
             activate GameTable
             Controller-> GameTable: tryAddMarbles()
