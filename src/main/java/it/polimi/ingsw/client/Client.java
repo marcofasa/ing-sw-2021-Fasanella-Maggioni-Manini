@@ -1,24 +1,37 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.view.CLI.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
+import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.client.ClientMessage;
-import it.polimi.ingsw.communication.client.PlayersNumber;
 import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.TimeoutException;
+
 
 public class Client {
 
     private volatile static boolean connected;
+    private final TimeoutHandler timeoutHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Socket clientSocket;
     private ClientCommandDispatcher clientCommandDispatcher;
+    private final ViewInterface view;
 
-    public Client(){
+    public Client(Boolean cli){
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
+        this.timeoutHandler = new TimeoutHandler(this);
+        if(cli == true){
+            view = new CLI(this);
+        } else {
+            view = new GUI();
+        }
     }
 
     public void startConnectionAndListen(String ip, int port, String nickname) {
@@ -32,7 +45,11 @@ public class Client {
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
+                    timeoutHandler.checkAndSuspend(inputClass);
                     inputClass.read(clientCommandDispatcher);
+                    timeoutHandler.disengage(inputClass);
+                } catch (RequestTimeoutException e) {
+                    e.printStackTrace();
                 } catch (IOException | ClassNotFoundException ioException) {
                     ioException.printStackTrace();
                 }
@@ -57,6 +74,24 @@ public class Client {
         }
     }
 
+    /**
+     * Send Message and waits for answer
+     * @param clientMessage message to be sent
+     * @param serverResponse message waited
+     * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
+     * @throws RequestTimeoutException thrown if timeout is exceeded.
+     */
+    public void sendAndWait(ClientMessage clientMessage, ServerResponse serverResponse , int timeoutInSeconds) throws RequestTimeoutException {
+        send(clientMessage);
+        try {
+            timeoutHandler.waitOn(serverResponse, timeoutInSeconds);
+        } catch (TimeoutException e) {
+            System.out.println("Timeout on message expired.");
+            throw new RequestTimeoutException();
+        }
+
+    }
+
     public int askPlayersNumber() { /* TODO */
         System.out.println("Insert players number");
         Scanner sc = new Scanner(System.in);
@@ -64,7 +99,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Client client = new Client();
+        Client client = new Client(true);
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
@@ -75,5 +110,9 @@ public class Client {
         System.out.println("Insert your nickname");
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
+    }
+
+    public ViewInterface getView() {
+        return view;
     }
 }

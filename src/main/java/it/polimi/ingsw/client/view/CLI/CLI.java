@@ -56,7 +56,8 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayMarket() {
-        utils.printMarket(model.getMarket());
+        // client.send(new GetMarketFromServer());
+        /* TODO WAIT FOR SERVER */
     }
 
     @Override
@@ -88,7 +89,7 @@ public class CLI implements ViewInterface {
     @Override
     public void askPlayerNumber() {
         out.println("How many players?");
-        int people= utils.readNumberWithBounds(1,4);
+        int people= utils.readNumberWithBounds(2,4);
         //client.send(new ClientMessageNumberOfPlayers(people);
     }
 

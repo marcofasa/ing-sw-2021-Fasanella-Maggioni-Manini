@@ -1,10 +1,14 @@
 package it.polimi.ingsw.client.view;
 
+import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ViewInterface {
-    //Methods display..() then override in CLI and GUI
+//Methods display..() then override in CLI and GUI
 
     /*
     Display Welcome Message
@@ -72,12 +76,24 @@ public interface ViewInterface {
     /*
     Ask Resource to discard
      */
-    void askResourceToDiscard(HashMap<Resource,Integer> choice,int leftResource);
+    void askResourceToDiscard(HashMap<Resource, Integer> choice, int leftResource);
 
-     /*
-     Ask to choose Market row or column
-     */
-     void askMarketChoice();
+    /*
+    Ask to choose Market row or column
+    */
+    void askMarketChoice();
 
+    void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 
+    void askForInitialResourcesSelection();
+
+    void askForResourceSelection(ArrayList<Marble> marbles);
+
+    void notifyNotActivePlayerError();
+
+    void notifyNotEnoughResource();
+
+    void notifySuccess();
+
+    void notifyLeaderRequirementsNotMet();
 }
