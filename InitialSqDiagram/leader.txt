@@ -1,8 +1,21 @@
 @startuml
 Client-> Server: ActivateCardLeader()
+
+Server-> GameHandler: makeAction()
+
+GameHandler-> Controller: makeAction()
+
+Controller-> GameTable: activateCardLeader()
+
 alt move valid
-    Client<- Server: AnswerActivateCardLeader()  
+    GameHandler<-- Controller: AnswerAcivateCardLeader()
+    Server<-- GameHandler: AnswerAcivateCardLeader()
+    Client<-- Server: AnswerActivateCardLeader()
+
 else move invalid
-    Client<- Server: GameLogicError()
+    GameHandler<-- Controller: GameLogicError()
+    Server<-- GameHandler: GameLogicError()
+    Client<-- Server: GameLogicError()
+
 end
 @enduml
