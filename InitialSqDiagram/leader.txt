@@ -1,4 +1,9 @@
 @startuml
+Player-> CLI: "card leader"
+Player<- CLI: displayCardLeader()
+Player<- CLI: askCardLeader()
+Player -> CLI: Index 
+CLI-> Client: sendCardLearderActivation()
 Client-> Server: ActivateCardLeader()
 
 Server-> GameHandler: makeAction()
@@ -11,11 +16,16 @@ alt move valid
     GameHandler<-- Controller: AnswerAcivateCardLeader()
     Server<-- GameHandler: AnswerAcivateCardLeader()
     Client<-- Server: AnswerActivateCardLeader()
+    CLI<- Client: success()
+    Player<- CLI: displaySuccess()
+
 
 else move invalid
     GameHandler<-- Controller: GameLogicError()
     Server<-- GameHandler: GameLogicError()
     Client<-- Server: GameLogicError()
-
+    CLI <-- Client: printGameError()
+    Player <-- CLI: displayGameError()
+    
 end
 @enduml
