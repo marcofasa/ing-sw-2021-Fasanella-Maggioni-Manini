@@ -85,6 +85,10 @@ public class PlayerBoard {
         return new ArrayList<>(cardsLeaderBeforeSelecting);
     }
 
+    public void addCardLeaderBeforeSelecting(CardLeader card) {
+        cardsLeaderBeforeSelecting.add(card);
+    }
+
     public Strongbox getStrongboxInstance() {
 
         if (strongbox == null) strongbox = new Strongbox();
@@ -265,6 +269,8 @@ public class PlayerBoard {
 
     public void setPlayerState(PlayerState newState) {
         playerState = newState;
+
+        //Qui avremo bisogno di un notify() per gli observer nella view
     }
 
     /**

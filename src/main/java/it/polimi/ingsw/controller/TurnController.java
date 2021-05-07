@@ -4,8 +4,6 @@ import it.polimi.ingsw.model.GameTable;
 import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.PlayerState;
 
-import java.util.ArrayList;
-
 
 /**
  * This class handles the turn logic in the game, advancing the active player when an End Turn action has been
@@ -15,43 +13,97 @@ import java.util.ArrayList;
 public class TurnController {
 
     private final GameTable gameTable;
-    private final Controller controller;
     private PlayerBoard activePlayer;
-    private ArrayList<PlayerBoard> players;
+    private boolean isLorenzoActive;
+    private Integer turnCounter;
 
     /**
      * Constructor : will be called by Controller once the lobby is full and GameTable has been initialized
+     *
      * @param _gameTable the GameTable that hosts the game
-     * @param _controller the Controller that will dispatch user commands
      */
-
-    public TurnController(GameTable _gameTable, Controller _controller) {
+    public TurnController(GameTable _gameTable) {
 
         gameTable = _gameTable;
-        controller = _controller;
         activePlayer = gameTable.getActivePlayer();
-        players = gameTable.getPlayerBoards();
+        isLorenzoActive = false;
+        turnCounter = 0;
     }
 
+    /**
+     * Getter for isLorenzoActive variable
+     *
+     * @return - true is it's Lorenzo's turn to move, false otherwise
+     */
+    public boolean isLorenzoActive() {
+        return isLorenzoActive;
+    }
+
+    /**
+     * Active player getter
+     *
+     * @return activePlayer
+     */
     private PlayerBoard getActivePlayer() {
         return activePlayer;
     }
 
-    private void setActivePlayer(PlayerBoard activePlayer) {
-        this.activePlayer = activePlayer;
+    /**
+     * Active player setter
+     *
+     * @param _activePlayer value assigned to this.activePlayer
+     */
+    private void setActivePlayer(PlayerBoard _activePlayer) {
+        activePlayer = _activePlayer;
+        activePlayer.setPlayerState(PlayerState.PLAYING);
     }
 
-    public PlayerBoard advanceTurn() {
+    /**
+     * Method to be called whenever an EndTurn request is received by the active player : this method is to be called
+     * from the Game class, after having checked that the request was received by the active player.
+     */
+    public void advanceTurn() {
 
-        activePlayer.setPlayerState(PlayerState.IDLE);
+        if (!gameTable.isSinglePlayer()) {
 
-        gameTable.getNextPlayer(activePlayer).setPlayerState(PlayerState.PLAYING);
-        setActivePlayer(gameTable.getActivePlayer());
+            PlayerBoard oldActivePlayer = activePlayer;
+            PlayerBoard newActivePlayer = gameTable.getNextPlayer(activePlayer);
 
-        return activePlayer;
+            oldActivePlayer.setPlayerState(PlayerState.IDLE);
+            setActivePlayer(newActivePlayer);
+        } else {
+
+            if (isLorenzoActive) {
+
+                isLorenzoActive = false;
+                setActivePlayer(gameTable.getPlayerByIndex(0));
+
+            } else {
+
+                isLorenzoActive = true;
+
+                activePlayer.setPlayerState(PlayerState.IDLE);
+                activePlayer = null;
+
+            }
+        }
+
+        if (gameTable.isFirstRound()) turnCounter++;
+
+        if (turnCounter == gameTable.getNumberOfPlayers()) gameTable.endFirstRound();
+
     }
 
-    public boolean isActivePlayer(PlayerBoard player) {
-        return getActivePlayer().equals(player);
+    /**
+     * Method to check whether the PlayerBoard passed as an argument is the active board or not
+     *
+     * @param _player PlayerBoard to be checked
+     * @return true if _player is activePlayer, false otherwise
+     */
+    boolean isActivePlayer(PlayerBoard _player) {
+
+        if (activePlayer == null) return false;
+        return getActivePlayer().equals(_player);
     }
+
 }
