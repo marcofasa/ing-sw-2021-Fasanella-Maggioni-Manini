@@ -83,6 +83,7 @@ public interface ViewInterface {
     */
     void askMarketChoice();
 
+    /*
     void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 
     void askForInitialResourcesSelection();
@@ -96,4 +97,5 @@ public interface ViewInterface {
     void notifySuccess();
 
     void notifyLeaderRequirementsNotMet();
+     */
 }
