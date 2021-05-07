@@ -59,7 +59,6 @@ public class PlayerBoard {
         return outputList;
     }
 
-
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
     }
@@ -262,6 +261,10 @@ public class PlayerBoard {
 
     public PlayerState getPlayerState() {
         return playerState;
+    }
+
+    public void setPlayerState(PlayerState newState) {
+        playerState = newState;
     }
 
     /**
