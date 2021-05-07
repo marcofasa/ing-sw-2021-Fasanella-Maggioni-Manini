@@ -1,34 +1,75 @@
 @startuml
-Client-> Server: UseMarket()
-activate Server
+Player -> CLI: "market"
+Player <- CLI: printMarket()
+Player <- CLI: askMarketChoice()
+Player -> CLI: Row/Column, Number
+CLI -> Client: sendMarketChoice()
 
-alt tryAdd() == true
-    Client<-- Server: AnswerUseMarket()  
+Client-> Server: UseMarket()
+
+
+
+alt tryAddMarbles() == true
+            Server-> GameHandler: makeAction()
+             activate GameHandler
+
+            GameHandler-> Controller: makeAction()
+            activate Controller 
+            activate GameTable
+            Controller-> GameTable: tryAddMarbles()
+            Controller<- GameTable: true
+            deactivate GameTable
+            Controller -> GameHandler: true
+            deactivate Controller
+            
+
 else tryAdd() == false
         loop until tryAdd() == true
+            Server-> GameHandler: makeAction()
+
+            activate Controller
+            GameHandler-> Controller: makeAction()
+            
+            activate GameTable
+            Controller-> GameTable: tryAddMarbles()
+            Controller<- GameTable: false
+                       
+      
+            Controller -> GameHandler: false
+
+            GameHandler->Server: RequestDiscardResourceMarket()
             Client<- Server: RequestDiscardResourceMarket()
+            CLI<-Client: askResourceToDiscard()
+            Player <- CLI: askResourceToDiscard()
+            Player -> CLI: Resource
+            CLI->Client: sendResourceSelection()
+            
+            
+
+            
 
             Client-> Server: DiscardResourceMarket()
 
             Server-> GameHandler: DiscardResource()
-             activate GameHandler
+
 
             GameHandler-> Controller: DiscardResource()
-            activate Controller 
+
 
             Controller-> GameTable: DiscardResourceFromTemporaryDeposit()
+            deactivate GameTable
             deactivate Controller
-
-            Server<-- GameHandler: AnswerUseMarket()
-             deactivate GameHandler
-
-            Client<-- Server: AnswerUseMarket()
 
 
         end
-
-deactivate Server
-
-
 end
+Server<-- GameHandler: AnswerUseMarket()
+
+deactivate GameHandler
+
+Client<-- Server: AnswerUseMarket()
+
+CLI <-- Client: success()
+
+Player <-- CLI: displaySuccess()
 @enduml

@@ -28,6 +28,15 @@ public class Game implements Runnable{
             ;
     }
 
+    /**
+     * get player's virtual client
+     * @param index index of the player, starting by 1
+     * @return player's virtual client
+     */
+    public VirtualClient getClientByIndex(Integer index){
+        return players.get(index + 1);
+    }
+
     public void addAllPlayers(ArrayList<VirtualClient> virtualClients){
         this.players = virtualClients;
     }

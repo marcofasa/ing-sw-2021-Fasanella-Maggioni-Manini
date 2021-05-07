@@ -3,9 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.communication.server.RequestPlayersNumber;
 import it.polimi.ingsw.communication.server.ServerMessage;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 import java.util.concurrent.*;
 
 public class WaitingLobby {
@@ -43,7 +41,7 @@ public class WaitingLobby {
             players.add(virtualClient);
             empty = false;
         } catch (TimeoutException e) {
-            server.unregisterClient(virtualClient);
+            server.unregisterClientTimeoutExceeded(virtualClient);
         }  catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

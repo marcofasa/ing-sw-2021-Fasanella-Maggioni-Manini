@@ -2,6 +2,10 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.client.*;
+import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.Marble;
+
+import java.util.ArrayList;
 
 public class ClientCommandDispatcher {
 
@@ -27,4 +31,34 @@ public class ClientCommandDispatcher {
     public void gameHasStarted(int gameID) {
         System.out.println("Game Has Started. Game ID: " + gameID);
     }
+
+    public void leaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+        client.getView().askLeaderCardSelection(cardLeaders);
+    }
+
+    public void initialResourcesSelection(int playerNumber) {
+        client.getView().askForInitialResourcesSelection();
+    }
+
+    public void discardResourceSelection(ArrayList<Marble> marbles) {
+        client.getView().askForResourceSelection(marbles);
+    }
+
+    public void notActivePlayerError() {
+        client.getView().displayNotActivePlayerError();
+    }
+
+    public void notEnoughResource() {
+        client.getView().displayNotEnoughResource();
+    }
+
+    public void success() {
+        client.getView().displaySuccess();
+    }
+
+    public void leaderRequirementsNotMet() {
+        client.getView().displayLeaderRequirementsNotMet();
+    }
 }
+
+//

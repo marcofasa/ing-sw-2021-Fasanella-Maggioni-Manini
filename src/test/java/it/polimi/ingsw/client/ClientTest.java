@@ -15,7 +15,7 @@ public class ClientTest {
 
     @Test
     private void singleClient() throws InterruptedException {
-        Client client = new Client();
+        Client client = new Client(true);
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
