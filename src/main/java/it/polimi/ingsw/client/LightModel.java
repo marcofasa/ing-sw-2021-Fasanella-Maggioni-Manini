@@ -13,6 +13,7 @@ public class LightModel {
     private PlayerState playerState;
     private CardDevelopmentSlot[] cardSlotArray;
     private ArrayList<CardLeader> cardsLeader;
+    private ArrayList<FaithTileStatus> tileStatuses; //size()==3 with the tree tiles in TilesPack
     private HashMap<Resource, Integer> deposit;
     private HashMap<Resource, Integer> strongbox;
     private DepositLeaderCard depositLeaderCard;
@@ -20,6 +21,18 @@ public class LightModel {
 
 
     public LightModel(){
+    }
+
+    public ArrayList<FaithTileStatus> getTileStatuses() {
+        return tileStatuses;
+    }
+
+    public HashMap<String, Integer> getPlayersPosition() {
+        return playersPosition;
+    }
+
+    public int positionPlayer(){
+        return playersPosition.get(nickname);
     }
 
     public void setNickname(String nickname) {

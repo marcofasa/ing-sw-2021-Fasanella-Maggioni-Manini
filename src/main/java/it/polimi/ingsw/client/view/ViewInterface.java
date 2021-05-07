@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ViewInterface {
-//Methods display..() then override in CLI and GUI
+    //Methods display..() then override in CLI and GUI
 
     /*
     Display Welcome Message
@@ -45,6 +45,15 @@ public interface ViewInterface {
      */
     void displayStrongBox();
 
+    /*
+    Display that the Player is not active
+     */
+    void displayNotActivePlayerError();
+
+    /*
+    Display that there are not enough resources to continue action
+     */
+    void displayNotEnoughResource();
 
     /*
     Display Disconnection
@@ -61,7 +70,17 @@ public interface ViewInterface {
      */
     void displayLost();
 
-    //Vari ask.
+    /*
+    Display successful action
+     */
+    void displaySuccess();
+
+    /*
+    Display requirements not met
+     */
+    void displayLeaderRequirementsNotMet();
+
+    //Various asks
 
     /*
     Ask for NickName
@@ -76,26 +95,25 @@ public interface ViewInterface {
     /*
     Ask Resource to discard
      */
-    void askResourceToDiscard(HashMap<Resource, Integer> choice, int leftResource);
+    void askResourceToDiscard(HashMap<Resource,Integer> choice);
 
-    /*
-    Ask to choose Market row or column
-    */
-    void askMarketChoice();
-
-    /*
-    void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
-
-    void askForInitialResourcesSelection();
-
-    void askForResourceSelection(ArrayList<Marble> marbles);
-
-    void notifyNotActivePlayerError();
-
-    void notifyNotEnoughResource();
-
-    void notifySuccess();
-
-    void notifyLeaderRequirementsNotMet();
+     /*
+     Ask to choose Market row or column
      */
+     void askMarketChoice();
+
+     /*
+
+     */
+     void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
+
+     /*
+
+     */
+     void askForResourceSelection(ArrayList<Marble> marbles);
+
+     /*
+
+      */
+     void askForInitialResourcesSelection();
 }

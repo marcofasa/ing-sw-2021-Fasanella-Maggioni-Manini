@@ -45,19 +45,19 @@ public class ClientCommandDispatcher {
     }
 
     public void notActivePlayerError() {
-        client.getView().notifyNotActivePlayerError();
+        client.getView().displayNotActivePlayerError();
     }
 
     public void notEnoughResource() {
-        client.getView().notifyNotEnoughResource();
+        client.getView().displayNotEnoughResource();
     }
 
     public void success() {
-        client.getView().notifySuccess();
+        client.getView().displaySuccess();
     }
 
     public void leaderRequirementsNotMet() {
-        client.getView().notifyLeaderRequirementsNotMet();
+        client.getView().displayLeaderRequirementsNotMet();
     }
 }
 
