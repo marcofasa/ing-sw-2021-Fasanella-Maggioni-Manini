@@ -1,9 +1,9 @@
 @startuml
-Client-> View: askForMarket()
-View-> CLI: printMarket()
-View-> CLI: askMarketChoice()
-CLI-> View: Row/column,Number
-View->Client: sendMarketChoice()
+Player -> CLI: "market"
+Player <- CLI: printMarket()
+Player <- CLI: askMarketChoice()
+Player -> CLI: Row/Column, Number
+CLI -> Client: sendMarketChoice()
 
 Client-> Server: UseMarket()
 
@@ -39,8 +39,14 @@ else tryAdd() == false
 
             GameHandler->Server: RequestDiscardResourceMarket()
             Client<- Server: RequestDiscardResourceMarket()
-            View<-Client: askResourceToDiscard()
-            View->Client: sendResourceSelection()
+            CLI<-Client: askResourceToDiscard()
+            Player <- CLI: askResourceToDiscard()
+            Player -> CLI: Resource
+            CLI->Client: sendResourceSelection()
+            
+            
+
+            
 
             Client-> Server: DiscardResourceMarket()
 
@@ -62,4 +68,8 @@ Server<-- GameHandler: AnswerUseMarket()
 deactivate GameHandler
 
 Client<-- Server: AnswerUseMarket()
+
+CLI <-- Client: success()
+
+Player <-- CLI: displaySuccess()
 @enduml
