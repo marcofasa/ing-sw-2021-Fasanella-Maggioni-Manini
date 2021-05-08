@@ -2,8 +2,8 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class ClientAccepted extends ServerResponse{
-    public ClientAccepted() {
+public class ResponseLeaderRequirementsNotMet extends ServerResponse {
+    public ResponseLeaderRequirementsNotMet() {
         super(null, null);
     }
 
@@ -14,6 +14,6 @@ public class ClientAccepted extends ServerResponse{
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.clientAccepted();
+        commandDispatcher.leaderRequirementsNotMet();
     }
 }

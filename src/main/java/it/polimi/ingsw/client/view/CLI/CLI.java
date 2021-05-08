@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
-import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
@@ -160,9 +159,10 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         utils.printCardLeaderList(cardLeaders);
         //client.sendLeaderCardSelection(utils.readNumberWithBounds(1,cardLeaders.size())-1);
+        return cardLeaders;
     }
 
     @Override

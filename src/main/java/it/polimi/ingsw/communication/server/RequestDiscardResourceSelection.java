@@ -1,10 +1,17 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.model.Marble;
 
-public class LeaderRequirementsNotMet extends ServerResponse {
-    public LeaderRequirementsNotMet() {
+import java.util.ArrayList;
+
+public class RequestDiscardResourceSelection extends ServerRequest {
+
+    private ArrayList<Marble> marbles;
+
+    public RequestDiscardResourceSelection(ArrayList<Marble> marbles) {
         super(null, null);
+        this.marbles = marbles;
     }
 
     /**
@@ -14,6 +21,6 @@ public class LeaderRequirementsNotMet extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.leaderRequirementsNotMet();
+        commandDispatcher.requestDiscardResourceSelection(marbles);
     }
 }

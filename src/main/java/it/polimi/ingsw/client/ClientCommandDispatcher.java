@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
@@ -21,7 +20,7 @@ public class ClientCommandDispatcher {
 
     public void requestPlayersNumber() {
         System.out.println("Request Players Number received");
-        client.send(new PlayersNumber(Integer.toString(client.askPlayersNumber())));
+        client.send(new ResponsePlayersNumber(Integer.toString(client.askPlayersNumber())));
     }
 
     public void nicknameIsUnavailable(){ /* TODO */
@@ -32,15 +31,16 @@ public class ClientCommandDispatcher {
         System.out.println("Game Has Started. Game ID: " + gameID);
     }
 
-    public void leaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-        client.getView().askLeaderCardSelection(cardLeaders);
+    public void requestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+        ArrayList<CardLeader> cardLeaders1 =  client.getView().askLeaderCardSelection(cardLeaders);
+        //client.send(new );
     }
 
-    public void initialResourcesSelection(int playerNumber) {
+    public void requestInitialResourcesSelection(int playerNumber) {
         client.getView().askForInitialResourcesSelection();
     }
 
-    public void discardResourceSelection(ArrayList<Marble> marbles) {
+    public void requestDiscardResourceSelection(ArrayList<Marble> marbles) {
         client.getView().askForResourceSelection(marbles);
     }
 
@@ -58,6 +58,10 @@ public class ClientCommandDispatcher {
 
     public void leaderRequirementsNotMet() {
         client.getView().displayLeaderRequirementsNotMet();
+    }
+
+    public TimeoutHandler getTimeoutHandler() {
+        return client.getTimeoutHandler();
     }
 }
 

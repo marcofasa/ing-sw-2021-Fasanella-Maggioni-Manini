@@ -27,7 +27,7 @@ public class Client {
     public Client(Boolean cli){
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new TimeoutHandler(this);
-        if(cli == true){
+        if(cli){
             view = new CLI(this);
         } else {
             view = new GUI();
@@ -45,9 +45,7 @@ public class Client {
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
-                    timeoutHandler.checkAndSuspend(inputClass);
                     inputClass.read(clientCommandDispatcher);
-                    timeoutHandler.disengage(inputClass);
                 } catch (RequestTimeoutException e) {
                     e.printStackTrace();
                 } catch (IOException | ClassNotFoundException ioException) {
@@ -77,14 +75,12 @@ public class Client {
     /**
      * Send Message and waits for answer
      * @param clientMessage message to be sent
-     * @param serverResponse message waited
      * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
      * @throws RequestTimeoutException thrown if timeout is exceeded.
      */
-    public void sendAndWait(ClientMessage clientMessage, ServerResponse serverResponse , int timeoutInSeconds) throws RequestTimeoutException {
-        send(clientMessage);
+    public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws RequestTimeoutException {
         try {
-            timeoutHandler.waitOn(serverResponse, timeoutInSeconds);
+            timeoutHandler.sendAndWait(clientMessage, timeoutInSeconds);
         } catch (TimeoutException e) {
             System.out.println("Timeout on message expired.");
             throw new RequestTimeoutException();
@@ -114,5 +110,9 @@ public class Client {
 
     public ViewInterface getView() {
         return view;
+    }
+
+    public TimeoutHandler getTimeoutHandler() {
+        return timeoutHandler;
     }
 }

@@ -1,17 +1,10 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.model.Resource;
 
-import java.util.ArrayList;
-
-public class SendArrayListResourcesTest extends ServerResponse{
-
-    private ArrayList<Resource> resources;
-
-    public SendArrayListResourcesTest(ArrayList<Resource> resources){
+public class ResponseNotActivePlayerError extends ServerResponse {
+    public ResponseNotActivePlayerError() {
         super(null, null);
-        this.resources = resources;
     }
 
     /**
@@ -21,6 +14,6 @@ public class SendArrayListResourcesTest extends ServerResponse{
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-
+        commandDispatcher.notActivePlayerError();
     }
 }

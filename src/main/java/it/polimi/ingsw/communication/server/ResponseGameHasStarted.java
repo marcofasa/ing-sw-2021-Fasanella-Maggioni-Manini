@@ -2,8 +2,8 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class GameHasStarted extends ServerResponse {
-    public GameHasStarted(int nextGameID) {
+public class ResponseGameHasStarted extends ServerResponse {
+    public ResponseGameHasStarted(int nextGameID) {
         super(Integer.toString(nextGameID), null);
     }
 

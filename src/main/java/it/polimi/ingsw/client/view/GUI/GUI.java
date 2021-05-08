@@ -106,8 +106,9 @@ public class GUI implements ViewInterface {
     }
 
     @Override
-    public void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
 
+        return cardLeaders;
     }
 
     @Override

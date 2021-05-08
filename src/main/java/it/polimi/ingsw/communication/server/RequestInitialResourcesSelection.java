@@ -2,12 +2,12 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class InitialResourcesSelection extends ServerRequest {
+public class RequestInitialResourcesSelection extends ServerRequest {
     /**
      * Ask for selection of resources to start with
      * @param playerNumber player number
      */
-    public InitialResourcesSelection(Integer playerNumber) {
+    public RequestInitialResourcesSelection(Integer playerNumber) {
         super(Integer.toString(playerNumber), null);
     }
 
@@ -18,6 +18,6 @@ public class InitialResourcesSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.initialResourcesSelection(Integer.parseInt(super.getPayload()));
+        commandDispatcher.requestInitialResourcesSelection(Integer.parseInt(super.getPayload()));
     }
 }

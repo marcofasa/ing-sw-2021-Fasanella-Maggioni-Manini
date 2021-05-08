@@ -2,10 +2,9 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class RequestPlayersNumber extends ServerRequest{
-
-    public RequestPlayersNumber() {
-        super(null, null);
+public class ResponseCurrentPlayersAndSlotLeft extends ServerResponse{
+    public ResponseCurrentPlayersAndSlotLeft(String message, String keyValues) {
+        super(message, keyValues);
     }
 
     /**
@@ -15,6 +14,6 @@ public class RequestPlayersNumber extends ServerRequest{
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.requestPlayersNumber();
+
     }
 }

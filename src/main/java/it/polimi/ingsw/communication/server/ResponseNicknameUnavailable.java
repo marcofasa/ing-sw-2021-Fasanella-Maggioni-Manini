@@ -1,18 +1,11 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.model.CardLeader;
 
-import java.util.ArrayList;
-
-public class LeaderCardSelection extends ServerRequest {
-    private ArrayList<CardLeader> cardLeaders;
-
-    public LeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+public class ResponseNicknameUnavailable extends ServerResponse{
+    public ResponseNicknameUnavailable() {
         super(null, null);
-        this.cardLeaders = cardLeaders;
     }
-
     /**
      * Calls the method specified in the read function
      *
@@ -20,6 +13,6 @@ public class LeaderCardSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.leaderCardSelection(cardLeaders);
+        commandDispatcher.nicknameIsUnavailable();
     }
 }

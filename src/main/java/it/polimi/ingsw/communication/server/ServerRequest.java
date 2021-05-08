@@ -1,10 +1,17 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.TimeoutHandler;
 
 public abstract class ServerRequest extends ServerMessage {
+
     public ServerRequest(String message, String key) {
         super(message, key);
+    }
+
+    public ServerRequest(String message, String key, int timeoutID){
+        super(null,null, timeoutID);
     }
 
     /**
@@ -13,6 +20,6 @@ public abstract class ServerRequest extends ServerMessage {
      * @param commandDispatcher Game dispatcher
      */
     @Override
-    public abstract void read(ClientCommandDispatcher commandDispatcher);
+    public abstract void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException;
 }
 

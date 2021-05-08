@@ -24,7 +24,10 @@ public class Game implements Runnable{
     @Override
     public void run() {
         System.out.println("Game partito");
+        start();
+        //MSF CONTROLLER
         while (true)
+            
             ;
     }
 
@@ -39,5 +42,9 @@ public class Game implements Runnable{
 
     public void addAllPlayers(ArrayList<VirtualClient> virtualClients){
         this.players = virtualClients;
+    }
+
+    private void start() {
+        //inzializza controller del primo turno
     }
 }
