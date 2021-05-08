@@ -5,6 +5,11 @@ import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for instantiating the controller and model classes, receiving and dispatching requests
+ * from the clients and sending requests and responses to them.
+ */
+
 public class Game implements Runnable{
 
     private ArrayList<VirtualClient> players;

@@ -22,6 +22,7 @@ public class GameTable {
     //Constructor
 
     public GameTable(Boolean isSinglePlayer){
+        isFirstRound = true;
         numberOfPlayers = 0;
         players = new ArrayList<>();
         this.isSinglePlayer = isSinglePlayer;
@@ -61,10 +62,17 @@ public class GameTable {
      * @param nickname String of the new player's nickname
      */
     public void addPlayer(String nickname){
+
         if (gameHasStarted) throw new RuntimeException("Cannot add players while game is running");
         if (players.size() == 4) throw new GameIsFullException();
-        if (numberOfPlayers == 0) players.add(new PlayerBoard(nickname, true, PlayerState.PLAYING, this));
-        else players.add(new PlayerBoard(nickname, false, PlayerState.IDLE, this));
+
+        if (numberOfPlayers == 0) {
+            players.add(new PlayerBoard(nickname, true, PlayerState.PLAYING, this));
+        }
+        else {
+            players.add(new PlayerBoard(nickname, false, PlayerState.IDLE, this));
+        }
+        numberOfPlayers++;
     }
 
     /**
@@ -126,6 +134,14 @@ public class GameTable {
 
     //State getters
 
+    public boolean isFirstRound() {
+        return isFirstRound;
+    }
+
+    public boolean isSinglePlayer() {
+        return isSinglePlayer;
+    }
+
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
@@ -136,6 +152,20 @@ public class GameTable {
 
     public PlayerBoard getPlayerByIndex(int i) {
         return players.get(i);
+    }
+
+    public int getIndexFromPlayer(PlayerBoard _player) {
+
+        int output = 0;
+
+        for (PlayerBoard player : players) {
+
+            if (player.equals(_player)) break;
+            output++;
+        }
+
+        return output;
+
     }
 
     /**
@@ -157,6 +187,7 @@ public class GameTable {
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
+
 
     /* Class methods */
 
@@ -269,10 +300,13 @@ public class GameTable {
 
         for (PlayerBoard player : players) {
             for (int i = 0; i < 4; i++)
-                player.getCardsLeaderBeforeSelecting().add(cardLeaderDeck.getCardLeader(player));
+                player.addCardLeaderBeforeSelecting(cardLeaderDeck.getCardLeader(player));
         }
 
     }
 
+    public void endFirstRound() {
+        isFirstRound = false;
+    }
 
 }

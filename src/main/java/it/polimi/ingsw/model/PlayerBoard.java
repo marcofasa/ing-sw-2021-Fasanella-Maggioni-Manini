@@ -59,7 +59,6 @@ public class PlayerBoard {
         return outputList;
     }
 
-
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
     }
@@ -84,6 +83,10 @@ public class PlayerBoard {
      */
     public ArrayList<CardLeader> getCardsLeaderBeforeSelecting() {
         return new ArrayList<>(cardsLeaderBeforeSelecting);
+    }
+
+    public void addCardLeaderBeforeSelecting(CardLeader card) {
+        cardsLeaderBeforeSelecting.add(card);
     }
 
     public Strongbox getStrongboxInstance() {
@@ -262,6 +265,12 @@ public class PlayerBoard {
 
     public PlayerState getPlayerState() {
         return playerState;
+    }
+
+    public void setPlayerState(PlayerState newState) {
+        playerState = newState;
+
+        //Qui avremo bisogno di un notify() per gli observer nella view
     }
 
     /**
