@@ -6,15 +6,15 @@ import it.polimi.ingsw.model.CardLeader;
 
 import java.util.ArrayList;
 
-public class RequestLeaderCardSelection extends ServerRequest {
+public class RequestInitialSelection extends ServerRequest {
     private final ArrayList<CardLeader> cardLeaders;
 
-    public RequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    public RequestInitialSelection(ArrayList<CardLeader> cardLeaders) {
         super(null, null);
         this.cardLeaders = cardLeaders;
     }
 
-    public RequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders, int timeoutID){
+    public RequestInitialSelection(ArrayList<CardLeader> cardLeaders, int timeoutID){
         super(null,null, timeoutID);
         this.cardLeaders = cardLeaders;
     }

@@ -52,7 +52,7 @@ public class TimeoutHandler {
     }
 
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
-        client.send(clientMessage);
+        client.send(clientMessage); /* TODO */
         Semaphore semaphore = getNewSemaphore();
         int messageID = getID();
         semaphoreByID.put(messageID, semaphore);
