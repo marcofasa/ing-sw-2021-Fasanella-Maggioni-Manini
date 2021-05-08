@@ -48,7 +48,7 @@ public class Utils {
             String key=resource.toString();
             String value= list.get(resource).toString();
             out.println(i+". x" + value + " resource of " + key);
-            resources.add(i--,resource);
+            resources.add(i-1,resource);
             i++;
         }
         return resources;
@@ -223,12 +223,13 @@ public class Utils {
         }
     }
 
-    public void printCardLeaderList(ArrayList<CardLeader> cardLeaders) {
+    public CardLeader printandgetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
             //Check toString
-            out.println(index+". "+ cardLeaders.get(0).toString());
+            out.println(index+". "+ cardLeaders.get(i).toString());
         }
+        return cardLeaders.get(readNumberWithBounds(0,cardLeaders.size()));
     }
 
     public void printMarbleList(ArrayList<Marble> marbles) {
@@ -237,6 +238,51 @@ public class Utils {
             //Check toString
             out.println(index+". "+ marbles.get(0).toString());
         }
+    }
+
+
+    public void printCommandError() {
+        out.println(ANSI_RED+"Command not found, please try again!"+ANSI_RESET);
+    }
+
+    public void printHelp() {
+        out.println(ANSI_BACKGROUND_GRAY+"Help Command List"+ANSI_RESET);
+        out.println("Here's a list of all commands that you can execute:");
+
+    }
+
+    public String readNumberWithBoundsToString(int min, int max) {
+        synchronized (in) {
+            Integer number = readNumber();
+            while (number < min || number > max) {
+                out.println("The number to select must be between " + min + " and " + max + ". Please retry:");
+                number = readNumber();
+            }
+            return number.toString();
+        }
+    }
+
+    public void printDevelopmentCardMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket) {
+        for (int i = 0; i < cardDevelopmentMarket.size(); i++) {
+            for (int j = 0; j < cardDevelopmentMarket.get(i).size(); j++) {
+                printCardDevelopment(cardDevelopmentMarket.get(i).get(j),i,j);
+            }
+            out.println();
+        }
+    }
+
+    private void printCardDevelopment(CardDevelopment cardDevelopment,int i,int j) {
+        out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+ "of level " + cardDevelopment.getCardLevel().toString() +"and  "+cardDevelopment.getVictoryPoints()+" victory points "+ printResource(cardDevelopment.getCardCosts()));
+    }
+
+    private String printResource(HashMap<Resource, Integer> cardCosts) {
+        String s="at a cost of";
+        for (Resource resource: cardCosts.keySet()){
+            String key=resource.toString();
+            String value= cardCosts.get(resource).toString();
+            s.concat(" x" + value + " resource of " + key);
+        }
+        return s;
     }
 }
 

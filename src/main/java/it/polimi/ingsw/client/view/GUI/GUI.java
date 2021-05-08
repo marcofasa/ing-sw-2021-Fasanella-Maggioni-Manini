@@ -41,6 +41,11 @@ public class GUI implements ViewInterface {
     }
 
     @Override
+    public void displayTimeOut() {
+
+    }
+
+    @Override
     public void displayMarket() {
 
     }
@@ -106,10 +111,20 @@ public class GUI implements ViewInterface {
     }
 
     @Override
-    public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    public void askDevelopmentCardChoice() {
 
-        return cardLeaders;
     }
+
+    @Override
+    public void askProductionActivation() {
+
+    }
+
+    @Override
+    public void askCardLeaderActivation() {
+
+    }
+
 
     @Override
     public void askForResourceSelection(ArrayList<Marble> marbles) {
@@ -118,7 +133,17 @@ public class GUI implements ViewInterface {
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection() {
+        return null;
+    }
 
+
+    @Override
+    public void askEndTurn() {
+
+    }
+
+    @Override
+    public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         return null;
     }
 }
