@@ -45,6 +45,7 @@ public class Client {
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
+                    timeoutHandler.tryDisengage(inputClass.getTimeoutID());
                     inputClass.read(clientCommandDispatcher);
                 } catch (RequestTimeoutException e) {
                     e.printStackTrace();

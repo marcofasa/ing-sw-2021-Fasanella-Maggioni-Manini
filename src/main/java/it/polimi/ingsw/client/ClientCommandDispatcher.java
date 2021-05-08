@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
+import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
 
@@ -31,13 +32,14 @@ public class ClientCommandDispatcher {
         System.out.println("Game Has Started. Game ID: " + gameID);
     }
 
-    public void requestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    public ArrayList<CardLeader> requestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         ArrayList<CardLeader> cardLeaders1 =  client.getView().askLeaderCardSelection(cardLeaders);
-        //client.send(new );
+        return cardLeaders1;
     }
 
-    public void requestInitialResourcesSelection(int playerNumber) {
-        client.getView().askForInitialResourcesSelection();
+    public ArrayList<Resource> requestInitialResourcesSelection(int playerNumber) {
+        ArrayList<Resource> resources = client.getView().askForInitialResourcesSelection();
+        return resources;
     }
 
     public void requestDiscardResourceSelection(ArrayList<Marble> marbles) {
@@ -62,6 +64,12 @@ public class ClientCommandDispatcher {
 
     public TimeoutHandler getTimeoutHandler() {
         return client.getTimeoutHandler();
+    }
+
+    public void requestInitialSelection(ArrayList<CardLeader> cardLeaders, int playerNumber) {
+        ArrayList<CardLeader> cardLeaders1 = requestLeaderCardSelection(cardLeaders);
+        ArrayList<Resource> resources = requestInitialResourcesSelection(playerNumber);
+        client.send(new ResponseInitialSelection(resources.get(0), resources.get(1), cardLeaders1));
     }
 }
 

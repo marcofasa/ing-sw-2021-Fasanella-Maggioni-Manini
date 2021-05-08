@@ -115,5 +115,5 @@ public interface ViewInterface {
      /*
 
       */
-     void askForInitialResourcesSelection();
+     ArrayList<Resource> askForInitialResourcesSelection();
 }

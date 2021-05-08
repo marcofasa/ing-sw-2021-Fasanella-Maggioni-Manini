@@ -172,8 +172,9 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void askForInitialResourcesSelection() {
+    public ArrayList<Resource> askForInitialResourcesSelection() {
 
+        return null;
     }
 
 
