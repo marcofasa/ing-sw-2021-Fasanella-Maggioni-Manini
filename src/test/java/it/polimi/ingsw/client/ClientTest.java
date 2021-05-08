@@ -19,7 +19,7 @@ public class ClientTest {
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
-        client.startConnectionAndListen(ip,port, "nickname");
+        new Thread(() -> client.startConnectionAndListen(ip,port, "nickname"));
     }
 
 }

@@ -2,8 +2,8 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class Success extends ServerResponse {
-    public Success() {
+public class ResponseNotEnoughResources extends ServerResponse {
+    public ResponseNotEnoughResources() {
         super(null, null);
     }
 
@@ -14,6 +14,6 @@ public class Success extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.success();
+        commandDispatcher.notEnoughResource();
     }
 }

@@ -2,9 +2,9 @@ package it.polimi.ingsw.communication.client;
 
 import it.polimi.ingsw.server.VirtualClient;
 
-public class PlayersNumber extends ClientResponse{
+public class ResponsePlayersNumber extends ClientResponse{
 
-    public PlayersNumber(String playersNumber) {
+    public ResponsePlayersNumber(String playersNumber) {
         super(playersNumber, null);
     }
 

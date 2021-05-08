@@ -105,7 +105,7 @@ public interface ViewInterface {
      /*
 
      */
-     void askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
+     ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 
      /*
 

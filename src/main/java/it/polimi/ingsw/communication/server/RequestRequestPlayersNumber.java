@@ -2,8 +2,9 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 
-public class NotActivePlayerError extends ServerResponse {
-    public NotActivePlayerError() {
+public class RequestRequestPlayersNumber extends ServerRequest{
+
+    public RequestRequestPlayersNumber() {
         super(null, null);
     }
 
@@ -14,6 +15,6 @@ public class NotActivePlayerError extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.notActivePlayerError();
+        commandDispatcher.requestPlayersNumber();
     }
 }

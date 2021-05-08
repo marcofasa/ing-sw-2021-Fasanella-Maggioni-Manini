@@ -1,14 +1,13 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.communication.server.ClientAccepted;
-import it.polimi.ingsw.communication.server.GameHasStarted;
+import it.polimi.ingsw.communication.server.ResponseClientAccepted;
+import it.polimi.ingsw.communication.server.ResponseGameHasStarted;
 import it.polimi.ingsw.controller.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Function;
 
 public class Server {
     private SocketServer socketServer;
@@ -51,7 +50,7 @@ public class Server {
         if(clientsNickname.containsKey(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
         clientsNickname.put(nickname, virtualClient);
-        virtualClient.send(new ClientAccepted());
+        virtualClient.send(new ResponseClientAccepted());
         synchronized (lobby) {
             lobby.addPlayer(virtualClient);
         }
@@ -87,7 +86,7 @@ public class Server {
                 players) {
             gameMap.put(player, currentGame);
         }
-        lobby.sendAll(new GameHasStarted(nextGameID - 1));
+        lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1));
         currentGame = new Game();
         gamesID.put(currentGame, nextGameID);
         nextGameID++;

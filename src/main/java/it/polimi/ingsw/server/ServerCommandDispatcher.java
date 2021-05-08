@@ -1,12 +1,8 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.communication.client.ClientMessage;
-import it.polimi.ingsw.communication.client.SetupConnection;
-import it.polimi.ingsw.communication.server.NicknameUnavailable;
-import it.polimi.ingsw.communication.server.ServerResponse;
-
-import java.net.Socket;
+import it.polimi.ingsw.communication.server.ResponseNicknameUnavailable;
+import it.polimi.ingsw.communication.server.ResponseSuccess;
+import it.polimi.ingsw.model.CardLeader;
 
 public class ServerCommandDispatcher {
 
@@ -20,12 +16,17 @@ public class ServerCommandDispatcher {
         try {
             server.registerClient(virtualClient, nickname);
         } catch (NicknameAlreadyInUseException e) {
-            virtualClient.send(new NicknameUnavailable());
+            virtualClient.send(new ResponseNicknameUnavailable());
         }
     }
 
     public void setLobbySize(VirtualClient virtualClient, Integer size){
         System.out.println("Server size set to " + size);
         server.setCurrentLobbySize(virtualClient, size);
+    }
+
+    public void requestActivateCardLeader(CardLeader cardLeader, VirtualClient virtualClient, int timeoutID) {
+        System.out.println("Card Leader activation request arrived");
+        virtualClient.send(new ResponseSuccess(timeoutID));
     }
 }

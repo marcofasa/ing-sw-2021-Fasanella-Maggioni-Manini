@@ -1,17 +1,10 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.model.Marble;
 
-import java.util.ArrayList;
-
-public class DiscardResourceSelection extends ServerRequest {
-
-    private ArrayList<Marble> marbles;
-
-    public DiscardResourceSelection(ArrayList<Marble> marbles) {
+public class ResponseClientAccepted extends ServerResponse{
+    public ResponseClientAccepted() {
         super(null, null);
-        this.marbles = marbles;
     }
 
     /**
@@ -21,6 +14,6 @@ public class DiscardResourceSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.discardResourceSelection(marbles);
+        commandDispatcher.clientAccepted();
     }
 }
