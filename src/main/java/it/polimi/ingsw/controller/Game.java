@@ -45,6 +45,6 @@ public class Game implements Runnable{
     }
 
     private void start() {
-        //inzializza controller del primo turno
+        //inzializza GameTable e Controller
     }
 }

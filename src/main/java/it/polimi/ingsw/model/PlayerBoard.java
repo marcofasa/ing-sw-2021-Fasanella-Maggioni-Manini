@@ -26,7 +26,7 @@ public class PlayerBoard {
      * @param _nickname    of the player
      * @param _first       true if is the first player
      * @param _playerState if the player is Playing or Idle
-     * @param _gameTable
+     * @param _gameTable   gameTable the PlayerBoard is participating in
      */
     public PlayerBoard(String _nickname, boolean _first, PlayerState _playerState, GameTable _gameTable) {
         nickname = _nickname;
@@ -122,7 +122,7 @@ public class PlayerBoard {
     /**
      * Adds a resource to the Temporary Deposit
      *
-     * @param resource
+     * @param resource type of Resource to be added to temporary deposit
      */
     void addToTemporaryDeposit(Resource resource) {
         Integer numberOfResourcesOrNull = tempDeposit.get(resource);
@@ -147,7 +147,7 @@ public class PlayerBoard {
     /**
      * For each call all the players move of one step except this player
      *
-     * @param resource
+     * @param resource type of Resource to be discarded from temporary deposit
      */
     public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected{
         if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelected();
@@ -275,11 +275,11 @@ public class PlayerBoard {
 
     /**
      * Giving two resources you can get one of any type
-     * This method assumes that the player hold enough resources to activate the production power.
+     * This method assumes that the player holds enough resources to activate the production power.
      *
-     * @param input1
-     * @param input2
-     * @param output
+     * @param input1 first resource used as input for basic production power
+     * @param input2 second resource used as input for basic production power
+     * @param output output of basic production power
      */
     private void activateBasicProduction(Resource input1, Resource input2, Resource output) {
         getDepositInstance().useResource(input1, 1);
@@ -291,7 +291,7 @@ public class PlayerBoard {
      * Method to activate a single card's production power.
      * This method assumes that the player holds enough resources to activate the production power.
      *
-     * @param cardDevelopmentSlotToActivate
+     * @param cardDevelopmentSlotToActivate slot whose highest production power is to be activated
      */
     private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate) {
         boolean success = cardDevelopmentSlotToActivate.getTop().tryActivateProduction(this);
@@ -301,8 +301,8 @@ public class PlayerBoard {
      * Checks if cardLeader can be activated and calls activate() on it
      * This method assumes that the player holds enough resources to activate the production power.
      *
-     * @param cardLeaderToBeActivated
-     * @param output
+     * @param cardLeaderToBeActivated card leader production whose power is to be activated
+     * @param output type of Resource to be produced
      */
     private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
         if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
