@@ -215,9 +215,10 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void askForResourceSelection(ArrayList<Marble> marbles) {
+    public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
          utils.printMarbleList(marbles);
         //client.sendMarbleSelection(utils.readNumberWithBounds(1,marbles.size())-1);
+        return marbles;
     }
 
     @Override

@@ -15,8 +15,8 @@ public class RequestBuyDevelopmentCard extends ClientRequest {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getServer().getServerCommandDispatcher().
-                requestBuyDevelopmentCard(virtualClient, Integer.parseInt(super.getPayload()),
+        virtualClient.getCommandDispatcher().
+                requestBuyDevelopmentCard(Integer.parseInt(super.getPayload()),
                 Integer.parseInt(super.getKey()));
     }
 }

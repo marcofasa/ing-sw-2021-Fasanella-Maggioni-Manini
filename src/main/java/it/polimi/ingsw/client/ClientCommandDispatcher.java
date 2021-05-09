@@ -1,9 +1,11 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.client.*;
+import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
 
@@ -19,9 +21,9 @@ public class ClientCommandDispatcher {
         System.out.println("Connected to server");
     }
 
-    public void requestPlayersNumber() {
+    public void requestPlayersNumber(int timeoutID) {
         System.out.println("Request Players Number received");
-        client.send(new ResponsePlayersNumber(Integer.toString(client.askPlayersNumber())));
+        sendWithTimeoutID(new ResponsePlayersNumber(Integer.toString(client.askPlayersNumber())), timeoutID);
     }
 
     public void nicknameIsUnavailable(){ /* TODO */
@@ -32,18 +34,19 @@ public class ClientCommandDispatcher {
         System.out.println("Game Has Started. Game ID: " + gameID);
     }
 
-    public ArrayList<CardLeader> requestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    private ArrayList<CardLeader> subRequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         ArrayList<CardLeader> cardLeaders1 =  client.getView().askLeaderCardSelection(cardLeaders);
         return cardLeaders1;
     }
 
-    public ArrayList<Resource> requestInitialResourcesSelection(int playerNumber) {
+    private ArrayList<Resource> subRequestInitialResourcesSelection(int playerNumber) {
         ArrayList<Resource> resources = client.getView().askForInitialResourcesSelection();
         return resources;
     }
 
-    public void requestDiscardResourceSelection(ArrayList<Marble> marbles) {
-        client.getView().askForResourceSelection(marbles);
+    public void requestDiscardResourceSelection(ArrayList<Marble> marbles, int timeoutID) {
+        ArrayList<Marble> marbles1 = client.getView().askForResourceSelection(marbles);
+        sendWithTimeoutID(new ResponseDiscardResourceSelection(marbles1), timeoutID);
     }
 
     public void notActivePlayerError() {
@@ -66,10 +69,15 @@ public class ClientCommandDispatcher {
         return client.getTimeoutHandler();
     }
 
-    public void requestInitialSelection(ArrayList<CardLeader> cardLeaders, int playerNumber) {
-        ArrayList<CardLeader> cardLeaders1 = requestLeaderCardSelection(cardLeaders);
-        ArrayList<Resource> resources = requestInitialResourcesSelection(playerNumber);
-        client.send(new ResponseInitialSelection(resources.get(0), resources.get(1), cardLeaders1));
+    public void requestInitialSelection(ArrayList<CardLeader> cardLeaders, int playerNumber, int timeoutID) {
+        ArrayList<CardLeader> cardLeaders1 = subRequestLeaderCardSelection(cardLeaders);
+        ArrayList<Resource> resources = subRequestInitialResourcesSelection(playerNumber);
+        sendWithTimeoutID(new ResponseInitialSelection(resources.get(0), resources.get(1), cardLeaders1), timeoutID);
+    }
+
+    private void sendWithTimeoutID(ClientMessage clientResponse, int timeoutID) {
+        clientResponse.setTimeoutID(timeoutID);
+        client.send(clientResponse);
     }
 }
 

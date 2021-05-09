@@ -127,8 +127,9 @@ public class GUI implements ViewInterface {
 
 
     @Override
-    public void askForResourceSelection(ArrayList<Marble> marbles) {
+    public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
 
+        return marbles;
     }
 
     @Override

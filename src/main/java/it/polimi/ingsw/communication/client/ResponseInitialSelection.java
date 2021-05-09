@@ -20,6 +20,6 @@ public class ResponseInitialSelection extends ClientResponse {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getServer().getServerCommandDispatcher().initialSelection(virtualClient, cardLeader, resource1, resource2);
+        virtualClient.getCommandDispatcher().initialSelection(cardLeader, resource1, resource2);
     }
 }

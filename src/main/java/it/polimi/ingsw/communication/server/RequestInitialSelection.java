@@ -23,6 +23,6 @@ public class RequestInitialSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
-        commandDispatcher.requestInitialSelection(cardLeaders, playerNumber);
+        commandDispatcher.requestInitialSelection(cardLeaders, playerNumber, getTimeoutID());
     }
 }

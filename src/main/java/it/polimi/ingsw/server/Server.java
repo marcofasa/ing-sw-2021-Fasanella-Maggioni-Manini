@@ -18,7 +18,6 @@ public class Server {
     private int nextGameID;
     private WaitingLobby lobby;
     private Game currentGame;
-    private final ServerCommandDispatcher serverCommandDispatcher;
     private final ExecutorService executors;
     private final ArrayList<Runnable> timeouts;
 
@@ -27,7 +26,6 @@ public class Server {
         gamesID = new HashMap<>();
         currentGame = new Game();
         lobby = new WaitingLobby(this);
-        serverCommandDispatcher = new ServerCommandDispatcher(this);
         clientsNickname = new HashMap<>();
         gameMap = new HashMap<>();
         virtualClientIDMap = new HashMap<>();
@@ -93,10 +91,6 @@ public class Server {
         lobby = new WaitingLobby(this);
     }
 
-    public ServerCommandDispatcher getServerCommandDispatcher() {
-        return serverCommandDispatcher;
-    }
-
     public void unregisterClientTimeoutExceeded(VirtualClient virtualClient) {
         System.out.println("Timeout exceeded, unregistering client " + virtualClient);
         unregisterClient(virtualClient);
@@ -104,5 +98,9 @@ public class Server {
 
     private void unregisterClient(VirtualClient virtualClient) {
         ;
+    }
+
+    public void requestTimedout(VirtualClient virtualClient) {
+        System.out.println("request Timedout by client: " + virtualClient);
     }
 }

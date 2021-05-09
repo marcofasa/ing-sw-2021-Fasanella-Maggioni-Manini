@@ -12,6 +12,6 @@ public class SetupConnection extends ClientMessage{
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getServer().getServerCommandDispatcher().setupConnection(super.getPayload(), virtualClient);
+        virtualClient.getCommandDispatcher().setupConnection(super.getPayload());
     }
 }

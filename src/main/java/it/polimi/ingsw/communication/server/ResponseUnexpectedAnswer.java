@@ -5,10 +5,6 @@ import it.polimi.ingsw.client.RequestTimeoutException;
 
 public class ResponseUnexpectedAnswer extends ServerResponse {
 
-    public ResponseUnexpectedAnswer(int timeoutID) {
-        super(null, null, timeoutID);
-    }
-
     public ResponseUnexpectedAnswer() {
         super(null, null);
     }
