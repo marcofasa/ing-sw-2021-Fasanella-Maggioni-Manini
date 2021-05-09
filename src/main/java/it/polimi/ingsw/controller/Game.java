@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.GameTable;
 import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class is responsible for instantiating the controller and model classes, receiving and dispatching requests
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class Game implements Runnable{
 
     private ArrayList<VirtualClient> players;
+    private HashMap<VirtualClient, String> vClientToNicknames;
     private GameTable gameTable;
     private Controller controller;
 
