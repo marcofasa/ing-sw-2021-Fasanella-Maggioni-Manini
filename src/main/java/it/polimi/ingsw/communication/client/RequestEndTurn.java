@@ -10,6 +10,6 @@ public class RequestEndTurn extends ClientRequest {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getServer().getServerCommandDispatcher().requestEndTurn(virtualClient);
+        virtualClient.getCommandDispatcher().requestEndTurn();
     }
 }

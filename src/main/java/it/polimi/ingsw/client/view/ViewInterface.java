@@ -113,7 +113,7 @@ public interface ViewInterface {
      /*
 
      */
-     void askForResourceSelection(ArrayList<Marble> marbles);
+     ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles);
 
      /*
 

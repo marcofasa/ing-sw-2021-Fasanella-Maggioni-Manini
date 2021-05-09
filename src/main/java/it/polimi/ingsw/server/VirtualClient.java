@@ -17,6 +17,7 @@ public class VirtualClient implements Runnable{
     private final Socket clientSocket;
     private final Server server;
     private final ClientTimeoutHandler timeoutHandler;
+    private final VirtualClientCommandDispatcher clientCommandDispatcher;
     private Game game;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -30,6 +31,7 @@ public class VirtualClient implements Runnable{
         connected = true;
         executors = Executors.newCachedThreadPool();
         timeoutHandler = new ClientTimeoutHandler(this);
+        clientCommandDispatcher = new VirtualClientCommandDispatcher(this);
     }
 
 
@@ -97,5 +99,9 @@ public class VirtualClient implements Runnable{
 
     public Game getGame() {
         return game;
+    }
+
+    public VirtualClientCommandDispatcher getCommandDispatcher() {
+        return clientCommandDispatcher;
     }
 }
