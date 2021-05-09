@@ -13,10 +13,6 @@ public class RequestBuyDevelopmentCard extends ClientRequest {
         super(Integer.toString(rowIndex), Integer.toString(columnIndex));
     }
 
-    public RequestBuyDevelopmentCard(Integer rowIndex, Integer columnIndex, Integer timeoutID) {
-        super(Integer.toString(rowIndex), Integer.toString(columnIndex), timeoutID);
-    }
-
     @Override
     public void read(VirtualClient virtualClient) {
         virtualClient.getServer().getServerCommandDispatcher().

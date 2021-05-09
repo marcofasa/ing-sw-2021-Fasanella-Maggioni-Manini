@@ -8,15 +8,12 @@ import java.util.ArrayList;
 
 public class RequestInitialSelection extends ServerRequest {
     private final ArrayList<CardLeader> cardLeaders;
+    private final int playerNumber;
 
-    public RequestInitialSelection(ArrayList<CardLeader> cardLeaders) {
+    public RequestInitialSelection(ArrayList<CardLeader> cardLeaders, int playerNumber) {
         super(null, null);
         this.cardLeaders = cardLeaders;
-    }
-
-    public RequestInitialSelection(ArrayList<CardLeader> cardLeaders, int timeoutID){
-        super(null,null, timeoutID);
-        this.cardLeaders = cardLeaders;
+        this.playerNumber = playerNumber;
     }
 
     /**
@@ -26,6 +23,6 @@ public class RequestInitialSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
-        commandDispatcher.requestLeaderCardSelection(cardLeaders);
+        commandDispatcher.requestInitialSelection(cardLeaders, playerNumber);
     }
 }

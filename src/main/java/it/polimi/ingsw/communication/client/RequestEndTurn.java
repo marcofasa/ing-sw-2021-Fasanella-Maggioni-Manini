@@ -8,11 +8,6 @@ public class RequestEndTurn extends ClientRequest {
         super(null, null);
     }
 
-
-    public RequestEndTurn(int timeoutID) {
-        super(null, null, timeoutID);
-    }
-
     @Override
     public void read(VirtualClient virtualClient) {
         virtualClient.getServer().getServerCommandDispatcher().requestEndTurn(virtualClient);

@@ -35,6 +35,8 @@ public interface ViewInterface {
      */
     void displayPosition();
 
+    void displayTimeOut();
+
     /*
     Display Market
      */
@@ -102,10 +104,11 @@ public interface ViewInterface {
      */
      void askMarketChoice();
 
-     /*
+     void askDevelopmentCardChoice();
 
-     */
-     ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
+     void askProductionActivation();
+
+     void askCardLeaderActivation();
 
      /*
 
@@ -115,5 +118,9 @@ public interface ViewInterface {
      /*
 
       */
-     void askForInitialResourcesSelection();
+     ArrayList<Resource> askForInitialResourcesSelection();
+
+     void askEndTurn();
+
+    ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 }

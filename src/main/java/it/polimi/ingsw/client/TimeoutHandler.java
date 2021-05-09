@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.client.ClientMessage;
+import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerResponse;
 
@@ -13,18 +14,13 @@ public class TimeoutHandler {
     private final Client client;
     private final ArrayList<Semaphore> semaphores;
     private final ExecutorService executors;
-    private final HashMap<ServerMessage, Semaphore> semaphoreMessageMap;
-    private final HashMap<ServerMessage, Boolean> messageIsInTimeMap;
     private final HashMap<Integer, Semaphore> semaphoreByID;
     private final HashMap<Integer, Boolean> idIsInTime;
-    private int idTimeout;
 
     public TimeoutHandler(Client client) {
         this.client = client;
         semaphores = new ArrayList<>();
         executors = Executors.newCachedThreadPool();
-        semaphoreMessageMap = new HashMap<>();
-        messageIsInTimeMap = new HashMap<>();
         semaphoreByID = new HashMap<>();
         idIsInTime = new HashMap<>();
     }
@@ -35,47 +31,63 @@ public class TimeoutHandler {
         return newSem;
     }
 
-    public void tryDisengage(int timeoutID) throws RequestTimeoutException{
-        if(!idIsInTime.get(timeoutID)){
-            clearID(timeoutID);
+    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException{
+        if(!idIsInTime.get(messageTimeoutID)){
+            clearID(messageTimeoutID);
             throw new RequestTimeoutException();
         } else {
-            clearID(timeoutID);
+            clearID(messageTimeoutID);
         }
     }
 
-    private void clearID(int timeoutID) {
-        semaphoreByID.get(timeoutID).release(); //this should do nothing, but just in case
-        semaphores.remove(semaphoreByID.get(timeoutID));
-        semaphoreByID.remove(timeoutID);
-        idIsInTime.remove(timeoutID);
+    private void clearID(int messageTimeoutID) {
+        semaphoreByID.get(messageTimeoutID).release();
+        semaphores.remove(semaphoreByID.get(messageTimeoutID));
+        semaphoreByID.remove(messageTimeoutID);
+        idIsInTime.remove(messageTimeoutID);
     }
 
+    /**
+     * Sends clientMessage to the Server and awaits answer for timeoutInSeconds time
+     * @param clientMessage message to be sent
+     * @param timeoutInSeconds timeout in seconds to wait for a server answer; -1 to wait indefinitely
+     * @throws TimeoutException thrown when timeout is expired
+     */
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
-        client.send(clientMessage); /* TODO */
+        if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
         Semaphore semaphore = getNewSemaphore();
-        int messageID = getID();
-        semaphoreByID.put(messageID, semaphore);
-        idIsInTime.put(messageID, true);
-        try {
-            executors.submit(() -> {
-                try {
-                    semaphore.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).get(timeoutInSeconds, TimeUnit.SECONDS);
-            semaphore.acquire();
-        } catch (TimeoutException e) {
-            timeoutExpired(messageID);
-            throw new TimeoutException();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        int messageTimeoutID = getID();
+        semaphoreByID.put(messageTimeoutID, semaphore);
+        idIsInTime.put(messageTimeoutID, true);
+        clientMessage.setTimeoutID(messageTimeoutID);
+        client.send(clientMessage);
+        if(timeoutInSeconds == -1){
+            try {
+                client.send(clientMessage);
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                executors.submit(() -> {
+                    try {
+                        semaphore.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).get(timeoutInSeconds, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                timeoutExpired(messageTimeoutID);
+                throw new TimeoutException();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void timeoutExpired(int messageID) {
-        idIsInTime.put(messageID, false);
+    private void timeoutExpired(int messageTimeoutID) {
+        idIsInTime.put(messageTimeoutID, false);
     }
 
     private int getID(){
@@ -83,8 +95,7 @@ public class TimeoutHandler {
         while (semaphoreByID.get(nextInt) != null){
             nextInt = ThreadLocalRandom.current().nextInt();
         }
-        idTimeout = nextInt;
-        return idTimeout;
+        return nextInt;
     }
 }
 

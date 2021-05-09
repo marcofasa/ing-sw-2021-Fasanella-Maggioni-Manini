@@ -11,18 +11,10 @@ public abstract class ServerMessage extends SerializedNetworkMessage {
 
     private final String key;
 
-    private final int timeoutID;
-
     public ServerMessage(String message, String key){
         this.message = message;
         this.key = key;
-        timeoutID = -1;
-    }
-
-    public ServerMessage(String message, String key, int timeoutID){
-        this.message = message;
-        this.key = key;
-        this.timeoutID = timeoutID;
+        super.setTimeoutID(-1);
     }
 
     public String getKey(){
@@ -39,7 +31,4 @@ public abstract class ServerMessage extends SerializedNetworkMessage {
      */
     public abstract void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException;
 
-    public int getTimeoutID() {
-        return timeoutID;
-    }
 }

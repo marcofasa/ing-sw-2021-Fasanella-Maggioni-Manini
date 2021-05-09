@@ -1,5 +1,7 @@
 package it.polimi.ingsw.communication.client;
 
+import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.server.VirtualClient;
 
 public class SetupConnection extends ClientMessage{

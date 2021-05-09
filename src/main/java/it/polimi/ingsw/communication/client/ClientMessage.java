@@ -13,6 +13,7 @@ public abstract class ClientMessage extends SerializedNetworkMessage {
     public ClientMessage(String message, String key){
         this.message = message;
         this.key = key;
+        super.setTimeoutID(-1);
     }
 
     public String getKey(){
@@ -24,5 +25,4 @@ public abstract class ClientMessage extends SerializedNetworkMessage {
     }
 
     public abstract void read(VirtualClient virtualClient);
-
 }
