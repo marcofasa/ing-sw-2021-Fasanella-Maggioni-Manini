@@ -218,6 +218,13 @@ public class CLI implements ViewInterface {
     public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
          utils.printMarbleList(marbles);
         //client.sendMarbleSelection(utils.readNumberWithBounds(1,marbles.size())-1);
+        //FOR DEBUG PURPOSES
+        try {
+            Thread.sleep(30 * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // END FOR DEBUG PURPOSES
         return marbles;
     }
 

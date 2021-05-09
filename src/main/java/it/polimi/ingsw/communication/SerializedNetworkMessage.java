@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class SerializedNetworkMessage implements Serializable {
 
-    private int timeoutID;
+    private int timeoutID = -1;
 
     public void setTimeoutID(int timeoutID){
         if(this.timeoutID == -1)

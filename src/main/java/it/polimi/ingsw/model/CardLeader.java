@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public abstract class CardLeader  {
+import java.io.Serializable;
+
+public abstract class CardLeader  implements Serializable {
 
 
     protected PlayerBoard playerBoard;

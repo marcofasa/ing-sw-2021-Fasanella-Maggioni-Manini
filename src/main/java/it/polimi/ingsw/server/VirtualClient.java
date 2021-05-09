@@ -2,8 +2,10 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.client.ClientMessage;
+import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.communication.client.ClientResponse;
 import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.communication.server.ServerResponse;
 import it.polimi.ingsw.controller.Game;
 
 import java.io.*;
@@ -69,13 +71,16 @@ public class VirtualClient implements Runnable{
             while (connected) {
                 inputClass = (ClientMessage) inputStream.readObject();
                 ClientMessage finalInputClass = inputClass;
-                timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
-                executors.submit(() -> finalInputClass.read(this));
+                try {
+                    if(finalInputClass instanceof ClientResponse)
+                        timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
+                    executors.submit(() -> finalInputClass.read(this));
+                } catch (RequestTimeoutException e) {
+                    server.requestTimedout(this);
+                    e.printStackTrace();
+                }
             }
             clientSocket.close();
-        } catch (RequestTimeoutException e) {
-            server.requestTimedout(this);
-            e.printStackTrace();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

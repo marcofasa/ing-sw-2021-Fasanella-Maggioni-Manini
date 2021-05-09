@@ -22,4 +22,8 @@ public class ClientTest {
         new Thread(() -> client.startConnectionAndListen(ip,port, "nickname"));
     }
 
+    private void sendAndWait() {
+        Client.main(new String[0]);
+
+    }
 }
