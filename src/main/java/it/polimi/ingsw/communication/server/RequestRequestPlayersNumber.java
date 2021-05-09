@@ -15,6 +15,6 @@ public class RequestRequestPlayersNumber extends ServerRequest{
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.requestPlayersNumber();
+        commandDispatcher.requestPlayersNumber(getTimeoutID());
     }
 }

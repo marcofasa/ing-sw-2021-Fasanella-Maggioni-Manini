@@ -105,4 +105,8 @@ public class Server {
     private void unregisterClient(VirtualClient virtualClient) {
         ;
     }
+
+    public void requestTimedout(VirtualClient virtualClient) {
+        System.out.println("request Timedout by client: " + virtualClient);
+    }
 }

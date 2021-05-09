@@ -8,10 +8,6 @@ public class ResponseSuccess extends ServerResponse {
         super(null, null);
     }
 
-    public ResponseSuccess(int timeoutID) {
-        super(null, null, timeoutID);
-    }
-
     /**
      * Calls the method specified in the read function
      *
@@ -19,7 +15,6 @@ public class ResponseSuccess extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
-        super.tryDisengageTimeout(commandDispatcher.getTimeoutHandler());
         commandDispatcher.success();
     }
 }

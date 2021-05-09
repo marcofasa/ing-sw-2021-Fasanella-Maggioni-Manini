@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.communication.server.ResponseNicknameUnavailable;
 import it.polimi.ingsw.communication.server.ResponseSuccess;
+import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
@@ -31,7 +32,7 @@ public class ServerCommandDispatcher {
 
     public void requestActivateCardLeader(VirtualClient virtualClient, CardLeader cardLeader, int timeoutID) {
         System.out.println("Card Leader activation request arrived");
-        virtualClient.send(new ResponseSuccess(timeoutID));
+        sendWithTimeoutID(virtualClient, new ResponseSuccess(), timeoutID);
     }
 
     public void initialSelection(VirtualClient virtualClient, ArrayList<CardLeader> cardLeader, Resource resource1, Resource resource2) {
@@ -48,5 +49,10 @@ public class ServerCommandDispatcher {
     }
 
     public void requestEndTurn(VirtualClient virtualClient) {
+    }
+
+    private void sendWithTimeoutID(VirtualClient virtualClient, ServerMessage responseSuccess, int timeoutID) {
+        responseSuccess.setTimeoutID(timeoutID);
+        virtualClient.send(responseSuccess);
     }
 }

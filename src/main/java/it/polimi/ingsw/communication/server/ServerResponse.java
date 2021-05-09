@@ -10,15 +10,6 @@ public abstract class ServerResponse extends ServerMessage{
         super(message, key);
     }
 
-    public ServerResponse(String message, String key, int timeoutID) {
-        super(message, key, timeoutID);
-    }
-
-    public void tryDisengageTimeout(TimeoutHandler timeoutHandler) throws RequestTimeoutException {
-        if(super.getTimeoutID() != -1)
-            timeoutHandler.tryDisengage(super.getTimeoutID());
-    }
-
     /**
      * Calls the method specified in the read function
      *

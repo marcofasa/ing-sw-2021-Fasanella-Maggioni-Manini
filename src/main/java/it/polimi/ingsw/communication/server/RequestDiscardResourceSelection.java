@@ -21,6 +21,6 @@ public class RequestDiscardResourceSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.requestDiscardResourceSelection(marbles);
+        commandDispatcher.requestDiscardResourceSelection(marbles, getTimeoutID());
     }
 }

@@ -10,10 +10,6 @@ public abstract class ServerRequest extends ServerMessage {
         super(message, key);
     }
 
-    public ServerRequest(String message, String key, int timeoutID){
-        super(null,null, timeoutID);
-    }
-
     /**
      * Calls the method specified in the read function
      *
