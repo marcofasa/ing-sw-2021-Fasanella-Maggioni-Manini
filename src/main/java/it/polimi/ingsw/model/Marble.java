@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * Abstract Marble
  */
-public abstract class Marble {
+public abstract class Marble implements Serializable {
 
     /**
      * @param playerBoard player where to activate marble

@@ -13,7 +13,7 @@ public class Server {
     private SocketServer socketServer;
     private final HashMap<Integer, VirtualClient> virtualClientIDMap;
     private final HashMap<VirtualClient, Game> gameMap;
-    private final HashMap<String, VirtualClient> clientsNickname;
+    private final HashMap<VirtualClient, String> clientsNickname;
     private final HashMap<Game, Integer> gamesID;
     private int nextGameID;
     private WaitingLobby lobby;
@@ -47,7 +47,7 @@ public class Server {
     void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
         if(clientsNickname.containsKey(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
-        clientsNickname.put(nickname, virtualClient);
+        clientsNickname.put(virtualClient, nickname);
         virtualClient.send(new ResponseClientAccepted());
         synchronized (lobby) {
             lobby.addPlayer(virtualClient);
@@ -78,7 +78,12 @@ public class Server {
 
     public void startGame() {
         ArrayList<VirtualClient> players = lobby.getPlayers();
-        currentGame.addAllPlayers(players);
+        ArrayList<String> playersNickname = new ArrayList<>();
+        for (VirtualClient player :
+                players) {
+            playersNickname.add(clientsNickname.get(player));
+        }
+        currentGame.addAllPlayers(players, playersNickname);
         executors.submit(currentGame);
         for (VirtualClient player :
                 players) {

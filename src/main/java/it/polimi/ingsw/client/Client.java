@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.communication.server.ServerRequest;
 import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.io.*;
@@ -45,7 +46,8 @@ public class Client {
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
-                    timeoutHandler.tryDisengage(inputClass.getTimeoutID());
+                    if(inputClass instanceof ServerResponse)
+                        timeoutHandler.tryDisengage(inputClass.getTimeoutID());
                     inputClass.read(clientCommandDispatcher);
                 } catch (RequestTimeoutException e) {
                     e.printStackTrace();
