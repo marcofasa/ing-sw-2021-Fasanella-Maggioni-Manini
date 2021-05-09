@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.communication.server.RequestInitialSelection;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 public class InitialSelectionController {
 
     private final GameTable gameTable;
-
 
     public InitialSelectionController(GameTable _gameTable) {
         gameTable = _gameTable;
@@ -30,16 +28,13 @@ public class InitialSelectionController {
             PlayerBoard _player,
             ArrayList<CardLeader> cardList,
             Resource res1,
-            Resource res2) throws IllegalArgumentException, CardLeaderWrongOwnerException{
-
-        int index = getPlayerIndex(_player);
+            Resource res2) throws IllegalArgumentException, CardLeaderWrongOwnerException {
 
         // This method throws an IllegalArgumentException : it is caught and handled in Game class
-        gameTable.setupHelper(index, res1, res2);
+        gameTable.setupHelper(getPlayerIndex(_player), res1, res2);
 
         // This method throws a CardLeaderWrongOwnerException : it is caught and handled in Game class
         _player.selectCardsLeader(cardList.get(0), cardList.get(1));
-
     }
 
     private int getPlayerIndex(PlayerBoard _player) {

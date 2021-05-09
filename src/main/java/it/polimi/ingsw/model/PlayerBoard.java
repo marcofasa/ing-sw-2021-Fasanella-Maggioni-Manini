@@ -46,6 +46,10 @@ public class PlayerBoard {
         for (int i = 0; i < 3; i++) cardSlotArray[i] = new CardDevelopmentSlot(CardDevelopmentSlotID.values()[i]);
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public ArrayList<CardDevelopment> getAllDevelopmentCards() {
         ArrayList<CardDevelopment> outputList = new ArrayList<>();
         ArrayList<CardDevelopment> tempList;
