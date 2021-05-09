@@ -90,10 +90,10 @@ public class TurnController {
             }
         }
 
-        if (gameTable.isFirstRound()) turnCounter++;
-
-        if (turnCounter == gameTable.getNumberOfPlayers()) gameTable.endFirstRound();
-
+        if (gameTable.isFirstRound()) {
+            turnCounter++;
+            if (turnCounter == gameTable.getNumberOfPlayers()) gameTable.endFirstRound();
+        }
     }
 
     /**
