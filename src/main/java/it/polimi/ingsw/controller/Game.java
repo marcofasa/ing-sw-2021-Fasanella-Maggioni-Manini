@@ -78,6 +78,7 @@ public class Game implements Runnable{
 
     }
 
+    // Overloaded send method
     public void send(VirtualClient virtualClient, ServerMessage serverMessage){
         virtualClient.send(serverMessage);
     }
@@ -90,6 +91,7 @@ public class Game implements Runnable{
         idPlayerClientMap.get(playerID).send(serverMessage);
     }
 
+    // Overloaded sendAndWait method
     public void sendAndWait(VirtualClient virtualClient, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
         virtualClient.sendAndWait(serverMessage, timeoutInSeconds);
     }
