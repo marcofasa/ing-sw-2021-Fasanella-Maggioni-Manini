@@ -43,6 +43,13 @@ public class ActionController {
                 InvalidSlotIndexException,
                 FullSlotException {
 
+        /*
+        Conditions for InvalidCardDevelopmentPlacementException, InvalidSlotIndexException and FullSlotException
+        must be checked before buying the card! Otherwise the card will be picked up by GC and lost.
+         */
+
+        checkBuyAndPlaceParams(_player, _rowIndex, _colIndex, _placementIndex);
+
         // Buy the development card from the market
         CardDevelopment boughtCard = _player.buyCardDevelopmentCardFromMarket(_rowIndex, _colIndex);
 
@@ -50,21 +57,21 @@ public class ActionController {
         _player.placeCardDevelopmentCardOnBoard(boughtCard, _placementIndex);
     }
 
-    public boolean useMarket(PlayerBoard _player, int index, String selection) throws IllegalArgumentException {
+    public boolean useMarket(PlayerBoard _player, int _index, String _selection) throws IllegalArgumentException {
 
         ArrayList<Marble> marbles = new ArrayList<>();
 
         // Row was selected
-        if (selection.equalsIgnoreCase("row")) {
+        if (_selection.equalsIgnoreCase("row")) {
 
             //Throws IllegalArgumentException if index < 1 || index > 3
-            marbles = _player.getMarketRow(index);
+            marbles = _player.getMarketRow(_index);
 
         // Column was selected
-        } else if (selection.equalsIgnoreCase("column")) {
+        } else if (_selection.equalsIgnoreCase("column")) {
 
             //Throws IllegalArgumentException if index < 1 || index > 4
-            marbles = _player.getMarketCol(index);
+            marbles = _player.getMarketCol(_index);
 
         // An illegal key was set for RequestMarketUse
         } else throw new IllegalArgumentException();
@@ -72,9 +79,14 @@ public class ActionController {
         return _player.tryAddMarbles(marbles);
     }
 
-    public void activateProductionPowers(PlayerBoard _player, ProductionSelection productionSelection) throws InvalidSlotIndexException, NotEnoughResourcesException {
+    public void activateProductionPowers(
+            PlayerBoard _player,
+            ProductionSelection _productionSelection)
+                throws
+                InvalidSlotIndexException,
+                NotEnoughResourcesException {
 
-        if (!_player.tryActivateProductions(productionSelection)) {
+        if (!_player.tryActivateProductions(_productionSelection)) {
             throw new NotEnoughResourcesException(_player.getNickname());
         }
     }
@@ -88,5 +100,61 @@ public class ActionController {
             return false;
     }
 
+    /**
+     * This private method is to be called to sanitize the input given to buyAndPlaceDevCard function.
+     * The method assures that the second statement of the method will not throw an exception, as if this were to occur
+     * the bought card would be picked up by GC and lost.
+     * @param _player _player param in buyAndPlaceDevCard
+     * @param _rowIndex _rowIndex param in buyAndPlaceDevCard
+     * @param _colIndex _colIndex param in buyAndPlaceDevCard
+     * @param _placementIndex _placementIndex param in buyAndPlaceDevCard
+     * @throws InvalidSlotIndexException - thrown if an invalid slot index is passed
+     * @throws FullSlotException - thrown if selected slot already holds 3 cards
+     * @throws InvalidCardDevelopmentPlacementException - thrown if a placement in the selected slot would break the game rules
+     */
+    private void checkBuyAndPlaceParams(
+            PlayerBoard _player,
+            int _rowIndex,
+            int _colIndex,
+            int _placementIndex)
+                throws
+                InvalidSlotIndexException,
+                FullSlotException,
+                InvalidCardDevelopmentPlacementException {
 
+        //Check for InvalidSlotIndexException
+        if (_placementIndex < 0 || _placementIndex > 2)
+            throw new InvalidSlotIndexException();
+
+        //Check for FullSlotException
+        if (_player.getCardDevelopmentSlotByIndex(_placementIndex).getSize() > 2)
+            throw new FullSlotException(CardDevelopmentSlotID.values()[_placementIndex]);
+
+        //Check for InvalidCardDevelopmentPlacementException
+
+        CardDevelopment desiredCard = gameTable.getCardDevelopmentMarketInstance().getMarket()[_rowIndex][_colIndex].getCards().peek();
+
+        CardDevelopmentSlot targetSlot = _player.getCardDevelopmentSlotByIndex(_placementIndex);
+
+        switch (desiredCard.getCardLevel()) {
+            case One:
+
+                if (targetSlot.getSize() != 0)
+                    throw new InvalidCardDevelopmentPlacementException(null);
+                break;
+
+            case Two:
+                if (targetSlot.getSize() != 1 || targetSlot.getTop().getCardLevel() != CardDevelopmentLevel.One)
+                    throw new InvalidCardDevelopmentPlacementException(null);
+                break;
+
+            case Three:
+                if (targetSlot.getSize() != 2 || targetSlot.getTop().getCardLevel() != CardDevelopmentLevel.Two)
+                    throw new InvalidCardDevelopmentPlacementException(null);
+
+                break;
+
+        }
+
+    }
 }

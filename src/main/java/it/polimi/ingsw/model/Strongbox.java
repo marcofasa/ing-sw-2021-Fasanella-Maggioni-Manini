@@ -62,7 +62,7 @@ public class Strongbox {
      * @param resourcesToBeAdded Map of <Resource,Integer> to be added to content
      * @return true, because Strongbox's content has no boundaries
      */
-    boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
+    public boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
 
         for (Resource res : resourcesToBeAdded.keySet()) {
             addResource(res, resourcesToBeAdded.get(res));

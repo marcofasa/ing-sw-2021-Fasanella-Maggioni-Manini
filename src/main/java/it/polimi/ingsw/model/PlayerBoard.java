@@ -153,7 +153,7 @@ public class PlayerBoard {
      *
      * @param resource type of Resource to be discarded from temporary deposit
      */
-    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected{
+    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected {
         if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelected();
         //Remove 1 Resource from the temporary deposit
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
@@ -308,7 +308,7 @@ public class PlayerBoard {
      * This method assumes that the player holds enough resources to activate the production power.
      *
      * @param cardLeaderToBeActivated card leader production whose power is to be activated
-     * @param output type of Resource to be produced
+     * @param output                  type of Resource to be produced
      */
     private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
         if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
@@ -382,14 +382,17 @@ public class PlayerBoard {
         targetSlot.placeCard(cardToBePlaced);
     }
 
-    /*
-    TODO Implementare funzione per attivare la selezione di poteri di produzione,
-     che prima controlli se il player possiede abbastanza risorse in una mappa generata da deposito + strongbox,
-     se no lancia NotEnoughResourcesException che sara' gestita dal controller
+    /**
+     * Method to try and activate a selection of production powers. The method first computes the total cost of activation
+     * for the selected powers, and if the player holds enough resources, it activates them.
+     *
+     * @param productionSelection class that contains the user selections
+     * @return true if player has enough resources to activate powers, false otherwise
+     * @throws InvalidSlotIndexException - thrown if an index not in range [0, 2] is selected
      */
     public boolean tryActivateProductions(ProductionSelection productionSelection) throws InvalidSlotIndexException {
 
-        /**** 1. Compute total cost of production powers to be activated ****/
+        /* *** 1. Compute total cost of production powers to be activated *** */
 
         HashMap<Resource, Integer> totalCost = new HashMap<>();
 
@@ -416,7 +419,8 @@ public class PlayerBoard {
 
                     CardDevelopment card = getCardDevelopmentSlotByIndex(i).getTop();
 
-                    for (Resource res : Resource.values()) totalCost.put(res, totalCost.get(res) + card.getProductionInput().get(res));
+                    for (Resource res : Resource.values())
+                        totalCost.put(res, totalCost.get(res) + card.getProductionInput().get(res));
                 }
             }
         }
@@ -429,7 +433,7 @@ public class PlayerBoard {
             }
         }
 
-        /**** 2. Check if player has enough resources to activate all the powers ****/
+        /* *** 2. Check if player has enough resources to activate all the powers *** */
         if (hasResources(totalCost)) {
 
             // **Activate all powers**

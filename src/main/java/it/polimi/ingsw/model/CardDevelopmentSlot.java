@@ -35,6 +35,8 @@ public class CardDevelopmentSlot {
         return id;
     }
 
+    public int getSize() { return cards.size(); }
+
     /**
      * Getter for the cards held by the player in this CardDevelopmentSlot
      * @return a deep copy of the card stack

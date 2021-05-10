@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * This class is to be instantiated in the Client, populated based on user input when the player
