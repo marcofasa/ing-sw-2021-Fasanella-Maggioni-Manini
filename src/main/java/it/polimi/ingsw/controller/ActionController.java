@@ -21,6 +21,9 @@ public class ActionController {
         gameTable = _gameTable;
     }
 
+
+    /* *** Standard user actions *** */
+
     /**
      * Method to be called when a ClientRequest : RequestBuyCardDevelopment is received
      * @param _player the active player that wishes to buy a development card
@@ -99,6 +102,9 @@ public class ActionController {
         } else
             return false;
     }
+
+    /* *** Actions a user can select following a ServerRequest *** */
+
 
     /**
      * This private method is to be called to sanitize the input given to buyAndPlaceDevCard function.
