@@ -304,7 +304,7 @@ public class PlayerBoard {
      * @param cardLeaderToBeActivated
      * @param output
      */
-    private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
+    public void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
         if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
             throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
         setCardLeaderProductionOutput(output);
