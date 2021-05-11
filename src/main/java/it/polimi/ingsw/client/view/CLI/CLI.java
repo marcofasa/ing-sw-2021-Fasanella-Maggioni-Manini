@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
+import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
 import java.io.PrintWriter;
@@ -127,17 +128,33 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askResourceToDiscard(HashMap<Resource, Integer> choice) {
-        int selection;
-        ArrayList<Resource> resources;
+        HashMap<Resource,Integer> selection= new HashMap<Resource, Integer>();
 
-             out.println("Choose one resource to discard");
-             resources=utils.printListResource(choice);
-             selection = utils.readNumber()-1;
-             //client.sendResourceSelection(resources.get(selection));
-             int currentValue= choice.get(resources.get(selection));
-             choice.put(resources.get(selection),currentValue--);
-             //Removes Resources with Value=0
-             choice.values().removeIf(f -> f == 0);
+             utils.printListResource(choice);
+             out.println("Do you want to discard a resource?");
+             if(utils.readYesOrNo()){
+                 do{
+                     Resource resource=utils.readResource();
+                     if(selection.containsKey(resource)){
+                         int i= selection.get(resource);
+                         selection.replace(resource,i+1);
+                     }
+                     else{
+                         selection.put(resource,1);
+                     }
+                     out.println("Discard another resource?");
+                 }while (utils.readYesOrNo());
+             }
+/*
+          try {
+              client.sendAndWait(new ResponseDiscardResourceSelection(selection),-1);
+          }
+          catch (RequestTimeoutException e){
+              displayTimeOut();
+              e.printStackTrace();
+          }
+
+ */
 
 
     }
@@ -197,45 +214,76 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askProductionActivation() {
-        //TODO
-        /*
-        client.sendAndWait(new RequestActivateProduction(),-1);
-         */
+        ProductionSelection productionSelection= new ProductionSelection();
+        //Ask for basic production
+        out.println("Do you want to activate basic production?");
+        productionSelection.setBasicProduction(utils.readYesOrNo());
+        if (productionSelection.getBasicProduction()){
+            productionSelection.setBasicProdInfo(utils.getBasicProduction());
+        }
+
+        //Ask for Card Development production
+        out.println("Do you want to activate Card Development production?");
+        if (utils.readYesOrNo()) productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardDevelopment()));
+        else {
+            Boolean[] falseArray =new Boolean[3];
+            falseArray[0]=false;
+            falseArray[1]=false;
+            falseArray[2]=false;
+            productionSelection.setCardDevelopmentSlotActive(falseArray);
+        }
+
+
+        //Ask for Card Leader production
+        out.println("Do you want to activate Card Leader production?");
+        if (utils.readYesOrNo()) {
+            CardLeader[] cardLeaders=new CardLeader[2];
+            cardLeaders=utils.getCardLeaderActivation(lightModel.getCardsLeader());
+            productionSelection.setCardLeadersToActivate(cardLeaders);
+        }
+        else {
+            CardLeader[] cardLeaders=new CardLeader[2];
+            cardLeaders[0]=null;
+            cardLeaders[1]=null;
+            productionSelection.setCardLeadersToActivate(cardLeaders);
+            Resource[] cardLeaderProdOutputs = new Resource[2];
+            cardLeaderProdOutputs[0]=null;
+            cardLeaderProdOutputs[1]=null;
+            productionSelection.setCardLeaderProdOutputs(cardLeaderProdOutputs);
+        }
+
+
+        try {
+            client.sendAndWait(new RequestActivateProduction(productionSelection),-1);
+        } catch (RequestTimeoutException e) {
+            displayTimeOut();
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
     public void askCardLeaderActivation() {
         out.println("Choose with card leader to activate:");
         try {
-            client.sendAndWait(new RequestActivateCardLeader(utils.printandgetCardLeaderList(lightModel.getCardsLeader())),-1);
+            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeaderList(lightModel.getCardsLeader())),-1);
         } catch (RequestTimeoutException e) {
             displayTimeOut();
             e.printStackTrace();
         }
     }
 
-    @Override
-    public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
-         utils.printMarbleList(marbles);
-        //client.sendMarbleSelection(utils.readNumberWithBounds(1,marbles.size())-1);
-        //FOR DEBUG PURPOSES
-        try {
-            Thread.sleep(30 * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        // END FOR DEBUG PURPOSES
-        return marbles;
-    }
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection() {
+        //TODO
         return null;
     }
 
     @Override
     public void askEndTurn() {
-        out.println("Turn if finished, wait for other players...");
+        out.println("Turn is finished, wait for other players...");
         try {
             client.sendAndWait(new RequestEndTurn(),-1);
         } catch (RequestTimeoutException e) {
@@ -243,6 +291,11 @@ public class CLI implements ViewInterface {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
+        return null;
     }
 
     @Override

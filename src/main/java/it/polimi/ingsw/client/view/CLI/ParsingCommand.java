@@ -9,15 +9,15 @@ public class ParsingCommand {
     }
 
     public void readCommand(){
-        System.out.println("");
         String command =utils.readString();
        switch (command){
           case "help": utils.printHelp();
-           case "market": cli.askMarketChoice();
-           case "card leader":
-           case "end turn":cli.askEndTurn();
+           case "resource market": cli.askMarketChoice();
+           case "card leader": cli.askCardLeaderActivation();
+           case "card development market": cli.askDevelopmentCardChoice();
+           case "production": cli.askProductionActivation();
+           case "end turn": cli.askEndTurn();
            default: utils.printCommandError();
-
        }
 
     }

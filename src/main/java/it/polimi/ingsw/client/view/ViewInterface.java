@@ -110,17 +110,12 @@ public interface ViewInterface {
 
      void askCardLeaderActivation();
 
-     /*
-
-     */
-     ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles);
-
-     /*
-
-      */
-     ArrayList<Resource> askForInitialResourcesSelection();
-
      void askEndTurn();
 
-    ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
+     ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles);
+
+     ArrayList<Resource> askForInitialResourcesSelection();
+
+     ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
+
 }

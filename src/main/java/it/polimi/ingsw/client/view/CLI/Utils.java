@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.CLI;
 
-import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.model.*;
 
 import java.io.PrintWriter;
@@ -11,7 +10,6 @@ import java.util.Scanner;
 public class Utils {
     private PrintWriter out;
     private Scanner in;
-    private LightModel model;
 
     //ANSI escape codes for Colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -41,17 +39,12 @@ public class Utils {
     }
 
     //DEBUG
-    public ArrayList<Resource> printListResource(HashMap<Resource,Integer> list){
-        int i=1;
-        ArrayList<Resource> resources= new ArrayList<>();
+    public void printListResource(HashMap<Resource,Integer> list){
         for(Resource resource: list.keySet()){
             String key=resource.toString();
             String value= list.get(resource).toString();
-            out.println(i+". x" + value + " resource of " + key);
-            resources.add(i-1,resource);
-            i++;
+            out.println("-x" + value + " resource of " + key);
         }
-        return resources;
     }
 
     //DEBUG
@@ -84,6 +77,13 @@ public class Utils {
         }
     }
 
+    /**
+     * Read a number between
+     * @param min
+     * and
+     * @param max
+     * @return
+     */
     public int readNumberWithBounds(int min,int max){
         synchronized (in){
             int number= readNumber();
@@ -223,7 +223,7 @@ public class Utils {
         }
     }
 
-    public CardLeader printandgetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
+    public CardLeader printAndGetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
             //Check toString
@@ -232,25 +232,33 @@ public class Utils {
         return cardLeaders.get(readNumberWithBounds(0,cardLeaders.size()));
     }
 
-    public void printMarbleList(ArrayList<Marble> marbles) {
-        int index=1;
-        for (int i=0; i<marbles.size();i++){
-            //Check toString
-            out.println(index+". "+ marbles.get(0).toString());
-        }
-    }
-
-
+    /**
+     * Error Message
+     */
     public void printCommandError() {
-        out.println(ANSI_RED+"Command not found, please try again!"+ANSI_RESET);
+        out.println(ANSI_RED+"Command not found, please try again! (type \"help\" for command list)"+ANSI_RESET);
     }
 
+    /**
+     * Help Message
+     */
     public void printHelp() {
         out.println(ANSI_BACKGROUND_GRAY+"Help Command List"+ANSI_RESET);
         out.println("Here's a list of all commands that you can execute:");
-
+        out.println("\"resource market\" to use market and get new resources");
+        out.println("\"card development market\" to use market and get new resources\"");
+        out.println("\"production\" to use various type of productions (basic,card development and card leader)");
+        out.println("\"end turn\" to end your turn ");
+        //out.println("\"\"");
     }
 
+    /**
+     * Read a number between
+     * @param min
+     * and
+     * @param max
+     * @return the number casted as String
+     */
     public String readNumberWithBoundsToString(int min, int max) {
         synchronized (in) {
             Integer number = readNumber();
@@ -262,20 +270,35 @@ public class Utils {
         }
     }
 
+    /**
+     *
+     * @param cardDevelopmentMarket
+     */
     public void printDevelopmentCardMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket) {
         for (int i = 0; i < cardDevelopmentMarket.size(); i++) {
             for (int j = 0; j < cardDevelopmentMarket.get(i).size(); j++) {
-                printCardDevelopment(cardDevelopmentMarket.get(i).get(j),i,j);
+                printCardDevelopmentForMarket(cardDevelopmentMarket.get(i).get(j),i,j);
             }
             out.println();
         }
     }
 
-    private void printCardDevelopment(CardDevelopment cardDevelopment,int i,int j) {
-        out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+ "of level " + cardDevelopment.getCardLevel().toString() +"and  "+cardDevelopment.getVictoryPoints()+" victory points "+ printResource(cardDevelopment.getCardCosts()));
+    /**
+     * Print Card Development Description in Market
+     * @param cardDevelopment
+     * @param i
+     * @param j
+     */
+    private void printCardDevelopmentForMarket(CardDevelopment cardDevelopment, int i, int j) {
+        out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+ "of level " + cardDevelopment.getCardLevel().toString() +"and  "+cardDevelopment.getVictoryPoints()+" victory points "+ printCardResourceCost(cardDevelopment.getCardCosts()));
     }
 
-    private String printResource(HashMap<Resource, Integer> cardCosts) {
+    /**
+     * Prints cost of a Card
+     * @param cardCosts
+     * @return
+     */
+    private String printCardResourceCost(HashMap<Resource, Integer> cardCosts) {
         String s="at a cost of";
         for (Resource resource: cardCosts.keySet()){
             String key=resource.toString();
@@ -283,6 +306,128 @@ public class Utils {
             s.concat(" x" + value + " resource of " + key);
         }
         return s;
+    }
+
+    /**
+     * Reads Basic production Resources
+     * @return Array of size()==3 with 2 inputs and 1 output Resource
+     *
+     */
+    public Resource[] getBasicProduction(){
+        Resource[] basicProdInfo = new Resource[3];
+        int i=0;
+        for (;i<2;i++){
+            out.println("Type an input resource for basic production:");
+            out.println("(Remember that resources are: coin, stone, servant, shield)");
+            basicProdInfo[i]=readResource();
+        }
+        out.println("Now type the output resource for basic production:");
+        out.println("(Remember that resources are: coin, stone, servant, shield)");
+        basicProdInfo[i+1]=readResource();
+        return basicProdInfo;
+    }
+
+    /**
+     * Reads input of resource selection:
+     * Coins, Stones, Servants, Shields
+     */
+    public Resource readResource(){
+        Resource resource;
+        String s;
+        s= readString();
+        while (s!="coin" || s!="stone" || s!="servant" || s!="shield" ){
+            out.println("Invalid choice. Type the correct name of the resource:");
+            out.println("(Remember that resources are: coin, stone, servant, shield)");
+            s=readString();
+        }
+        switch (s){
+            case "coin": resource=Resource.Coins;
+            case "stone": resource=Resource.Stones;
+            case "servant":resource=Resource.Servants;
+            case "shield": resource=Resource.Shields;
+            default: {
+                //This should never be reached
+                printResourceError();
+                resource=null;
+            }
+        }
+        return resource;
+    }
+
+    /**
+     * Ask for yes or not answer
+     * @return true if "yes"
+     */
+    public boolean readYesOrNo(){
+        String s;
+        out.println("y/n ?");
+        s=readString();
+        while (s!="n" || s!="y"){
+            out.println("Invalid input, type y/n :");
+            s=readString();
+        }
+        if (s=="y") return true;
+        else return false;
+    }
+
+    /**
+     * Selection of CardDevelopment to activate
+     * @param cardDevelopments that can be activated
+     * @return Boolean array in corresponding index
+     */
+    public Boolean[] getCardDevelopmentActivation(ArrayList<CardDevelopment> cardDevelopments){
+        Boolean[] cardDevelopmentSlotActive= new Boolean[3];
+        for(int i=0; i<cardDevelopments.size();i++){
+            if(cardDevelopments.get(i)!=null){
+            out.println("Card type " + cardDevelopments.get(i).getCardType().toString()+ "of level " + cardDevelopments.get(i).getCardLevel().toString() + " ?");
+            cardDevelopmentSlotActive[i]=readYesOrNo();
+            }
+        }
+        return cardDevelopmentSlotActive;
+    }
+
+    /**
+     * Error Message
+     */
+    private void printResourceError() {
+        out.println("There has been a problem with resource selection!");
+    }
+
+
+    /**
+     * Selection of CardLeader to activate
+     * @param cardsLeader that can be activated
+     * @return array of CardLeader that will be Activated in corresponding index (else NULL)
+     */
+    public CardLeader[] getCardLeaderActivation(ArrayList<CardLeader> cardsLeader) {
+        CardLeader[] cardLeaders=new CardLeader[2];
+        for (int i=0;i<cardsLeader.size();i++){
+            if(cardsLeader.get(i)!=null){
+                //TODO Description of Card Leader
+                //out.println("Card type " + cardsLeader.get(i).getClass()+ "of level " + cardDevelopments.get(i).getCardLevel().toString() + " ?");
+                if (readYesOrNo()) cardLeaders[i]=cardsLeader.get(i);
+                else cardLeaders[i]=null;
+            }
+        }
+        return cardLeaders;
+    }
+
+
+    /**
+     * Read output resource selection for Card Leader production
+     * @param cardLeaders that will be activated
+     * @return Array of output Resource
+     */
+    public Resource[] getCardLeaderOutputs(CardLeader[] cardLeaders){
+        Resource[] cardLeaderProdOutputs = new Resource[2];
+        for (int i=0;i<cardLeaders.length;i++){
+            if(cardLeaders[i]!=null){
+                out.println("Select an output resource for Card Leader production:");
+                cardLeaderProdOutputs[i]=readResource();
+            }
+            else cardLeaderProdOutputs[i]=null;
+        }
+        return cardLeaderProdOutputs;
     }
 }
 
