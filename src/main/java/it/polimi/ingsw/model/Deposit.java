@@ -20,7 +20,7 @@ public class Deposit extends Strongbox {
     }
 
     @Override
-    boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
+    public boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
 
         // Create a temporary copy of deposit content
         Deposit temp = new Deposit();

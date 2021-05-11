@@ -16,7 +16,7 @@ public class GameTable {
     private CardDevelopmentMarket cardDevelopmentMarket;
     private int numberOfPlayers;
     private boolean isFirstRound;
-    private boolean isSinglePlayer;
+    private final boolean isSinglePlayer;
     private boolean gameHasStarted;
 
     //Constructor
@@ -187,7 +187,6 @@ public class GameTable {
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
-
 
     /* Class methods */
 

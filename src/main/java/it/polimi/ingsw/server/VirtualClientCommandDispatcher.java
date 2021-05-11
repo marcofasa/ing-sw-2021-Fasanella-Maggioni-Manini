@@ -47,9 +47,13 @@ public class VirtualClientCommandDispatcher {
 
     public void requestBuyDevelopmentCard(int rowIndex, int columnIndex) {
 
+        //boolean success = Game.buyCardDevelopment(this, rowIndex, columnIndex)
+
     }
 
     public void requestEndTurn() {
+
+        //boolean success = Game.advanceTurn()
     }
 
     private void sendWithTimeoutID(ServerMessage responseSuccess, int timeoutID) {
@@ -58,5 +62,7 @@ public class VirtualClientCommandDispatcher {
     }
 
     public void discardResourceSelection(ArrayList<Marble> discardSelection) {
+
+        //boolean success = Game.discardResource
     }
 }

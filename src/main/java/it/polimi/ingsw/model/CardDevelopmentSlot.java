@@ -35,6 +35,8 @@ public class CardDevelopmentSlot {
         return id;
     }
 
+    public int getSize() { return cards.size(); }
+
     /**
      * Getter for the cards held by the player in this CardDevelopmentSlot
      * @return a deep copy of the card stack
@@ -45,7 +47,7 @@ public class CardDevelopmentSlot {
         return clone.cards;
     }
 
-    CardDevelopment getTop() {
+    public CardDevelopment getTop() {
         return cards.peek();
     }
 
@@ -58,7 +60,7 @@ public class CardDevelopmentSlot {
      * @throws FullSlotException when the player tries to place a card on a full slot
      * @throws InvalidCardDevelopmentPlacementException when an illegal placement is made
      */
-    CardDevelopment placeCard(CardDevelopment cardToBePlaced) throws FullSlotException, InvalidCardDevelopmentPlacementException {
+    public CardDevelopment placeCard(CardDevelopment cardToBePlaced) throws FullSlotException, InvalidCardDevelopmentPlacementException {
 
         if (cards.size() == MAX_SLOT_SIZE) throw new FullSlotException(id);
 
@@ -67,19 +69,19 @@ public class CardDevelopmentSlot {
             case One:
 
                 if (cards.size() == 0) return cards.push(cardToBePlaced);
-                else throw new InvalidCardDevelopmentPlacementException();
+                else throw new InvalidCardDevelopmentPlacementException(cardToBePlaced);
 
             case Two:
 
                 if (cards.size() == 1 &&
                         getTop().getCardLevel() == CardDevelopmentLevel.One) return cards.push(cardToBePlaced);
-                else throw  new InvalidCardDevelopmentPlacementException();
+                else throw  new InvalidCardDevelopmentPlacementException(cardToBePlaced);
 
             case Three:
 
                 if (cards.size() == 2 &&
                         getTop().getCardLevel() == CardDevelopmentLevel.Two) return cards.push(cardToBePlaced);
-                else throw new InvalidCardDevelopmentPlacementException();
+                else throw new InvalidCardDevelopmentPlacementException(cardToBePlaced);
         }
 
         //This return should never be reached!

@@ -85,13 +85,15 @@ public class TurnController {
                 activePlayer.setPlayerState(PlayerState.IDLE);
                 activePlayer = null;
 
+                //Eventually I can make a Lorenzo move in here, or in the Controller
+
             }
         }
 
-        if (gameTable.isFirstRound()) turnCounter++;
-
-        if (turnCounter == gameTable.getNumberOfPlayers()) gameTable.endFirstRound();
-
+        if (gameTable.isFirstRound()) {
+            turnCounter++;
+            if (turnCounter == gameTable.getNumberOfPlayers()) gameTable.endFirstRound();
+        }
     }
 
     /**

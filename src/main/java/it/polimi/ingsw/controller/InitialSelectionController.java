@@ -1,7 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.GameTable;
-import it.polimi.ingsw.model.PlayerBoard;
+import it.polimi.ingsw.model.*;
+
+import java.util.ArrayList;
 
 /**
  * This class handles the initial phase of the game where players, starting from the first player, select their
@@ -12,7 +13,6 @@ public class InitialSelectionController {
 
     private final GameTable gameTable;
 
-
     public InitialSelectionController(GameTable _gameTable) {
         gameTable = _gameTable;
     }
@@ -20,17 +20,25 @@ public class InitialSelectionController {
     /**
      * Method to distribute the initial benefits to a specific player
      * @param _player PlayerBoard whose turn it is to be assigned the initial benefits
+     * @param cardList a list of exactly 2 CardLeader, which are the player's selected leader cards
+     * @param res1 the first bonus resource to be assigned to an eligible player
+     * @param res2 the second bonus resource to be assigned to an eligible player
      */
+    public void assignInitialBenefits(
+            PlayerBoard _player,
+            ArrayList<CardLeader> cardList,
+            Resource res1,
+            Resource res2) throws IllegalArgumentException, CardLeaderWrongOwnerException {
 
-    /*
-    TODO: this method must also receive the Resource selection the corresponding client has made, in order to be able
-        to call gameTable.setupHelper()!
-     */
-    public void assignInitialBenefits(PlayerBoard _player) {
+        // This method throws an IllegalArgumentException : it is caught and handled in Game class
+        gameTable.setupHelper(getPlayerIndex(_player), res1, res2);
 
-        int index = gameTable.getIndexFromPlayer(_player);
+        // This method throws a CardLeaderWrongOwnerException : it is caught and handled in Game class
+        _player.selectCardsLeader(cardList.get(0), cardList.get(1));
+    }
 
-
+    private int getPlayerIndex(PlayerBoard _player) {
+        return gameTable.getIndexFromPlayer(_player);
     }
 
 }

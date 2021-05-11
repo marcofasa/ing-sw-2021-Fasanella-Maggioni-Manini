@@ -13,6 +13,10 @@ import java.util.HashMap;
 /**
  * This class is responsible for instantiating the controller and model classes, receiving and dispatching requests
  * from the clients and sending requests and responses to them.
+ *
+ * This class maintains the correlations between VirtualClient(s) and nickname(s), in order to be able to expose methods
+ * parametric in VirtualClient, find the corresponding nickname and call Controller's methods, which are parametric
+ * in String.
  */
 
 public class Game implements Runnable{
@@ -26,6 +30,7 @@ public class Game implements Runnable{
     public Game(){
         //inizializza controller
         gameTable = new GameTable(false);
+        controller = new Controller(gameTable);
         nicknameClientMap = new HashMap<>();
         idPlayerClientMap = new HashMap<>();
     }
@@ -73,6 +78,7 @@ public class Game implements Runnable{
 
     }
 
+    // Overloaded send method
     public void send(VirtualClient virtualClient, ServerMessage serverMessage){
         virtualClient.send(serverMessage);
     }
@@ -85,6 +91,7 @@ public class Game implements Runnable{
         idPlayerClientMap.get(playerID).send(serverMessage);
     }
 
+    // Overloaded sendAndWait method
     public void sendAndWait(VirtualClient virtualClient, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
         virtualClient.sendAndWait(serverMessage, timeoutInSeconds);
     }

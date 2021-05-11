@@ -26,7 +26,7 @@ public class PlayerBoard {
      * @param _nickname    of the player
      * @param _first       true if is the first player
      * @param _playerState if the player is Playing or Idle
-     * @param _gameTable
+     * @param _gameTable   gameTable the PlayerBoard is participating in
      */
     public PlayerBoard(String _nickname, boolean _first, PlayerState _playerState, GameTable _gameTable) {
         nickname = _nickname;
@@ -44,6 +44,10 @@ public class PlayerBoard {
         cardSlotArray = new CardDevelopmentSlot[3];
 
         for (int i = 0; i < 3; i++) cardSlotArray[i] = new CardDevelopmentSlot(CardDevelopmentSlotID.values()[i]);
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     public ArrayList<CardDevelopment> getAllDevelopmentCards() {
@@ -122,7 +126,7 @@ public class PlayerBoard {
     /**
      * Adds a resource to the Temporary Deposit
      *
-     * @param resource
+     * @param resource type of Resource to be added to temporary deposit
      */
     void addToTemporaryDeposit(Resource resource) {
         Integer numberOfResourcesOrNull = tempDeposit.get(resource);
@@ -147,9 +151,9 @@ public class PlayerBoard {
     /**
      * For each call all the players move of one step except this player
      *
-     * @param resource
+     * @param resource type of Resource to be discarded from temporary deposit
      */
-    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected{
+    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected {
         if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelected();
         //Remove 1 Resource from the temporary deposit
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
@@ -163,7 +167,7 @@ public class PlayerBoard {
      * @param marbles to be added
      * @return True if action has succeeded, False otherwise
      */
-    boolean tryAddMarbles(ArrayList<Marble> marbles) {
+    public boolean tryAddMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
         for (Marble marble : marbles
         ) {
@@ -236,8 +240,10 @@ public class PlayerBoard {
      */
     public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
 
+        //Strongbox content
         HashMap<Resource, Integer> temp = getStrongboxInstance().getContent();
 
+        //Deposit content
         for (Resource res : Resource.values()) {
             temp.replace(res, temp.get(res) + getDepositInstance().getContent().get(res));
         }
@@ -275,11 +281,11 @@ public class PlayerBoard {
 
     /**
      * Giving two resources you can get one of any type
-     * This method assumes that the player hold enough resources to activate the production power.
+     * This method assumes that the player holds enough resources to activate the production power.
      *
-     * @param input1
-     * @param input2
-     * @param output
+     * @param input1 first resource used as input for basic production power
+     * @param input2 second resource used as input for basic production power
+     * @param output output of basic production power
      */
     private void activateBasicProduction(Resource input1, Resource input2, Resource output) {
         getDepositInstance().useResource(input1, 1);
@@ -291,7 +297,7 @@ public class PlayerBoard {
      * Method to activate a single card's production power.
      * This method assumes that the player holds enough resources to activate the production power.
      *
-     * @param cardDevelopmentSlotToActivate
+     * @param cardDevelopmentSlotToActivate slot whose highest production power is to be activated
      */
     private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate) {
         boolean success = cardDevelopmentSlotToActivate.getTop().tryActivateProduction(this);
@@ -301,8 +307,8 @@ public class PlayerBoard {
      * Checks if cardLeader can be activated and calls activate() on it
      * This method assumes that the player holds enough resources to activate the production power.
      *
-     * @param cardLeaderToBeActivated
-     * @param output
+     * @param cardLeaderToBeActivated card leader production whose power is to be activated
+     * @param output                  type of Resource to be produced
      */
     public void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
         if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
@@ -355,7 +361,7 @@ public class PlayerBoard {
         if (hasResources(desiredCard.getCardCosts())) {
             return marketInstance.buyCardFromStack(this, rowIndex, colIndex);
         } else {
-            throw new NotEnoughResourcesException(this.nickname, rowIndex, colIndex);
+            throw new NotEnoughResourcesException(this.nickname);
         }
     }
 
@@ -376,13 +382,90 @@ public class PlayerBoard {
         targetSlot.placeCard(cardToBePlaced);
     }
 
-    /*
-    TODO Implementare funzione per attivare la selezione di poteri di produzione,
-     che prima controlli se il player possiede abbastanza risorse in una mappa generata da deposito + strongbox,
-     se no lancia NotEnoughResourcesException che sara' gestita dal controller
+    /**
+     * Method to try and activate a selection of production powers. The method first computes the total cost of activation
+     * for the selected powers, and if the player holds enough resources, it activates them.
+     *
+     * @param productionSelection class that contains the user selections
+     * @return true if player has enough resources to activate powers, false otherwise
+     * @throws InvalidSlotIndexException - thrown if an index not in range [0, 2] is selected
      */
-    public void tryActivateProductions() {
+    public boolean tryActivateProductions(ProductionSelection productionSelection) throws InvalidSlotIndexException {
 
+        /* *** 1. Compute total cost of production powers to be activated *** */
+
+        HashMap<Resource, Integer> totalCost = new HashMap<>();
+
+        for (Resource res : Resource.values()) totalCost.put(res, 0);
+
+        // Cost for basic production power
+        if (productionSelection.getBasicProduction()) {
+
+            totalCost.put(
+                    productionSelection.getBasicProdInfo()[0],
+                    totalCost.get(productionSelection.getBasicProdInfo()[0]) + 1);
+
+            totalCost.put(
+                    productionSelection.getBasicProdInfo()[1],
+                    totalCost.get(productionSelection.getBasicProdInfo()[1]) + 1);
+        }
+
+        // Cost for selected development card powers
+        for (int i = 0; i < 3; i++) {
+
+            if (productionSelection.getCardDevelopmentSlotActive()[i]) {
+
+                if (getCardDevelopmentSlotByIndex(i).getTop() != null) {
+
+                    CardDevelopment card = getCardDevelopmentSlotByIndex(i).getTop();
+
+                    for (Resource res : Resource.values())
+                        totalCost.put(res, totalCost.get(res) + card.getProductionInput().get(res));
+                }
+            }
+        }
+
+        // Cost for selected leader production card powers
+        for (CardLeader card : productionSelection.getCardLeadersToActivate()) {
+
+            if (card != null) {
+                totalCost.put(card.resource, totalCost.get(card.resource) + 1);
+            }
+        }
+
+        /* *** 2. Check if player has enough resources to activate all the powers *** */
+        if (hasResources(totalCost)) {
+
+            // **Activate all powers**
+
+            // Activate basic production
+            activateBasicProduction(
+                    productionSelection.getBasicProdInfo()[0],
+                    productionSelection.getBasicProdInfo()[1],
+                    productionSelection.getBasicProdInfo()[2]
+            );
+
+            // Activate development card powers
+            for (int i = 0; i < 3; i++) {
+                if (productionSelection.getCardDevelopmentSlotActive()[i]) {
+                    activateCardProduction(cardSlotArray[i]);
+                }
+            }
+
+            // Activate leader card production powers
+            for (int i = 0; i < 2; i++) {
+
+                if (productionSelection.getCardLeadersToActivate()[i] != null) {
+
+                    activateLeaderProduction(
+                            productionSelection.getCardLeadersToActivate()[i],
+                            productionSelection.getCardLeaderProdOutputs()[i]);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

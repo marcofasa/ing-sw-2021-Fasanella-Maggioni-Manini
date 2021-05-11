@@ -14,6 +14,7 @@ public class RequestMarketUse extends ClientRequest {
 
     @Override
     public void read(VirtualClient virtualClient) {
+        //Controller.useMarket(virtualClient, getPayload(), getKey());
 
     }
 }
