@@ -151,8 +151,10 @@ public class PlayerBoard {
     /**
      * For each call all the players move of one step except this player
      *
+     * @deprecated this function doesn't have a reason to exist anymore.
      * @param resource type of Resource to be discarded from temporary deposit
      */
+    @Deprecated
     public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected {
         if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelected();
         //Remove 1 Resource from the temporary deposit
@@ -162,11 +164,44 @@ public class PlayerBoard {
     }
 
     /**
+     * return the activation effect of the Marble s
+     *
+     * @param marbles marbles to be activated
+     * @return new HashMap of Resource, numerosity
+     */
+    public HashMap<Resource, Integer> consumeMarbles(ArrayList<Marble> marbles){
+        resetTemporaryDeposit();
+        for (Marble marble : marbles
+        ) {
+            marble.activate(this);
+        }
+        return new HashMap<Resource, Integer>(tempDeposit);
+    }
+
+    /**
+     * try add this resource s to the player's deposit. It prioritizes the card leader deposit
+     *
+     * @param resources HashMap<Resource, Integer> to be added
+     * @return Resources to be added (this is less or equal the input resources and represents the resources after
+     * adding the maximum amount to the leader's deposit), null if all the resources have been added
+     */
+    public HashMap<Resource, Integer> tryAddResources(HashMap<Resource, Integer> resources){
+        getDepositLeaderCardInstance().add(resources);
+        if (deposit.tryAdd(resources)){
+            return null;
+        } else {
+            return resources;
+        }
+    }
+
+    /**
      * Resets the Temporary Deposit and tries to add the given arraylist of marbles
      *
+     * @deprecated Use {@link #consumeMarbles(ArrayList)} and {@link #tryAddResources(HashMap)}instead
      * @param marbles to be added
      * @return True if action has succeeded, False otherwise
      */
+    @Deprecated
     public boolean tryAddMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
         for (Marble marble : marbles
@@ -310,7 +345,7 @@ public class PlayerBoard {
      * @param cardLeaderToBeActivated card leader production whose power is to be activated
      * @param output                  type of Resource to be produced
      */
-    private void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
+    public void activateLeaderProduction(CardLeader cardLeaderToBeActivated, Resource output) {
         if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
             throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
         setCardLeaderProductionOutput(output);
