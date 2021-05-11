@@ -60,7 +60,16 @@ public class ActionController {
         _player.placeCardDevelopmentCardOnBoard(boughtCard, _placementIndex);
     }
 
-    public boolean useMarket(PlayerBoard _player, int _index, String _selection) throws IllegalArgumentException {
+    /**
+     * Central method to grab Resources from the Marble market
+     * @param _player the player that wishes to grab resources
+     * @param _index the index of the row or column selected by the player
+     * @param _selection "row" or "column"
+     * @return Null if the player doesn't need to discard any resources, instance of Hashmap if the player
+     * has to discard some resources.
+     * @throws IllegalArgumentException - when an invalid index is given for the corresponding _selection
+     */
+    public HashMap<Resource, Integer> useMarket(PlayerBoard _player, int _index, String _selection) throws IllegalArgumentException {
 
         ArrayList<Marble> marbles = new ArrayList<>();
 
@@ -79,7 +88,9 @@ public class ActionController {
         // An illegal key was set for RequestMarketUse
         } else throw new IllegalArgumentException();
 
-        return _player.tryAddMarbles(marbles);
+        HashMap<Resource, Integer> resources = _player.consumeMarbles(marbles);
+
+        return _player.tryAddResources(resources);
     }
 
     public void activateProductionPowers(
@@ -104,6 +115,13 @@ public class ActionController {
     }
 
     /* *** Actions a user can select following a ServerRequest *** */
+
+    /* *** Lorenzo move *** */
+    public void makeLorenzoMove() {
+
+        Lorenzo lorenzo = gameTable.getLorenzoInstance();
+        lorenzo.getActionCardDeck().getCard().activate();
+    }
 
 
     /**

@@ -96,12 +96,13 @@ class ActionControllerTest {
             }
         });
 
-        assertDoesNotThrow(new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.useMarket(player, 2, "row");
-            }
-        });
+        //assertTrue(actionController.useMarket(player, 2, "row"));
+
+        for (int i = 0; i < 10; i++) {
+
+            System.out.println(actionController.useMarket(player, 1, "row"));
+
+        }
 
         System.out.println("debug");
 

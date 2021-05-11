@@ -84,9 +84,6 @@ public class TurnController {
 
                 activePlayer.setPlayerState(PlayerState.IDLE);
                 activePlayer = null;
-
-                //Eventually I can make a Lorenzo move in here, or in the Controller
-
             }
         }
 
