@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
 import java.io.PrintWriter;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -50,10 +51,7 @@ public class CLI implements ViewInterface {
       out.println(message);
     }
 
-    @Override
-    public void displayLogin() {
 
-    }
 
     @Override
     public void displayPosition() {
@@ -124,37 +122,26 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void askResourceToDiscard(HashMap<Resource, Integer> choice) {
-        HashMap<Resource,Integer> selection= new HashMap<>();
+    public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
+        HashMap<Resource, Integer> selection = new HashMap<>();
 
-             utils.printListResource(choice);
-             out.println("Do you want to discard a resource?");
-             if(utils.readYesOrNo()){
-                 do{
-                     Resource resource=utils.readResource();
-                     if(selection.containsKey(resource)){
-                         int i= selection.get(resource);
-                         selection.replace(resource,i+1);
-                     }
-                     else{
-                         selection.put(resource,1);
-                     }
-                     out.println("Discard another resource?");
-                 }while (utils.readYesOrNo());
-             }
-/*
-          try {
-              client.sendAndWait(new ResponseDiscardResourceSelection(selection),-1);
-          }
-          catch (RequestTimeoutException e){
-              displayTimeOut();
-              e.printStackTrace();
-          }
-
- */
-
-
+        utils.printListResource(choice);
+        out.println("Do you want to discard a resource?");
+        if (utils.readYesOrNo()) {
+            do {
+                Resource resource = utils.readResource();
+                if (selection.containsKey(resource)) {
+                    int i = selection.get(resource);
+                    selection.replace(resource, i + 1);
+                } else {
+                    selection.put(resource, 1);
+                }
+                out.println("Discard another resource?");
+            } while (utils.readYesOrNo());
+        }
+   return selection;
     }
+
 
     @Override
     public void askMarketChoice() {
@@ -308,14 +295,13 @@ public class CLI implements ViewInterface {
 
     @Override
     public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
-        //USE askResourceToDiscard()
+        //USE askForResourceToDiscard()
         return null;
     }
 
     @Override
-    public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-        utils.printAndGetCardLeaderList(cardLeaders);
-        return null;
+    public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+        return utils.printAndGetCardLeaderList(cardLeaders);
     }
 
 

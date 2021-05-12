@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUI implements ViewInterface {
-  //implements ViewInterface
     //TODO
 
     private Client client;
@@ -27,12 +26,6 @@ public class GUI implements ViewInterface {
 
     @Override
     public void displayMessage(String message) {
-
-    }
-
-    @Override
-    public void displayLogin() {
-
     }
 
     @Override
@@ -100,10 +93,6 @@ public class GUI implements ViewInterface {
         return 0;
     }
 
-    @Override
-    public void askResourceToDiscard(HashMap<Resource, Integer> choice) {
-
-    }
 
     @Override
     public void askMarketChoice() {
@@ -144,7 +133,12 @@ public class GUI implements ViewInterface {
     }
 
     @Override
-    public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+    public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+        return null;
+    }
+
+    @Override
+    public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         return null;
     }
 }

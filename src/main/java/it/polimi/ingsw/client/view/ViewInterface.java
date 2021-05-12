@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ViewInterface {
-    //Methods display..() then override in CLI and GUI
+    //DISPLAY
 
     /*
     Display Welcome Message
@@ -25,10 +25,6 @@ public interface ViewInterface {
      */
     void displayMessage(String message);
 
-    /*
-    Display Login
-     */
-    void displayLogin();
 
     /*
     Display Position in FaithTrail
@@ -82,40 +78,34 @@ public interface ViewInterface {
      */
     void displayLeaderRequirementsNotMet();
 
-    //Various asks
+    //ASK
+
+       //REQUEST
 
     /*
     Ask for NickName
      */
     String askNickName();
 
-    /*
-    Ask for number of Players
-     */
     int askPlayerNumber();
 
-    /*
-    Ask Resource to discard
-     */
-    void askResourceToDiscard(HashMap<Resource,Integer> choice);
+    void askMarketChoice();
 
-     /*
-     Ask to choose Market row or column
-     */
-     void askMarketChoice();
+    void askDevelopmentCardChoice();
 
-     void askDevelopmentCardChoice();
-
-     void askProductionActivation();
+    void askProductionActivation();
 
      void askCardLeaderActivation();
 
      void askEndTurn();
 
+       //RESPONSE
+
      ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles);
 
      ArrayList<Resource> askForInitialResourcesSelection(int playerNumber);
 
-     ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
+     ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 
+    HashMap<Resource,Integer> askForResourceToDiscard(HashMap<Resource,Integer> choice);
 }

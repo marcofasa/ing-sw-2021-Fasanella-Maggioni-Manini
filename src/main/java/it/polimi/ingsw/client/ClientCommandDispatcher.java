@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.client.*;
-import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ClientCommandDispatcher {
 
@@ -35,7 +34,7 @@ public class ClientCommandDispatcher {
     }
 
     private ArrayList<CardLeader> subRequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-        ArrayList<CardLeader> cardLeaders1 =  client.getView().askLeaderCardSelection(cardLeaders);
+        ArrayList<CardLeader> cardLeaders1 =  client.getView().askForLeaderCardSelection(cardLeaders);
         return cardLeaders1;
     }
 
@@ -45,6 +44,7 @@ public class ClientCommandDispatcher {
     }
 
     public void requestDiscardResourceSelection(ArrayList<Marble> marbles, int timeoutID) {
+        //HashMap<Resource,Integer> marbles1= client.getView().askForResourceToDiscard(marbles);
         ArrayList<Marble> marbles1 = client.getView().askForResourceSelection(marbles);
         sendWithTimeoutID(new ResponseDiscardResourceSelection(marbles1), timeoutID);
     }
