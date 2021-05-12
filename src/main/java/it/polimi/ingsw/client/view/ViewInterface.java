@@ -114,7 +114,7 @@ public interface ViewInterface {
 
      ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles);
 
-     ArrayList<Resource> askForInitialResourcesSelection();
+     ArrayList<Resource> askForInitialResourcesSelection(int playerNumber);
 
      ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 

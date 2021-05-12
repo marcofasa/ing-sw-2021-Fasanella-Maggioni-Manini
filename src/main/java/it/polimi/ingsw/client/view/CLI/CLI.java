@@ -128,7 +128,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askResourceToDiscard(HashMap<Resource, Integer> choice) {
-        HashMap<Resource,Integer> selection= new HashMap<Resource, Integer>();
+        HashMap<Resource,Integer> selection= new HashMap<>();
 
              utils.printListResource(choice);
              out.println("Do you want to discard a resource?");
@@ -215,6 +215,7 @@ public class CLI implements ViewInterface {
     @Override
     public void askProductionActivation() {
         ProductionSelection productionSelection= new ProductionSelection();
+
         //Ask for basic production
         out.println("Do you want to activate basic production?");
         productionSelection.setBasicProduction(utils.readYesOrNo());
@@ -237,7 +238,7 @@ public class CLI implements ViewInterface {
         //Ask for Card Leader production
         out.println("Do you want to activate Card Leader production?");
         if (utils.readYesOrNo()) {
-            CardLeader[] cardLeaders=new CardLeader[2];
+            CardLeader[] cardLeaders;
             cardLeaders=utils.getCardLeaderActivation(lightModel.getCardsLeader());
             productionSelection.setCardLeadersToActivate(cardLeaders);
         }
@@ -252,7 +253,7 @@ public class CLI implements ViewInterface {
             productionSelection.setCardLeaderProdOutputs(cardLeaderProdOutputs);
         }
 
-
+        //Sending request
         try {
             client.sendAndWait(new RequestActivateProduction(productionSelection),-1);
         } catch (RequestTimeoutException e) {
@@ -267,7 +268,7 @@ public class CLI implements ViewInterface {
     public void askCardLeaderActivation() {
         out.println("Choose with card leader to activate:");
         try {
-            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeaderList(lightModel.getCardsLeader())),-1);
+            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())),-1);
         } catch (RequestTimeoutException e) {
             displayTimeOut();
             e.printStackTrace();
@@ -276,9 +277,24 @@ public class CLI implements ViewInterface {
 
 
     @Override
-    public ArrayList<Resource> askForInitialResourcesSelection() {
-        //TODO
-        return null;
+    public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
+        ArrayList<Resource> resources =new ArrayList<>();
+        switch (playerNumber){
+            case 1:
+                resources.add(null);
+                resources.add(null);
+                break;
+            case 2: case 3:
+                resources.add(utils.readResource());
+                resources.add(null);
+                break;
+            case 4:
+                resources.add(utils.readResource());
+                resources.add(utils.readResource());
+                break;
+        }
+
+        return resources;
     }
 
     @Override
@@ -295,11 +311,13 @@ public class CLI implements ViewInterface {
 
     @Override
     public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
+        //USE askResourceToDiscard()
         return null;
     }
 
     @Override
     public ArrayList<CardLeader> askLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
+        utils.printAndGetCardLeaderList(cardLeaders);
         return null;
     }
 

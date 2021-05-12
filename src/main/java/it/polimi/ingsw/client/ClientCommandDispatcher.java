@@ -40,7 +40,7 @@ public class ClientCommandDispatcher {
     }
 
     private ArrayList<Resource> subRequestInitialResourcesSelection(int playerNumber) {
-        ArrayList<Resource> resources = client.getView().askForInitialResourcesSelection();
+        ArrayList<Resource> resources = client.getView().askForInitialResourcesSelection(playerNumber);
         return resources;
     }
 

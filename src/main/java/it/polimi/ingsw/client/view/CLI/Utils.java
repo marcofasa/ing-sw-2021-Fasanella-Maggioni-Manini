@@ -223,13 +223,31 @@ public class Utils {
         }
     }
 
-    public CardLeader printAndGetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
+    public ArrayList<CardLeader> printAndGetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
+        int index=1;
+        ArrayList<CardLeader> selection= new ArrayList<>();
+        for (int i=0; i<cardLeaders.size();i++){
+            //TODO Check toString
+            out.println(index+". "+ cardLeaders.get(i).toString());
+            index++;
+        }
+        out.println("Choose the first leader card:");
+        out.println("Type the corresponding number in the list");
+        selection.add(cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1));
+        out.println("Choose the second leader card:");
+        out.println("Type the corresponding number in the list");
+        selection.add(cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1));
+        return selection;
+    }
+
+    public CardLeader printAndGetCardLeader(ArrayList<CardLeader> cardLeaders) {
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
-            //Check toString
+            //TODO Check toString
             out.println(index+". "+ cardLeaders.get(i).toString());
+            index++;
         }
-        return cardLeaders.get(readNumberWithBounds(0,cardLeaders.size()));
+        return cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1);
     }
 
     /**
@@ -341,15 +359,22 @@ public class Utils {
             s=readString();
         }
         switch (s){
-            case "coin": resource=Resource.Coins;
-            case "stone": resource=Resource.Stones;
-            case "servant":resource=Resource.Servants;
-            case "shield": resource=Resource.Shields;
-            default: {
+            case "coin":
+                resource=Resource.Coins;
+                break;
+            case "stone":
+                resource=Resource.Stones;
+                break;
+            case "servant":
+                resource=Resource.Servants;
+                break;
+            case "shield":
+                resource=Resource.Shields;
+                break;
+            default:
                 //This should never be reached
                 printResourceError();
                 resource=null;
-            }
         }
         return resource;
     }
