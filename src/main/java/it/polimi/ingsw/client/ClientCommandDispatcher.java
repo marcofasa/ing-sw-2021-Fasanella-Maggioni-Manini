@@ -23,7 +23,7 @@ public class ClientCommandDispatcher {
 
     public void requestPlayersNumber(int timeoutID) {
         System.out.println("Request Players Number received");
-        sendWithTimeoutID(new ResponsePlayersNumber(Integer.toString(client.askPlayersNumber())), timeoutID);
+        sendWithTimeoutID(new ResponsePlayersNumber(Integer.toString(client.getView().askPlayerNumber())), timeoutID);
     }
 
     public void nicknameIsUnavailable(){ /* TODO */

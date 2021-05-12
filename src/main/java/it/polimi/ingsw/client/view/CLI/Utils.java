@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Utils {
     private PrintWriter out;
     private Scanner in;
+    private boolean coloredCLI=false;
 
     //ANSI escape codes for Colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -51,25 +52,38 @@ public class Utils {
     public void printMarket(ArrayList<ArrayList<MarbleType>> market){
         for (int i = 0; i < market.size(); i++) {
             for (int j = 0; j < market.get(i).size(); j++) {
-                printMarble(market.get(i).get(j));
+               if(coloredCLI) printMarbleColored(market.get(i).get(j));
+               else printMarble(market.get(i).get(j));
             }
             out.println();
         }
     }
 
-    private void printMarble(MarbleType marble) {
-        if (marble==MarbleType.MarbleBlue) out.println(ANSI_BACKGROUND_BLUE+ "   " + ANSI_RESET);
-        else if (marble==MarbleType.MarbleGrey) out.println(ANSI_BACKGROUND_GRAY+ "   " + ANSI_RESET);
-        else if (marble==MarbleType.MarbleRed) out.println(ANSI_BACKGROUND_RED+ "   " + ANSI_RESET);
-        else if (marble==MarbleType.MarbleWhite) out.println(ANSI_BACKGROUND_WHITE+ "   " + ANSI_RESET);
-        else if (marble==MarbleType.MarbleYellow) out.println(ANSI_BACKGROUND_YELLOW+ "   " + ANSI_RESET);
+    private void printMarble(MarbleType marble){
+        if (marble==MarbleType.MarbleBlue) out.printf(" B ");
+        else if (marble==MarbleType.MarbleGrey) out.printf(" G ");
+        else if (marble==MarbleType.MarbleRed) out.printf(" R ");
+        else if (marble==MarbleType.MarbleWhite) out.printf(" W ");
+        else if (marble==MarbleType.MarbleYellow) out.printf(" Y ");
     }
 
+    private void printMarbleColored(MarbleType marble) {
+        if (marble==MarbleType.MarbleBlue) out.printf(ANSI_BACKGROUND_BLUE+ "   " + ANSI_RESET);
+        else if (marble==MarbleType.MarbleGrey) out.printf(ANSI_BACKGROUND_GRAY+ "   " + ANSI_RESET);
+        else if (marble==MarbleType.MarbleRed) out.printf(ANSI_BACKGROUND_RED+ "   " + ANSI_RESET);
+        else if (marble==MarbleType.MarbleWhite) out.printf(ANSI_BACKGROUND_WHITE+ "   " + ANSI_RESET);
+        else if (marble==MarbleType.MarbleYellow) out.printf(ANSI_BACKGROUND_YELLOW+ "   " + ANSI_RESET);
+    }
+
+    /**
+     * Reads a number from stdin
+     * @return
+     */
     public int readNumber(){
         int selection;
         synchronized (in){
         while(!in.hasNextInt()){
-            out.println("Invalid choice! Choose again:");
+            out.println("Invalid input ! Choose again:");
             in.next();
         }
         selection=in.nextInt();
@@ -112,6 +126,10 @@ public class Utils {
                 "                                                                                                      '8                                                                                                                                                 \n"+ANSI_RESET);
     }
 
+    /**
+     *
+     * @return 1 if row / 0 if column
+     */
     public int chooseRowOrColumn() {
         String choice;
         synchronized (in){
@@ -124,6 +142,10 @@ public class Utils {
             else return 0;
         }}
 
+    /**
+     * Reads a string from stdin
+     * @return
+     */
         public String readString(){
             synchronized (in){
             String word;
@@ -131,6 +153,7 @@ public class Utils {
             return word;
             }
         }
+
 
     public void printFaithTrail(HashMap<String, Integer> playersPosition, String nickname){
              out.println("You are at position "+playersPosition.get(nickname));
@@ -140,6 +163,7 @@ public class Utils {
                  if(string!=nickname) out.println(string+" is at position "+playersPosition.get(string));
              }
     }
+
 
     public void printFaithTrailASCII(ArrayList<FaithTileStatus> tileStatuses){
         int col=18;
@@ -223,6 +247,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Prints and asks the Card Leader from the list
+     * @param cardLeaders
+     * @return arraylist of chosen Card Leader
+     */
     public ArrayList<CardLeader> printAndGetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
         int index=1;
         ArrayList<CardLeader> selection= new ArrayList<>();
@@ -240,6 +269,11 @@ public class Utils {
         return selection;
     }
 
+    /**
+     *
+     * @param cardLeaders
+     * @return
+     */
     public CardLeader printAndGetCardLeader(ArrayList<CardLeader> cardLeaders) {
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
@@ -289,7 +323,7 @@ public class Utils {
     }
 
     /**
-     *
+     * Prints the Card Development Market
      * @param cardDevelopmentMarket
      */
     public void printDevelopmentCardMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket) {

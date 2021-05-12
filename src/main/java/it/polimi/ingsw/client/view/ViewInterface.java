@@ -87,12 +87,12 @@ public interface ViewInterface {
     /*
     Ask for NickName
      */
-    void askNickName();
+    String askNickName();
 
     /*
     Ask for number of Players
      */
-    void askPlayerNumber();
+    int askPlayerNumber();
 
     /*
     Ask Resource to discard

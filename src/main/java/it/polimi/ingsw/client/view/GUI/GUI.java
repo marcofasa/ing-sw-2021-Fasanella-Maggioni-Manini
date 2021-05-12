@@ -91,13 +91,13 @@ public class GUI implements ViewInterface {
     }
 
     @Override
-    public void askNickName() {
-
+    public String askNickName() {
+        return null;
     }
 
     @Override
-    public void askPlayerNumber() {
-
+    public int askPlayerNumber() {
+        return 0;
     }
 
     @Override

@@ -22,12 +22,13 @@ public class CLI implements ViewInterface {
     private static final Scanner in = new Scanner(System.in);
     private LightModel lightModel;
     private Utils utils;
+    private ParsingCommand parsingCommand;
 
     public CLI(Client client){
         this.client=client;
         this.lightModel =new LightModel(client);
         this.utils=new Utils(out,in);
-
+        this.parsingCommand=new ParsingCommand(utils,this);
     }
 
 
@@ -57,10 +58,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayPosition() {
         utils.printFaithTrailASCII(lightModel.getTileStatuses());
-        //utils.printFaithTrailASCII(new RequestTileStatuses());
         utils.printFaithTrail(lightModel.getPlayersPosition(), lightModel.getNickname());
-
-
     }
 
     @Override
@@ -114,16 +112,15 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void askNickName() {
+    public String askNickName() {
         out.println("NickName:");
-        //client.sendNickName(utils.readString());
+        return utils.readString();
     }
 
     @Override
-    public void askPlayerNumber() {
+    public int askPlayerNumber() {
         out.println("How many players?");
-        utils.readNumberWithBounds(1,4);
-        //client.send(utils.readNumberWithBounds(1,4));
+        return utils.readNumberWithBounds(1,4);
     }
 
     @Override

@@ -11,12 +11,24 @@ public class ParsingCommand {
     public void readCommand(){
         String command =utils.readString();
        switch (command){
-          case "help": utils.printHelp();
-           case "resource market": cli.askMarketChoice();
-           case "card leader": cli.askCardLeaderActivation();
-           case "card development market": cli.askDevelopmentCardChoice();
-           case "production": cli.askProductionActivation();
-           case "end turn": cli.askEndTurn();
+          case "help":
+              utils.printHelp();
+              break;
+           case "resource market":
+               cli.askMarketChoice();
+               break;
+           case "card leader":
+               cli.askCardLeaderActivation();
+               break;
+           case "card development market":
+               cli.askDevelopmentCardChoice();
+               break;
+           case "production":
+               cli.askProductionActivation();
+               break;
+           case "end turn":
+               cli.askEndTurn();
+               break;
            default: utils.printCommandError();
        }
 
