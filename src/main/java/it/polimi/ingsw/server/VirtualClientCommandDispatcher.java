@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class VirtualClientCommandDispatcher {
 
@@ -61,7 +62,7 @@ public class VirtualClientCommandDispatcher {
         virtualClient.send(responseSuccess);
     }
 
-    public void discardResourceSelection(ArrayList<Marble> discardSelection) {
+    public void discardResourceSelection(HashMap<Resource, Integer> discardSelection) {
 
         //boolean success = Game.discardResource
     }

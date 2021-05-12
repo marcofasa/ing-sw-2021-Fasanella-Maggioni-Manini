@@ -101,7 +101,7 @@ public interface ViewInterface {
 
        //RESPONSE
 
-     ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles);
+     HashMap<Resource,Integer> askForResourceSelection(HashMap<Resource, Integer> resources);
 
      ArrayList<Resource> askForInitialResourcesSelection(int playerNumber);
 

@@ -2,16 +2,18 @@ package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.model.Marble;
+import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestDiscardResourceSelection extends ServerRequest {
 
-    private ArrayList<Marble> marbles;
+    private HashMap<Resource,Integer> resources;
 
-    public RequestDiscardResourceSelection(ArrayList<Marble> marbles) {
+    public RequestDiscardResourceSelection(HashMap<Resource,Integer> resources) {
         super(null, null);
-        this.marbles = marbles;
+        this.resources = resources;
     }
 
     /**
@@ -21,6 +23,6 @@ public class RequestDiscardResourceSelection extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.requestDiscardResourceSelection(marbles, getTimeoutID());
+        commandDispatcher.requestDiscardResourceSelection(resources, getTimeoutID());
     }
 }

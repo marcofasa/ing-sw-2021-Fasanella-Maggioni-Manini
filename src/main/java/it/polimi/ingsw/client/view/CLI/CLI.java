@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
 import java.io.PrintWriter;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -294,7 +293,7 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
+    public HashMap<Resource,Integer> askForResourceSelection(HashMap<Resource, Integer> resources) {
         //USE askForResourceToDiscard()
         return null;
     }

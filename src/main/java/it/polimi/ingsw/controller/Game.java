@@ -39,16 +39,6 @@ public class Game implements Runnable{
     public void run() {
         System.out.println("Game partito");
         start();
-        ArrayList<Marble> marbles = new ArrayList<>();
-        marbles.add(new MarbleFactory().produce(MarbleType.MarbleBlue, new GameTable(false)));
-        marbles.add(new MarbleFactory().produce(MarbleType.MarbleGrey, new GameTable(false)));
-        marbles.add(new MarbleFactory().produce(MarbleType.MarblePurple, new GameTable(false)));
-        try {
-            sendAndWait(players.get(0), new RequestDiscardResourceSelection(marbles), 20);
-        } catch (RequestTimeoutException e) {
-            System.out.println("scaduto timeout");
-            e.printStackTrace();
-        }
         //MSF CONTROLLER
         while (true)
             

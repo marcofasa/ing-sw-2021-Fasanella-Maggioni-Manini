@@ -116,9 +116,9 @@ public class GUI implements ViewInterface {
 
 
     @Override
-    public ArrayList<Marble> askForResourceSelection(ArrayList<Marble> marbles) {
+    public HashMap<Resource,Integer> askForResourceSelection(HashMap<Resource, Integer> resources) {
 
-        return marbles;
+        return resources;
     }
 
     @Override

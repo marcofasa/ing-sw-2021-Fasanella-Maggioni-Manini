@@ -1,15 +1,17 @@
 package it.polimi.ingsw.communication.client;
 
 import it.polimi.ingsw.model.Marble;
+import it.polimi.ingsw.model.Resource;
 import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ResponseDiscardResourceSelection extends ClientResponse {
 
-    ArrayList<Marble> discardSelection;
+    HashMap<Resource, Integer> discardSelection;
 
-    public ResponseDiscardResourceSelection(ArrayList<Marble> discardSelection) {
+    public ResponseDiscardResourceSelection(HashMap<Resource, Integer> discardSelection) {
         super(null, null);
         this.discardSelection = discardSelection;
     }
