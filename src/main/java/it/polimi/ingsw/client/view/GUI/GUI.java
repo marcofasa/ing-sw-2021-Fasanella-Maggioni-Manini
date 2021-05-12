@@ -115,11 +115,7 @@ public class GUI implements ViewInterface {
     }
 
 
-    @Override
-    public HashMap<Resource,Integer> askForResourceSelection(HashMap<Resource, Integer> resources) {
 
-        return resources;
-    }
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {

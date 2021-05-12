@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
@@ -31,13 +30,13 @@ public class CLI implements ViewInterface {
         this.parsingCommand=new ParsingCommand(utils,this);
     }
 
+    public ParsingCommand getParsingCommand() {
+        return parsingCommand;
+    }
 
     @Override
     public void displayWelcome() {
-       /* ASCII ART version
-       utils.printASCIIWelcome();
-        */
-      out.println("Welcome to Masters of Renaissance!");
+      utils.printWelcomeMessage();
     }
 
     @Override
@@ -54,8 +53,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayPosition() {
-        utils.printFaithTrailASCII(lightModel.getTileStatuses());
-        utils.printFaithTrail(lightModel.getPlayersPosition(), lightModel.getNickname());
+        utils.printFaithTrail(lightModel.getPlayersPosition(), lightModel.getNickname(),lightModel.getTileStatuses());
     }
 
     @Override
@@ -70,7 +68,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayStrongBox() {
-
+               utils.printListResource(lightModel.getStrongbox());
     }
 
     @Override
@@ -292,11 +290,6 @@ public class CLI implements ViewInterface {
 
     }
 
-    @Override
-    public HashMap<Resource,Integer> askForResourceSelection(HashMap<Resource, Integer> resources) {
-        //USE askForResourceToDiscard()
-        return null;
-    }
 
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {

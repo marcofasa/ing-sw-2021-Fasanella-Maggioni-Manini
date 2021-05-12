@@ -31,6 +31,7 @@ public interface ViewInterface {
      */
     void displayPosition();
 
+
     void displayTimeOut();
 
     /*
@@ -82,30 +83,25 @@ public interface ViewInterface {
 
        //REQUEST
 
-    /*
-    Ask for NickName
-     */
-    String askNickName();
+     String askNickName();
 
-    int askPlayerNumber();
+     int askPlayerNumber();
 
-    void askMarketChoice();
+     void askMarketChoice();
 
-    void askDevelopmentCardChoice();
+     void askDevelopmentCardChoice();
 
-    void askProductionActivation();
+     void askProductionActivation();
 
      void askCardLeaderActivation();
 
      void askEndTurn();
 
-       //RESPONSE
+     //RESPONSE
 
-     HashMap<Resource,Integer> askForResourceSelection(HashMap<Resource, Integer> resources);
+      ArrayList<Resource> askForInitialResourcesSelection(int playerNumber);
 
-     ArrayList<Resource> askForInitialResourcesSelection(int playerNumber);
+      ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
 
-     ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders);
-
-    HashMap<Resource,Integer> askForResourceToDiscard(HashMap<Resource,Integer> choice);
+      HashMap<Resource,Integer> askForResourceToDiscard(HashMap<Resource,Integer> choice);
 }

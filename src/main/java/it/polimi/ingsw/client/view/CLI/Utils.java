@@ -155,7 +155,8 @@ public class Utils {
         }
 
 
-    public void printFaithTrail(HashMap<String, Integer> playersPosition, String nickname){
+    public void printFaithTrail(HashMap<String, Integer> playersPosition, String nickname, ArrayList<FaithTileStatus> tileStatuses){
+            if(coloredCLI) printFaithTrailASCII(tileStatuses);
              out.println("You are at position "+playersPosition.get(nickname));
              out.println("Other players:");
              for (String string: playersPosition.keySet()){
@@ -288,19 +289,30 @@ public class Utils {
      * Error Message
      */
     public void printCommandError() {
-        out.println(ANSI_RED+"Command not found, please try again! (type \"help\" for command list)"+ANSI_RESET);
+        if (coloredCLI) out.println(ANSI_RED+"Command not found, please try again! (type \"help\" for command list)"+ANSI_RESET);
+        else out.println("Command not found, please try again! (type \"help\" for command list)");
     }
 
     /**
      * Help Message
      */
     public void printHelp() {
-        out.println(ANSI_BACKGROUND_GRAY+"Help Command List"+ANSI_RESET);
-        out.println("Here's a list of all commands that you can execute:");
-        out.println("\"resource market\" to use market and get new resources");
-        out.println("\"card development market\" to use market and get new resources\"");
-        out.println("\"production\" to use various type of productions (basic,card development and card leader)");
-        out.println("\"end turn\" to end your turn ");
+        if(coloredCLI) {
+            out.println(ANSI_BACKGROUND_GRAY + "Help Command List" + ANSI_RESET);
+            out.println("Here's a list of all commands that you can execute:");
+            out.println(ANSI_BACKGROUND_GREEN+"\"resource market\""+ANSI_RESET+" to use market and get new resources");
+            out.println(ANSI_BACKGROUND_GREEN+"\"card development market\""+ANSI_RESET+" to use market and get new resources\"");
+            out.println(ANSI_BACKGROUND_GREEN+"\"production\""+ANSI_RESET+" to use various type of productions (basic,card development and card leader)");
+            out.println(ANSI_BACKGROUND_GREEN+"\"end turn\""+ANSI_RESET+" to end your turn ");
+        }
+        else {
+            out.println( "Help Command List:");
+            out.println("Here's a list of all commands that you can execute:");
+            out.println("\"resource market\" to use market and get new resources");
+            out.println("\"card development market\" to use market and get new resources\"");
+            out.println("\"production\" to use various type of productions (basic,card development and card leader)");
+            out.println("\"end turn\" to end your turn ");
+        }
         //out.println("\"\"");
     }
 
@@ -487,6 +499,14 @@ public class Utils {
             else cardLeaderProdOutputs[i]=null;
         }
         return cardLeaderProdOutputs;
+    }
+
+    /**
+     * Welcome Message
+     */
+    public void printWelcomeMessage() {
+        if(coloredCLI) printASCIIWelcome();
+        out.println("Welcome to Masters of Renaissance!");
     }
 }
 

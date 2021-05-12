@@ -44,9 +44,8 @@ public class ClientCommandDispatcher {
     }
 
     public void requestDiscardResourceSelection(HashMap<Resource, Integer> resources, int timeoutID) {
-        //HashMap<Resource,Integer> marbles1= client.getView().askForResourceToDiscard(marbles);
-        HashMap<Resource,Integer> resources1 = client.getView().askForResourceSelection(resources);
-        sendWithTimeoutID(new ResponseDiscardResourceSelection(resources1), timeoutID);
+        HashMap<Resource,Integer> marbles1= client.getView().askForResourceToDiscard(resources);
+        sendWithTimeoutID(new ResponseDiscardResourceSelection(marbles1), timeoutID);
     }
 
     public void notActivePlayerError() {
