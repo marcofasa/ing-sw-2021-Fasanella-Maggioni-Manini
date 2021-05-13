@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 
-public abstract class CardLeader  implements Serializable {
+public abstract class CardLeader implements Serializable {
 
 
     protected PlayerBoard playerBoard;
@@ -15,6 +15,20 @@ public abstract class CardLeader  implements Serializable {
 
     protected Resource resource;
 
+    // ---- GETTERS
+    public CardLeaderRequirements getRequirements(){
+        return requirements;
+    }
+
+    public boolean getActivationState(){
+        return active;
+    }
+
+    public Resource getResource(){
+        return resource;
+    }
+
+    // end of getters
 
     /**
      * Check if requirements are met

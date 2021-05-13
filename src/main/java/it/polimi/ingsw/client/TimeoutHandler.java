@@ -57,6 +57,7 @@ public class TimeoutHandler {
      */
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
         if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
+        client.getView().displayWaiting(timeoutInSeconds);
         Semaphore semaphore = getNewSemaphore();
         int messageTimeoutID = getID();
         semaphoreByID.put(messageTimeoutID, semaphore);

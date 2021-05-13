@@ -139,6 +139,11 @@ public class CLI implements ViewInterface {
    return selection;
     }
 
+    @Override
+    public void displayWaiting(int timeoutInSeconds) {
+
+    }
+
 
     @Override
     public void askMarketChoice() {

@@ -137,4 +137,9 @@ public class GUI implements ViewInterface {
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         return null;
     }
+
+    @Override
+    public void displayWaiting(int timeoutInSeconds) {
+
+    }
 }

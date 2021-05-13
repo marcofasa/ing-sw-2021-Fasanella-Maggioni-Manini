@@ -19,7 +19,6 @@ public class Server {
     private WaitingLobby lobby;
     private Game currentGame;
     private final ExecutorService executors;
-    private final ArrayList<Runnable> timeouts;
 
     public Server(){
         nextGameID = 1;
@@ -32,7 +31,6 @@ public class Server {
         executors = Executors.newCachedThreadPool();
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
-        timeouts = new ArrayList<>();
     }
 
     /*
