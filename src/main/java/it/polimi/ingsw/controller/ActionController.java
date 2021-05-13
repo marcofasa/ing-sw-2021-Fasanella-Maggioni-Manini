@@ -114,6 +114,54 @@ public class ActionController {
             return false;
     }
 
+    /**
+     * This method discards the resources selected by a player, after he has used the market and it was found
+     * that he cannot place all of the collected resources in his deposit
+     * @param _player Player who is discarding the resources
+     * @param _discardSelection A HashMap<Resource, Integer> that represents the resources to be discarded
+     * @return null if the selection has generated a consistent state for the deposit,
+     * a map with the obtained resources from which the selection must be made, if otherwise.
+     */
+    public HashMap<Resource, Integer> discardResources(PlayerBoard _player, HashMap<Resource, Integer> _discardSelection) {
+
+       //Grab a clone of the previously obtained resources
+       HashMap<Resource, Integer> tempDepositClone = new HashMap<>(_player.getTempDeposit());
+
+       for (Resource res : Resource.values()) {
+
+           //Check that the player has not discarded more Resources that he can discard
+           if (tempDepositClone.get(res) < _discardSelection.get(res)) return tempDepositClone;
+           else {
+               tempDepositClone.put(res, tempDepositClone.get(res) - _discardSelection.get(res));
+           }
+       }
+
+       //Try adding the obtained resources
+       if (_player.tryAddResources(tempDepositClone) == null) {
+
+           //Selection was successful: move all other players faith pawns and return true
+
+           int numDiscarded = 0;
+           for (Integer i : _discardSelection.values()) numDiscarded += i;
+
+           for (int i = 0; i < numDiscarded; i++)  {
+
+               if (gameTable.isSinglePlayer()) {
+                   gameTable.moveFaithTrailLorenzo();
+               } else {
+                   gameTable.moveOthersFaithTrail(_player);
+               }
+
+           }
+           return null;
+
+       } else {
+
+           //Selection was not effective: return false and force another selection
+           return tempDepositClone;
+       }
+    }
+
     /* *** Actions a user can select following a ServerRequest *** */
 
     /* *** Lorenzo move *** */

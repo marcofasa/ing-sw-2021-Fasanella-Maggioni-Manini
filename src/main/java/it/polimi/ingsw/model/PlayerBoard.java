@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerBoard {
+public class PlayerBoard implements Serializable {
 
     private String nickname;
     private boolean first;
@@ -65,6 +66,10 @@ public class PlayerBoard {
 
     public ArrayList<Marble> getMarketRow(Integer integer) {
         return gameTable.getMarketInstance().getRow(integer);
+    }
+
+    public HashMap<Resource, Integer> getTempDeposit() {
+        return tempDeposit;
     }
 
     public ArrayList<Marble> getMarketCol(Integer integer) {

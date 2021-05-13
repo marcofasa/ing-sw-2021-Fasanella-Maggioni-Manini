@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
 
+import java.io.Serializable;
 import java.util.Stack;
 
-public class CardDevelopmentSlot {
+public class CardDevelopmentSlot implements Serializable {
 
     final int MAX_SLOT_SIZE = 3;
     final CardDevelopmentSlotID id;

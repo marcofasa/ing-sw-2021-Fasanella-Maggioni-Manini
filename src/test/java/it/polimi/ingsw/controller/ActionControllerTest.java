@@ -1,10 +1,13 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.HashMap;
+import java.util.Random;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,6 +75,8 @@ class ActionControllerTest {
     @Test
     void useMarket() {
 
+        Scanner scanner = new Scanner(System.in);
+
         GameTable gameTable = new GameTable(true);
         String nickname = "test1";
 
@@ -96,16 +101,36 @@ class ActionControllerTest {
             }
         });
 
+        assertThrows(Exception.class, () -> {
+           actionController.useMarket(player, 1, "invalidArg");
+        });
+
         //assertTrue(actionController.useMarket(player, 2, "row"));
 
-        for (int i = 0; i < 10; i++) {
+        HashMap<Resource, Integer> temp = new HashMap<>();
+        HashMap<Resource, Integer> discardSelection = new HashMap<>();
 
-            System.out.println(actionController.useMarket(player, 1, "row"));
+        for (int i = 0; i < 5; i++) {
 
+            temp = actionController.useMarket(player, 1, "row");
+            temp = actionController.useMarket(player, 1, "column");
+
+            System.out.println(temp);
+
+            if (temp != null) {
+
+                do {
+                    for (Resource res : Resource.values()) {
+
+                        discardSelection.put(res, new Random().nextInt(4));
+                    }
+                    System.out.println("Trying to discard : " + discardSelection);
+
+                } while (actionController.discardResources(player, discardSelection) != null);
+            }
         }
 
         System.out.println("debug");
-
     }
 
     @Test

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class is the main class in the controller package. It is responsible for implementing the state machine that
@@ -50,7 +51,7 @@ public class Controller {
         return actionController;
     }
 
-    private PlayerBoard getPlayerBoardByNickname(String _nickname) {
+    protected PlayerBoard getPlayerBoardByNickname(String _nickname) {
 
         for (PlayerBoard board : gameTable.getPlayerBoards()) {
             if (_nickname.equals(board.getNickname())) return board;
@@ -205,12 +206,17 @@ public class Controller {
         throw new NotActivePlayerException(_nickname);
     }
 
-    ArrayList<Resource> discardResources(String _nickname) {
+    HashMap<Resource, Integer> discardResources(String _nickname, HashMap<Resource, Integer> _discardSelection) throws NotActivePlayerException {
 
-        /* TODO  Rivisitare tutta la catena di chiamate, il Response del client invia un ArrayList di Marble,
-        *   ma imo dovrebbe essere un HashMap di Resources -> Integer*/
+        if (isActivePlayer(_nickname)) {
 
-        return null;
+            return actionController.discardResources(
+                    Objects.requireNonNull(getPlayerBoardByNickname(_nickname)),
+                    _discardSelection
+            );
+
+        } else throw new NotActivePlayerException(_nickname);
+
     }
 
     void activateProductionPowers(String _nickname, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException {

@@ -25,13 +25,12 @@ public class Game implements Runnable{
     private GameTable gameTable;
     private Controller controller;
     private HashMap<String, VirtualClient> nicknameClientMap;
+    private HashMap<VirtualClient, String> clientNicknameMap;
     private HashMap<Integer, VirtualClient> idPlayerClientMap;
 
     public Game(){
-        //inizializza controller
-        gameTable = new GameTable(false);
-        controller = new Controller(gameTable);
         nicknameClientMap = new HashMap<>();
+        clientNicknameMap = new HashMap<>();
         idPlayerClientMap = new HashMap<>();
     }
 
@@ -39,10 +38,7 @@ public class Game implements Runnable{
     public void run() {
         System.out.println("Game partito");
         start();
-        //MSF CONTROLLER
-        while (true)
-            
-            ;
+        solicitInitialSelections();
     }
 
     /**
@@ -60,12 +56,36 @@ public class Game implements Runnable{
             VirtualClient virtualClient = virtualClients.get(i);
             idPlayerClientMap.put(virtualClient.getID(), virtualClient);
             nicknameClientMap.put(playersNicknames.get(i), virtualClient);
+            clientNicknameMap.put(virtualClient, playersNicknames.get(i));
         }
     }
 
     private void start() {
-        //inzializza controller del primo turno
 
+        // Initialized model
+        gameTable = new GameTable(players.size() == 1);
+
+        // Populate match
+        for (String nickname : nicknameClientMap.keySet()) {
+            gameTable.addPlayer(nickname);
+        }
+
+        // Initialize controller
+        controller = new Controller(gameTable);
+
+        // Distribute initial cards
+        gameTable.startGame();
+    }
+
+    private void solicitInitialSelections() {
+
+        for (VirtualClient vClient : players) {
+
+            send(vClient, new RequestInitialSelection(
+                    controller.getPlayerBoardByNickname(clientNicknameMap.get(vClient)).getCardsLeaderBeforeSelecting(),
+                    vClient.getID()
+            ));
+        }
     }
 
     // Overloaded send method

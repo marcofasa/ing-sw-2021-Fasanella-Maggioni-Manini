@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class CardDevelopment {
+public class CardDevelopment implements Serializable {
 
     // Development card state
 
