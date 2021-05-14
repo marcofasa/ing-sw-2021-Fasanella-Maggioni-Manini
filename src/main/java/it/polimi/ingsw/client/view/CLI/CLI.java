@@ -277,15 +277,15 @@ public class CLI implements ViewInterface {
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         ArrayList<Resource> resources =new ArrayList<>();
         switch (playerNumber){
-            case 1:
+            case 0:
                 resources.add(null);
                 resources.add(null);
                 break;
-            case 2: case 3:
+            case 1: case 2:
                 resources.add(utils.readResource());
                 resources.add(null);
                 break;
-            case 4:
+            case 3:
                 resources.add(utils.readResource());
                 resources.add(utils.readResource());
                 break;

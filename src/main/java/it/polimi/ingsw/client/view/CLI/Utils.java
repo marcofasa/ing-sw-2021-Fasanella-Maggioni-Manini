@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Utils {
     private final PrintWriter out;
     private final Scanner in;
-    private boolean coloredCLI=false;
+    private boolean coloredCLI=true;
 
     //ANSI escape codes for Colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -34,6 +34,7 @@ public class Utils {
     public static final String ANSI_BACKGROUND_BLUE = "\u001b[44;1m";
     public static final String ANSI_BACKGROUND_CYAN = "\u001b[46;1m";
     public static final String ANSI_BACKGROUND_WHITE = "\u001b[47;1m";
+    public static final String ANSI_BACKGROUND_PURPLE = "\u001b[45;1m";
 
     public Utils(PrintWriter out,Scanner in){
         this.in=in;
@@ -70,6 +71,7 @@ public class Utils {
         else if (marble==MarbleType.MarbleRed) out.printf(" R ");
         else if (marble==MarbleType.MarbleWhite) out.printf(" W ");
         else if (marble==MarbleType.MarbleYellow) out.printf(" Y ");
+        else if (marble==MarbleType.MarblePurple) out.printf(" P ");
     }
 
     private void printMarbleColored(MarbleType marble) {
@@ -78,6 +80,7 @@ public class Utils {
         else if (marble==MarbleType.MarbleRed) out.printf(ANSI_BACKGROUND_RED+ "   " + ANSI_RESET);
         else if (marble==MarbleType.MarbleWhite) out.printf(ANSI_BACKGROUND_WHITE+ "   " + ANSI_RESET);
         else if (marble==MarbleType.MarbleYellow) out.printf(ANSI_BACKGROUND_YELLOW+ "   " + ANSI_RESET);
+        else if (marble==MarbleType.MarblePurple) out.printf(ANSI_BACKGROUND_PURPLE+ "   " + ANSI_RESET);
     }
 
     /**
@@ -112,6 +115,7 @@ public class Utils {
         }
         return number;}
     }
+
 
     public void printANSIWelcome(){
         System.out.println(ANSI_BACKGROUND_BLACK+ANSI_BLUE+"    ...     ..      ..                    .x+=:.        s                                                            ..      ...                                             .       .x+=:.      .x+=:.                                                  \n" +
