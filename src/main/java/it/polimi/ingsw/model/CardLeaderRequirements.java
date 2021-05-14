@@ -84,4 +84,19 @@ public class CardLeaderRequirements implements Serializable {
         throw new IllegalArgumentException();
     }
 
+    public CardLeaderRequirementsType getCardLeaderRequirementsType() {
+        return cardLeaderRequirementsType;
+    }
+
+    public HashMap<CardDevelopmentType, Integer> getNumberOfDevelopmentCardTypes() {
+        return numberOfDevelopmentCardTypes;
+    }
+
+    public HashMap<CardDevelopmentType, CardDevelopmentLevel> getNumberOfDevelopmentCardLevel() {
+        return numberOfDevelopmentCardLevel;
+    }
+
+    public HashMap<Resource, Integer> getNumberOfResources() {
+        return numberOfResources;
+    }
 }

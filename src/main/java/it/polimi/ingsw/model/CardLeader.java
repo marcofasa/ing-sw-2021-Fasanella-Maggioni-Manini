@@ -67,11 +67,19 @@ public abstract class CardLeader implements Serializable {
     }
 
     /**
-     * returns victory points value of the card
+     * returns victory points value of the card if it active
      * @return number of victory points worth
      */
     public Integer getVictoryPoints(){
         return active? victoryPoints : 0;
+    }
+
+    /**
+     * returns victory points value of the card
+     * @return
+     */
+    public Integer getVictoryPointsValue(){
+        return victoryPoints;
     }
 
     /**

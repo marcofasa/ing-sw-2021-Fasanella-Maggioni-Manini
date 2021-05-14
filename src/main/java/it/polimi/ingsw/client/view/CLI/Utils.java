@@ -211,7 +211,6 @@ public class Utils {
         int col=18;
         int i =0;
         int row=0;
-        int pos=0;
         while(row<3) {
             while (i <= col) {
                 if((row==0 && (i ==0 || i ==1 || i ==8 || i ==11)) || (row==1 && (i ==0 || i ==1 || i ==3 || i ==6 || i ==8 || i ==11|| i ==13 || i ==14|| i ==17 || i ==18)) || (row==2 &&(i ==3 || i ==6 || i ==13 || i ==14|| i ==17 || i ==18)))System.out.print("       ");
@@ -248,16 +247,6 @@ public class Utils {
                 else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
                 else {
                     printFaithTrailCellNumber(row,i);
-                    /*
-                    if (pos <10) {
-                        System.out.print("│  "+pos+"  │");
-                    }
-                    else {
-                        System.out.print("│  "+pos+" │");
-                    }
-                    pos++;
-
-                     */
                 }
 
                 i++;
@@ -331,12 +320,18 @@ public class Utils {
         ArrayList<CardLeader> selection= new ArrayList<>();
         out.println("Choose the first leader card:");
         out.println("Type the corresponding number in the list");
-        selection.add(cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1));
+        int one=readNumberWithBounds(1,cardLeaders.size());
+        selection.add(cardLeaders.get(one-1));
 
 
         out.println("Choose the second leader card:");
         out.println("Type the corresponding number in the list");
-        selection.add(cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1));
+        int two=readNumberWithBounds(1,cardLeaders.size());
+        while(one==two){
+            out.println("Card already picked, please choose another one");
+            two=readNumberWithBounds(1,cardLeaders.size());
+        }
+        selection.add(cardLeaders.get(two-1));
         return selection;
     }
 
@@ -358,14 +353,56 @@ public class Utils {
     public void printCardLeaderDeck(ArrayList<CardLeader> cardLeaders){
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
-            //TODO
-            out.println(index+". "+ printCardLeader(cardLeaders.get(i)));
+            out.printf(index+" ");
+            printCardLeader(cardLeaders.get(i));
+            out.println();
             index++;
         }
     }
 
-    private String printCardLeader(CardLeader requirements) {
-        return "NOT IMPLEMENTED YET";
+    private void printCardLeader(CardLeader cardLeader) {
+        int victoryPoints = cardLeader.getVictoryPointsValue();
+        CardLeaderRequirements cardLeaderRequirements= cardLeader.getRequirements();
+        out.printf("Card Leader (requirements for production): ");
+        switch (cardLeaderRequirements.getCardLeaderRequirementsType()){
+                case NumberOfDevelopmentCardTypes:
+                    printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());
+                    break;
+                case NumberOfDevelopmentCardLevel:
+                    printCardLeaderDevelopmentLevel(cardLeaderRequirements.getNumberOfDevelopmentCardLevel());
+                    break;
+                case NumberOfResources:
+                    HashMap<Resource,Integer> list=cardLeaderRequirements.getNumberOfResources();
+                    for(Resource resource: list.keySet()){
+                        String key=resource.toString();
+                        String value= list.get(resource).toString();
+                        if (coloredCLI) {
+                            out.printf(" x" + value + " resource of " );
+                            printResource(resource);
+                        }
+                        else out.printf(" x" + value + " resource of " + key);
+                    }
+                    out.printf(",");
+                    break;
+        }
+        out.printf(" with "+victoryPoints+" victory points;");
+        out.println();
+    }
+
+    private void printCardLeaderDevelopmentLevel(HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel) {
+        for(CardDevelopmentType cardDevelopmentType: numberOfDevelopmentCardLevel.keySet()){
+            String key=cardDevelopmentType.toString();
+            String value=numberOfDevelopmentCardLevel.get(cardDevelopmentType).toString();
+            out.printf("Card development of type "+key+" at level "+value+",");
+        }
+    }
+
+    private void printCardLeaderDevelopmentNumber(HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes) {
+        for(CardDevelopmentType cardDevelopmentType: numberOfDevelopmentCardTypes.keySet()){
+            String key=cardDevelopmentType.toString();
+            int value=numberOfDevelopmentCardTypes.get(cardDevelopmentType);
+            out.printf(" x"+value+" cards of type "+key+",");
+        }
     }
 
 
@@ -478,7 +515,7 @@ public class Utils {
         }
         out.println("Now type the output resource for basic production:");
         out.println("(Remember that resources are: coin, stone, servant, shield)");
-        basicProdInfo[i+1]=readResource();
+        basicProdInfo[3]=readResource();
         return basicProdInfo;
     }
 
@@ -488,13 +525,12 @@ public class Utils {
      */
     public Resource readResource(){
         Resource resource;
-        String s;
-        //out.println("Please select a bonus resource :");
-        s= readString();
+        out.println("(Remember that resources are: coin, stone, servant, shield)");
+        String s= in.nextLine();
         while (!s.equals("coin") && !s.equals("stone") && !s.equals("servant") && !s.equals("shield") ){
             out.println("Invalid choice. Type the correct name of the resource:");
             out.println("(Remember that resources are: coin, stone, servant, shield)");
-            s=readString();
+            s= in.nextLine();
         }
         switch (s){
             case "coin":

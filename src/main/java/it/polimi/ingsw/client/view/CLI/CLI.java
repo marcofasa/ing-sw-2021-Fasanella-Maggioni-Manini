@@ -283,14 +283,18 @@ public class CLI implements ViewInterface {
         ArrayList<Resource> resources =new ArrayList<>();
         switch (playerNumber){
             case 0:
+                out.println("You have no resources to choose because you're the first player!");
+                out.println();
                 resources.add(null);
                 resources.add(null);
                 break;
             case 1: case 2:
+                out.println("Choose one resource : ");
                 resources.add(utils.readResource());
                 resources.add(null);
                 break;
             case 3:
+                out.println("Choose two resources : ");
                 resources.add(utils.readResource());
                 resources.add(utils.readResource());
                 break;
