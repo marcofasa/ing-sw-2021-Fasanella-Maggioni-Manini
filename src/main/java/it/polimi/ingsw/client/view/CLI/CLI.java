@@ -232,12 +232,15 @@ public class CLI implements ViewInterface {
         }
 
 
-        //Ask for Card Leader production
+        //Ask for Card Leader production and output
         out.println("Do you want to activate Card Leader production?");
         if (utils.readYesOrNo()) {
             CardLeader[] cardLeaders;
             cardLeaders=utils.getCardLeaderActivation(lightModel.getCardsLeader());
             productionSelection.setCardLeadersToActivate(cardLeaders);
+            Resource[] resourcesOutput;
+            resourcesOutput=utils.getCardLeaderOutputs(productionSelection.getCardLeadersToActivate());
+            productionSelection.setCardLeaderProdOutputs(resourcesOutput);
         }
         else {
             CardLeader[] cardLeaders=new CardLeader[2];
@@ -249,6 +252,8 @@ public class CLI implements ViewInterface {
             cardLeaderProdOutputs[1]=null;
             productionSelection.setCardLeaderProdOutputs(cardLeaderProdOutputs);
         }
+
+
 
         //Sending request
         try {

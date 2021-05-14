@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.model.FaithTileStatus;
 import it.polimi.ingsw.model.MarbleType;
+import it.polimi.ingsw.model.Resource;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.PrintWriter;
@@ -14,11 +16,11 @@ public class UtilsTest {
 
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
+    private static final Utils utils=new Utils(out,in);
 
     @Test
     public void MarketTest() {
         ArrayList<ArrayList<MarbleType>> market = new ArrayList<ArrayList<MarbleType>>();
-        Utils utils=new Utils(out,in);
 
         ArrayList<MarbleType> row0 = new ArrayList<>();
         row0.add(MarbleType.MarbleWhite);
@@ -60,10 +62,39 @@ public class UtilsTest {
         tileStatuses.add(FaithTileStatus.Discarded);
         tileStatuses.add(FaithTileStatus.Not_Reached);
 
-        Utils utils=new Utils(out,in);
-
         utils.printFaithTrail(playersPosition,nickname,tileStatuses);
 
     }
+
+    @Test
+    public void ListTest(){
+        HashMap<Resource, Integer> map=new HashMap<>();
+        map.put(Resource.Coins,2);
+        map.put(Resource.Shields,4);
+        map.put(Resource.Stones,1);
+        map.put(Resource.Servants,3);
+        utils.printListResource(map);
+    }
+
+    @Test
+    public void CardLeaderTest(){
+
+    }
+
+    @Test
+    public void CardDevelopmentTest(){
+
+    }
+
+
+    @Test
+    public void MessageTests(){
+        utils.printErrorMessage();
+        utils.printHelp();
+        utils.printWelcomeMessage();
+    }
+
+
+
 
 }
