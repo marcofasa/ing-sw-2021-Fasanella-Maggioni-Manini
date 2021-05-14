@@ -66,4 +66,7 @@ public class VirtualClientCommandDispatcher {
 
         //boolean success = Game.discardResource
     }
+
+    public void requestDiscardCardLeader(CardLeader cardLeader) {
+    }
 }

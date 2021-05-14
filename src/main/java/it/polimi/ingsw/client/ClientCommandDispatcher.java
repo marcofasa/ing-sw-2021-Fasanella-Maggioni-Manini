@@ -78,6 +78,9 @@ public class ClientCommandDispatcher {
         clientResponse.setTimeoutID(timeoutID);
         client.send(clientResponse);
     }
+
+    public void unexpectedMove() {
+    }
 }
 
 //

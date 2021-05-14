@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class CardLeaderRequirements {
+public class CardLeaderRequirements implements Serializable {
     private final CardLeaderRequirementsType cardLeaderRequirementsType;
 
     private HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel;

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public abstract class CardLeader implements Serializable {
 
-
     protected PlayerBoard playerBoard;
 
     protected CardLeaderRequirements requirements;
