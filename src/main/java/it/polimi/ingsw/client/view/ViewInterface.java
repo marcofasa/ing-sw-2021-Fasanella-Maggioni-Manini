@@ -106,4 +106,6 @@ public interface ViewInterface {
       HashMap<Resource,Integer> askForResourceToDiscard(HashMap<Resource,Integer> choice);
 
     void displayWaiting(int timeoutInSeconds);
+
+    void askCardLeaderDiscard();
 }

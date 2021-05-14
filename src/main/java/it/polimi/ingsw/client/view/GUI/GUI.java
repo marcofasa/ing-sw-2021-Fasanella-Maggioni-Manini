@@ -17,6 +17,7 @@ public class GUI implements ViewInterface {
     @Override
     public void displayWelcome() {
 
+
     }
 
     @Override
@@ -140,6 +141,11 @@ public class GUI implements ViewInterface {
 
     @Override
     public void displayWaiting(int timeoutInSeconds) {
+
+    }
+
+    @Override
+    public void askCardLeaderDiscard() {
 
     }
 }

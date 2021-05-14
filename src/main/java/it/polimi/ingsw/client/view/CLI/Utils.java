@@ -2,14 +2,15 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.model.*;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Utils {
-    private PrintWriter out;
-    private Scanner in;
+    private final PrintWriter out;
+    private final Scanner in;
     private boolean coloredCLI=false;
 
     //ANSI escape codes for Colors
@@ -38,6 +39,10 @@ public class Utils {
         this.in=in;
         this.out=out;
     }
+
+
+
+
 
     //DEBUG
     public void printListResource(HashMap<Resource,Integer> list){
@@ -108,7 +113,7 @@ public class Utils {
         return number;}
     }
 
-    public void printASCIIWelcome(){
+    public void printANSIWelcome(){
         System.out.println(ANSI_BACKGROUND_BLACK+ANSI_BLUE+"    ...     ..      ..                    .x+=:.        s                                                            ..      ...                                             .       .x+=:.      .x+=:.                                                  \n" +
                 "  x*8888x.:*8888: -\"888:                 z`    ^%      :8                                             oec :       :~\"8888x :\"%888x                                          @88>    z`    ^%    z`    ^%                                                 \n" +
                 " X   48888X `8888H  8888                    .   <k    .88                  .u    .             u.    @88888      8    8888Xf  8888>                u.    u.                 %8P        .   <k      .   <k                u.    u.                        \n" +
@@ -253,12 +258,12 @@ public class Utils {
      * @param cardLeaders
      * @return arraylist of chosen Card Leader
      */
-    public ArrayList<CardLeader> printAndGetCardLeaderList(ArrayList<CardLeader> cardLeaders) {
+    public ArrayList<CardLeader> printAndGetCardLeaderFirstSelection(ArrayList<CardLeader> cardLeaders) {
         int index=1;
         ArrayList<CardLeader> selection= new ArrayList<>();
         for (int i=0; i<cardLeaders.size();i++){
             //TODO Check toString
-            out.println(index+". "+ cardLeaders.get(i).toString());
+            out.println(index+". "+printCardLeader(cardLeaders.get(i)));
             index++;
         }
         out.println("Choose the first leader card:");
@@ -279,10 +284,16 @@ public class Utils {
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
             //TODO Check toString
-            out.println(index+". "+ cardLeaders.get(i).toString());
+            out.println(index+". "+ printCardLeader(cardLeaders.get(i)));
             index++;
         }
+        out.println("Choose the leader card to discard:");
+        out.println("Type the corresponding number in the list");
         return cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1);
+    }
+
+    private String printCardLeader(CardLeader requirements) {
+        return "NOT IMPLEMENTED YET";
     }
 
     /**
@@ -475,7 +486,7 @@ public class Utils {
         for (int i=0;i<cardsLeader.size();i++){
             if(cardsLeader.get(i)!=null){
                 //TODO Description of Card Leader
-                //out.println("Card type " + cardsLeader.get(i).getClass()+ "of level " + cardDevelopments.get(i).getCardLevel().toString() + " ?");
+                out.println("Card type " + cardsLeader.get(i).getClass()+ "of level ");
                 if (readYesOrNo()) cardLeaders[i]=cardsLeader.get(i);
                 else cardLeaders[i]=null;
             }
@@ -505,8 +516,31 @@ public class Utils {
      * Welcome Message
      */
     public void printWelcomeMessage() {
-        if(coloredCLI) printASCIIWelcome();
+        if(coloredCLI) printANSIWelcome();
         out.println("Welcome to Masters of Renaissance!");
     }
+
+    public void printWaitingMessage(int timeoutInSeconds) throws InterruptedException, IOException {
+        String anim="|/-\\";
+        if (coloredCLI){
+        for (int x =0 ; x < timeoutInSeconds ; x++) {
+            String data = "\r" + anim.charAt(x % anim.length());
+            System.out.print(ANSI_BACKGROUND_BLUE);
+            System.out.write(data.getBytes());
+            Thread.sleep(1000);
+        }}
+        else{
+            for (int x =0 ; x < timeoutInSeconds ; x++) {
+                String data = "\r" + anim.charAt(x % anim.length());
+                System.out.write(data.getBytes());
+                Thread.sleep(1000);
+        }
+    }
+
 }
+
+    public void printErrorMessage() {
+        out.println("There has been an error in the game. Stack Trace:");
+    }
+    }
 

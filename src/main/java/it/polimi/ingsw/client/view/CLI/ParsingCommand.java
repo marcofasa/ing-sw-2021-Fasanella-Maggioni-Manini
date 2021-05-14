@@ -8,6 +8,7 @@ public class ParsingCommand {
         this.cli=cli;
     }
 
+
     public void readCommand(){
         String command =utils.readString();
        switch (command){
@@ -25,6 +26,9 @@ public class ParsingCommand {
                break;
            case "production":
                cli.askProductionActivation();
+               break;
+           case "discard card leader":
+               cli.askCardLeaderDiscard();
                break;
            case "end turn":
                cli.askEndTurn();

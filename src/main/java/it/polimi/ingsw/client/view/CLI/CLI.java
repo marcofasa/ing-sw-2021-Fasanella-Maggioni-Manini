@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,12 +17,12 @@ import java.util.Scanner;
 
 public class CLI implements ViewInterface {
 
-    private Client client;
+    private final Client client;
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
-    private LightModel lightModel;
-    private Utils utils;
-    private ParsingCommand parsingCommand;
+    private final LightModel lightModel;
+    private final Utils utils;
+    private final ParsingCommand parsingCommand;
 
     public CLI(Client client){
         this.client=client;
@@ -141,13 +142,23 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayWaiting(int timeoutInSeconds) {
+        try {
+            utils.printWaitingMessage(timeoutInSeconds);
+        } catch (InterruptedException | IOException e) {
+            utils.printErrorMessage();
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void askCardLeaderDiscard() {
+       //client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader()),-1));
     }
 
 
     @Override
     public void askMarketChoice() {
-        int rowcolumn=-1;
+        int rowcolumn;
         String key;
         String message;
         out.println("Choose row or column (type r/c):");
@@ -252,7 +263,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askCardLeaderActivation() {
-        out.println("Choose with card leader to activate:");
+        out.println("Choose which card leader to activate:");
         try {
             client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())),-1);
         } catch (RequestTimeoutException e) {
@@ -298,7 +309,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-        return utils.printAndGetCardLeaderList(cardLeaders);
+        return utils.printAndGetCardLeaderFirstSelection(cardLeaders);
     }
 
 
