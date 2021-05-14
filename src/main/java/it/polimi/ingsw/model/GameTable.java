@@ -3,10 +3,11 @@ package it.polimi.ingsw.model;
 import jdk.jshell.spi.ExecutionControl;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class GameTable {
+public class GameTable implements Serializable {
 
     private ArrayList<PlayerBoard> players;
     private Lorenzo lorenzo;

@@ -83,7 +83,7 @@ public class Game implements Runnable{
 
             send(vClient, new RequestInitialSelection(
                     controller.getPlayerBoardByNickname(clientNicknameMap.get(vClient)).getCardsLeaderBeforeSelecting(),
-                    vClient.getID()
+                    gameTable.getIndexFromPlayer(controller.getPlayerBoardByNickname(clientNicknameMap.get(vClient)))
             ));
         }
     }

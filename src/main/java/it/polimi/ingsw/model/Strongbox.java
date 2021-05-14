@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Strongbox {
+public class Strongbox implements Serializable {
 
     protected final HashMap<Resource, Integer> content;
 
