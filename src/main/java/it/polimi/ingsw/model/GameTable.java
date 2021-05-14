@@ -148,7 +148,8 @@ public class GameTable implements Serializable {
     }
 
     public ArrayList<PlayerBoard> getPlayerBoards() {
-        return new ArrayList<>(players);
+        return players;
+        // return new ArrayList<>(players);
     }
 
     public PlayerBoard getPlayerByIndex(int i) {

@@ -220,7 +220,7 @@ public class PlayerBoard implements Serializable {
     protected void activateCardLeader(CardLeader cardLeader) {
         if (!cardLeader.canActivate())
             throw new CardLeaderRequirementsNotMetException();
-        if (cardLeader.getPlayerBoard() != this)
+        if (!cardLeader.getPlayerBoard().getNickname().equals(this.getNickname()))
             throw new CardLeaderWrongOwnerException();
         cardLeader.activate();
     }
@@ -239,7 +239,8 @@ public class PlayerBoard implements Serializable {
      * @param cardLeader2 second selection
      */
     public void selectCardsLeader(CardLeader cardLeader1, CardLeader cardLeader2) {
-        if (cardLeader1.getPlayerBoard() != this || cardLeader2.getPlayerBoard() != this) {
+        if (!cardLeader1.getPlayerBoard().getNickname().equals(this.getNickname())
+                || !cardLeader2.getPlayerBoard().getNickname().equals(this.getNickname())) {
             throw new CardLeaderWrongOwnerException();
         }
         cardsLeader.add(cardLeader1);

@@ -94,7 +94,7 @@ public class VirtualClient implements Runnable{
 
     }
 
-    void SetGame(Game game){
+    public void setGame(Game game){
         this.game = game;
     }
 

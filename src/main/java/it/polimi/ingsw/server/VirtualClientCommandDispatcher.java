@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.communication.server.ResponseNicknameUnavailable;
 import it.polimi.ingsw.communication.server.ResponseSuccess;
 import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.controller.Game;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.ProductionSelection;
@@ -38,7 +39,7 @@ public class VirtualClientCommandDispatcher {
     }
 
     public void initialSelection(ArrayList<CardLeader> cardLeader, Resource resource1, Resource resource2) {
-        System.out.println("initialSelection");
+        virtualClient.getGame().distributeInitialSelection(virtualClient, cardLeader, resource1, resource2);
     }
 
     public void requestActivateProduction(ProductionSelection productionSelection) {

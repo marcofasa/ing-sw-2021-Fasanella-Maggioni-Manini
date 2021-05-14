@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import com.sun.net.httpserver.Authenticator;
 import it.polimi.ingsw.client.RequestTimeoutException;
-import it.polimi.ingsw.communication.server.RequestDiscardResourceSelection;
-import it.polimi.ingsw.communication.server.RequestInitialSelection;
-import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.communication.server.*;
+import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
 
@@ -34,11 +34,26 @@ public class Game implements Runnable{
         idPlayerClientMap = new HashMap<>();
     }
 
+    public void distributeInitialSelection(VirtualClient _vClient, ArrayList<CardLeader> _cardLeader, Resource _resource1, Resource _resource2)  {
+
+        String nickname = clientNicknameMap.get(_vClient);
+
+        try {
+            controller.assignInitialBenefits(nickname, _cardLeader, _resource1, _resource2);
+            send(_vClient, new ResponseSuccess());
+        } catch (NotActivePlayerException ex) {
+            send(_vClient, new ResponseNotActivePlayerError());
+        }
+
+    }
+
     @Override
     public void run() {
         System.out.println("Game partito");
         start();
         solicitInitialSelections();
+
+        //System.out.println("debug");
     }
 
     /**
@@ -54,6 +69,7 @@ public class Game implements Runnable{
         this.players = new ArrayList<>(virtualClients);
         for (int i = 0; i < virtualClients.size(); i++) {
             VirtualClient virtualClient = virtualClients.get(i);
+            virtualClient.setGame(this);
             idPlayerClientMap.put(virtualClient.getID(), virtualClient);
             nicknameClientMap.put(playersNicknames.get(i), virtualClient);
             clientNicknameMap.put(virtualClient, playersNicknames.get(i));

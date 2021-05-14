@@ -413,8 +413,9 @@ public class Utils {
     public Resource readResource(){
         Resource resource;
         String s;
+        //out.println("Please select a bonus resource :");
         s= readString();
-        while (s!="coin" || s!="stone" || s!="servant" || s!="shield" ){
+        while (!s.equals("coin") && !s.equals("stone") && !s.equals("servant") && !s.equals("shield") ){
             out.println("Invalid choice. Type the correct name of the resource:");
             out.println("(Remember that resources are: coin, stone, servant, shield)");
             s=readString();
