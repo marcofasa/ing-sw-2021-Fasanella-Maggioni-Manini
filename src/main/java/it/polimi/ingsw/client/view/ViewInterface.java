@@ -97,7 +97,7 @@ public interface ViewInterface {
 
      void askEndTurn();
 
-     //RESPONSE
+        //RESPONSE
 
       ArrayList<Resource> askForInitialResourcesSelection(int playerNumber);
 
@@ -105,7 +105,7 @@ public interface ViewInterface {
 
       HashMap<Resource,Integer> askForResourceToDiscard(HashMap<Resource,Integer> choice);
 
-    void displayWaiting(int timeoutInSeconds);
+      void displayWaiting(int timeoutInSeconds);
 
-    void askCardLeaderDiscard();
+      void askCardLeaderDiscard();
 }
