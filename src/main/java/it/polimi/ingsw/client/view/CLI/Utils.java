@@ -15,7 +15,7 @@ public class Utils {
 
     //ANSI escape codes for Colors
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_GRAY = "\u001b[48;5;240m";
+    public static final String ANSI_GRAY = "\u001B[48;5;240m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -36,25 +36,49 @@ public class Utils {
     public static final String ANSI_BACKGROUND_WHITE = "\u001b[47;1m";
     public static final String ANSI_BACKGROUND_PURPLE = "\u001b[45;1m";
 
+    /**
+     * Constructor
+     * @param out
+     * @param in
+     */
     public Utils(PrintWriter out,Scanner in){
         this.in=in;
         this.out=out;
     }
 
 
-
-
-
-    //DEBUG
+    /**
+     * Print List of given Resources
+     * @param list
+     */
     public void printListResource(HashMap<Resource,Integer> list){
         for(Resource resource: list.keySet()){
             String key=resource.toString();
             String value= list.get(resource).toString();
-            out.println("-x" + value + " resource of " + key);
+            if (coloredCLI) {
+                out.printf("- x" + value + " resource of " );
+                printResource(resource);
+                out.println();
+            }
+                else out.println("- x" + value + " resource of " + key);
         }
     }
 
-    //DEBUG
+    /**
+     * Print a single given Resource
+     * @param resource
+     */
+    private void printResource(Resource resource) {
+        if(resource==Resource.Coins) out.printf(ANSI_YELLOW+"Coins"+ANSI_RESET);
+            else if(resource==Resource.Servants) out.printf(ANSI_PURPLE+"Servants"+ANSI_RESET);
+                else if(resource==Resource.Stones) out.printf(ANSI_GRAY+"Stones"+ANSI_RESET);
+                    else if(resource==Resource.Shields) out.printf(ANSI_BLUE+"Shields"+ANSI_RESET);
+    }
+
+    /**
+     * Print Marble Market
+     * @param market
+     */
     public void printMarket(ArrayList<ArrayList<MarbleType>> market){
         for (int i = 0; i < market.size(); i++) {
             for (int j = 0; j < market.get(i).size(); j++) {
@@ -65,6 +89,10 @@ public class Utils {
         }
     }
 
+    /**
+     * Print a single given Marble
+     * @param marble
+     */
     private void printMarble(MarbleType marble){
         if (marble==MarbleType.MarbleBlue) out.printf(" B ");
         else if (marble==MarbleType.MarbleGrey) out.printf(" G ");
@@ -74,6 +102,10 @@ public class Utils {
         else if (marble==MarbleType.MarblePurple) out.printf(" P ");
     }
 
+    /**
+     * Print a single given Marble (ANSI Color)
+     * @param marble
+     */
     private void printMarbleColored(MarbleType marble) {
         if (marble==MarbleType.MarbleBlue) out.printf(ANSI_BACKGROUND_BLUE+ "   " + ANSI_RESET);
         else if (marble==MarbleType.MarbleGrey) out.printf(ANSI_BACKGROUND_GRAY+ "   " + ANSI_RESET);
@@ -184,16 +216,16 @@ public class Utils {
             while (i <= col) {
                 if((row==0 && (i ==0 || i ==1 || i ==8 || i ==11)) || (row==1 && (i ==0 || i ==1 || i ==3 || i ==6 || i ==8 || i ==11|| i ==13 || i ==14|| i ==17 || i ==18)) || (row==2 &&(i ==3 || i ==6 || i ==13 || i ==14|| i ==17 || i ==18)))System.out.print("       ");
                 else if(row==1 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
-                else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
+                else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(2)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
                 else if(row==1 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"┌─────┐"+ANSI_RESET);
                 else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"┌─────┐"+ANSI_RESET);
                 else if(row==2 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
-                else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
+                else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(2)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
                 else if(row==2 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"┌─────┐"+ANSI_RESET);
                 else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"┌─────┐"+ANSI_RESET);
-                else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
+                else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(1)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
                 else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"┌─────┐"+ANSI_RESET);
-                else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
+                else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(1)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"┌─────┐"+ANSI_RESET);
                 else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"┌─────┐"+ANSI_RESET);
                    else System.out.print("┌─────┐");
                 i++;
@@ -203,18 +235,20 @@ public class Utils {
             while (i <= col) {
                 if((row==0 && !(i != 0 && i != 1 && i != 8 && i != 11)) || !(row != 1 || !(i == 0 || i == 1 || i == 3 || i == 6 || i == 8 || i == 11 || i == 13 || i == 14 || i == 17 || i == 18)) || (row==2 &&(i ==3 || i ==6 || i ==13 || i ==14|| i ==17 || i ==18)))System.out.print("       ");
                 else if(row==1 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
-                else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
+                else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(2)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
                 else if(row==1 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
                 else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
                 else if(row==2 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
-                else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
+                else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(2)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
                 else if(row==2 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
                 else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
-                else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
+                else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(1)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
                 else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
-                else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
+                else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(1)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"│     │"+ANSI_RESET);
                 else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"│     │"+ANSI_RESET);
                 else {
+                    printFaithTrailCellNumber(row,i);
+                    /*
                     if (pos <10) {
                         System.out.print("│  "+pos+"  │");
                     }
@@ -222,6 +256,8 @@ public class Utils {
                         System.out.print("│  "+pos+" │");
                     }
                     pos++;
+
+                     */
                 }
 
                 i++;
@@ -235,16 +271,16 @@ public class Utils {
                     System.out.print("       ");
                 }
                 else if(row==1 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
-                else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
+                else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(2)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
                 else if(row==1 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"└─────┘"+ANSI_RESET);
                 else if(row==1 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"└─────┘"+ANSI_RESET);
                 else if(row==2 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
-                else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
+                else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Discarded||tileStatuses.get(2)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
                 else if(row==2 && (i==4||i==5) && (tileStatuses.get(0)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"└─────┘"+ANSI_RESET);
                 else if(row==2 && (i==15||i==16) && (tileStatuses.get(2)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"└─────┘"+ANSI_RESET);
-                else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
+                else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(1)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
                 else if(row==1 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"└─────┘"+ANSI_RESET);
-                else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(0)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
+                else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Discarded||tileStatuses.get(1)==FaithTileStatus.Not_Reached)) System.out.print(ANSI_BACKGROUND_RED+"└─────┘"+ANSI_RESET);
                 else if(row==0 && (i==9||i==10) && (tileStatuses.get(1)==FaithTileStatus.Reached)) System.out.print(ANSI_BACKGROUND_GREEN+"└─────┘"+ANSI_RESET);
                 else {
                     System.out.print("└─────┘");
@@ -257,22 +293,47 @@ public class Utils {
         }
     }
 
+    private void printFaithTrailCellNumber(int row, int i) {
+            int pos;
+            if(row==0){
+                if(i<8) {
+                    pos = i + 2;
+                }
+                else pos=i+6;
+            }
+            else if (row==1){
+                if(i==2) pos=i+1;
+                else if(i==7) pos=i+3;
+                else pos=17;
+            }
+            else {
+                if(i>6) pos=i+4;
+                else pos=i;
+            }
+        if (pos<10) {
+            System.out.print("│  "+pos+"  │");
+        }
+        else {
+            System.out.print("│  "+pos+" │");
+        }
+    }
+
     /**
      * Prints and asks the Card Leader from the list
      * @param cardLeaders
      * @return arraylist of chosen Card Leader
      */
     public ArrayList<CardLeader> printAndGetCardLeaderFirstSelection(ArrayList<CardLeader> cardLeaders) {
-        int index=1;
+        //Print Card Leader Deck
+        printCardLeaderDeck(cardLeaders);
+
+        //Selection
         ArrayList<CardLeader> selection= new ArrayList<>();
-        for (int i=0; i<cardLeaders.size();i++){
-            //TODO Check toString
-            out.println(index+". "+printCardLeader(cardLeaders.get(i)));
-            index++;
-        }
         out.println("Choose the first leader card:");
         out.println("Type the corresponding number in the list");
         selection.add(cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1));
+
+
         out.println("Choose the second leader card:");
         out.println("Type the corresponding number in the list");
         selection.add(cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1));
@@ -280,25 +341,33 @@ public class Utils {
     }
 
     /**
-     *
+     *Print and Get a single Card Leader from Deck
      * @param cardLeaders
      * @return
      */
     public CardLeader printAndGetCardLeader(ArrayList<CardLeader> cardLeaders) {
-        int index=1;
-        for (int i=0; i<cardLeaders.size();i++){
-            //TODO Check toString
-            out.println(index+". "+ printCardLeader(cardLeaders.get(i)));
-            index++;
-        }
+        //Print Card Leader Deck
+        printCardLeaderDeck(cardLeaders);
+
+        //Selection
         out.println("Choose the leader card to discard:");
         out.println("Type the corresponding number in the list");
         return cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1);
     }
 
+    public void printCardLeaderDeck(ArrayList<CardLeader> cardLeaders){
+        int index=1;
+        for (int i=0; i<cardLeaders.size();i++){
+            //TODO
+            out.println(index+". "+ printCardLeader(cardLeaders.get(i)));
+            index++;
+        }
+    }
+
     private String printCardLeader(CardLeader requirements) {
         return "NOT IMPLEMENTED YET";
     }
+
 
     /**
      * Error Message
@@ -315,10 +384,12 @@ public class Utils {
         if(coloredCLI) {
             out.println(ANSI_BACKGROUND_GRAY + "Help Command List" + ANSI_RESET);
             out.println("Here's a list of all commands that you can execute:");
+            out.println();
             out.println(ANSI_BACKGROUND_GREEN+"\"resource market\""+ANSI_RESET+" to use market and get new resources");
             out.println(ANSI_BACKGROUND_GREEN+"\"card development market\""+ANSI_RESET+" to use market and get new resources\"");
             out.println(ANSI_BACKGROUND_GREEN+"\"production\""+ANSI_RESET+" to use various type of productions (basic,card development and card leader)");
             out.println(ANSI_BACKGROUND_GREEN+"\"end turn\""+ANSI_RESET+" to end your turn ");
+            out.println(ANSI_BACKGROUND_GREEN+"\"discard card leader\""+ANSI_RESET+" to discard a card leader");
         }
         else {
             out.println( "Help Command List:");
@@ -327,6 +398,7 @@ public class Utils {
             out.println("\"card development market\" to use market and get new resources\"");
             out.println("\"production\" to use various type of productions (basic,card development and card leader)");
             out.println("\"end turn\" to end your turn ");
+            out.println("\"discard card leader\" to discard a card leader");
         }
         //out.println("\"\"");
     }
@@ -370,6 +442,10 @@ public class Utils {
      */
     private void printCardDevelopmentForMarket(CardDevelopment cardDevelopment, int i, int j) {
         out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+ "of level " + cardDevelopment.getCardLevel().toString() +"and  "+cardDevelopment.getVictoryPoints()+" victory points "+ printCardResourceCost(cardDevelopment.getCardCosts()));
+    }
+
+    private void printCardDevelopment(CardDevelopment cardDevelopments){
+        out.println("Card type " + cardDevelopments.getCardType().toString()+ "of level " + cardDevelopments.getCardLevel().toString() );
     }
 
     /**
@@ -465,8 +541,8 @@ public class Utils {
         Boolean[] cardDevelopmentSlotActive= new Boolean[3];
         for(int i=0; i<cardDevelopments.size();i++){
             if(cardDevelopments.get(i)!=null){
-            out.println("Card type " + cardDevelopments.get(i).getCardType().toString()+ "of level " + cardDevelopments.get(i).getCardLevel().toString() + " ?");
-            cardDevelopmentSlotActive[i]=readYesOrNo();
+                printCardDevelopment(cardDevelopments.get(i));
+                cardDevelopmentSlotActive[i]=readYesOrNo();
             }
         }
         return cardDevelopmentSlotActive;
@@ -489,8 +565,7 @@ public class Utils {
         CardLeader[] cardLeaders=new CardLeader[2];
         for (int i=0;i<cardsLeader.size();i++){
             if(cardsLeader.get(i)!=null){
-                //TODO Description of Card Leader
-                out.println("Card type " + cardsLeader.get(i).getClass()+ "of level ");
+                printCardLeader(cardsLeader.get(i));
                 if (readYesOrNo()) cardLeaders[i]=cardsLeader.get(i);
                 else cardLeaders[i]=null;
             }
@@ -509,6 +584,7 @@ public class Utils {
         for (int i=0;i<cardLeaders.length;i++){
             if(cardLeaders[i]!=null){
                 out.println("Select an output resource for Card Leader production:");
+                printCardLeader(cardLeaders[i]);
                 cardLeaderProdOutputs[i]=readResource();
             }
             else cardLeaderProdOutputs[i]=null;
