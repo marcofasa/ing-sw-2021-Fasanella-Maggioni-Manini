@@ -526,6 +526,7 @@ public class Utils {
     public Resource readResource(){
         Resource resource;
         out.println("(Remember that resources are: coin, stone, servant, shield)");
+        in.nextLine();
         String s= in.nextLine();
         while (!s.equals("coin") && !s.equals("stone") && !s.equals("servant") && !s.equals("shield") ){
             out.println("Invalid choice. Type the correct name of the resource:");
