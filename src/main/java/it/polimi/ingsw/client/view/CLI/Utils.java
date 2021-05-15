@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Utils {
     private final PrintWriter out;
     private final Scanner in;
-    private boolean coloredCLI=true;
+    private boolean coloredCLI=false;
 
     //ANSI escape codes for Colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -422,22 +422,42 @@ public class Utils {
             out.println(ANSI_BACKGROUND_GRAY + "Help Command List" + ANSI_RESET);
             out.println("Here's a list of all commands that you can execute:");
             out.println();
-            out.println(ANSI_BACKGROUND_GREEN+"\"resource market\""+ANSI_RESET+" to use market and get new resources");
-            out.println(ANSI_BACKGROUND_GREEN+"\"card development market\""+ANSI_RESET+" to use market and get new resources\"");
-            out.println(ANSI_BACKGROUND_GREEN+"\"production\""+ANSI_RESET+" to use various type of productions (basic,card development and card leader)");
-            out.println(ANSI_BACKGROUND_GREEN+"\"end turn\""+ANSI_RESET+" to end your turn ");
-            out.println(ANSI_BACKGROUND_GREEN+"\"discard card leader\""+ANSI_RESET+" to discard a card leader");
+            out.println(ANSI_BACKGROUND_BLUE+"Command list for displays:"+ANSI_RESET);
+            out.println(ANSI_GREEN+"faith trail"+ANSI_RESET+" to display your position, faith tiles and other players position ");
+            out.println(ANSI_GREEN+"deposit"+ANSI_RESET+" to display your deposit ");
+            out.println(ANSI_GREEN+"strongbox"+ANSI_RESET+" to display your strongbox ");
+            out.println(ANSI_GREEN+"card leader"+ANSI_RESET+" to display your card leader deck ");
+            out.println(ANSI_GREEN+"card development"+ANSI_RESET+" to display your card development deck ");
+            out.println();
+            out.println(ANSI_BACKGROUND_BLUE+"Command list for actions"+ANSI_RESET);
+            out.println(ANSI_GREEN+"resource market"+ANSI_RESET+" to use market and get new resources");
+            out.println(ANSI_GREEN+"card development market"+ANSI_RESET+" to use market and get new resources");
+            out.println(ANSI_GREEN+"production"+ANSI_RESET+" to use various type of productions (basic,card development and card leader)");
+            out.println(ANSI_GREEN+"end turn"+ANSI_RESET+" to end your turn ");
+            out.println(ANSI_GREEN+"activate card leader"+ANSI_RESET+" to activate a card leader");
+            out.println(ANSI_GREEN+"discard card leader"+ANSI_RESET+" to discard a card leader");
+            out.println();
         }
         else {
-            out.println( "Help Command List:");
+            out.println("Help Command List:");
             out.println("Here's a list of all commands that you can execute:");
+            out.println();
+            out.println("Command list for displays:");
+            out.println("\"faith trail\" to display your position, faith tiles and other players position ");
+            out.println("\"deposit\" to display your deposit ");
+            out.println("\"strongbox\" to display your strongbox ");
+            out.println("\"card leader\" to display your card leader deck ");
+            out.println("\"card development\" to display your card development deck ");
+            out.println();
+            out.println("Command list for actions:");
             out.println("\"resource market\" to use market and get new resources");
-            out.println("\"card development market\" to use market and get new resources\"");
+            out.println("\"card development market\" to use market and get new resources");
             out.println("\"production\" to use various type of productions (basic,card development and card leader)");
             out.println("\"end turn\" to end your turn ");
+            out.println("\"activate card leader\" to activate a card leader");
             out.println("\"discard card leader\" to discard a card leader");
+            out.println();
         }
-        //out.println("\"\"");
     }
 
     /**
@@ -482,7 +502,7 @@ public class Utils {
     }
 
     private void printCardDevelopment(CardDevelopment cardDevelopments){
-        out.println("Card type " + cardDevelopments.getCardType().toString()+ "of level " + cardDevelopments.getCardLevel().toString() );
+        out.println("Card Development type " + cardDevelopments.getCardType().toString()+ "of level " + cardDevelopments.getCardLevel().toString() );
     }
 
     /**
@@ -660,5 +680,11 @@ public class Utils {
     public void printErrorMessage() {
         out.println("There has been an error in the game. Stack Trace:");
     }
+
+    public void printCardDevelopmentDeck(ArrayList<CardDevelopment> cardDevelopment) {
+        for (int i=0; i<cardDevelopment.size();i++){
+            printCardDevelopment(cardDevelopment.get(i));
+        }
     }
+}
 

@@ -85,6 +85,31 @@ public class GUI implements ViewInterface {
     }
 
     @Override
+    public void displayTurn(String currentPlayer) {
+
+    }
+
+    @Override
+    public void displayWaitingOpponent(String currentPlayer) {
+
+    }
+
+    @Override
+    public void displayDeposit() {
+
+    }
+
+    @Override
+    public void displayCardLeader() {
+
+    }
+
+    @Override
+    public void displayCardDevelopment() {
+
+    }
+
+    @Override
     public String askNickName() {
         return null;
     }

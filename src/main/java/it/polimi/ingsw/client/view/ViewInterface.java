@@ -79,6 +79,17 @@ public interface ViewInterface {
      */
     void displayLeaderRequirementsNotMet();
 
+    /*
+    Display
+     */
+    void displayTurn(String currentPlayer);
+
+    void displayWaitingOpponent(String currentPlayer);
+
+    void displayDeposit();
+    void displayCardLeader();
+    void displayCardDevelopment();
+
     //ASK
 
        //REQUEST

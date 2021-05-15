@@ -28,7 +28,7 @@ public class CLI implements ViewInterface {
         this.client=client;
         this.lightModel =new LightModel(client);
         this.utils=new Utils(out,in);
-        this.parsingCommand=new ParsingCommand(utils,this);
+        this.parsingCommand=new ParsingCommand(utils,this,out);
     }
 
     public ParsingCommand getParsingCommand() {
@@ -69,6 +69,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayStrongBox() {
+        out.println("---StrongBox---");
                utils.printListResource(lightModel.getStrongbox());
     }
 
@@ -105,6 +106,37 @@ public class CLI implements ViewInterface {
     @Override
     public void displayLeaderRequirementsNotMet() {
        out.println("Ops, requirements for this Card Leader are not met! ");
+    }
+
+    @Override
+    public void displayTurn(String currentPlayer) {
+        if (currentPlayer==lightModel.getNickname()){
+            parsingCommand.Menu();
+        }
+        else displayWaitingOpponent(currentPlayer);
+    }
+
+    @Override
+    public void displayWaitingOpponent(String currentPlayer) {
+        out.println("Wait for your move, is "+currentPlayer+" now playing...");
+    }
+
+    @Override
+    public void displayDeposit() {
+        out.println("---Deposit---");
+        utils.printListResource(lightModel.getDeposit());
+    }
+
+    @Override
+    public void displayCardLeader() {
+       out.println("---Card Leader---");
+       utils.printCardLeaderDeck(lightModel.getCardsLeader());
+    }
+
+    @Override
+    public void displayCardDevelopment() {
+       out.println("---Card Development---");
+       utils.printCardDevelopmentDeck(lightModel.getCardDevelopment());
     }
 
     @Override
