@@ -33,6 +33,10 @@ public class ParsingCommand {
     }
 
 
+    /**
+     * Reads a user command during the turn
+     * @return
+     */
     private boolean readCommand(){
         String command =utils.readString();
        switch (command){
