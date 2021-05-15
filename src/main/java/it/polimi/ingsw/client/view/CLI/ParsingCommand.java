@@ -1,5 +1,4 @@
 package it.polimi.ingsw.client.view.CLI;
-
 import java.io.PrintWriter;
 
 public class ParsingCommand {
@@ -9,7 +8,7 @@ public class ParsingCommand {
     private boolean haveMove=true;
 
     /**
-     * Constructor
+     * Constructor of Parsing Command
      * @param utils
      * @param cli
      * @param out
@@ -28,6 +27,7 @@ public class ParsingCommand {
         printMenu();
         while(readCommand());
     }
+
 
     private void printMenu() {
        out.println("Is your Turn!");

@@ -117,7 +117,7 @@ public class Utils {
 
     /**
      * Reads a number from stdin
-     * @return
+     * @return the input number
      */
     public int readNumber(){
         int selection;
@@ -132,10 +132,10 @@ public class Utils {
     }
 
     /**
-     * Read a number between
-     * @param min
+     * Read and check a number between
+     * @param min minimum bound
      * and
-     * @param max
+     * @param max maximum value
      * @return
      */
     public int readNumberWithBounds(int min,int max){
@@ -149,6 +149,9 @@ public class Utils {
     }
 
 
+    /**
+     * Print Colored Welcome message in ANSI
+     */
     public void printANSIWelcome(){
         System.out.println(ANSI_BACKGROUND_BLACK+ANSI_BLUE+"    ...     ..      ..                    .x+=:.        s                                                            ..      ...                                             .       .x+=:.      .x+=:.                                                  \n" +
                 "  x*8888x.:*8888: -\"888:                 z`    ^%      :8                                             oec :       :~\"8888x :\"%888x                                          @88>    z`    ^%    z`    ^%                                                 \n" +

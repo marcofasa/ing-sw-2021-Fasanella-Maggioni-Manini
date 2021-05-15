@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 public class CLI implements ViewInterface {
 
+    //
     private final Client client;
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
@@ -24,6 +25,10 @@ public class CLI implements ViewInterface {
     private final Utils utils;
     private final ParsingCommand parsingCommand;
 
+    /**
+     * Constructor of CLI
+     * @param client
+     */
     public CLI(Client client){
         this.client=client;
         this.lightModel =new LightModel(client);
