@@ -20,6 +20,9 @@ public class ParsingCommand {
         this.out=out;
     }
 
+    /**
+     * Menu displayed
+     */
     public void Menu(){
         haveMove=true;
         printMenu();

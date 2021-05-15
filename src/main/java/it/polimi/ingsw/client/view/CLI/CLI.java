@@ -290,9 +290,7 @@ public class CLI implements ViewInterface {
             productionSelection.setCardLeaderProdOutputs(cardLeaderProdOutputs);
         }
 
-
-
-        //Sending request
+        //Sending request to Server
         try {
             client.sendAndWait(new RequestActivateProduction(productionSelection),-1);
         } catch (RequestTimeoutException e) {
@@ -303,6 +301,9 @@ public class CLI implements ViewInterface {
 
     }
 
+    /**
+     * Ask for card leader Activation
+     */
     @Override
     public void askCardLeaderActivation() {
         out.println("Choose which card leader to activate:");
@@ -315,6 +316,11 @@ public class CLI implements ViewInterface {
     }
 
 
+    /**
+     * Ask for initial resources to select
+     * @param playerNumber in order of game
+     * @return
+     */
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         ArrayList<Resource> resources =new ArrayList<>();
@@ -340,6 +346,10 @@ public class CLI implements ViewInterface {
         return resources;
     }
 
+
+    /**
+     * Ask to end turn
+     */
     @Override
     public void askEndTurn() {
         out.println("Turn is finished, wait for other players...");
@@ -347,6 +357,11 @@ public class CLI implements ViewInterface {
     }
 
 
+    /**
+     * Ask to select two cards leader at the beginning of the game
+     * @param cardLeaders deck of card
+     * @return
+     */
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         return utils.printAndGetCardLeaderFirstSelection(cardLeaders);
