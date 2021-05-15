@@ -110,7 +110,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayTurn(String currentPlayer) {
-        if (currentPlayer==lightModel.getNickname()){
+        if (currentPlayer.equals(lightModel.getNickname())){
             parsingCommand.Menu();
         }
         else displayWaitingOpponent(currentPlayer);

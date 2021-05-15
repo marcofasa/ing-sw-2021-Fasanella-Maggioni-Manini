@@ -6,6 +6,7 @@ public class ParsingCommand {
     private Utils utils;
     private CLI cli;
     private final PrintWriter out ;
+    private boolean haveMove=true;
 
 
     public ParsingCommand(Utils utils, CLI cli, PrintWriter out){
@@ -15,6 +16,7 @@ public class ParsingCommand {
     }
 
     public void Menu(){
+        haveMove=true;
         printMenu();
         while(readCommand());
     }
@@ -33,16 +35,28 @@ public class ParsingCommand {
               utils.printHelp();
               break;
            case "resource market":
-               cli.askMarketChoice();
+               if (haveMove) {
+                   cli.askMarketChoice();
+                   haveMove=false;
+               }
+               else printInvalidMove();
                break;
            case "activate card leader":
                cli.askCardLeaderActivation();
                break;
            case "card development market":
-               cli.askDevelopmentCardChoice();
+               if(haveMove) {
+                   cli.askDevelopmentCardChoice();
+                   haveMove=false;
+               }
+               else printInvalidMove();
                break;
            case "production":
-               cli.askProductionActivation();
+               if(haveMove) {
+                   cli.askProductionActivation();
+                   haveMove=false;
+               }
+               else printInvalidMove();
                break;
            case "discard card leader":
                cli.askCardLeaderDiscard();
@@ -68,5 +82,9 @@ public class ParsingCommand {
            default: utils.printCommandError();
        }
       return true;
+    }
+
+    private void printInvalidMove() {
+        out.println("Invalid Move, you have already done a one-chance action!");
     }
 }
