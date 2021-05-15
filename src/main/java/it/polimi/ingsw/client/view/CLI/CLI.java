@@ -50,8 +50,6 @@ public class CLI implements ViewInterface {
       out.println(message);
     }
 
-
-
     @Override
     public void displayPosition() {
         utils.printFaithTrail(lightModel.getPlayersPosition(), lightModel.getNickname(),lightModel.getTileStatuses());
@@ -110,7 +108,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayTurn(String currentPlayer) {
-        if (currentPlayer==lightModel.getNickname()){
+        if (currentPlayer.equals(lightModel.getNickname())){
             parsingCommand.Menu();
         }
         else displayWaitingOpponent(currentPlayer);
@@ -141,8 +139,15 @@ public class CLI implements ViewInterface {
 
     @Override
     public String askNickName() {
+
+        String input;
+
         out.println("NickName:");
-        return utils.readString();
+
+        input = utils.readString();
+        lightModel.setNickname(input);
+
+        return input;
     }
 
     @Override
@@ -338,13 +343,7 @@ public class CLI implements ViewInterface {
     @Override
     public void askEndTurn() {
         out.println("Turn is finished, wait for other players...");
-        try {
-            client.sendAndWait(new RequestEndTurn(),-1);
-        } catch (RequestTimeoutException e) {
-            displayTimeOut();
-            e.printStackTrace();
-        }
-
+        client.send(new RequestEndTurn());
     }
 
 

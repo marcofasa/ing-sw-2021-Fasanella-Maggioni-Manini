@@ -54,8 +54,7 @@ public class VirtualClientCommandDispatcher {
     }
 
     public void requestEndTurn() {
-
-        //boolean success = Game.advanceTurn()
+        virtualClient.getGame().advanceTurn(virtualClient);
     }
 
     private void sendWithTimeoutID(ServerMessage responseSuccess, int timeoutID) {

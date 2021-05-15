@@ -44,7 +44,7 @@ public class TurnController {
      *
      * @return activePlayer
      */
-    private PlayerBoard getActivePlayer() {
+    PlayerBoard getActivePlayer() {
         return activePlayer;
     }
 
