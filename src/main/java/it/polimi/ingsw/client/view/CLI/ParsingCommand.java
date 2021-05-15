@@ -8,7 +8,12 @@ public class ParsingCommand {
     private final PrintWriter out ;
     private boolean haveMove=true;
 
-
+    /**
+     * Constructor
+     * @param utils
+     * @param cli
+     * @param out
+     */
     public ParsingCommand(Utils utils, CLI cli, PrintWriter out){
         this.utils=utils;
         this.cli=cli;
