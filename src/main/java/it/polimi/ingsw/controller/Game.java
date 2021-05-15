@@ -124,6 +124,8 @@ public class Game implements Runnable {
 
     public void advanceTurn(VirtualClient _vClient) {
 
+        String foo;
+
         String nickname = clientNicknameMap.get(_vClient);
 
         try {
