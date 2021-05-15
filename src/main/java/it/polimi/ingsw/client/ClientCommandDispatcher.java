@@ -52,6 +52,10 @@ public class ClientCommandDispatcher {
         client.getView().displayNotActivePlayerError();
     }
 
+    public void displayTurn(String nickname) {
+        client.getView().displayTurn(nickname);
+    }
+
     public void notEnoughResource() {
         client.getView().displayNotEnoughResource();
     }

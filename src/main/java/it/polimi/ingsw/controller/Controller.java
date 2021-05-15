@@ -142,9 +142,17 @@ public class Controller {
             Resource _res1,
             Resource _res2) throws NotActivePlayerException {
 
-        //Single player games do not have an initial selection phase
+        //Single player game logic
         if (isSinglePlayer && gamePhase == 0) {
+
+            initialSelectionController.assignInitialBenefits(
+                    getPlayerBoardByNickname(_nickname),
+                    _cardList,
+                    _res1,
+                    _res2);
+
             gamePhase = 1;
+            gameTable.endFirstRound();
             return;
         }
 
