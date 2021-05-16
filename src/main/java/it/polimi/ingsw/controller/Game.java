@@ -1,13 +1,12 @@
 package it.polimi.ingsw.controller;
 
-import com.sun.net.httpserver.Authenticator;
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
 
-import java.awt.color.ICC_ColorSpace;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

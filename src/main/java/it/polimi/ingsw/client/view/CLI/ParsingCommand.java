@@ -35,15 +35,11 @@ public class ParsingCommand {
         while(readCommand());
     }
 
-
-
-
     private void printMenu() {
         out.println("Is your Turn!");
         out.println("Choose a move:");
         out.println("(Type help to read commands)");
     }
-
 
     /**
      * Reads a user command during the turn
