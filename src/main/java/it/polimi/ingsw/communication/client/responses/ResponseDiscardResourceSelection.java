@@ -1,5 +1,6 @@
-package it.polimi.ingsw.communication.client;
+package it.polimi.ingsw.communication.client.responses;
 
+import it.polimi.ingsw.communication.client.ClientResponse;
 import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
 import it.polimi.ingsw.server.VirtualClient;

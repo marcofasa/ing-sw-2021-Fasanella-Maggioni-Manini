@@ -18,9 +18,8 @@ public class TurnController {
     private Integer turnCounter;
 
     /**
-     * Constructor : will be called by Controller once the lobby is full and GameTable has been initialized
-     *
-     * @param _gameTable the GameTable that hosts the game
+     * Basic constructor to set internal GameTable reference.
+     * @param _gameTable Instance of GameTable associated with the current match.
      */
     public TurnController(GameTable _gameTable) {
 

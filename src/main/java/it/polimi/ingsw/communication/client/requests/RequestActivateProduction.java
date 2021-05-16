@@ -1,5 +1,6 @@
-package it.polimi.ingsw.communication.client;
+package it.polimi.ingsw.communication.client.requests;
 
+import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.server.VirtualClient;
 

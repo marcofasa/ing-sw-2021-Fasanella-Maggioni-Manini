@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.communication.server.ResponseClientAccepted;
-import it.polimi.ingsw.communication.server.ResponseGameHasStarted;
+import it.polimi.ingsw.communication.server.responses.ResponseClientAccepted;
+import it.polimi.ingsw.communication.server.responses.ResponseGameHasStarted;
 import it.polimi.ingsw.controller.*;
 
 import java.util.ArrayList;

@@ -17,6 +17,10 @@ public class ActionController {
 
     private final GameTable gameTable;
 
+    /**
+     * Basic constructor to set internal GameTable reference.
+     * @param _gameTable Instance of GameTable associated with the current match.
+     */
     public ActionController(GameTable _gameTable) {
         gameTable = _gameTable;
     }
@@ -71,7 +75,7 @@ public class ActionController {
      */
     public HashMap<Resource, Integer> useMarket(PlayerBoard _player, int _index, String _selection) throws IllegalArgumentException {
 
-        ArrayList<Marble> marbles = new ArrayList<>();
+        ArrayList<Marble> marbles;
 
         // Row was selected
         if (_selection.equalsIgnoreCase("row")) {
@@ -93,6 +97,13 @@ public class ActionController {
         return _player.tryAddResources(resources);
     }
 
+    /**
+     * Method used to activate a selection of production powers.
+     * @param _player The PlayerBoard requesting for his powers to be activated.
+     * @param _productionSelection Instance of ProductionSelection containing the powers selected by the player.
+     * @throws InvalidSlotIndexException : thrown if an invalid index was selected for the CardDevelopmentSlot(s).
+     * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all selected powers.
+     */
     public void activateProductionPowers(
             PlayerBoard _player,
             ProductionSelection _productionSelection)
@@ -105,6 +116,11 @@ public class ActionController {
         }
     }
 
+    /**
+     * Method used to try and activate a CardLeader.
+     * @param _leaderToBeActivated CardLeader to be activated.
+     * @return true if the CardLeader was successfully activated, false if the card could not be activated.
+     */
     public boolean activateLeaderCard(CardLeader _leaderToBeActivated) {
 
         if (_leaderToBeActivated.canActivate()) {
@@ -162,15 +178,14 @@ public class ActionController {
        }
     }
 
-    /* *** Actions a user can select following a ServerRequest *** */
-
-    /* *** Lorenzo move *** */
+    /**
+     * Method invoked after a player has ended his turn in a single player match, forcing Lorenzo to make a move.
+     */
     public void makeLorenzoMove() {
 
         Lorenzo lorenzo = gameTable.getLorenzoInstance();
         lorenzo.getActionCardDeck().getCard().activate();
     }
-
 
     /**
      * This private method is to be called to sanitize the input given to buyAndPlaceDevCard function.

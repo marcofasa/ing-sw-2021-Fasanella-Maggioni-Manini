@@ -571,7 +571,7 @@ public class Utils {
         }
         out.println("Now type the output resource for basic production:");
         out.println("(Remember that resources are: coin, stone, servant, shield)");
-        basicProdInfo[3]=readResource();
+        basicProdInfo[2]=readResource();
         return basicProdInfo;
     }
 
@@ -618,12 +618,11 @@ public class Utils {
         String s;
         out.println("y/n ?");
         s=readString();
-        while (!s.equals("n") || !s.equals("y")){
+        while (!s.equals("n") && !s.equals("y")){
             out.println("Invalid input, type y/n :");
             s=readString();
         }
-        if (s.equals("y")) return true;
-        else return false;
+        return s.equals("y");
     }
 
     /**

@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
-import it.polimi.ingsw.communication.client.*;
+import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
@@ -36,6 +36,9 @@ public class CLI implements ViewInterface {
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
     }
 
+    public LightModel getLightModel() {
+        return lightModel;
+    }
 
     public ParsingCommand getParsingCommand() {
         return parsingCommand;

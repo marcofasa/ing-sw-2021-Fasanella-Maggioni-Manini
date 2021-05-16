@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.communication.server.RequestRequestPlayersNumber;
+import it.polimi.ingsw.communication.server.requests.RequestRequestPlayersNumber;
 import it.polimi.ingsw.communication.server.ServerMessage;
 
 import java.util.ArrayList;

@@ -1,8 +1,9 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.requests;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.communication.server.ServerRequest;
 
-public class RequestRequestPlayersNumber extends ServerRequest{
+public class RequestRequestPlayersNumber extends ServerRequest {
 
     public RequestRequestPlayersNumber() {
         super(null, null);

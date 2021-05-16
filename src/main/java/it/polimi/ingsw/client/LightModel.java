@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.communication.client.requests.RequestDepositInstance;
+import it.polimi.ingsw.communication.client.requests.RequestStrongboxInstance;
 import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +29,6 @@ public class LightModel {
     public LightModel(Client client){
         this.client=client;
     }
-
-
 
     public int positionPlayer(){
         return playersPosition.get(nickname);
@@ -146,14 +146,13 @@ public class LightModel {
 
     public HashMap<Resource, Integer> getDeposit(){
         if (deposit==null) deposit=new HashMap<Resource,Integer>();
-        /*
+
         try {
-            client.sendAndWait(new RequestDepositIstance(),-1);
-        }catch (RequestTimeoutException e){
+            client.sendAndWait(new RequestDepositInstance(),-1);
+        } catch (RequestTimeoutException e){
             e.printStackTrace();
         }
 
-         */
         return deposit;
     }
 
@@ -184,15 +183,16 @@ public class LightModel {
     }
 
     public HashMap<Resource, Integer> getStrongbox() {
-        if(strongbox==null) strongbox= new HashMap<>();
-        /*
+        if (strongbox==null) strongbox= new HashMap<>();
+
+
         try {
             client.sendAndWait(new RequestStrongboxInstance(),-1);
-        }catch (RequestTimeoutException e){
+        } catch (RequestTimeoutException e){
             e.printStackTrace();
         }
 
-         */
+
         return strongbox;
     }
 

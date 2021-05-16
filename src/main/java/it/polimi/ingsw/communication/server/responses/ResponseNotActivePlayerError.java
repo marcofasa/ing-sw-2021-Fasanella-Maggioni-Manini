@@ -1,9 +1,10 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.communication.server.ServerResponse;
 
-public class ResponseNotEnoughResources extends ServerResponse {
-    public ResponseNotEnoughResources() {
+public class ResponseNotActivePlayerError extends ServerResponse {
+    public ResponseNotActivePlayerError() {
         super(null, null);
     }
 
@@ -14,6 +15,6 @@ public class ResponseNotEnoughResources extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.notEnoughResource();
+        commandDispatcher.notActivePlayerError();
     }
 }

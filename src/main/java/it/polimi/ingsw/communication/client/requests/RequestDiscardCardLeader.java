@@ -1,9 +1,10 @@
-package it.polimi.ingsw.communication.client;
+package it.polimi.ingsw.communication.client.requests;
 
+import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.server.VirtualClient;
 
-public class RequestDiscardCardLeader extends ClientRequest{
+public class RequestDiscardCardLeader extends ClientRequest {
 
     CardLeader cardLeader;
 

@@ -13,6 +13,10 @@ public class InitialSelectionController {
 
     private final GameTable gameTable;
 
+    /**
+     * Basic constructor to set internal GameTable reference.
+     * @param _gameTable Instance of GameTable associated with the current match.
+     */
     public InitialSelectionController(GameTable _gameTable) {
         gameTable = _gameTable;
     }
@@ -37,6 +41,12 @@ public class InitialSelectionController {
         _player.selectCardsLeader(cardList.get(0), cardList.get(1));
     }
 
+
+    /**
+     * Private method to retrieve a player's index in the array that dictates the play order, based on a PlayerBoard reference.
+     * @param _player The PlayerBoard's whose index we want to fetch.
+     * @return _player's index.
+     */
     private int getPlayerIndex(PlayerBoard _player) {
         return gameTable.getIndexFromPlayer(_player);
     }

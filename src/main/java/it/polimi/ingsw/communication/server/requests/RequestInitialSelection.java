@@ -1,7 +1,8 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.requests;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.communication.server.ServerRequest;
 import it.polimi.ingsw.model.CardLeader;
 
 import java.util.ArrayList;

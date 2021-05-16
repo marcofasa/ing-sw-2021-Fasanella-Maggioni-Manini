@@ -1,11 +1,12 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.communication.server.ServerResponse;
 import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
 
-public class ResponseSendArrayListResourcesTest extends ServerResponse{
+public class ResponseSendArrayListResourcesTest extends ServerResponse {
 
     private ArrayList<Resource> resources;
 

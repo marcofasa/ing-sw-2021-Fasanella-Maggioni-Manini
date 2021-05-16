@@ -238,7 +238,7 @@ public class GameTable implements Serializable {
      * Calls movePlayer() method in FaithTrail
      *
      * @param player to be moved
-     * @param steps
+     * @param steps number of steps player will be moved forward
      */
     public void moveFaithTrail(PlayerBoard player, int steps) {
         getFaithTrailInstance().movePlayer(player, steps);
@@ -310,4 +310,14 @@ public class GameTable implements Serializable {
         isFirstRound = false;
     }
 
+    public PlayerBoard getPlayerByNickname(String nickname) {
+
+        for (PlayerBoard player : players) {
+
+            if (player.getNickname().equals(nickname)) return player;
+        }
+
+        //This return should never be reached!
+        return null;
+    }
 }

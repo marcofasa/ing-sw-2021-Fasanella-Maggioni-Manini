@@ -1,11 +1,13 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.communication.server.ServerResponse;
 
-public class ResponseNicknameUnavailable extends ServerResponse{
-    public ResponseNicknameUnavailable() {
+public class ResponseLeaderRequirementsNotMet extends ServerResponse {
+    public ResponseLeaderRequirementsNotMet() {
         super(null, null);
     }
+
     /**
      * Calls the method specified in the read function
      *
@@ -13,6 +15,6 @@ public class ResponseNicknameUnavailable extends ServerResponse{
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.nicknameIsUnavailable();
+        commandDispatcher.leaderRequirementsNotMet();
     }
 }

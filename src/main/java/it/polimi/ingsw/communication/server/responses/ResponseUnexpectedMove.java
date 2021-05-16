@@ -1,11 +1,11 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.communication.server.ServerRequest;
 
-public class ResponseUnexpectedAnswer extends ServerResponse {
-
-    public ResponseUnexpectedAnswer() {
+public class ResponseUnexpectedMove extends ServerRequest {
+    public ResponseUnexpectedMove() {
         super(null, null);
     }
 
@@ -16,6 +16,6 @@ public class ResponseUnexpectedAnswer extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
-        //niente per ora
+        commandDispatcher.unexpectedMove();
     }
 }

@@ -2,6 +2,10 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.*;
+import it.polimi.ingsw.communication.server.requests.RequestInitialSelection;
+import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
+import it.polimi.ingsw.communication.server.responses.ResponseNotActivePlayerError;
+import it.polimi.ingsw.communication.server.responses.ResponseSuccess;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
@@ -25,16 +29,27 @@ public class Game implements Runnable {
     private ArrayList<VirtualClient> players;
     private GameTable gameTable;
     private Controller controller;
-    private LinkedHashMap<String, VirtualClient> nicknameClientMap;
-    private LinkedHashMap<VirtualClient, String> clientNicknameMap;
-    private LinkedHashMap<Integer, VirtualClient> idPlayerClientMap;
+    private final LinkedHashMap<String, VirtualClient> nicknameClientMap;
+    private final LinkedHashMap<VirtualClient, String> clientNicknameMap;
+    private final LinkedHashMap<Integer, VirtualClient> idPlayerClientMap;
 
+    /**
+     * Basic constructor which instantiates the private LinkedHashMaps
+     */
     public Game() {
         nicknameClientMap = new LinkedHashMap<>();
         clientNicknameMap = new LinkedHashMap<>();
         idPlayerClientMap = new LinkedHashMap<>();
     }
 
+    /**
+     * This method is called by ResponseInitialSelection's read() method.
+     * It is used to assign a player's selection of card leaders and bonus resources.
+     * @param _vClient The VirtualClient corresponding to the player that has sent the response.
+     * @param _cardLeader An ArrayList of CardLeader, which contains the cards selected by the player.
+     * @param _resource1 The first bonus resource selected, null if the player does not have rights to obtain the resource.
+     * @param _resource2 The second bonus resource selected, null if the player does not have rights to obtain the resource.
+     */
     public void distributeInitialSelection(VirtualClient _vClient, ArrayList<CardLeader> _cardLeader, Resource _resource1, Resource _resource2) {
 
         String nickname = clientNicknameMap.get(_vClient);
@@ -49,10 +64,9 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Game partito");
+        System.out.println("Game iniziato!");
         start();
         solicitInitialSelections();
-        //System.out.println("debug");
     }
 
     /**
@@ -65,6 +79,11 @@ public class Game implements Runnable {
         return players.get(index + 1);
     }
 
+    /**
+     * This method populates all private LinkedHashMaps.
+     * @param virtualClients ArrayList of VirtualClient, contains all virtualClients for the current match
+     * @param playersNicknames ArrayList of String, contains all nicknames selected by the players
+     */
     public void addAllPlayers(ArrayList<VirtualClient> virtualClients, ArrayList<String> playersNicknames) {
         this.players = new ArrayList<>(virtualClients);
         for (int i = 0; i < virtualClients.size(); i++) {
@@ -76,6 +95,9 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * This private method instantiates gameTable and controller, adds the players to gameTable and start the match.
+     */
     private void start() {
 
         // Initialized model
@@ -93,6 +115,9 @@ public class Game implements Runnable {
         gameTable.startGame();
     }
 
+    /**
+     * This method sends a RequestInitialSelection to all players and waits for their response one by one.
+     */
     private void solicitInitialSelections() {
 
         for (VirtualClient vClient : players) {
@@ -120,8 +145,33 @@ public class Game implements Runnable {
 
     }
 
-    // Public methods to be invoked when a ClientRequest is received
+    // Public getter methods to be invoked when a ClientRequest is received
 
+    public HashMap<Resource, Integer> getDepositClone(VirtualClient _vClient) {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        PlayerBoard board = gameTable.getPlayerByNickname(nickname);
+
+        return board.getDepositInstance().getContent();
+    }
+
+    public HashMap<Resource, Integer> getStrongboxClone(VirtualClient _vClient) {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        PlayerBoard board = gameTable.getPlayerByNickname(nickname);
+
+        return board.getStrongboxInstance().getContent();
+    }
+
+
+    // Public action methods to be invoked when a ClientRequest is received
+
+    /**
+     * This method is called by a RequestEndTurn's read() method.
+     * It calls Controller's advanceTurn() method and responds to the ClientRequest accordingly.
+     * Finally, it notifies all players who the new active player has become.
+     * @param _vClient The VirtualClient associated with the player that requested to end his turn.
+     */
     public void advanceTurn(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
@@ -139,6 +189,18 @@ public class Game implements Runnable {
                         controller.getTurnController().getActivePlayer().getNickname()));
     }
 
+    /**
+     * This method is called by a RequestBuyDevelopmentCard's read() method.
+     * @param _vClient The VirtualClient associated with the player that sent the request.
+     * @param _rowIndex The row index of the desired CardDevelopment within the market matrix.
+     * @param _colIndex The column index of the desired CardDevelopment within the market matrix.
+     * @param _placementIndex The placement index of the selected CardDevelopmentSlot, in which the newly bought card is to placed.
+     * @throws InvalidCardDevelopmentPlacementException : thrown if the selected placement index would not consent for a legal placement.
+     * @throws InvalidSlotIndexException : thrown if an invalid index was selected as the placement index.
+     * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to buy the desired card.
+     * @throws FullSlotException : thrown if the slot at _placementIndex already holds 3 cards.
+     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
+     */
     public void buyAndPlaceDevCard(
             VirtualClient _vClient,
             int _rowIndex,
@@ -156,18 +218,43 @@ public class Game implements Runnable {
 
     }
 
+    /**
+     * This method is called by a RequestMarketUse's read() method.
+     * @param _vClient The VirtualClient associated with the player that sent the request.
+     * @param _index The index of the selected line from which to retrieve the Marbles.
+     * @param _selection Field must be either "row" or "column".
+     * @return null if no resources must be discarded after obtaining them from the market, an instance of HashMap<Resource,Integer>
+     *         containing the newly obtained resources if one or more resources must be discarded.
+     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
+     * @throws IllegalArgumentException : thrown if an invalid _index was selected by the player.
+     */
     public HashMap<Resource, Integer> useMarket(VirtualClient _vClient, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException {
 
         String nickname = clientNicknameMap.get(_vClient);
         return controller.useMarket(nickname, _index, _selection);
     }
 
+    /**
+     * This method is called by a ResponseDiscardResourceSelection's read() method.
+     * @param _vClient The VirtualClient associated with the player that sent the request.
+     * @param _discardSelection An instance of HashMap containing the amounts to be discarded for each Resource
+     * @return null if _discardSelection allowed for the remaining resources to be added to the player's deposit, an instance of HashMap<Resource,Integer>
+     *         containing the previously obtained resources if the selection did not allow for the remaining resources to be added to the deposit.
+     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
+     */
     public HashMap<Resource, Integer> discardResources(VirtualClient _vClient, HashMap<Resource, Integer> _discardSelection) throws NotActivePlayerException {
 
         String nickname = clientNicknameMap.get(_vClient);
         return controller.discardResources(nickname, _discardSelection);
     }
 
+    /**
+     * This method is called by a RequestActivateCardLeader's read() method.
+     * @param _vClient The VirtualClient associated with the player that sent the request.
+     * @param _cardToBeActivated The CardLeader to be activated.
+     * @return true if CardLeader was successfully activated, false if it could not be activated.
+     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
+     */
     public boolean activateLeaderCard(VirtualClient _vClient, CardLeader _cardToBeActivated) throws NotActivePlayerException {
 
         //TODO : Questo metodo va modificato perche` non funzionera` se riceve come parametro la carta da attivare!
@@ -177,42 +264,99 @@ public class Game implements Runnable {
 
     }
 
+    /**
+     * This method is called by a RequestActivateProduction's read() method.
+     * @param _vClient The VirtualClient associated with the player that sent the request.
+     * @param _selection An instance of ProductionSelection.
+     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
+     * @throws InvalidSlotIndexException : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
+     * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all of the selected production powers.
+     */
     public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException {
 
         String nickname = clientNicknameMap.get(_vClient);
         controller.activateProductionPowers(nickname, _selection);
     }
 
-    // Overloaded send method
+    /* Overloaded send method */
+
+    /**
+     * Overloaded send() method. This method is used to send a ServerMessage to a VirtualClient.
+     * @param virtualClient Target VirtualClient.
+     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     */
     public void send(VirtualClient virtualClient, ServerMessage serverMessage) {
         virtualClient.send(serverMessage);
     }
 
+    /**
+     * Overloaded send() method. This method is used to send a ServerMessage to a VirtualClient.
+     * @param nickname The nickname bound to the target VirtualClient.
+     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     */
     public void send(String nickname, ServerMessage serverMessage) {
         nicknameClientMap.get(nickname).send(serverMessage);
     }
 
+    /**
+     * Overloaded send() method. This method is used to send a ServerMessage to a VirtualClient.
+     * @param playerID The ID associated with the target VirtualClient.
+     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     */
     public void send(Integer playerID, ServerMessage serverMessage) {
         idPlayerClientMap.get(playerID).send(serverMessage);
     }
 
-    // Overloaded sendAndWait method
+    /* Overloaded sendAndWait method */
+
+    /**
+     * Overloaded sendAndWait() method. This method is used to send a ServerMessage to a VirtualClient and block
+     * the thread until the Client has sent his response.
+     * @param virtualClient Target VirtualClient.
+     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
+     *                         If timeoutInSeconds == -1, the thread will wait forever.
+     * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
+     */
     public void sendAndWait(VirtualClient virtualClient, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
         virtualClient.sendAndWait(serverMessage, timeoutInSeconds);
     }
 
+    /**
+     * Overloaded sendAndWait() method. This method is used to send a ServerMessage to a VirtualClient and block
+     * the thread until the Client has sent his response.
+     * @param nickname The nickname bound to the target VirtualClient.
+     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
+     *                         If timeoutInSeconds == -1, the thread will wait forever.
+     * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
+     */
     public void sendAndWait(String nickname, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
         nicknameClientMap.get(nickname).sendAndWait(serverMessage, timeoutInSeconds);
     }
 
+    /**
+     * Overloaded sendAndWait() method. This method is used to send a ServerMessage to a VirtualClient and block
+     * the thread until the Client has sent his response.
+     * @param playerID The ID associated with the target VirtualClient.
+     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
+     *                         If timeoutInSeconds == -1, the thread will wait forever.
+     * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
+     */
     public void sendAndWait(Integer playerID, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
         idPlayerClientMap.get(playerID).sendAndWait(serverMessage, timeoutInSeconds);
     }
 
+    /**
+     * Method used to send an instance of ServerMessage in broadcast to all players.
+     * @param serverMessage Instance of ServerMessage to be sent to all players.
+     */
     public void sendAll(ServerMessage serverMessage) {
         for (VirtualClient player :
                 players) {
             player.send(serverMessage);
         }
     }
+
 }

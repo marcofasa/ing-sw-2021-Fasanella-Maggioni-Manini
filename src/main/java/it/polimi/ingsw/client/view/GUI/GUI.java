@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.GUI;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
@@ -10,6 +11,12 @@ import java.util.HashMap;
 public class GUI implements ViewInterface {
 
     private Client client;
+
+    @Override
+    public LightModel getLightModel() {
+        //Momentary solution
+        return null;
+    }
 
     @Override
     public void displayWelcome() {

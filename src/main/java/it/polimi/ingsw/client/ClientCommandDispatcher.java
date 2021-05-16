@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.client.*;
+import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSelection;
+import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
+import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
@@ -87,5 +89,14 @@ public class ClientCommandDispatcher {
     }
 
     public void unexpectedMove() {
+        System.out.println("ClientCommandDispatcher.unexpectedMove : METHOD HOLDS ONLY THIS PRINT, IT IS NOT IMPLEMENTED");
+    }
+
+    public void setDeposit(HashMap<Resource, Integer> depositClone) {
+        client.getView().getLightModel().setDeposit(depositClone);
+    }
+
+    public void setStrongbox(HashMap<Resource, Integer> strongboxClone) {
+        client.getView().getLightModel().setStrongbox(strongboxClone);
     }
 }

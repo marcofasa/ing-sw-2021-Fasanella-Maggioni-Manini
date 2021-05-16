@@ -46,7 +46,7 @@ public class ParsingCommand {
      * @return
      */
     private boolean readCommand(){
-        String command =utils.readString();
+        String command = utils.readString();
         switch (command){
             case "help":
                 utils.printHelp();

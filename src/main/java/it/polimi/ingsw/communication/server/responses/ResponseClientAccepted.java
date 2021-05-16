@@ -1,8 +1,9 @@
-package it.polimi.ingsw.communication.server;
+package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
+import it.polimi.ingsw.communication.server.ServerResponse;
 
-public class ResponseClientAccepted extends ServerResponse{
+public class ResponseClientAccepted extends ServerResponse {
     public ResponseClientAccepted() {
         super(null, null);
     }
