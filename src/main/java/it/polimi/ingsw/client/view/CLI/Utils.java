@@ -9,11 +9,14 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Utils {
+
     private final PrintWriter out;
     private final Scanner in;
     private boolean coloredCLI=false;
 
     //ANSI escape codes for Colors
+
+    //Char colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GRAY = "\u001B[48;5;240m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -171,7 +174,7 @@ public class Utils {
     }
 
     /**
-     *
+     * Reads if player wants to choose a row or a column
      * @return 1 if row / 0 if column
      */
     public int chooseRowOrColumn() {
@@ -199,6 +202,12 @@ public class Utils {
     }
 
 
+    /**
+     * Prints FaithTrail with list of other players position
+     * @param playersPosition
+     * @param nickname
+     * @param tileStatuses
+     */
     public void printFaithTrail(HashMap<String, Integer> playersPosition, String nickname, ArrayList<FaithTileStatus> tileStatuses){
         if(coloredCLI) printFaithTrailASCII(tileStatuses);
         out.println("You are at position "+playersPosition.get(nickname));
@@ -210,6 +219,10 @@ public class Utils {
     }
 
 
+    /**
+     * Prints Faith Trail in ASCII Art
+     * @param tileStatuses
+     */
     public void printFaithTrailASCII(ArrayList<FaithTileStatus> tileStatuses){
         int col=18;
         int i =0;
@@ -285,6 +298,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Prints the number of the corresponding cell in printFaithTrailASCII()
+     * @param row from 0 to 2
+     * @param i
+     */
     private void printFaithTrailCellNumber(int row, int i) {
         int pos;
         if(row==0){
@@ -353,6 +371,10 @@ public class Utils {
         return cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1);
     }
 
+    /**
+     * Prints a given Card Leader Deck
+     * @param cardLeaders
+     */
     public void printCardLeaderDeck(ArrayList<CardLeader> cardLeaders){
         int index=1;
         for (int i=0; i<cardLeaders.size();i++){
@@ -363,6 +385,10 @@ public class Utils {
         }
     }
 
+    /**
+     * Prints a Card Leader with production requirements and victory points
+     * @param cardLeader
+     */
     private void printCardLeader(CardLeader cardLeader) {
         int victoryPoints = cardLeader.getVictoryPointsValue();
         CardLeaderRequirements cardLeaderRequirements= cardLeader.getRequirements();
@@ -392,6 +418,10 @@ public class Utils {
         out.println();
     }
 
+    /**
+     * Prints descriptions if CardLeaderRequirementsType==NumberOfDevelopmentCardLevel
+     * @param numberOfDevelopmentCardLevel
+     */
     private void printCardLeaderDevelopmentLevel(HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel) {
         for(CardDevelopmentType cardDevelopmentType: numberOfDevelopmentCardLevel.keySet()){
             String key=cardDevelopmentType.toString();
@@ -400,6 +430,10 @@ public class Utils {
         }
     }
 
+    /**
+     * Prints descriptions if CardLeaderRequirementsType==NumberOfDevelopmentCardTypes
+     * @param numberOfDevelopmentCardTypes
+     */
     private void printCardLeaderDevelopmentNumber(HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes) {
         for(CardDevelopmentType cardDevelopmentType: numberOfDevelopmentCardTypes.keySet()){
             String key=cardDevelopmentType.toString();
@@ -465,9 +499,9 @@ public class Utils {
 
     /**
      * Read a number between
-     * @param min
+     * @param min minimum
      * and
-     * @param max
+     * @param max maximum
      * @return the number casted as String
      */
     public String readNumberWithBoundsToString(int min, int max) {
@@ -661,6 +695,12 @@ public class Utils {
         out.println("Welcome to Masters of Renaissance!");
     }
 
+    /**
+     * Waiting Message
+     * @param timeoutInSeconds timeout
+     * @throws InterruptedException
+     * @throws IOException
+     */
     public void printWaitingMessage(int timeoutInSeconds) throws InterruptedException, IOException {
         String anim="|/-\\";
         if (coloredCLI){
@@ -680,14 +720,59 @@ public class Utils {
 
     }
 
+    /**
+     * General Error
+     */
     public void printErrorMessage() {
         out.println("There has been an error in the game. Stack Trace:");
     }
 
+    /**
+     * Prints a given Card Development Deck
+     * @param cardDevelopment
+     */
     public void printCardDevelopmentDeck(ArrayList<CardDevelopment> cardDevelopment) {
         for (int i=0; i<cardDevelopment.size();i++){
             printCardDevelopment(cardDevelopment.get(i));
         }
     }
+
+    public void clearScreen(){
+        try
+        {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows"))
+            {
+                Runtime.getRuntime().exec("cls");
+            }
+            else
+            {
+                Runtime.getRuntime().exec("clear");
+            }
+        }
+        catch (final Exception e)
+        {
+            e.printStackTrace();
+        }
+}
+
+public void setColoredCLI(){
+    try
+    {
+        final String os = System.getProperty("os.name");
+        if (os.contains("Windows"))
+        {
+            coloredCLI=false;
+        }
+        else
+        {
+           coloredCLI=true;
+        }
+    }
+    catch (final Exception e)
+    {
+        e.printStackTrace();
+    }
+}
 }
 

@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class CLI implements ViewInterface {
 
-    //
+    // Attributes
     private final Client client;
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
@@ -33,8 +33,9 @@ public class CLI implements ViewInterface {
         this.client=client;
         this.lightModel =new LightModel(client);
         this.utils=new Utils(out,in);
-        this.parsingCommand=new ParsingCommand(utils,this,out);
+        this.parsingCommand=new ParsingCommand(utils,this,out,in);
     }
+
 
     public ParsingCommand getParsingCommand() {
         return parsingCommand;
@@ -113,6 +114,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayTurn(String currentPlayer) {
+        //utils.clearScreen();
         if (currentPlayer.equals(lightModel.getNickname())){
             parsingCommand.Menu();
         }
@@ -121,7 +123,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayWaitingOpponent(String currentPlayer) {
-        out.println("Wait for your move, is "+currentPlayer+" now playing...");
+        out.println("Wait for your move, "+currentPlayer+" is now playing...");
     }
 
     @Override
@@ -144,11 +146,10 @@ public class CLI implements ViewInterface {
 
     @Override
     public String askNickName() {
+        //utils.setColoredCLI();
 
         String input;
-
         out.println("NickName:");
-
         input = utils.readString();
         lightModel.setNickname(input);
 
@@ -306,9 +307,8 @@ public class CLI implements ViewInterface {
 
     }
 
-    /**
-     * Ask for card leader Activation
-     */
+
+
     @Override
     public void askCardLeaderActivation() {
         out.println("Choose which card leader to activate:");
@@ -321,11 +321,7 @@ public class CLI implements ViewInterface {
     }
 
 
-    /**
-     * Ask for initial resources to select
-     * @param playerNumber in order of game
-     * @return
-     */
+
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         ArrayList<Resource> resources =new ArrayList<>();

@@ -1,10 +1,14 @@
 package it.polimi.ingsw.client.view.CLI;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class ParsingCommand {
+
+
     private Utils utils;
     private CLI cli;
     private final PrintWriter out ;
+    private final Scanner in;
     private boolean haveMove=true;
 
     /**
@@ -12,11 +16,13 @@ public class ParsingCommand {
      * @param utils
      * @param cli
      * @param out
+     * @param in
      */
-    public ParsingCommand(Utils utils, CLI cli, PrintWriter out){
+    public ParsingCommand(Utils utils, CLI cli, PrintWriter out, Scanner in){
         this.utils=utils;
         this.cli=cli;
         this.out=out;
+        this.in=in;
     }
 
     /**
@@ -25,8 +31,11 @@ public class ParsingCommand {
     public void Menu(){
         haveMove=true;
         printMenu();
+        in.nextLine();
         while(readCommand());
     }
+
+
 
 
     private void printMenu() {

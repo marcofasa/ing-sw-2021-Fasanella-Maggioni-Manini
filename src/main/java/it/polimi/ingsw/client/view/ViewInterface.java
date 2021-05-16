@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client.view;
-
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ViewInterface {
+
     //DISPLAY
 
     /*
@@ -86,8 +85,19 @@ public interface ViewInterface {
 
     void displayWaitingOpponent(String currentPlayer);
 
+    /*
+
+     */
     void displayDeposit();
+
+    /*
+    Display Card
+     */
     void displayCardLeader();
+
+    /*
+    Display Card Development Deck
+     */
     void displayCardDevelopment();
 
     //ASK
