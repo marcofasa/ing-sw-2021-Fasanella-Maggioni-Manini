@@ -3,14 +3,9 @@ package it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Marble;
 import it.polimi.ingsw.model.Resource;
-import javafx.application.Application;
-import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static javafx.application.Application.launch;
 
 public class GUI implements ViewInterface {
 
