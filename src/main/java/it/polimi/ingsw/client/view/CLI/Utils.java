@@ -213,8 +213,7 @@ public class Utils {
         out.println("You are at position "+playersPosition.get(nickname));
         out.println("Other players:");
         for (String string: playersPosition.keySet()){
-            String name= string;
-            if(string!=nickname) out.println(string+" is at position "+playersPosition.get(string));
+            if(!string.equals(nickname)) out.println(string+" is at position "+playersPosition.get(string));
         }
     }
 
@@ -619,11 +618,11 @@ public class Utils {
         String s;
         out.println("y/n ?");
         s=readString();
-        while (s!="n" || s!="y"){
+        while (!s.equals("n") || !s.equals("y")){
             out.println("Invalid input, type y/n :");
             s=readString();
         }
-        if (s=="y") return true;
+        if (s.equals("y")) return true;
         else return false;
     }
 
