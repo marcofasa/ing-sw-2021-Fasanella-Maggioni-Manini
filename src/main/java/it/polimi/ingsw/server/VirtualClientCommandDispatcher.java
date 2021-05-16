@@ -1,13 +1,9 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.communication.server.ResponseNicknameUnavailable;
-import it.polimi.ingsw.communication.server.ResponseSuccess;
-import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.controller.Game;
-import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Marble;
-import it.polimi.ingsw.model.ProductionSelection;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
+import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,23 +30,67 @@ public class VirtualClientCommandDispatcher {
     }
 
     public void requestActivateCardLeader(CardLeader cardLeader, int timeoutID) {
-        System.out.println("Card Leader activation request arrived");
-        sendWithTimeoutID(new ResponseSuccess(), timeoutID);
+
+        boolean success;
+
+        try {
+            success = virtualClient.getGame().activateLeaderCard(virtualClient, cardLeader);
+
+            if (success) {
+                sendWithTimeoutID(new ResponseSuccess(), timeoutID);
+            } else {
+                sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), timeoutID);
+            }
+
+        } catch (NotActivePlayerException ex) {
+
+            sendWithTimeoutID(new ResponseNotActivePlayerError(), timeoutID);
+        }
+
     }
 
     public void initialSelection(ArrayList<CardLeader> cardLeader, Resource resource1, Resource resource2) {
         virtualClient.getGame().distributeInitialSelection(virtualClient, cardLeader, resource1, resource2);
     }
 
-    public void requestActivateProduction(ProductionSelection productionSelection) {
-        //<- tornare indietro una server response chiamata controller
-        //SEND al player server response
+    public void requestActivateProduction(ProductionSelection productionSelection, int _timeoutID) {
+
+        try {
+            virtualClient.getGame().activateProductionPowers(virtualClient, productionSelection);
+            sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+
+        } catch (NotActivePlayerException e) {
+            sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
+
+        } catch (InvalidSlotIndexException e) {
+            sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
+
+        } catch (NotEnoughResourcesException e) {
+            sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+        }
+
     }
 
-    public void requestBuyDevelopmentCard(int rowIndex, int columnIndex) {
+    public void requestBuyAndPlaceDevelopmentCard(int _rowIndex, int _columnIndex, int _placementIndex, int _timeoutID) {
 
-        //boolean success = Game.buyCardDevelopment(this, rowIndex, columnIndex)
 
+        try {
+
+            virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, _placementIndex);
+            sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+
+        } catch (NotActivePlayerException ex) {
+
+            sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
+
+        } catch (NotEnoughResourcesException ex) {
+
+            sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+
+        } catch (InvalidCardDevelopmentPlacementException | InvalidSlotIndexException | FullSlotException ex) {
+
+            sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
+        }
     }
 
     public void requestEndTurn() {
@@ -62,11 +102,51 @@ public class VirtualClientCommandDispatcher {
         virtualClient.send(responseSuccess);
     }
 
-    public void discardResourceSelection(HashMap<Resource, Integer> discardSelection) {
+    public void discardResourceSelection(HashMap<Resource, Integer> discardSelection, int _timeoutID) {
 
-        //boolean success = Game.discardResource
+        HashMap<Resource, Integer> residualResources = new HashMap<>();
+
+        try {
+            residualResources = virtualClient.getGame().discardResources(virtualClient, discardSelection);
+
+            if (residualResources == null) {
+
+                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+
+            } else {
+                RequestDiscardResourceSelection request = new RequestDiscardResourceSelection(residualResources);
+
+                sendWithTimeoutID(request, _timeoutID);
+            }
+
+        } catch (NotActivePlayerException e) {
+            sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
+        }
     }
 
     public void requestDiscardCardLeader(CardLeader cardLeader) {
+        //TODO
+    }
+
+    public void useMarket(int _index, String _selection, int _timeoutID) {
+
+        HashMap<Resource, Integer> residualResources = new HashMap<>();
+
+        try {
+            residualResources = virtualClient.getGame().useMarket(virtualClient, _index, _selection);
+
+            if (residualResources == null) {
+                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+            } else {
+                sendWithTimeoutID(new RequestDiscardResourceSelection(residualResources), _timeoutID);
+            }
+
+        } catch (NotActivePlayerException ex) {
+            sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
+
+        } catch (IllegalArgumentException ex) {
+            sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
+
+        }
     }
 }

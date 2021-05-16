@@ -45,7 +45,10 @@ public class ClientCommandDispatcher {
 
     public void requestDiscardResourceSelection(HashMap<Resource, Integer> resources, int timeoutID) {
         HashMap<Resource,Integer> resources1= client.getView().askForResourceToDiscard(resources);
-        sendWithTimeoutID(new ResponseDiscardResourceSelection(resources1), timeoutID);
+
+        ResponseDiscardResourceSelection response = new ResponseDiscardResourceSelection(resources1);
+
+        sendWithTimeoutID(response, timeoutID);
     }
 
     public void notActivePlayerError() {
@@ -86,5 +89,3 @@ public class ClientCommandDispatcher {
     public void unexpectedMove() {
     }
 }
-
-//

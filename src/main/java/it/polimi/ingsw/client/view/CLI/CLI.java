@@ -221,7 +221,7 @@ public class CLI implements ViewInterface {
 
          */
         try{
-            client.sendAndWait( new RequestMarketUse(message,key),-1);
+            client.sendAndWait(new RequestMarketUse(message,key),-1);
         }
         catch (RequestTimeoutException e){
             displayTimeOut();
@@ -244,8 +244,14 @@ public class CLI implements ViewInterface {
         }
         Integer rowIndex= Integer.parseInt(String.valueOf(array[0]));
         Integer columnIndex=Integer.parseInt(String.valueOf(array[1]));
+
+        out.println("In which slot would you like to place your new card? Possible selection are {0 ,1 ,2}");
+        s = utils.readNumberWithBoundsToString(0, 2);
+
+        Integer placementIndex = Integer.parseInt(s);
+
         try {
-            client.sendAndWait(new RequestBuyDevelopmentCard(rowIndex,columnIndex),-1);
+            client.sendAndWait(new RequestBuyDevelopmentCard(rowIndex,columnIndex,placementIndex),-1);
         } catch (RequestTimeoutException e) {
             displayTimeOut();
             e.printStackTrace();
@@ -303,8 +309,6 @@ public class CLI implements ViewInterface {
             displayTimeOut();
             e.printStackTrace();
         }
-
-
     }
 
 

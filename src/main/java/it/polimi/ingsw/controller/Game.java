@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
 
+import java.awt.color.ICC_ColorSpace;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -137,6 +138,50 @@ public class Game implements Runnable {
         sendAll(
                 new RequestSignalActivePlayer(
                         controller.getTurnController().getActivePlayer().getNickname()));
+    }
+
+    public void buyAndPlaceDevCard(
+            VirtualClient _vClient,
+            int _rowIndex,
+            int _colIndex,
+            int _placementIndex)
+            throws NotActivePlayerException,
+            InvalidCardDevelopmentPlacementException,
+            InvalidSlotIndexException,
+            NotEnoughResourcesException,
+            FullSlotException {
+
+        String nickname = clientNicknameMap.get(_vClient);
+
+        controller.buyAndPlaceDevCard(nickname, _rowIndex, _colIndex, _placementIndex);
+
+    }
+
+    public HashMap<Resource, Integer> useMarket(VirtualClient _vClient, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        return controller.useMarket(nickname, _index, _selection);
+    }
+
+    public HashMap<Resource, Integer> discardResources(VirtualClient _vClient, HashMap<Resource, Integer> _discardSelection) throws NotActivePlayerException {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        return controller.discardResources(nickname, _discardSelection);
+    }
+
+    public boolean activateLeaderCard(VirtualClient _vClient, CardLeader _cardToBeActivated) throws NotActivePlayerException {
+
+        //TODO : Questo metodo va modificato perche` non funzionera` se riceve come parametro la carta da attivare!
+
+        String nickname = clientNicknameMap.get(_vClient);
+        return controller.activateLeaderCard(nickname, _cardToBeActivated);
+
+    }
+
+    public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        controller.activateProductionPowers(nickname, _selection);
     }
 
     // Overloaded send method

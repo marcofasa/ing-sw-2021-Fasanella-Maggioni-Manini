@@ -18,6 +18,6 @@ public class ResponseDiscardResourceSelection extends ClientResponse {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getCommandDispatcher().discardResourceSelection(discardSelection);
+        virtualClient.getCommandDispatcher().discardResourceSelection(discardSelection, getTimeoutID());
     }
 }

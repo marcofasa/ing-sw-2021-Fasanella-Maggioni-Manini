@@ -13,6 +13,6 @@ public class RequestActivateProduction extends ClientRequest {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getCommandDispatcher().requestActivateProduction(productionSelection);
+        virtualClient.getCommandDispatcher().requestActivateProduction(productionSelection, super.getTimeoutID());
     }
 }

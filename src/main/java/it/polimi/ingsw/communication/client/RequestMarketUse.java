@@ -1,5 +1,6 @@
 package it.polimi.ingsw.communication.client;
 
+import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.server.VirtualClient;
 
 public class RequestMarketUse extends ClientRequest {
@@ -15,6 +16,6 @@ public class RequestMarketUse extends ClientRequest {
     @Override
     public void read(VirtualClient virtualClient) {
         //Controller.useMarket(virtualClient, getPayload(), getKey());
-
+        virtualClient.getCommandDispatcher().useMarket(Integer.parseInt(getPayload()), getKey(), super.getTimeoutID());
     }
 }

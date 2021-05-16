@@ -202,7 +202,7 @@ public class Controller {
 
     }
 
-    HashMap<Resource, Integer> useMarket(String _nickname, int _index, String _selection) throws NotActivePlayerException {
+    HashMap<Resource, Integer> useMarket(String _nickname, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException {
 
         if (isActivePlayer(_nickname)) {
 
