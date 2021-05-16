@@ -66,8 +66,14 @@ public class TimeoutHandler {
         client.send(clientMessage);
         if(timeoutInSeconds == -1){
             try {
-                semaphore.acquire();
-            } catch (InterruptedException e) {
+                executors.submit(() -> {
+                    try {
+                        semaphore.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).get();
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         } else {

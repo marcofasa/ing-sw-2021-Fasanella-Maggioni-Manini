@@ -12,6 +12,8 @@ import it.polimi.ingsw.communication.server.ServerResponse;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
 
 
@@ -24,8 +26,11 @@ public class Client {
     private Socket clientSocket;
     private ClientCommandDispatcher clientCommandDispatcher;
     private final ViewInterface view;
+    private final ExecutorService executors;
+
 
     public Client(Boolean cli){
+        executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new TimeoutHandler(this);
         if(cli){
@@ -48,7 +53,14 @@ public class Client {
                     inputClass = (ServerMessage) inputStream.readObject();
                     if(inputClass instanceof ServerResponse)
                         timeoutHandler.tryDisengage(inputClass.getTimeoutID());
-                    inputClass.read(clientCommandDispatcher);
+                    ServerMessage finalInputClass = inputClass;
+                    executors.submit(() -> {
+                        try {
+                            finalInputClass.read(clientCommandDispatcher);
+                        } catch (RequestTimeoutException e) {
+                            e.printStackTrace();
+                        }
+                    });
                 } catch (RequestTimeoutException e) {
                     e.printStackTrace();
                 } catch (IOException | ClassNotFoundException ioException) {
