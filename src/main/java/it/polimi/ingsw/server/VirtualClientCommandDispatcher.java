@@ -165,4 +165,13 @@ public class VirtualClientCommandDispatcher {
 
         sendWithTimeoutID(new ResponseStorageInstance(false, strongboxClone), _timeoutID);
     }
+
+    public void requestMarketInstance(int _timeoutID) {
+
+        ArrayList<ArrayList<MarbleType>> marketClone;
+        marketClone = virtualClient.getGame().getMarketClone(virtualClient);
+
+        sendWithTimeoutID(new ResponseMarketInstance(marketClone), _timeoutID);
+
+    }
 }

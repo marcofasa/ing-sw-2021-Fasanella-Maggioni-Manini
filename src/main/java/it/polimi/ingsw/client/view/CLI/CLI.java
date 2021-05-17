@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
@@ -24,6 +25,7 @@ public class CLI implements ViewInterface {
     private final LightModel lightModel;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
+    private int startingGame;
 
     /**
      * Constructor of CLI
@@ -34,6 +36,8 @@ public class CLI implements ViewInterface {
         this.lightModel =new LightModel(client);
         this.utils=new Utils(out,in);
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
+        startingGame=0;
+        //displayWelcome();
     }
 
     public LightModel getLightModel() {
@@ -69,15 +73,28 @@ public class CLI implements ViewInterface {
         out.println("Timeout error! Your connection to server may have been lost");
     }
 
+
     @Override
     public void displayMarket() {
-        utils.printMarket(lightModel.getMarket());
+
+        ArrayList<ArrayList<MarbleType>> marketClone = lightModel.getMarket();
+
+        utils.printMarket(marketClone);
     }
 
     @Override
     public void displayStrongBox() {
         out.println("---StrongBox---");
-        utils.printListResource(lightModel.getStrongbox());
+        HashMap<Resource, Integer> strongboxClone = lightModel.getStrongbox();
+
+        //TODO Fix with semaphore the second call
+
+        // If first call ever fails for some reason, grab a strongbox clone again
+        if (strongboxClone.size() == 0) {
+            strongboxClone = lightModel.getStrongbox();
+        }
+
+        utils.printListResource(strongboxClone);
     }
 
     @Override
@@ -115,8 +132,11 @@ public class CLI implements ViewInterface {
         out.println("Ops, requirements for this Card Leader are not met! ");
     }
 
+
     @Override
     public void displayTurn(String currentPlayer) {
+
+
         //utils.clearScreen();
         if (currentPlayer.equals(lightModel.getNickname())){
             parsingCommand.Menu();
@@ -132,7 +152,15 @@ public class CLI implements ViewInterface {
     @Override
     public void displayDeposit() {
         out.println("---Deposit---");
-        utils.printListResource(lightModel.getDeposit());
+        HashMap<Resource, Integer> cloneDeposit = lightModel.getDeposit();
+
+        // If first call ever fails, grab deposit again
+        if (cloneDeposit.size() == 0) {
+            cloneDeposit = lightModel.getDeposit();
+        }
+
+        utils.printListResource(cloneDeposit);
+
     }
 
     @Override
@@ -147,10 +175,14 @@ public class CLI implements ViewInterface {
         utils.printCardDevelopmentDeck(lightModel.getCardDevelopment());
     }
 
+
     @Override
     public String askNickName() {
         //utils.setColoredCLI();
+        //Welcome Message
+        displayWelcome();
 
+        //Reads the nickname
         String input;
         out.println("NickName:");
         input = utils.readString();
@@ -201,9 +233,17 @@ public class CLI implements ViewInterface {
         //client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader()),-1));
     }
 
+    @Override
+    public void displayCardDevelopmentMarket() {
+        utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+
+    }
+
+
 
     @Override
     public void askMarketChoice() {
+        displayMarket();
         int rowcolumn;
         String key;
         String message;
@@ -237,6 +277,8 @@ public class CLI implements ViewInterface {
     public void askDevelopmentCardChoice() {
         String s;
         utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+
+
         out.println("Type the number in the round brackets of the corresponding card that you want to buy");
         s = utils.readString();
         char[] array = s.toCharArray();
@@ -376,4 +418,7 @@ public class CLI implements ViewInterface {
     }
 
 
+    public void colorize(boolean b) {
+        utils.setColors(b);
+    }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.client.requests.RequestDepositInstance;
+import it.polimi.ingsw.communication.client.requests.RequestMarketInstance;
 import it.polimi.ingsw.communication.client.requests.RequestStrongboxInstance;
 import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
@@ -87,8 +88,8 @@ public class LightModel {
     }
 
     public ArrayList<ArrayList<MarbleType>> getMarket() {
-        if (market==null) market=new ArrayList<ArrayList<MarbleType>>();
-        /*
+        if (market==null) market = new ArrayList<ArrayList<MarbleType>>();
+
         try {
             client.sendAndWait(new RequestMarketInstance(),-1);
         }
@@ -96,7 +97,6 @@ public class LightModel {
             e.printStackTrace();
         }
 
-         */
         return market;
     }
 

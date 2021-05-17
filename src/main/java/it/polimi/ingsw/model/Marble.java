@@ -18,4 +18,6 @@ public abstract class Marble implements Serializable {
      */
     @Override
     public abstract Marble clone();
+
+    public abstract MarbleType getType();
 }

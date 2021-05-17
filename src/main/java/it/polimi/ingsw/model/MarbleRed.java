@@ -32,4 +32,9 @@ public class MarbleRed extends Marble {
     public void activate(PlayerBoard playerBoard) {
         playerBoard.moveFaith(1);
     }
+
+    @Override
+    public MarbleType getType() {
+        return MarbleType.MarbleRed;
+    }
 }

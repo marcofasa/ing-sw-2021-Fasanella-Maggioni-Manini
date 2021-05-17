@@ -6,6 +6,7 @@ import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSel
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
 import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
 import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.Resource;
 
 import java.util.ArrayList;
@@ -99,5 +100,9 @@ public class ClientCommandDispatcher {
 
     public void setStrongbox(HashMap<Resource, Integer> strongboxClone) {
         client.getView().getLightModel().setStrongbox(strongboxClone);
+    }
+
+    public void setMarketInstance(ArrayList<ArrayList<MarbleType>> marketClone) {
+        client.getView().getLightModel().setMarket(marketClone);
     }
 }

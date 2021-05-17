@@ -163,6 +163,27 @@ public class Game implements Runnable {
         return board.getStrongboxInstance().getContent();
     }
 
+    public ArrayList<ArrayList<MarbleType>> getMarketClone(VirtualClient _vClient) {
+
+        //String nickname = clientNicknameMap.get(_vClient);
+
+        ArrayList<ArrayList<MarbleType>> marketClone = new ArrayList<>();
+        ArrayList<ArrayList<Marble>> marbleMatrix = gameTable.getMarketInstance().getMarket();
+
+        for (int i = 0; i < marbleMatrix.size(); i++) {
+
+            marketClone.add(new ArrayList<>());
+
+            for (int j = 0; j < marbleMatrix.get(0).size(); j++) {
+
+                MarbleType type = marbleMatrix.get(i).get(j).getType();
+                marketClone.get(i).add(type);
+            }
+        }
+        return marketClone;
+    }
+
+
 
     // Public action methods to be invoked when a ClientRequest is received
 
