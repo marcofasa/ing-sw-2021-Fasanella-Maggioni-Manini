@@ -24,4 +24,9 @@ public class MarbleWhite extends Marble {
     public Marble clone(){
         return new MarbleWhite();
     }
+
+    @Override
+    public MarbleType getType() {
+        return MarbleType.MarbleWhite;
+    }
 }

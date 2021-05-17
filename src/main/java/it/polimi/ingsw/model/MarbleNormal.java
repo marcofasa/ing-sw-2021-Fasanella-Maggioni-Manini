@@ -15,6 +15,25 @@ public class MarbleNormal extends Marble {
         this.resource = resource;
     }
 
+    @Override
+    public MarbleType getType() {
+
+        switch (resource) {
+            case Coins -> {
+                return MarbleType.MarbleYellow;
+            }
+            case Stones -> {
+                return MarbleType.MarbleGrey;
+            }
+            case Shields -> {
+                return MarbleType.MarbleBlue;
+            }
+            default -> {
+                return MarbleType.MarblePurple;
+            }
+        }
+    }
+
     /**
      * cloner of the class
      * @return a deep clone of Marble
