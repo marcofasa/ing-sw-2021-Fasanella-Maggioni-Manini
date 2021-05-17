@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class CardLeader implements Serializable {
 
-    protected PlayerBoard playerBoard;
+    protected String playerName;
 
     protected CardLeaderRequirements requirements;
 
@@ -33,19 +33,19 @@ public abstract class CardLeader implements Serializable {
      * Check if requirements are met
      * @return true if activate() can be called, false otherwise
      */
-    public boolean canActivate() {
+    public boolean canActivate(PlayerBoard playerBoard) {
         return requirements.meetsRequirements(playerBoard);
     }
 
     /**
      * Activate the cards if the requirements are met. activate() should be called only if canActivate() == true
      */
-    public abstract void activate();
+    public abstract void activate(PlayerBoard playerBoard);
 
     /**
      * discard this CardLeader from the player's deck
      */
-    public void discard(){
+    public void discard(PlayerBoard playerBoard){
         playerBoard.moveFaith(1);
         playerBoard.discardCardLeader(this);
     }
@@ -56,13 +56,13 @@ public abstract class CardLeader implements Serializable {
      * @return this
      */
     public CardLeader draw(PlayerBoard playerBoard){
-        if (this.playerBoard != null) {
+        if (this.playerName != null) {
             throw new CardLeaderAlreadyDrawnException();
         }
         if (playerBoard == null) {
             throw new IllegalArgumentException("playerBoard cannot be null");
         }
-        this.playerBoard = playerBoard;
+        this.playerName = playerBoard.getNickname();
         return this;
     }
 
@@ -86,7 +86,7 @@ public abstract class CardLeader implements Serializable {
      * Returns owner of the card, null if this card is still in the deck
      * @return PlayerBoard associated to the card
      */
-    public PlayerBoard getPlayerBoard() {
-        return playerBoard;
+    public String getPlayerName() {
+        return playerName;
     }
 }

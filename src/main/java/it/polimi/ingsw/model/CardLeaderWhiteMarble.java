@@ -18,8 +18,8 @@ public class CardLeaderWhiteMarble extends CardLeader {
      * set playerboard's white marble conversion. activate() should be called only if canActivate() == true
      */
     @Override
-    public void activate() {
-        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+    public void activate(PlayerBoard playerBoard) {
+        if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         playerBoard.setWhiteEffect(resource);
         active = true;
     }
