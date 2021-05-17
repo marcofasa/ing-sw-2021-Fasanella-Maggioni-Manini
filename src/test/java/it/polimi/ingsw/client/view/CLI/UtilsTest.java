@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client.view.CLI;
 
+import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.FaithTileStatus;
 import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.Resource;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +64,7 @@ public class UtilsTest {
         tileStatuses.add(FaithTileStatus.Discarded);
         tileStatuses.add(FaithTileStatus.Not_Reached);
 
-        utils.printFaithTrail(playersPosition,nickname,tileStatuses);
+
     }
 
     @Test
@@ -76,8 +78,8 @@ public class UtilsTest {
     }
 
     @Test
-    public void CardLeaderTest(){
-
+    public void WaitingTest() throws IOException, InterruptedException {
+     utils.printWaitingMessage(10);
     }
 
     @Test

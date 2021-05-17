@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
@@ -20,6 +21,7 @@ public class CLI implements ViewInterface {
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
     private final LightModel lightModel;
+    private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
     private int startingGame;
@@ -31,6 +33,7 @@ public class CLI implements ViewInterface {
     public CLI(Client client){
         this.client=client;
         this.lightModel =new LightModel(client);
+        this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
         startingGame=0;
@@ -39,6 +42,11 @@ public class CLI implements ViewInterface {
 
     public LightModel getLightModel() {
         return lightModel;
+    }
+
+    @Override
+    public LightFaithTrail getLightFaithTrail() {
+        return lightFaithTrail;
     }
 
     public ParsingCommand getParsingCommand() {
@@ -62,12 +70,9 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayPosition() {
-
-        HashMap<String, Integer> playerPositions = lightModel.getPlayersPosition();
         String nickname = lightModel.getNickname();
-        ArrayList<FaithTileStatus> statuses = lightModel.getTileStatuses();
 
-        utils.printFaithTrail(playerPositions, nickname, statuses);
+        utils.printFaithTrail( nickname, lightFaithTrail.getFaithTrail());
     }
 
     @Override
@@ -78,7 +83,6 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayMarket() {
-
         ArrayList<ArrayList<MarbleType>> marketClone = lightModel.getMarket();
 
         utils.printMarket(marketClone);
@@ -231,6 +235,8 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askCardLeaderDiscard() {
+        out.println("Choose a card leader to discard:");
+        //TODO
         //client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader()),-1));
     }
 

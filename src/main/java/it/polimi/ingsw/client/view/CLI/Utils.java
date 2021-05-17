@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.CLI;
 
+import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
@@ -58,12 +59,14 @@ public class Utils {
         for(Resource resource: list.keySet()){
             String key=resource.toString();
             String value= list.get(resource).toString();
+            if(!list.get(resource).equals(0)){
             if (coloredCLI) {
                 out.printf("- x" + value + " resources of " );
                 printResourceColored(resource);
                 out.println();
             }
             else out.println("- x" + value + " resources of " + key);
+            }
         }
     }
 
@@ -77,6 +80,8 @@ public class Utils {
         else if(resource==Resource.Stones) out.printf("Stones");
         else if(resource==Resource.Shields) out.printf(ANSI_BLUE+"Shields"+ANSI_RESET);
     }
+
+
 
     /**
      * Print Marble Market
@@ -204,13 +209,12 @@ public class Utils {
 
     /**
      * Prints FaithTrail with list of other players position
-     * @param playersPosition
      * @param nickname
-     * @param tileStatuses
      */
-    public void printFaithTrail(HashMap<String, Integer> playersPosition, String nickname, ArrayList<FaithTileStatus> tileStatuses){
-        if(coloredCLI) printFaithTrailASCII(tileStatuses);
-        out.println("You are at position "+playersPosition.get(nickname));
+    public void printFaithTrail(String nickname, LightFaithTrail lightFaithTrail){
+        HashMap<String, Integer> playersPosition= lightFaithTrail.getPlayersPosition();
+        if(coloredCLI) printFaithTrailASCII(lightFaithTrail.getTileStatuses());
+        out.println("You are at position "+lightFaithTrail.getPlayersPosition().get(nickname));
         out.println("Other players:");
         for (String string: playersPosition.keySet()){
             if(!string.equals(nickname)) out.println(string+" is at position "+playersPosition.get(string));
@@ -300,24 +304,24 @@ public class Utils {
     /**
      * Prints the number of the corresponding cell in printFaithTrailASCII()
      * @param row from 0 to 2
-     * @param i
+     * @param column from 0 to 18
      */
-    private void printFaithTrailCellNumber(int row, int i) {
+    private void printFaithTrailCellNumber(int row, int column) {
         int pos;
         if(row==0){
-            if(i<8) {
-                pos = i + 2;
+            if(column <8) {
+                pos = column + 2;
             }
-            else pos=i+6;
+            else pos= column +6;
         }
         else if (row==1){
-            if(i==2) pos=i+1;
-            else if(i==7) pos=i+3;
+            if(column ==2) pos= column +1;
+            else if(column ==7) pos= column +3;
             else pos=17;
         }
         else {
-            if(i>6) pos=i+4;
-            else pos=i;
+            if(column >6) pos= column +4;
+            else pos= column;
         }
         if (pos<10) {
             System.out.print("│  "+pos+"  │");
@@ -365,7 +369,6 @@ public class Utils {
         printCardLeaderDeck(cardLeaders);
 
         //Selection
-        out.println("Choose the leader card to discard:");
         out.println("Type the corresponding number in the list");
         return cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1);
     }
@@ -542,10 +545,11 @@ public class Utils {
      * @param j
      */
     private void printCardDevelopmentForMarket(CardDevelopment cardDevelopment, int i, int j) {
-        out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+
+        out.printf("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+
                 " of level " + cardDevelopment.getCardLevel().toString() +
-                " and  "+cardDevelopment.getVictoryPoints()+" victory points "+
-                printCardResourceCost(cardDevelopment.getCardCosts()));
+                ": "+cardDevelopment.getVictoryPoints()+" victory points");
+                printCardResourceCost(cardDevelopment.getCardCosts());
+        out.println();
     }
 
     private void printCardDevelopment(CardDevelopment cardDevelopments){
@@ -554,17 +558,19 @@ public class Utils {
 
     /**
      * Prints cost of a Card
-     * @param cardCosts
-     * @return
+     * @param cardCosts HashMap of resources cost
      */
-    private String printCardResourceCost(HashMap<Resource, Integer> cardCosts) {
-        String s="at a cost of";
+    private void printCardResourceCost(HashMap<Resource, Integer> cardCosts) {
+        out.printf("; at a cost of:");
         for (Resource resource: cardCosts.keySet()){
             String key=resource.toString();
             String value= cardCosts.get(resource).toString();
-            s = s.concat(" x" + value + " resource of " + key);
+            if (coloredCLI) {
+                out.printf(" -x" + value + " resource of ");
+                printResourceColored(resource);
+            }
+            else out.printf(" -x" + value + " resource of " + key);
         }
-        return s;
     }
 
     /**

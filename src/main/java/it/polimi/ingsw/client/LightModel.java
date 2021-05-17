@@ -9,11 +9,9 @@ public class LightModel {
     private String nickname;
     private Client client;
     private int numberOfPlayers;
-    private HashMap<String, Integer> playersPosition;
     private ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket;
     private ArrayList<CardDevelopment> cardDevelopment;
     private ArrayList<CardLeader> cardsLeader;
-    private ArrayList<FaithTileStatus> tileStatuses; //size()==3 with the tree tiles in TilesPack
     private HashMap<Resource, Integer> deposit;
     private HashMap<Resource, Integer> strongbox;
     private ArrayList<ArrayList<MarbleType>> market;
@@ -27,10 +25,6 @@ public class LightModel {
      */
     public LightModel(Client client){
         this.client=client;
-    }
-
-    public int positionPlayer(){
-        return playersPosition.get(nickname);
     }
 
     //Setters (used as Update methods)
@@ -63,16 +57,9 @@ public class LightModel {
         this.strongbox = new HashMap<Resource, Integer>(strongbox);
     }
 
-    public void setPlayersPosition(HashMap<String, Integer> playersPosition) {
-        this.playersPosition = new HashMap<String, Integer>(playersPosition);
-    }
 
     public void setDeposit(HashMap<Resource, Integer> deposit) {
         this.deposit = new HashMap<Resource, Integer>(deposit);
-    }
-
-    public void setTileStatuses(ArrayList<FaithTileStatus> tileStatuses) {
-        this.tileStatuses = new ArrayList<>(tileStatuses);
     }
 
 
@@ -113,6 +100,7 @@ public class LightModel {
         return cardDevelopmentMarket;
     }
 
+    /*
     public ArrayList<FaithTileStatus> getTileStatuses() {
         if(tileStatuses==null) tileStatuses=new ArrayList<>();
 
@@ -140,6 +128,8 @@ public class LightModel {
 
         return playersPosition;
     }
+
+     */
 
     public HashMap<Resource, Integer> getDeposit(){
         if (deposit==null) deposit=new HashMap<Resource,Integer>();
