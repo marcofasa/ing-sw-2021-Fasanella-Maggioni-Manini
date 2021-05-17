@@ -18,7 +18,7 @@ public class ResponseCardDevelopmentMarketInstance extends ServerResponse {
     }
 
     @Override
-    public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
+    public void read(ClientCommandDispatcher commandDispatcher) {
         commandDispatcher.setCardDevelopmentMarketInstance(cardMarketClone);
     }
 }
