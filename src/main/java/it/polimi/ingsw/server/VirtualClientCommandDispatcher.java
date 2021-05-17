@@ -21,6 +21,7 @@ public class VirtualClientCommandDispatcher {
         try {
             virtualClient.getServer().registerClient(virtualClient, nickname);
         } catch (NicknameAlreadyInUseException e) {
+            System.out.println("nickname unavailable " + nickname);
             virtualClient.send(new ResponseNicknameUnavailable());
         }
     }

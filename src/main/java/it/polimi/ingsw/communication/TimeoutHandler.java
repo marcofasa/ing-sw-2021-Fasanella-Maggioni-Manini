@@ -96,9 +96,9 @@ class TimeoutHandler {
      * @throws TimeoutException thrown when timeout is expired
      */
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
-        if(isServerHandler) throw new RuntimeException("This method can only be called from a Virtual Client!");
+        if(isServerHandler) throw new RuntimeException("This method can only be called from an actual Client!");
         if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
-        client.getView().displayWaiting(timeoutInSeconds);
+        // client.getView().displayWaiting(timeoutInSeconds);
         int messageTimeoutID = getID();
         Semaphore semaphore = setupTimerAndGetSemaphore(clientMessage, messageTimeoutID);
         client.send(clientMessage);

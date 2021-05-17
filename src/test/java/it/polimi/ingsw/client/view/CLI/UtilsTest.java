@@ -96,6 +96,8 @@ public class UtilsTest {
     }
 
 
-
-
+    @Test
+    public void printWaitingMessage() throws IOException, InterruptedException {
+        utils.printWaitingMessage(10);
+    }
 }
