@@ -83,6 +83,8 @@ public class CLI implements ViewInterface {
         out.println("---StrongBox---");
         HashMap<Resource, Integer> strongboxClone = lightModel.getStrongbox();
 
+        //TODO Fix with semaphore the second call
+
         // If first call ever fails for some reason, grab a strongbox clone again
         if (strongboxClone.size() == 0) {
             strongboxClone = lightModel.getStrongbox();
@@ -125,6 +127,7 @@ public class CLI implements ViewInterface {
     public void displayLeaderRequirementsNotMet() {
         out.println("Ops, requirements for this Card Leader are not met! ");
     }
+
 
     @Override
     public void displayTurn(String currentPlayer) {
@@ -171,7 +174,10 @@ public class CLI implements ViewInterface {
     @Override
     public String askNickName() {
         //utils.setColoredCLI();
+        //Welcome Message
         displayWelcome();
+
+        //Reads the nickname
         String input;
         out.println("NickName:");
         input = utils.readString();
@@ -225,6 +231,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askMarketChoice() {
+        displayMarket();
         int rowcolumn;
         String key;
         String message;
@@ -258,6 +265,8 @@ public class CLI implements ViewInterface {
     public void askDevelopmentCardChoice() {
         String s;
         utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+
+
         out.println("Type the number in the round brackets of the corresponding card that you want to buy");
         s = utils.readString();
         char[] array = s.toCharArray();
@@ -397,4 +406,7 @@ public class CLI implements ViewInterface {
     }
 
 
+    public void colorize(boolean b) {
+        utils.setColors(b);
+    }
 }

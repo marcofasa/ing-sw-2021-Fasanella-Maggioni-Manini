@@ -61,28 +61,19 @@ public class ParsingCommand {
                 utils.printHelp();
                 break;
             case "resource market":
-                if (haveMove) {
-                    cli.askMarketChoice();
-                    haveMove=false;
-                }
-                else printInvalidMove();
+                    cli.askMarketChoice(); //1 chance
+
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();
                 break;
             case "card development market":
-                if(haveMove) {
-                    cli.askDevelopmentCardChoice();
-                    haveMove=false;
-                }
-                else printInvalidMove();
+                    cli.askDevelopmentCardChoice(); //1 chance
+
                 break;
             case "production":
-                if(haveMove) {
-                    cli.askProductionActivation();
-                    haveMove=false;
-                }
-                else printInvalidMove();
+                    cli.askProductionActivation(); //1 chance
+
                 break;
             case "discard card leader":
                 cli.askCardLeaderDiscard();
@@ -102,6 +93,11 @@ public class ParsingCommand {
             case "card development":
                 cli.displayCardDevelopment();
                 break;
+            case "colors":
+                cli.colorize(true);
+                break;
+            case "no colors":
+                cli.colorize(false);
             case "end turn":
                 cli.askEndTurn();
                 return false;
