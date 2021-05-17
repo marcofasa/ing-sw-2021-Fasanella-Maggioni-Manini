@@ -90,7 +90,6 @@ public class LightModel {
     public ArrayList<ArrayList<MarbleType>> getMarket() {
         if (market==null) market = new ArrayList<ArrayList<MarbleType>>();
 
-
         try {
             client.sendAndWait(new RequestMarketInstance(),-1);
         }

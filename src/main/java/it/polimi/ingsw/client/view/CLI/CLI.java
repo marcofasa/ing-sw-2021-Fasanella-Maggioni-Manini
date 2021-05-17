@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 
@@ -75,7 +76,10 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayMarket() {
-        utils.printMarket(lightModel.getMarket());
+
+        ArrayList<ArrayList<MarbleType>> marketClone = lightModel.getMarket();
+
+        utils.printMarket(marketClone);
     }
 
     @Override
