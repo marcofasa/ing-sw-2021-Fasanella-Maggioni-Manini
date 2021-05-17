@@ -41,12 +41,14 @@ public class VirtualClient implements Runnable{
 
 
     public void send(ServerMessage serverMessage){
-        try {
-            outputStream.reset();
-            outputStream.writeObject(serverMessage);
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        synchronized (this) {
+            try {
+                outputStream.reset();
+                outputStream.writeObject(serverMessage);
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.controller.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,6 +20,7 @@ public class Server {
     private WaitingLobby lobby;
     private Game currentGame;
     private final ExecutorService executors;
+    private final Object lobbyLocked;
 
     public Server(){
         nextGameID = 1;
@@ -31,6 +33,7 @@ public class Server {
         executors = Executors.newCachedThreadPool();
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
+        lobbyLocked = new Object();
     }
 
     /*
@@ -43,11 +46,11 @@ public class Server {
     }*/
 
     void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
-        if(clientsNickname.containsKey(nickname)) throw new NicknameAlreadyInUseException();
+        if(clientsNickname.containsValue(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
         clientsNickname.put(virtualClient, nickname);
         virtualClient.send(new ResponseClientAccepted());
-        synchronized (lobby) {
+        synchronized (lobbyLocked) {
             lobby.addPlayer(virtualClient);
         }
     }
