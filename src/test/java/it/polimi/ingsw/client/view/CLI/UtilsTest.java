@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Resource;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,6 +95,8 @@ public class UtilsTest {
     }
 
 
-
-
+    @Test
+    public void printWaitingMessage() throws IOException, InterruptedException {
+        utils.printWaitingMessage(10);
+    }
 }
