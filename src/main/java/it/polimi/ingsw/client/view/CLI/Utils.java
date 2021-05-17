@@ -59,22 +59,22 @@ public class Utils {
             String key=resource.toString();
             String value= list.get(resource).toString();
             if (coloredCLI) {
-                out.printf("- x" + value + " resource of " );
-                printResource(resource);
+                out.printf("- x" + value + " resources of " );
+                printResourceColored(resource);
                 out.println();
             }
-            else out.println("- x" + value + " resource of " + key);
+            else out.println("- x" + value + " resources of " + key);
         }
     }
 
     /**
-     * Print a single given Resource
+     * Print a single given Resource in ANSI Colors
      * @param resource
      */
-    private void printResource(Resource resource) {
+    private void printResourceColored(Resource resource) {
         if(resource==Resource.Coins) out.printf(ANSI_YELLOW+"Coins"+ANSI_RESET);
         else if(resource==Resource.Servants) out.printf(ANSI_PURPLE+"Servants"+ANSI_RESET);
-        else if(resource==Resource.Stones) out.printf(ANSI_GRAY+"Stones"+ANSI_RESET);
+        else if(resource==Resource.Stones) out.printf("Stones");
         else if(resource==Resource.Shields) out.printf(ANSI_BLUE+"Shields"+ANSI_RESET);
     }
 
@@ -406,7 +406,7 @@ public class Utils {
                     String value= list.get(resource).toString();
                     if (coloredCLI) {
                         out.printf(" x" + value + " resource of " );
-                        printResource(resource);
+                        printResourceColored(resource);
                     }
                     else out.printf(" x" + value + " resource of " + key);
                 }
@@ -738,8 +738,7 @@ public class Utils {
     public void clearScreen(){
         try
         {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows"))
+            if (!coloredCLI)
             {
                 Runtime.getRuntime().exec("cls");
             }
@@ -761,10 +760,21 @@ public void setColoredCLI(){
         if (os.contains("Windows"))
         {
             coloredCLI=false;
+            out.println("Cucumber uses ANSI escape codes to print colored output to the console. This isn’t supported natively in Windows, so you have to install a tool called ANSICON to see colors." +
+                    "\n" +
+                    "Download and unzip the latest version. Open a command prompt and cd to the folder where you unzipped it. Now, cd into either x86 or x64 (depending on your machine’s processor) and install it globally on your machine:" +
+                    "\n" +
+                    "\u200B \t\n" +
+                    "C:\\somewhere\\ansi140\\x64>\u200B ansicon -i\u200B\n" + "\n"+
+                    "Any program that prints ANSI colors will now display properly on your machine." +
+                    "\n" +
+                    "If you don’t want (or aren’t allowed) to install ANSICON, then you can use the --monochrome option to make the output text only.");
+            out.println("To see colors, type \"colors\" during a normal turn.");
         }
         else
         {
            coloredCLI=true;
+           out.println("To disable colors, type \"no colors\" during a normal turn.");
         }
     }
     catch (final Exception e)
@@ -772,5 +782,9 @@ public void setColoredCLI(){
         e.printStackTrace();
     }
 }
+
+    public void setColors(boolean b) {
+        this.coloredCLI=b;
+    }
 }
 

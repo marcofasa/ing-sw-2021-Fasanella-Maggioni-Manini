@@ -63,7 +63,6 @@ public class UtilsTest {
         tileStatuses.add(FaithTileStatus.Not_Reached);
 
         utils.printFaithTrail(playersPosition,nickname,tileStatuses);
-
     }
 
     @Test
