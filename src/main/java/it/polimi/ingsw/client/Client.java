@@ -11,6 +11,7 @@ import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -53,15 +54,16 @@ public class Client {
                     ServerMessage finalInputClass = inputClass;
                     if (inputClass instanceof ServerResponse) {
                         timeoutHandler.tryDisengage(inputClass.getTimeoutID());
-                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
+                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher)).get();
                         timeoutHandler.defuse(inputClass.getTimeoutID());
                     } else {
                         executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
                     }
                 } catch (RequestTimeoutException e) {
+                    System.err.println("Timed out server response received");
                     e.printStackTrace();
-                } catch (IOException | ClassNotFoundException ioException) {
-                    ioException.printStackTrace();
+                } catch (IOException | ClassNotFoundException | InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
                 }
             }
             clientSocket.close();
