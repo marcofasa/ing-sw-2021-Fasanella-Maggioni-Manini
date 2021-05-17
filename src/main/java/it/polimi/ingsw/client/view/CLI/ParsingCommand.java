@@ -9,7 +9,7 @@ public class ParsingCommand {
     private CLI cli;
     private final PrintWriter out ;
     private final Scanner in;
-    private boolean haveMove=true;
+    private boolean haveMove=false;
 
     /**
      * Constructor of Parsing Command
@@ -31,7 +31,12 @@ public class ParsingCommand {
     public void Menu(){
         haveMove=true;
         printMenu();
-        in.nextLine();
+        /*if(in.hasNext("") || in.hasNext("\r")) {
+            in.nextLine();
+        }
+
+         */
+        //in.nextLine();
         while(readCommand());
     }
 
@@ -48,6 +53,10 @@ public class ParsingCommand {
     private boolean readCommand(){
         String command = utils.readString();
         switch (command){
+            case"":
+                break;
+            case"\n":
+                break;
             case "help":
                 utils.printHelp();
                 break;
@@ -101,7 +110,10 @@ public class ParsingCommand {
         return true;
     }
 
+    /**
+     * Prints an invalid move message
+     */
     private void printInvalidMove() {
-        out.println("Invalid Move, you have already done a one-chance action!");
+        out.println("Invalid move, you have already done a one-chance action!");
     }
 }

@@ -12,7 +12,7 @@ public class Utils {
 
     private final PrintWriter out;
     private final Scanner in;
-    private boolean coloredCLI=false;
+    private boolean coloredCLI=true;
 
     //ANSI escape codes for Colors
 
@@ -60,7 +60,7 @@ public class Utils {
             String value= list.get(resource).toString();
             if (coloredCLI) {
                 out.printf("- x" + value + " resource of " );
-                printResource(resource);
+                printResourceColored(resource);
                 out.println();
             }
             else out.println("- x" + value + " resource of " + key);
@@ -68,10 +68,10 @@ public class Utils {
     }
 
     /**
-     * Print a single given Resource
+     * Print a single given Resource in ANSI Colors
      * @param resource
      */
-    private void printResource(Resource resource) {
+    private void printResourceColored(Resource resource) {
         if(resource==Resource.Coins) out.printf(ANSI_YELLOW+"Coins"+ANSI_RESET);
         else if(resource==Resource.Servants) out.printf(ANSI_PURPLE+"Servants"+ANSI_RESET);
         else if(resource==Resource.Stones) out.printf(ANSI_GRAY+"Stones"+ANSI_RESET);
@@ -406,7 +406,7 @@ public class Utils {
                     String value= list.get(resource).toString();
                     if (coloredCLI) {
                         out.printf(" x" + value + " resource of " );
-                        printResource(resource);
+                        printResourceColored(resource);
                     }
                     else out.printf(" x" + value + " resource of " + key);
                 }

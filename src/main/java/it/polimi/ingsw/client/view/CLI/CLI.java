@@ -24,6 +24,7 @@ public class CLI implements ViewInterface {
     private final LightModel lightModel;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
+    private int startingGame;
 
     /**
      * Constructor of CLI
@@ -34,6 +35,8 @@ public class CLI implements ViewInterface {
         this.lightModel =new LightModel(client);
         this.utils=new Utils(out,in);
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
+        startingGame=0;
+        //displayWelcome();
     }
 
     public LightModel getLightModel() {
@@ -68,6 +71,7 @@ public class CLI implements ViewInterface {
     public void displayTimeOut() {
         out.println("Timeout error! Your connection to server may have been lost");
     }
+
 
     @Override
     public void displayMarket() {
@@ -124,6 +128,8 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayTurn(String currentPlayer) {
+
+
         //utils.clearScreen();
         if (currentPlayer.equals(lightModel.getNickname())){
             parsingCommand.Menu();
@@ -165,7 +171,7 @@ public class CLI implements ViewInterface {
     @Override
     public String askNickName() {
         //utils.setColoredCLI();
-
+        displayWelcome();
         String input;
         out.println("NickName:");
         input = utils.readString();
