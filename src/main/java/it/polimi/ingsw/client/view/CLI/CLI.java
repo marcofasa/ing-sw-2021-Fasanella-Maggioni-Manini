@@ -77,7 +77,14 @@ public class CLI implements ViewInterface {
     @Override
     public void displayStrongBox() {
         out.println("---StrongBox---");
-        utils.printListResource(lightModel.getStrongbox());
+        HashMap<Resource, Integer> strongboxClone = lightModel.getStrongbox();
+
+        // If first call ever fails for some reason, grab a strongbox clone again
+        if (strongboxClone.size() == 0) {
+            strongboxClone = lightModel.getStrongbox();
+        }
+
+        utils.printListResource(strongboxClone);
     }
 
     @Override
@@ -132,7 +139,15 @@ public class CLI implements ViewInterface {
     @Override
     public void displayDeposit() {
         out.println("---Deposit---");
-        utils.printListResource(lightModel.getDeposit());
+        HashMap<Resource, Integer> cloneDeposit = lightModel.getDeposit();
+
+        // If first call ever fails, grab deposit again
+        if (cloneDeposit.size() == 0) {
+            cloneDeposit = lightModel.getDeposit();
+        }
+
+        utils.printListResource(cloneDeposit);
+
     }
 
     @Override
