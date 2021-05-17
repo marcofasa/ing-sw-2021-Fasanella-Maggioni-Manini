@@ -1,25 +1,35 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GUI implements ViewInterface {
+public class GUI extends Application implements ViewInterface {
 
-    private Client client;
+    public static void main(String[] args) {
+        launch(args);
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+      primaryStage.show();
+    }
 
     @Override
     public LightModel getLightModel() {
-        //Momentary solution
         return null;
     }
 
     @Override
     public void displayWelcome() {
+
     }
 
     @Override
@@ -29,6 +39,7 @@ public class GUI implements ViewInterface {
 
     @Override
     public void displayMessage(String message) {
+
     }
 
     @Override
@@ -121,7 +132,6 @@ public class GUI implements ViewInterface {
         return 0;
     }
 
-
     @Override
     public void askMarketChoice() {
 
@@ -142,18 +152,14 @@ public class GUI implements ViewInterface {
 
     }
 
+    @Override
+    public void askEndTurn() {
 
-
+    }
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         return null;
-    }
-
-
-    @Override
-    public void askEndTurn() {
-
     }
 
     @Override

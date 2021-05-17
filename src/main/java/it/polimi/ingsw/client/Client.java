@@ -6,12 +6,10 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
-import it.polimi.ingsw.communication.server.ServerRequest;
 import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
