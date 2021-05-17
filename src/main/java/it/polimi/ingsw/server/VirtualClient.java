@@ -12,6 +12,7 @@ import it.polimi.ingsw.controller.Game;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Time;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -76,13 +77,15 @@ public class VirtualClient implements Runnable{
                 try {
                     if(finalInputClass instanceof ClientResponse) {
                         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
-                        executors.submit(() -> finalInputClass.read(this));
+                        executors.submit(() -> finalInputClass.read(this)).get();
                         timeoutHandler.defuse(finalInputClass.getTimeoutID());
                     } else {
                         executors.submit(() -> finalInputClass.read(this));
                     }
                 } catch (RequestTimeoutException e) {
                     server.requestTimedout(this);
+                    e.printStackTrace();
+                } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }

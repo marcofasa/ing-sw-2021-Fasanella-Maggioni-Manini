@@ -28,11 +28,11 @@ public class Client {
     private final ExecutorService executors;
 
 
-    public Client(Boolean cli){
+    public Client(Boolean cli) {
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new ClientTimeoutHandler(this);
-        if(cli){
+        if (cli) {
             view = new CLI(this);
         } else {
             view = new GUI();
@@ -46,24 +46,20 @@ public class Client {
             outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
             send(new SetupConnection(nickname));
-            ServerMessage inputClass = null;
+            ServerMessage inputClass;
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
                     ServerMessage finalInputClass = inputClass;
-                    if(inputClass instanceof ServerResponse) {
+                    if (inputClass instanceof ServerResponse) {
                         timeoutHandler.tryDisengage(inputClass.getTimeoutID());
-                        executors.submit(() -> {
-                            finalInputClass.read(clientCommandDispatcher);
-                        });
+                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
                         timeoutHandler.defuse(inputClass.getTimeoutID());
                     } else {
-                        executors.submit(() -> {
-                            finalInputClass.read(clientCommandDispatcher);
-                        });
+                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
                     }
                 } catch (RequestTimeoutException e) {
-                    System.err.println("Request " + inputClass + " is timed out.");
+                    e.printStackTrace();
                 } catch (IOException | ClassNotFoundException ioException) {
                     ioException.printStackTrace();
                 }
@@ -74,11 +70,11 @@ public class Client {
         }
     }
 
-    public void notifyConnected(){
+    public void notifyConnected() {
         System.out.println("Il client è connesso al server");
     }
 
-    public void send(ClientMessage clientMessage){
+    public void send(ClientMessage clientMessage) {
         try {
             outputStream.reset();
             outputStream.writeObject(clientMessage);
@@ -90,7 +86,8 @@ public class Client {
 
     /**
      * Send Message and waits for answer
-     * @param clientMessage message to be sent
+     *
+     * @param clientMessage    message to be sent
      * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
      * @throws RequestTimeoutException thrown if timeout is exceeded.
      */
@@ -109,7 +106,7 @@ public class Client {
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
-        client.executors.submit(()-> client.startConnectionAndListen(ip,port, client.getView().askNickName()));
+        client.executors.submit(() -> client.startConnectionAndListen(ip, port, client.getView().askNickName()));
     }
 
     public ViewInterface getView() {

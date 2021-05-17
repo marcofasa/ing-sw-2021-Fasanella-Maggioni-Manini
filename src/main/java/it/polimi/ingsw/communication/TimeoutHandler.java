@@ -3,9 +3,7 @@ package it.polimi.ingsw.communication;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.client.ClientMessage;
-import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.communication.server.ServerMessage;
-import it.polimi.ingsw.communication.server.ServerResponse;
 import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
@@ -60,10 +58,12 @@ class TimeoutHandler {
     }
 
     private void clearID(int messageTimeoutID) {
-        semaphoreByID.get(messageTimeoutID).release();
-        semaphores.remove(semaphoreByID.get(messageTimeoutID));
-        semaphoreByID.remove(messageTimeoutID);
-        idIsInTime.remove(messageTimeoutID);
+        if(messageTimeoutID != -1) {
+            semaphoreByID.get(messageTimeoutID).release();
+            semaphores.remove(semaphoreByID.get(messageTimeoutID));
+            semaphoreByID.remove(messageTimeoutID);
+            idIsInTime.remove(messageTimeoutID);
+        }
     }
 
     /**
@@ -77,31 +77,8 @@ class TimeoutHandler {
         if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
         int messageTimeoutID = getID();
         Semaphore semaphore = setupTimerAndGetSemaphore(serverMessage, messageTimeoutID);
-        virtualClient.send(serverMessage); //<-
-        if(timeoutInSeconds == -1){
-            try {
-                semaphore.acquire();
-                semaphore.acquire();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                executors.submit(() -> {
-                    try {
-                        semaphore.acquire();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }).get(timeoutInSeconds, TimeUnit.SECONDS);
-                semaphore.acquire();
-            } catch (TimeoutException e) {
-                timeoutExpired(messageTimeoutID);
-                throw new TimeoutException();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
+        virtualClient.send(serverMessage);
+        pauseHandler(timeoutInSeconds, semaphore, messageTimeoutID);
     }
 
     private Semaphore setupTimerAndGetSemaphore(SerializedNetworkMessage message, int messageTimeoutID) {
@@ -119,23 +96,21 @@ class TimeoutHandler {
      * @throws TimeoutException thrown when timeout is expired
      */
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
-        if(!isServerHandler) throw new RuntimeException("This method can only be called from a Virtual Client!");
+        if(isServerHandler) throw new RuntimeException("This method can only be called from a Virtual Client!");
         if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
         client.getView().displayWaiting(timeoutInSeconds);
         int messageTimeoutID = getID();
         Semaphore semaphore = setupTimerAndGetSemaphore(clientMessage, messageTimeoutID);
         client.send(clientMessage);
+        pauseHandler(timeoutInSeconds, semaphore, messageTimeoutID);
+    }
+
+    private void pauseHandler(int timeoutInSeconds, Semaphore semaphore, int messageTimeoutID) throws TimeoutException {
         if(timeoutInSeconds == -1){
             try {
-                executors.submit(() -> {
-                    try {
-                        semaphore.acquire();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }).get();
                 semaphore.acquire();
-            } catch (InterruptedException | ExecutionException e) {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         } else {
