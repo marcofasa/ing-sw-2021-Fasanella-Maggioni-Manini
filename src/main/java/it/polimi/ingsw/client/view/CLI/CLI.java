@@ -5,10 +5,7 @@ import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.*;
-import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.MarbleType;
-import it.polimi.ingsw.model.ProductionSelection;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,7 +62,12 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayPosition() {
-        utils.printFaithTrail(lightModel.getPlayersPosition(), lightModel.getNickname(),lightModel.getTileStatuses());
+
+        HashMap<String, Integer> playerPositions = lightModel.getPlayersPosition();
+        String nickname = lightModel.getNickname();
+        ArrayList<FaithTileStatus> statuses = lightModel.getTileStatuses();
+
+        utils.printFaithTrail(playerPositions, nickname, statuses);
     }
 
     @Override

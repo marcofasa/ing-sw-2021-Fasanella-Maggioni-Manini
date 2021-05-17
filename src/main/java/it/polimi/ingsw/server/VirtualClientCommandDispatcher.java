@@ -183,4 +183,21 @@ public class VirtualClientCommandDispatcher {
         sendWithTimeoutID(new ResponseCardDevelopmentMarketInstance(cardMarketClone), _timeoutID);
 
     }
+
+    public void requestTileStatuses(VirtualClient _vClient, int _timeoutID) {
+
+        ArrayList<FaithTileStatus> tileStatuses;
+        tileStatuses = virtualClient.getGame().getTileStatuses(_vClient);
+
+        sendWithTimeoutID(new ResponseFaithTileStatuses(tileStatuses), _timeoutID);
+
+    }
+
+    public void requestPlayersPosition(int _timeoutID) {
+
+        HashMap<String, Integer> playerPositions;
+        playerPositions = virtualClient.getGame().getPlayerPositions();
+
+        sendWithTimeoutID(new ResponsePlayerPositions(playerPositions), _timeoutID);
+    }
 }

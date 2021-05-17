@@ -200,6 +200,42 @@ public class Game implements Runnable {
         return output;
     }
 
+    public ArrayList<FaithTileStatus> getTileStatuses(VirtualClient _vClient) {
+
+        ArrayList<FaithTileStatus> output = new ArrayList<>();
+        FaithTilePack pack = new FaithTilePack();
+        String nickname = clientNicknameMap.get(_vClient);
+        PlayerBoard board = gameTable.getPlayerByNickname(nickname);
+
+        pack = gameTable.getFaithTrailInstance().getTilePack(board);
+
+        for (FaithSection section : FaithSection.values()) {
+            output.add(pack.getStatus(section));
+        }
+
+        return output;
+    }
+
+    public HashMap<String, Integer> getPlayerPositions() {
+
+        HashMap<String, Integer> output = new HashMap<>();
+        String nickname;
+        PlayerBoard board;
+
+        for (VirtualClient _vClient : clientNicknameMap.keySet()) {
+
+            nickname = clientNicknameMap.get(_vClient);
+            board = gameTable.getPlayerByNickname(nickname);
+
+            output.put(nickname, gameTable.getFaithTrailInstance().getPosition(board));
+        }
+
+        return output;
+    }
+
+
+
+
     // Public action methods to be invoked when a ClientRequest is received
 
     /**
@@ -394,5 +430,4 @@ public class Game implements Runnable {
             player.send(serverMessage);
         }
     }
-
 }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.communication.client.requests.RequestCardDevelopmentMarketInstance;
-import it.polimi.ingsw.communication.client.requests.RequestDepositInstance;
-import it.polimi.ingsw.communication.client.requests.RequestMarketInstance;
-import it.polimi.ingsw.communication.client.requests.RequestStrongboxInstance;
+import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +72,7 @@ public class LightModel {
     }
 
     public void setTileStatuses(ArrayList<FaithTileStatus> tileStatuses) {
-        this.tileStatuses = new ArrayList<FaithTileStatus>(tileStatuses);
+        this.tileStatuses = new ArrayList<>(tileStatuses);
     }
 
 
@@ -117,30 +114,29 @@ public class LightModel {
     }
 
     public ArrayList<FaithTileStatus> getTileStatuses() {
-        if(tileStatuses==null) tileStatuses=new ArrayList<FaithTileStatus>();
-        /*
+        if(tileStatuses==null) tileStatuses=new ArrayList<>();
+
         try {
-            client.sendAndWait(new RequestTileStatusesInstance(),-1);
+            client.sendAndWait(new RequestTileStatuses(),-1);
 
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
         }
-        */
+
         return tileStatuses;
     }
 
     public HashMap<String, Integer> getPlayersPosition() {
         if (playersPosition==null) playersPosition=new HashMap<String,Integer>();
-        /*
+
         try {
-            playersPosition= client.sendAndWait(new RequestPlayersPositionInstance(),-1);
-            return playersPosition;
+            client.sendAndWait(new RequestPlayersPositionInstance(),-1);
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
         }
-        */
+
 
         return playersPosition;
     }

@@ -5,10 +5,7 @@ import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
 import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
-import it.polimi.ingsw.model.CardDevelopment;
-import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.MarbleType;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,5 +105,13 @@ public class ClientCommandDispatcher {
 
     public void setCardDevelopmentMarketInstance(ArrayList<ArrayList<CardDevelopment>> _cardMarketClone) {
         client.getView().getLightModel().setCardDevelopmentMarket(_cardMarketClone);
+    }
+
+    public void setTileStatuses(ArrayList<FaithTileStatus> tileStatuses) {
+        client.getView().getLightModel().setTileStatuses(tileStatuses);
+    }
+
+    public void setPlayerPositions(HashMap<String, Integer> _playerPositions) {
+        client.getView().getLightModel().setPlayersPosition(_playerPositions);
     }
 }
