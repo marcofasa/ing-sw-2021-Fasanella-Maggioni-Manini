@@ -107,20 +107,21 @@ public class ClientCommandDispatcher {
         client.getView().getLightModel().setCardDevelopmentMarket(_cardMarketClone);
     }
 
+    @Deprecated
     public void setTileStatuses(ArrayList<FaithTileStatus> tileStatuses) {
 
         //client.getView().getLightModel().setTileStatuses(tileStatuses);
     }
 
+    @Deprecated
     public void setPlayerPositions(HashMap<String, Integer> _playerPositions) {
         //client.getView().getLightFaithTrail().setFaithTrail(_playerPositions);
     }
 
 
     //GOOD ONE
-    /*public void setFaithTrail(HashMap<String, Integer> _playerPositions,ArrayList<FaithTileStatus> tileStatuses ) {
+    public void setFaithTrail(HashMap<String, Integer> _playerPositions,ArrayList<FaithTileStatus> tileStatuses ) {
         client.getView().getLightFaithTrail().setFaithTrail(_playerPositions,tileStatuses);
     }
 
-     */
 }

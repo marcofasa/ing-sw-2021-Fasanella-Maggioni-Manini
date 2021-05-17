@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.communication.client.requests.RequestFaithTrail;
 import it.polimi.ingsw.model.FaithTileStatus;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class LightFaithTrail {
     }
 
     public void setFaithTrail(HashMap<String, Integer> playersPosition, ArrayList<FaithTileStatus> tileStatuses) {
-        this.playersPosition = new HashMap<String, Integer>(playersPosition);
+        this.playersPosition = new HashMap<>(playersPosition);
         this.tileStatuses = new ArrayList<>(tileStatuses);
     }
 
@@ -29,16 +30,14 @@ public class LightFaithTrail {
 
 
     public LightFaithTrail getFaithTrail(){
-        /*
+
         try {
             client.sendAndWait(new RequestFaithTrail(),-1);
-
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
         }
 
-         */
         return this;
     }
 }

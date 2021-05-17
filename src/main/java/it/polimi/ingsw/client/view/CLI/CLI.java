@@ -71,15 +71,13 @@ public class CLI implements ViewInterface {
     @Override
     public void displayPosition() {
         String nickname = lightModel.getNickname();
-
-        utils.printFaithTrail( nickname, lightFaithTrail.getFaithTrail());
+        utils.printFaithTrail(nickname, lightFaithTrail.getFaithTrail());
     }
 
     @Override
     public void displayTimeOut() {
         out.println("Timeout error! Your connection to server may have been lost");
     }
-
 
     @Override
     public void displayMarket() {
@@ -95,10 +93,14 @@ public class CLI implements ViewInterface {
 
         //TODO Fix with semaphore the second call
 
+        /*
+
         // If first call ever fails for some reason, grab a strongbox clone again
         if (strongboxClone.size() == 0) {
             strongboxClone = lightModel.getStrongbox();
         }
+
+         */
 
         utils.printListResource(strongboxClone);
     }
@@ -160,10 +162,12 @@ public class CLI implements ViewInterface {
         out.println("---Deposit---");
         HashMap<Resource, Integer> cloneDeposit = lightModel.getDeposit();
 
+        /*
         // If first call ever fails, grab deposit again
         if (cloneDeposit.size() == 0) {
             cloneDeposit = lightModel.getDeposit();
         }
+         */
 
         utils.printListResource(cloneDeposit);
 

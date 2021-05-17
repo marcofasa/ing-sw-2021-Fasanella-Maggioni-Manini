@@ -203,7 +203,7 @@ public class Game implements Runnable {
     public ArrayList<FaithTileStatus> getTileStatuses(VirtualClient _vClient) {
 
         ArrayList<FaithTileStatus> output = new ArrayList<>();
-        FaithTilePack pack = new FaithTilePack();
+        FaithTilePack pack;
         String nickname = clientNicknameMap.get(_vClient);
         PlayerBoard board = gameTable.getPlayerByNickname(nickname);
 
@@ -232,9 +232,6 @@ public class Game implements Runnable {
 
         return output;
     }
-
-
-
 
     // Public action methods to be invoked when a ClientRequest is received
 

@@ -100,37 +100,6 @@ public class LightModel {
         return cardDevelopmentMarket;
     }
 
-    /*
-    public ArrayList<FaithTileStatus> getTileStatuses() {
-        if(tileStatuses==null) tileStatuses=new ArrayList<>();
-
-        try {
-            client.sendAndWait(new RequestTileStatuses(),-1);
-
-        }
-        catch (RequestTimeoutException e){
-            e.printStackTrace();
-        }
-
-        return tileStatuses;
-    }
-
-    public HashMap<String, Integer> getPlayersPosition() {
-        if (playersPosition==null) playersPosition=new HashMap<String,Integer>();
-
-        try {
-            client.sendAndWait(new RequestPlayersPositionInstance(),-1);
-        }
-        catch (RequestTimeoutException e){
-            e.printStackTrace();
-        }
-
-
-        return playersPosition;
-    }
-
-     */
-
     public HashMap<Resource, Integer> getDeposit(){
         if (deposit==null) deposit=new HashMap<Resource,Integer>();
 
