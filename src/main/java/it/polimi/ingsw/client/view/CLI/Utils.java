@@ -464,10 +464,14 @@ public class Utils {
             out.println(ANSI_GREEN+"strongbox"+ANSI_RESET+" to display your strongbox ");
             out.println(ANSI_GREEN+"card leader"+ANSI_RESET+" to display your card leader deck ");
             out.println(ANSI_GREEN+"card development"+ANSI_RESET+" to display your card development deck ");
+            out.println(ANSI_GREEN+"resource market"+ANSI_RESET+" to display resource market");
+            out.println(ANSI_GREEN+"card development market"+ANSI_RESET+" to display card development market");
+
             out.println();
+
             out.println(ANSI_BACKGROUND_BLUE+"Command list for actions"+ANSI_RESET);
-            out.println(ANSI_GREEN+"resource market"+ANSI_RESET+" to use market and get new resources");
-            out.println(ANSI_GREEN+"card development market"+ANSI_RESET+" to use market and get new resources");
+            out.println(ANSI_GREEN+"buy resource"+ANSI_RESET+" to use market and get new resources");
+            out.println(ANSI_GREEN+"buy card development"+ANSI_RESET+" to use market and get new resources");
             out.println(ANSI_GREEN+"production"+ANSI_RESET+" to use various type of productions (basic,card development and card leader)");
             out.println(ANSI_GREEN+"end turn"+ANSI_RESET+" to end your turn ");
             out.println(ANSI_GREEN+"activate card leader"+ANSI_RESET+" to activate a card leader");
@@ -484,10 +488,14 @@ public class Utils {
             out.println("\"strongbox\" to display your strongbox ");
             out.println("\"card leader\" to display your card leader deck ");
             out.println("\"card development\" to display your card development deck ");
+            out.println("\"resource market\" to display resource market");
+            out.println("\"card development market\" to display card development market");
+
             out.println();
+
             out.println("Command list for actions:");
-            out.println("\"resource market\" to use market and get new resources");
-            out.println("\"card development market\" to use market and get new resources");
+            out.println("\"buy resource\" to use market and get new resources");
+            out.println("\"buy card development\" to use market and get new resources");
             out.println("\"production\" to use various type of productions (basic,card development and card leader)");
             out.println("\"end turn\" to end your turn ");
             out.println("\"activate card leader\" to activate a card leader");

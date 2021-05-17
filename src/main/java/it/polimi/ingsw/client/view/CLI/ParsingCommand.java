@@ -60,20 +60,23 @@ public class ParsingCommand {
             case "help":
                 utils.printHelp();
                 break;
-            case "resource market":
+            case "buy resource":
                     cli.askMarketChoice(); //1 chance
-
+                break;
+            case "resource market":
+                    cli.displayMarket();
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();
                 break;
             case "card development market":
-                    cli.askDevelopmentCardChoice(); //1 chance
-
+                    cli.displayCardDevelopmentMarket();
                 break;
+            case "buy card development":
+                cli.askDevelopmentCardChoice(); //1 chance
+                        break;
             case "production":
                     cli.askProductionActivation(); //1 chance
-
                 break;
             case "discard card leader":
                 cli.askCardLeaderDiscard();

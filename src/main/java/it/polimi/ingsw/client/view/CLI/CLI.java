@@ -175,6 +175,7 @@ public class CLI implements ViewInterface {
         utils.printCardDevelopmentDeck(lightModel.getCardDevelopment());
     }
 
+
     @Override
     public String askNickName() {
         //utils.setColoredCLI();
@@ -231,6 +232,13 @@ public class CLI implements ViewInterface {
     public void askCardLeaderDiscard() {
         //client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader()),-1));
     }
+
+    @Override
+    public void displayCardDevelopmentMarket() {
+        utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+
+    }
+
 
 
     @Override

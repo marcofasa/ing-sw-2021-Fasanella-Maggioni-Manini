@@ -175,4 +175,9 @@ public class GUI implements ViewInterface {
     public void askCardLeaderDiscard() {
 
     }
+
+    @Override
+    public void displayCardDevelopmentMarket() {
+
+    }
 }
