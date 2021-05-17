@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.GUI;
 
+import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.model.CardLeader;
@@ -24,6 +25,11 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public LightModel getLightModel() {
+        return null;
+    }
+
+    @Override
+    public LightFaithTrail getLightFaithTrail() {
         return null;
     }
 

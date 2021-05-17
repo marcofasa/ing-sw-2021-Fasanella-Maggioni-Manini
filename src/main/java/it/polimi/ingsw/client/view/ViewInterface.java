@@ -1,4 +1,5 @@
 package it.polimi.ingsw.client.view;
+import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 public interface ViewInterface {
 
     LightModel getLightModel();
+
+    LightFaithTrail getLightFaithTrail();
 
     //DISPLAY
 

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.communication.client.requests.RequestCardDevelopmentMarketInstance;
-import it.polimi.ingsw.communication.client.requests.RequestDepositInstance;
-import it.polimi.ingsw.communication.client.requests.RequestMarketInstance;
-import it.polimi.ingsw.communication.client.requests.RequestStrongboxInstance;
+import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,11 +9,9 @@ public class LightModel {
     private String nickname;
     private Client client;
     private int numberOfPlayers;
-    private HashMap<String, Integer> playersPosition;
     private ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket;
     private ArrayList<CardDevelopment> cardDevelopment;
     private ArrayList<CardLeader> cardsLeader;
-    private ArrayList<FaithTileStatus> tileStatuses; //size()==3 with the tree tiles in TilesPack
     private HashMap<Resource, Integer> deposit;
     private HashMap<Resource, Integer> strongbox;
     private ArrayList<ArrayList<MarbleType>> market;
@@ -30,10 +25,6 @@ public class LightModel {
      */
     public LightModel(Client client){
         this.client=client;
-    }
-
-    public int positionPlayer(){
-        return playersPosition.get(nickname);
     }
 
     //Setters (used as Update methods)
@@ -66,16 +57,9 @@ public class LightModel {
         this.strongbox = new HashMap<Resource, Integer>(strongbox);
     }
 
-    public void setPlayersPosition(HashMap<String, Integer> playersPosition) {
-        this.playersPosition = new HashMap<String, Integer>(playersPosition);
-    }
 
     public void setDeposit(HashMap<Resource, Integer> deposit) {
         this.deposit = new HashMap<Resource, Integer>(deposit);
-    }
-
-    public void setTileStatuses(ArrayList<FaithTileStatus> tileStatuses) {
-        this.tileStatuses = new ArrayList<FaithTileStatus>(tileStatuses);
     }
 
 
@@ -116,34 +100,36 @@ public class LightModel {
         return cardDevelopmentMarket;
     }
 
+    /*
     public ArrayList<FaithTileStatus> getTileStatuses() {
-        if(tileStatuses==null) tileStatuses=new ArrayList<FaithTileStatus>();
-        /*
+        if(tileStatuses==null) tileStatuses=new ArrayList<>();
+
         try {
-            client.sendAndWait(new RequestTileStatusesInstance(),-1);
+            client.sendAndWait(new RequestTileStatuses(),-1);
 
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
         }
-        */
+
         return tileStatuses;
     }
 
     public HashMap<String, Integer> getPlayersPosition() {
         if (playersPosition==null) playersPosition=new HashMap<String,Integer>();
-        /*
+
         try {
-            playersPosition= client.sendAndWait(new RequestPlayersPositionInstance(),-1);
-            return playersPosition;
+            client.sendAndWait(new RequestPlayersPositionInstance(),-1);
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
         }
-        */
+
 
         return playersPosition;
     }
+
+     */
 
     public HashMap<Resource, Integer> getDeposit(){
         if (deposit==null) deposit=new HashMap<Resource,Integer>();
