@@ -16,7 +16,7 @@ public class ResponseUnexpectedAnswer extends ServerResponse {
      * @param commandDispatcher Game dispatcher
      */
     @Override
-    public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
+    public void read(ClientCommandDispatcher commandDispatcher) {
         //niente per ora
     }
 }

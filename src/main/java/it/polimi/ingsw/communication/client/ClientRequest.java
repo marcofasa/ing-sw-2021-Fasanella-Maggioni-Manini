@@ -1,6 +1,5 @@
 package it.polimi.ingsw.communication.client;
 
-import it.polimi.ingsw.client.TimeoutHandler;
 import it.polimi.ingsw.server.VirtualClient;
 
 public abstract class ClientRequest extends ClientMessage {

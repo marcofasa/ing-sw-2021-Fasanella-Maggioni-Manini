@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.requests.RequestRequestPlayersNumber;
 import it.polimi.ingsw.communication.server.ServerMessage;
 
@@ -30,20 +31,11 @@ public class WaitingLobby {
 
     private void addFirstPlayer(VirtualClient virtualClient) {
         try {
-            virtualClient.send(new RequestRequestPlayersNumber());
-            executors.submit((() -> {
-                try {
-                    semaphore.acquire(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            })).get(20, TimeUnit.SECONDS);
+            virtualClient.sendAndWait(new RequestRequestPlayersNumber(), -1);
             players.add(virtualClient);
             empty = false;
-        } catch (TimeoutException e) {
+        } catch (RequestTimeoutException e) {
             server.unregisterClientTimeoutExceeded(virtualClient);
-        }  catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
         }
     }
 
@@ -70,7 +62,6 @@ public class WaitingLobby {
 
     public void setLobbyCapacity(int size){
         lobbyCapacity = size;
-        semaphore.release();
     }
 
     public ArrayList<VirtualClient> getPlayers() {

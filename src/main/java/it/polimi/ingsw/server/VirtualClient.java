@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.communication.ServerTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.communication.client.ClientResponse;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.controller.Game;
 
 import java.io.*;
 import java.net.Socket;
+import java.sql.Time;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -18,7 +20,7 @@ public class VirtualClient implements Runnable{
     private final Integer clientID;
     private final Socket clientSocket;
     private final Server server;
-    private final ClientTimeoutHandler timeoutHandler;
+    private final ServerTimeoutHandler timeoutHandler;
     private final VirtualClientCommandDispatcher clientCommandDispatcher;
     private Game game;
     private ObjectInputStream inputStream;
@@ -32,7 +34,7 @@ public class VirtualClient implements Runnable{
         this.clientID = clientID;
         connected = true;
         executors = Executors.newCachedThreadPool();
-        timeoutHandler = new ClientTimeoutHandler(this);
+        timeoutHandler = new ServerTimeoutHandler(this);
         clientCommandDispatcher = new VirtualClientCommandDispatcher(this);
     }
 
@@ -72,9 +74,13 @@ public class VirtualClient implements Runnable{
                 inputClass = (ClientMessage) inputStream.readObject();
                 ClientMessage finalInputClass = inputClass;
                 try {
-                    if(finalInputClass instanceof ClientResponse)
+                    if(finalInputClass instanceof ClientResponse) {
                         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
-                    executors.submit(() -> finalInputClass.read(this));
+                        executors.submit(() -> finalInputClass.read(this));
+                        timeoutHandler.defuse(finalInputClass.getTimeoutID());
+                    } else {
+                        executors.submit(() -> finalInputClass.read(this));
+                    }
                 } catch (RequestTimeoutException e) {
                     server.requestTimedout(this);
                     e.printStackTrace();

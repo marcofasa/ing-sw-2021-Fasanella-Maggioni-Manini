@@ -1,28 +1,45 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.communication;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.ClientRequest;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerResponse;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
-public class TimeoutHandler {
+class TimeoutHandler {
 
     private final Client client;
+    private final VirtualClient virtualClient;
     private final ArrayList<Semaphore> semaphores;
     private final ExecutorService executors;
     private final HashMap<Integer, Semaphore> semaphoreByID;
     private final HashMap<Integer, Boolean> idIsInTime;
+    private final boolean isServerHandler;
 
     public TimeoutHandler(Client client) {
+        this.virtualClient = null;
         this.client = client;
         semaphores = new ArrayList<>();
         executors = Executors.newCachedThreadPool();
         semaphoreByID = new HashMap<>();
         idIsInTime = new HashMap<>();
+        isServerHandler = false;
+    }
+
+    public TimeoutHandler(VirtualClient virtualClient) {
+        this.client = null;
+        this.virtualClient = virtualClient;
+        semaphores = new ArrayList<>();
+        executors = Executors.newCachedThreadPool();
+        semaphoreByID = new HashMap<>();
+        idIsInTime = new HashMap<>();
+        isServerHandler = true;
     }
 
     private Semaphore getNewSemaphore(){
@@ -31,14 +48,14 @@ public class TimeoutHandler {
         return newSem;
     }
 
-    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException{
+    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException {
         if(messageTimeoutID == -1)
             return;
         if(!idIsInTime.get(messageTimeoutID)){
-            clearID(messageTimeoutID);
+            semaphoreByID.get(messageTimeoutID).release();
             throw new RequestTimeoutException();
         } else {
-            clearID(messageTimeoutID);
+            semaphoreByID.get(messageTimeoutID).release();
         }
     }
 
@@ -50,19 +67,63 @@ public class TimeoutHandler {
     }
 
     /**
+     * Sends serverMessage to the Server and awaits answer for timeoutInSeconds time
+     * @param serverMessage message to be sent
+     * @param timeoutInSeconds timeout in seconds to wait for a server answer; -1 to wait indefinitely
+     * @throws TimeoutException thrown when timeout is expired
+     */
+    public void sendAndWait(ServerMessage serverMessage, int timeoutInSeconds) throws TimeoutException {
+        if(!isServerHandler) throw new RuntimeException("This method can only be called from a Virtual Client!");
+        if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
+        int messageTimeoutID = getID();
+        Semaphore semaphore = setupTimerAndGetSemaphore(serverMessage, messageTimeoutID);
+        virtualClient.send(serverMessage); //<-
+        if(timeoutInSeconds == -1){
+            try {
+                semaphore.acquire();
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                executors.submit(() -> {
+                    try {
+                        semaphore.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).get(timeoutInSeconds, TimeUnit.SECONDS);
+                semaphore.acquire();
+            } catch (TimeoutException e) {
+                timeoutExpired(messageTimeoutID);
+                throw new TimeoutException();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Semaphore setupTimerAndGetSemaphore(SerializedNetworkMessage message, int messageTimeoutID) {
+        Semaphore semaphore = getNewSemaphore();
+        semaphoreByID.put(messageTimeoutID, semaphore);
+        idIsInTime.put(messageTimeoutID, true);
+        message.setTimeoutID(messageTimeoutID);
+        return semaphore;
+    }
+
+    /**
      * Sends clientMessage to the Server and awaits answer for timeoutInSeconds time
      * @param clientMessage message to be sent
      * @param timeoutInSeconds timeout in seconds to wait for a server answer; -1 to wait indefinitely
      * @throws TimeoutException thrown when timeout is expired
      */
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
+        if(!isServerHandler) throw new RuntimeException("This method can only be called from a Virtual Client!");
         if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
         client.getView().displayWaiting(timeoutInSeconds);
-        Semaphore semaphore = getNewSemaphore();
         int messageTimeoutID = getID();
-        semaphoreByID.put(messageTimeoutID, semaphore);
-        idIsInTime.put(messageTimeoutID, true);
-        clientMessage.setTimeoutID(messageTimeoutID);
+        Semaphore semaphore = setupTimerAndGetSemaphore(clientMessage, messageTimeoutID);
         client.send(clientMessage);
         if(timeoutInSeconds == -1){
             try {
@@ -73,6 +134,7 @@ public class TimeoutHandler {
                         e.printStackTrace();
                     }
                 }).get();
+                semaphore.acquire();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -85,6 +147,7 @@ public class TimeoutHandler {
                         e.printStackTrace();
                     }
                 }).get(timeoutInSeconds, TimeUnit.SECONDS);
+                semaphore.acquire();
             } catch (TimeoutException e) {
                 timeoutExpired(messageTimeoutID);
                 throw new TimeoutException();
@@ -92,6 +155,10 @@ public class TimeoutHandler {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void defuse(int timeoutID) {
+        clearID(timeoutID);
     }
 
     private void timeoutExpired(int messageTimeoutID) {

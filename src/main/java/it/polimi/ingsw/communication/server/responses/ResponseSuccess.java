@@ -15,7 +15,7 @@ public class ResponseSuccess extends ServerResponse {
      * @param commandDispatcher Game dispatcher
      */
     @Override
-    public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
+    public void read(ClientCommandDispatcher commandDispatcher) {
         commandDispatcher.success();
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.communication.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
@@ -24,7 +25,7 @@ public class ClientCommandDispatcher {
 
     public void requestPlayersNumber(int timeoutID) {
         System.out.println("Request Players Number received");
-        sendWithTimeoutID(new ResponsePlayersNumber(Integer.toString(client.getView().askPlayerNumber())), timeoutID);
+        sendWithTimeoutID(new ResponsePlayersNumber(client.getView().askPlayerNumber()), timeoutID);
     }
 
     public void nicknameIsUnavailable(){ /* TODO */
@@ -73,7 +74,7 @@ public class ClientCommandDispatcher {
         client.getView().displayLeaderRequirementsNotMet();
     }
 
-    public TimeoutHandler getTimeoutHandler() {
+    public ClientTimeoutHandler getTimeoutHandler() {
         return client.getTimeoutHandler();
     }
 

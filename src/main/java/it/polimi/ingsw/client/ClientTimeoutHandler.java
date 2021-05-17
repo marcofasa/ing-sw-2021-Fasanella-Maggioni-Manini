@@ -1,14 +1,15 @@
-package it.polimi.ingsw.communication;
+package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.client.ClientMessage;
+import it.polimi.ingsw.communication.client.ClientRequest;
+import it.polimi.ingsw.communication.server.ServerMessage;
+import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
-public class TimeoutHandlerClone {
+public class ClientTimeoutHandler {
 
     private final Client client;
     private final ArrayList<Semaphore> semaphores;
@@ -16,7 +17,7 @@ public class TimeoutHandlerClone {
     private final HashMap<Integer, Semaphore> semaphoreByID;
     private final HashMap<Integer, Boolean> idIsInTime;
 
-    public TimeoutHandlerClone(Client client) {
+    public ClientTimeoutHandler(Client client) {
         this.client = client;
         semaphores = new ArrayList<>();
         executors = Executors.newCachedThreadPool();
@@ -30,7 +31,7 @@ public class TimeoutHandlerClone {
         return newSem;
     }
 
-    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException {
+    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException{
         if(messageTimeoutID == -1)
             return;
         if(!idIsInTime.get(messageTimeoutID)){
@@ -56,6 +57,7 @@ public class TimeoutHandlerClone {
      */
     public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws TimeoutException {
         if(timeoutInSeconds<0 && timeoutInSeconds != -1) throw new IllegalArgumentException("timeoutInSeconds must be > 0 or == -1");
+        client.getView().displayWaiting(timeoutInSeconds);
         Semaphore semaphore = getNewSemaphore();
         int messageTimeoutID = getID();
         semaphoreByID.put(messageTimeoutID, semaphore);
@@ -64,8 +66,14 @@ public class TimeoutHandlerClone {
         client.send(clientMessage);
         if(timeoutInSeconds == -1){
             try {
-                semaphore.acquire();
-            } catch (InterruptedException e) {
+                executors.submit(() -> {
+                    try {
+                        semaphore.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).get();
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         } else {

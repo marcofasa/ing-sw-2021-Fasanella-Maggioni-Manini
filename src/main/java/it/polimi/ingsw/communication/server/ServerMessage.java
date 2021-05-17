@@ -28,6 +28,6 @@ public abstract class ServerMessage extends SerializedNetworkMessage {
      * Calls the method specified in the read function
      * @param commandDispatcher Game dispatcher
      */
-    public abstract void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException;
+    public abstract void read(ClientCommandDispatcher commandDispatcher);
 
 }
