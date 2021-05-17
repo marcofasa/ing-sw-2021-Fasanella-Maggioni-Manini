@@ -132,4 +132,6 @@ public interface ViewInterface {
     void displayWaiting(int timeoutInSeconds);
 
     void askCardLeaderDiscard();
+
+    void displayCardDevelopmentMarket();
 }
