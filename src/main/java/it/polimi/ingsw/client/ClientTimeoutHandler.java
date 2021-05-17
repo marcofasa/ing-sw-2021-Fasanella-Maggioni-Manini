@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
-public class TimeoutHandler {
+public class ClientTimeoutHandler {
 
     private final Client client;
     private final ArrayList<Semaphore> semaphores;
@@ -17,7 +17,7 @@ public class TimeoutHandler {
     private final HashMap<Integer, Semaphore> semaphoreByID;
     private final HashMap<Integer, Boolean> idIsInTime;
 
-    public TimeoutHandler(Client client) {
+    public ClientTimeoutHandler(Client client) {
         this.client = client;
         semaphores = new ArrayList<>();
         executors = Executors.newCachedThreadPool();

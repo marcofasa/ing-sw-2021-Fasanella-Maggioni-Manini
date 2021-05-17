@@ -1,8 +1,6 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.client.RequestTimeoutException;
-import it.polimi.ingsw.client.TimeoutHandler;
 
 public abstract class ServerResponse extends ServerMessage{
 
@@ -16,5 +14,5 @@ public abstract class ServerResponse extends ServerMessage{
      * @param commandDispatcher Game dispatcher
      */
     @Override
-    public abstract void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException;
+    public abstract void read(ClientCommandDispatcher commandDispatcher);
 }

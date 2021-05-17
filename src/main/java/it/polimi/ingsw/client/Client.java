@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.view.CLI.CLI;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ViewInterface;
+import it.polimi.ingsw.communication.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.communication.server.ServerResponse;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -18,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 public class Client {
 
     private volatile static boolean connected;
-    private final TimeoutHandler timeoutHandler;
+    private final ClientTimeoutHandler timeoutHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Socket clientSocket;
@@ -27,11 +29,11 @@ public class Client {
     private final ExecutorService executors;
 
 
-    public Client(Boolean cli){
+    public Client(Boolean cli) {
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
-        this.timeoutHandler = new TimeoutHandler(this);
-        if(cli){
+        this.timeoutHandler = new ClientTimeoutHandler(this);
+        if (cli) {
             view = new CLI(this);
         } else {
             view = new GUI();
@@ -49,20 +51,19 @@ public class Client {
             while (connected) {
                 try {
                     inputClass = (ServerMessage) inputStream.readObject();
-                    if(inputClass instanceof ServerResponse)
-                        timeoutHandler.tryDisengage(inputClass.getTimeoutID());
                     ServerMessage finalInputClass = inputClass;
-                    executors.submit(() -> {
-                        try {
-                            finalInputClass.read(clientCommandDispatcher);
-                        } catch (RequestTimeoutException e) {
-                            e.printStackTrace();
-                        }
-                    });
+                    if (inputClass instanceof ServerResponse) {
+                        timeoutHandler.tryDisengage(inputClass.getTimeoutID());
+                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher)).get();
+                        timeoutHandler.defuse(inputClass.getTimeoutID());
+                    } else {
+                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
+                    }
                 } catch (RequestTimeoutException e) {
+                    System.err.println("Timed out server response received");
                     e.printStackTrace();
-                } catch (IOException | ClassNotFoundException ioException) {
-                    ioException.printStackTrace();
+                } catch (IOException | ClassNotFoundException | InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
                 }
             }
             clientSocket.close();
@@ -71,11 +72,11 @@ public class Client {
         }
     }
 
-    public void notifyConnected(){
+    public void notifyConnected() {
         System.out.println("Il client è connesso al server");
     }
 
-    public void send(ClientMessage clientMessage){
+    public void send(ClientMessage clientMessage) {
         try {
             outputStream.reset();
             outputStream.writeObject(clientMessage);
@@ -87,7 +88,8 @@ public class Client {
 
     /**
      * Send Message and waits for answer
-     * @param clientMessage message to be sent
+     *
+     * @param clientMessage    message to be sent
      * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
      * @throws RequestTimeoutException thrown if timeout is exceeded.
      */
@@ -106,14 +108,14 @@ public class Client {
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
-        new Thread(() -> client.startConnectionAndListen(ip,port, client.getView().askNickName())).start();
+        client.executors.submit(() -> client.startConnectionAndListen(ip, port, client.getView().askNickName()));
     }
 
     public ViewInterface getView() {
         return view;
     }
 
-    public TimeoutHandler getTimeoutHandler() {
+    public ClientTimeoutHandler getTimeoutHandler() {
         return timeoutHandler;
     }
 }

@@ -24,7 +24,7 @@ public class ResponseStorageInstance extends ServerResponse {
      * @param commandDispatcher Game dispatcher
      */
     @Override
-    public void read(ClientCommandDispatcher commandDispatcher) throws RequestTimeoutException {
+    public void read(ClientCommandDispatcher commandDispatcher) {
 
         if (isDeposit) {
             commandDispatcher.setDeposit(storage);

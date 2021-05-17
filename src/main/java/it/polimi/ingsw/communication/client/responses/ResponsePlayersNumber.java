@@ -5,8 +5,8 @@ import it.polimi.ingsw.server.VirtualClient;
 
 public class ResponsePlayersNumber extends ClientResponse {
 
-    public ResponsePlayersNumber(String playersNumber) {
-        super(playersNumber, null);
+    public ResponsePlayersNumber(Integer playersNumber) {
+        super(playersNumber.toString(), null);
     }
 
     @Override

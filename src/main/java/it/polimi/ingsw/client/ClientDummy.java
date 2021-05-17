@@ -1,8 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.communication.client.SetupConnection;
-import it.polimi.ingsw.communication.server.ServerStringMessageForTesting;
-
 import java.io.*;
 import java.net.*;
 
