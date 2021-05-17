@@ -132,7 +132,6 @@ public class CLI implements ViewInterface {
         out.println("Ops, requirements for this Card Leader are not met! ");
     }
 
-
     @Override
     public void displayTurn(String currentPlayer) {
 
@@ -231,7 +230,6 @@ public class CLI implements ViewInterface {
     public void askCardLeaderDiscard() {
         //client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader()),-1));
     }
-
 
     @Override
     public void askMarketChoice() {
@@ -348,8 +346,6 @@ public class CLI implements ViewInterface {
         }
     }
 
-
-
     @Override
     public void askCardLeaderActivation() {
         out.println("Choose which card leader to activate:");
@@ -360,8 +356,6 @@ public class CLI implements ViewInterface {
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {

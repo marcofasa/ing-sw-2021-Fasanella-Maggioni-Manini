@@ -54,7 +54,6 @@ public class ParsingCommand {
         String command = utils.readString();
         switch (command){
             case"":
-                break;
             case"\n":
                 break;
             case "help":

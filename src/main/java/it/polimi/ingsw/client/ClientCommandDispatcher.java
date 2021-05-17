@@ -42,8 +42,7 @@ public class ClientCommandDispatcher {
     }
 
     private ArrayList<Resource> subRequestInitialResourcesSelection(int playerNumber) {
-        ArrayList<Resource> resources = client.getView().askForInitialResourcesSelection(playerNumber);
-        return resources;
+        return client.getView().askForInitialResourcesSelection(playerNumber);
     }
 
     public void requestDiscardResourceSelection(HashMap<Resource, Integer> resources, int timeoutID) {
