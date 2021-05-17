@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -163,9 +164,7 @@ public class Game implements Runnable {
         return board.getStrongboxInstance().getContent();
     }
 
-    public ArrayList<ArrayList<MarbleType>> getMarketClone(VirtualClient _vClient) {
-
-        //String nickname = clientNicknameMap.get(_vClient);
+    public ArrayList<ArrayList<MarbleType>> getMarketClone() {
 
         ArrayList<ArrayList<MarbleType>> marketClone = new ArrayList<>();
         ArrayList<ArrayList<Marble>> marbleMatrix = gameTable.getMarketInstance().getMarket();
@@ -183,7 +182,23 @@ public class Game implements Runnable {
         return marketClone;
     }
 
+    public ArrayList<ArrayList<CardDevelopment>> getCardDevMarketClone() {
 
+        ArrayList<ArrayList<CardDevelopment>> output = new ArrayList<>();
+        CardDevelopmentStack[][] cardSlotMatrix = gameTable.getCardDevelopmentMarketInstance().getMarket();
+
+        for (int i = 0; i < cardSlotMatrix.length; i++) {
+
+            output.add(new ArrayList<>());
+            for (int j = 0; j < cardSlotMatrix[0].length; j++) {
+
+                CardDevelopment topCard = cardSlotMatrix[i][j].getCards().peek();
+                output.get(i).add(topCard);
+            }
+        }
+
+        return output;
+    }
 
     // Public action methods to be invoked when a ClientRequest is received
 

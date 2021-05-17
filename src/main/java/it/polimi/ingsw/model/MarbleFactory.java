@@ -12,21 +12,14 @@ public class MarbleFactory {
      * @return Concrete Marble
      */
     public Marble produce(MarbleType marbleType, GameTable gameTable){
-        switch (marbleType) {
-            case MarbleRed:
-                new MarbleRed(gameTable.getFaithTrailInstance());
-            case MarbleWhite:
-                return new MarbleWhite();
-            case MarbleBlue:
-                return new MarbleNormal(Resource.Shields);
-            case MarblePurple:
-                return new MarbleNormal(Resource.Servants);
-            case MarbleGrey:
-                return new MarbleNormal(Resource.Stones);
-            case MarbleYellow:
-                return new MarbleNormal(Resource.Coins);
-            default:
-                throw new IllegalArgumentException();
-        }
+        return switch (marbleType) {
+            case MarbleRed -> new MarbleRed(gameTable.getFaithTrailInstance());
+            case MarbleWhite -> new MarbleWhite();
+            case MarbleBlue -> new MarbleNormal(Resource.Shields);
+            case MarblePurple -> new MarbleNormal(Resource.Servants);
+            case MarbleGrey -> new MarbleNormal(Resource.Stones);
+            case MarbleYellow -> new MarbleNormal(Resource.Coins);
+            default -> throw new IllegalArgumentException();
+        };
     }
 }

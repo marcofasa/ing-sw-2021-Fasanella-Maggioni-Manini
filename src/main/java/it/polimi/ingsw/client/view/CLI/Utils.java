@@ -542,7 +542,10 @@ public class Utils {
      * @param j
      */
     private void printCardDevelopmentForMarket(CardDevelopment cardDevelopment, int i, int j) {
-        out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+ "of level " + cardDevelopment.getCardLevel().toString() +"and  "+cardDevelopment.getVictoryPoints()+" victory points "+ printCardResourceCost(cardDevelopment.getCardCosts()));
+        out.println("("+i+j+") Card type " + cardDevelopment.getCardType().toString()+
+                " of level " + cardDevelopment.getCardLevel().toString() +
+                " and  "+cardDevelopment.getVictoryPoints()+" victory points "+
+                printCardResourceCost(cardDevelopment.getCardCosts()));
     }
 
     private void printCardDevelopment(CardDevelopment cardDevelopments){
@@ -559,7 +562,7 @@ public class Utils {
         for (Resource resource: cardCosts.keySet()){
             String key=resource.toString();
             String value= cardCosts.get(resource).toString();
-            s.concat(" x" + value + " resource of " + key);
+            s = s.concat(" x" + value + " resource of " + key);
         }
         return s;
     }

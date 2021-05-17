@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.communication.client.requests.RequestCardDevelopmentMarketInstance;
 import it.polimi.ingsw.communication.client.requests.RequestDepositInstance;
 import it.polimi.ingsw.communication.client.requests.RequestMarketInstance;
 import it.polimi.ingsw.communication.client.requests.RequestStrongboxInstance;
@@ -102,8 +103,8 @@ public class LightModel {
 
 
     public ArrayList<ArrayList<CardDevelopment>> getCardDevelopmentMarket() {
-        if (cardDevelopmentMarket==null) cardDevelopmentMarket= new ArrayList<ArrayList<CardDevelopment>>();
-       /*
+        if (cardDevelopmentMarket == null) cardDevelopmentMarket= new ArrayList<>();
+
        try {
             client.sendAndWait(new RequestCardDevelopmentMarketInstance(),-1);
 
@@ -111,7 +112,7 @@ public class LightModel {
         catch (RequestTimeoutException e){
             e.printStackTrace();
         }
-        */
+
         return cardDevelopmentMarket;
     }
 

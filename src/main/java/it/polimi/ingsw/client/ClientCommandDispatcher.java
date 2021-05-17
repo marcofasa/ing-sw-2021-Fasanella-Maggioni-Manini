@@ -4,6 +4,7 @@ import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
 import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
+import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.Resource;
@@ -102,5 +103,9 @@ public class ClientCommandDispatcher {
 
     public void setMarketInstance(ArrayList<ArrayList<MarbleType>> marketClone) {
         client.getView().getLightModel().setMarket(marketClone);
+    }
+
+    public void setCardDevelopmentMarketInstance(ArrayList<ArrayList<CardDevelopment>> _cardMarketClone) {
+        client.getView().getLightModel().setCardDevelopmentMarket(_cardMarketClone);
     }
 }

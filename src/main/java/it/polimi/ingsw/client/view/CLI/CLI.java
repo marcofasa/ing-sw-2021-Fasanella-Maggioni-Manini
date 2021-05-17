@@ -239,7 +239,6 @@ public class CLI implements ViewInterface {
     }
 
 
-
     @Override
     public void askMarketChoice() {
         displayMarket();
