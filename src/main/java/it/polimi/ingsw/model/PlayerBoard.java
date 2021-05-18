@@ -34,6 +34,8 @@ public class PlayerBoard implements Serializable {
         first = _first;
         playerState = _playerState;
 
+        discountedResource = null;
+
         strongbox = getStrongboxInstance();
         deposit = getDepositInstance();
         cardSlotArray = new CardDevelopmentSlot[3];
@@ -281,12 +283,20 @@ public class PlayerBoard implements Serializable {
      */
     public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
 
+
         //Strongbox content
         HashMap<Resource, Integer> temp = getStrongboxInstance().getContent();
 
         //Deposit content
         for (Resource res : Resource.values()) {
             temp.replace(res, temp.get(res) + getDepositInstance().getContent().get(res));
+        }
+
+        //Card Leader deposit content
+        if (depositLeaderCard.getContent().size() > 0) {
+            for (Resource res : depositLeaderCard.getContent().keySet()) {
+                temp.replace(res, depositLeaderCard.getContent().get(res) + temp.get(res));
+            }
         }
 
         for (Resource res : Resource.values()) {
@@ -316,8 +326,6 @@ public class PlayerBoard implements Serializable {
 
     public void setPlayerState(PlayerState newState) {
         playerState = newState;
-
-        //Qui avremo bisogno di un notify() per gli observer nella view
     }
 
     /**
@@ -398,6 +406,10 @@ public class PlayerBoard implements Serializable {
         CardDevelopmentMarket marketInstance = gameTable.getCardDevelopmentMarketInstance();
         CardDevelopmentStack desiredStack = marketInstance.getMarket()[rowIndex][colIndex];
         CardDevelopment desiredCard = desiredStack.peek();
+
+        if (discountedResource != null && desiredCard.getCardCosts().get(discountedResource) > 0) {
+            desiredCard.applyDiscount(discountedResource);
+        }
 
         if (hasResources(desiredCard.getCardCosts())) {
             return marketInstance.buyCardFromStack(this, rowIndex, colIndex);
