@@ -680,11 +680,9 @@ public class Utils {
         int i=0;
         for (;i<2;i++){
             out.println("Type an input resource for basic production:");
-            out.println("(Remember that resources are: coin, stone, servant, shield)");
             basicProdInfo[i]=readResource(false);
         }
         out.println("Now type the output resource for basic production:");
-        out.println("(Remember that resources are: coin, stone, servant, shield)");
         basicProdInfo[2]=readResource(false);
         return basicProdInfo;
     }
