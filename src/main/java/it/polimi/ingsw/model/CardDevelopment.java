@@ -74,6 +74,14 @@ public class CardDevelopment implements Serializable {
         return new HashMap<>(cardCosts);
     }
 
+    public void applyDiscount(Resource res) {
+
+        if (cardCosts.get(res) > 0) {
+            cardCosts.put(res, cardCosts.get(res) - 1);
+        }
+
+    }
+
     public HashMap<Resource, Integer> getProductionInput() {
         return new HashMap<>(productionInput);
     }
@@ -97,12 +105,21 @@ public class CardDevelopment implements Serializable {
 
         Strongbox strongbox = board.getStrongboxInstance();
         Deposit deposit = board.getDepositInstance();
+        DepositLeaderCard depositLeaderCard = board.getDepositLeaderCardInstance();
 
         //temp is initialized with the content of Strongbox, then it is added Deposit's content one resource at a time
         HashMap<Resource, Integer> temp = new HashMap<>(strongbox.getContent());
 
         for (Resource resource : Resource.values()) {
             temp.put(resource, temp.get(resource) + deposit.getContent().get(resource));
+        }
+
+        //Add DepositLeaderCard content
+        if (depositLeaderCard.getContent().size() > 0) {
+
+            for (Resource res : depositLeaderCard.getContent().keySet()) {
+                temp.put(res, temp.get(res) + depositLeaderCard.getContent().get(res));
+            }
         }
 
         // Check if card can be activated
@@ -125,6 +142,7 @@ public class CardDevelopment implements Serializable {
      */
     void activateProduction(PlayerBoard board) {
 
+        //TODO Add logic to consume DepositLeaderCard content
         Strongbox strongbox = board.getStrongboxInstance();
         Deposit deposit = board.getDepositInstance();
 
@@ -151,7 +169,6 @@ public class CardDevelopment implements Serializable {
         // Move pawn on faith trail for the amount of red resources produced by this card
         board.moveFaith(this.numberOfRedResourceProduced);
     }
-
 
     /**
      * Method to activate the production power of this card

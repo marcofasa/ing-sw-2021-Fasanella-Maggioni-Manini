@@ -182,7 +182,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayCardDevelopment() {
         out.println("---Card Development---");
-        utils.printCardDevelopmentDeck(lightModel.getCardDevelopment());
+        utils.printCardDevelopmentDeck(lightModel.getCardsDevelopment());
     }
 
     @Override
@@ -326,7 +326,7 @@ public class CLI implements ViewInterface {
 
         //Ask for Card Development production
         out.println("Do you want to activate Card Development production?");
-        if (utils.readYesOrNo()) productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardDevelopment()));
+        if (utils.readYesOrNo()) productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardsDevelopment()));
         else {
             Boolean[] falseArray =new Boolean[3];
             falseArray[0]=false;

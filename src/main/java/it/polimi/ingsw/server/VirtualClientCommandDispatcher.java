@@ -195,4 +195,21 @@ public class VirtualClientCommandDispatcher {
 
         sendWithTimeoutID(new ResponseLightFaithTrail(tileStatuses, playerPositions), _timeoutID);
     }
+
+    public void requestLeaderCards(VirtualClient _vClient, int _timeoutID) {
+
+        ArrayList<CardLeader> leaderCards;
+        leaderCards = virtualClient.getGame().getLeaderCards(_vClient);
+
+        sendWithTimeoutID(new ResponseCardLeaders(leaderCards), _timeoutID);
+    }
+
+    public void requestTopCardsDevelopment(VirtualClient _vClient, int _timeoutID) {
+
+        ArrayList<CardDevelopment> developmentCards;
+        developmentCards = virtualClient.getGame().getTopDevelopmentCards(_vClient);
+
+        sendWithTimeoutID(new ResponseTopCardsDevelopment(developmentCards), _timeoutID);
+
+    }
 }

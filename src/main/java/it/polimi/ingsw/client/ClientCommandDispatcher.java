@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class ClientCommandDispatcher {
 
-    private Client client;
+    private final Client client;
 
     public ClientCommandDispatcher(Client client){
         this.client = client;
@@ -107,21 +107,15 @@ public class ClientCommandDispatcher {
         client.getView().getLightModel().setCardDevelopmentMarket(_cardMarketClone);
     }
 
-    @Deprecated
-    public void setTileStatuses(ArrayList<FaithTileStatus> tileStatuses) {
-
-        //client.getView().getLightModel().setTileStatuses(tileStatuses);
-    }
-
-    @Deprecated
-    public void setPlayerPositions(HashMap<String, Integer> _playerPositions) {
-        //client.getView().getLightFaithTrail().setFaithTrail(_playerPositions);
-    }
-
-
-    //GOOD ONE
     public void setFaithTrail(HashMap<String, Integer> _playerPositions,ArrayList<FaithTileStatus> tileStatuses ) {
         client.getView().getLightFaithTrail().setFaithTrail(_playerPositions,tileStatuses);
     }
 
+    public void setLeaderCards(ArrayList<CardLeader> leaderCards) {
+        client.getView().getLightModel().setCardsLeader(leaderCards);
+    }
+
+    public void setTopCardsDevelopment(ArrayList<CardDevelopment> developmentCards) {
+        client.getView().getLightModel().setCardsDevelopment(developmentCards);
+    }
 }

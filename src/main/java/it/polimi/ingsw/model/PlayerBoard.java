@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 public class PlayerBoard {
@@ -34,6 +35,8 @@ public class PlayerBoard {
         first = _first;
         playerState = _playerState;
 
+        discountedResource = null;
+
         strongbox = getStrongboxInstance();
         deposit = getDepositInstance();
         cardSlotArray = new CardDevelopmentSlot[3];
@@ -61,6 +64,25 @@ public class PlayerBoard {
             tempList = new ArrayList<>(cardDevelopmentSlot.getCards());
             outputList.addAll(tempList);
         }
+        return outputList;
+    }
+
+    public ArrayList<CardDevelopment> getTopDevelopmentCards() {
+        ArrayList<CardDevelopment> outputList = new ArrayList<>();
+        CardDevelopment card;
+
+        for (CardDevelopmentSlot slot : cardSlotArray) {
+
+            try {
+                card = slot.getTop();
+                outputList.add(card);
+
+            } catch (EmptyStackException ex) {
+                outputList.add(null);
+
+            }
+        }
+
         return outputList;
     }
 
@@ -281,12 +303,20 @@ public class PlayerBoard {
      */
     public boolean hasResources(HashMap<Resource, Integer> numberOfResources) {
 
+
         //Strongbox content
         HashMap<Resource, Integer> temp = getStrongboxInstance().getContent();
 
         //Deposit content
         for (Resource res : Resource.values()) {
             temp.replace(res, temp.get(res) + getDepositInstance().getContent().get(res));
+        }
+
+        //Card Leader deposit content
+        if (depositLeaderCard.getContent().size() > 0) {
+            for (Resource res : depositLeaderCard.getContent().keySet()) {
+                temp.replace(res, depositLeaderCard.getContent().get(res) + temp.get(res));
+            }
         }
 
         for (Resource res : Resource.values()) {
@@ -316,8 +346,6 @@ public class PlayerBoard {
 
     public void setPlayerState(PlayerState newState) {
         playerState = newState;
-
-        //Qui avremo bisogno di un notify() per gli observer nella view
     }
 
     /**
@@ -398,6 +426,10 @@ public class PlayerBoard {
         CardDevelopmentMarket marketInstance = gameTable.getCardDevelopmentMarketInstance();
         CardDevelopmentStack desiredStack = marketInstance.getMarket()[rowIndex][colIndex];
         CardDevelopment desiredCard = desiredStack.peek();
+
+        if (discountedResource != null && desiredCard.getCardCosts().get(discountedResource) > 0) {
+            desiredCard.applyDiscount(discountedResource);
+        }
 
         if (hasResources(desiredCard.getCardCosts())) {
             return marketInstance.buyCardFromStack(this, rowIndex, colIndex);

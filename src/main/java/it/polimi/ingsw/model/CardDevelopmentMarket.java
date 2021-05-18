@@ -61,7 +61,8 @@ public class CardDevelopmentMarket {
          Payment logic : resources are first taken from deposit, if deposit cannot cover the whole cost
          the rest is taken from strongbox
          */
-
+        // TODO Logic to pay with the card leader deposit is yet to be added
+        //DepositLeaderCard depositLeaderCard = board.getDepositLeaderCardInstance();
         Strongbox strongbox = board.getStrongboxInstance();
         Deposit deposit = board.getDepositInstance();
         CardDevelopment desiredCard = market[rowIndex][colIndex].peek();

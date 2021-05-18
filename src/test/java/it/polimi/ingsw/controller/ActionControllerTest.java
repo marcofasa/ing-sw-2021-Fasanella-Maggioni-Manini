@@ -75,8 +75,6 @@ class ActionControllerTest {
     @Test
     void useMarket() {
 
-        Scanner scanner = new Scanner(System.in);
-
         GameTable gameTable = new GameTable(true);
         String nickname = "test1";
 
