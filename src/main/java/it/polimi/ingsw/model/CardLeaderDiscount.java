@@ -18,8 +18,8 @@ public class CardLeaderDiscount extends CardLeader {
      * discounts resource to buy development cards. activate() should be called only if canActivate() == true
      */
     @Override
-    public void activate() {
-        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+    public void activate(PlayerBoard playerBoard) {
+        if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         if(!active) {
             playerBoard.discountResource(resource);
             active = true;

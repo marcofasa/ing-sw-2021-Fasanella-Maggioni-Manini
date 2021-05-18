@@ -33,15 +33,15 @@ public class CardLeaderDeckTest {
         GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
         CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
-        cardleaderWhite.playerBoard = playerBoard;
-        cardleaderWhite.activate();
+        cardleaderWhite.playerName = playerBoard.getNickname();
+        cardleaderWhite.activate(playerBoard);
     }
 
     public void cardLeaderActivationTest(){
         GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
         CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
-        cardleaderWhite.playerBoard = playerBoard;
+        cardleaderWhite.playerName = playerBoard.getNickname();
         MarbleWhite marbleWhite = new MarbleWhite();
         var marblelist = new ArrayList<Marble>();
         //test

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashMap;
 
-public class PlayerBoard implements Serializable {
+public class PlayerBoard {
 
     private String nickname;
     private boolean first;
@@ -143,7 +143,7 @@ public class PlayerBoard implements Serializable {
 
     //RISOLVERE IN QUALCHE MODO QUESTE DUE
     void discardCardLeaderController(CardLeader cardLeader) {
-        cardLeader.discard();
+        cardLeader.discard(this);
     }
 
     void discardCardLeader(CardLeader cardLeader) {
@@ -240,11 +240,11 @@ public class PlayerBoard implements Serializable {
     }
 
     protected void activateCardLeader(CardLeader cardLeader) {
-        if (!cardLeader.canActivate())
+        if (!cardLeader.canActivate(this))
             throw new CardLeaderRequirementsNotMetException();
-        if (!cardLeader.getPlayerBoard().getNickname().equals(this.getNickname()))
+        if (!cardLeader.getPlayerName().equals(this.getNickname()))
             throw new CardLeaderWrongOwnerException();
-        cardLeader.activate();
+        cardLeader.activate(this);
     }
 
     /**
@@ -261,8 +261,8 @@ public class PlayerBoard implements Serializable {
      * @param cardLeader2 second selection
      */
     public void selectCardsLeader(CardLeader cardLeader1, CardLeader cardLeader2) {
-        if (!cardLeader1.getPlayerBoard().getNickname().equals(this.getNickname())
-                || !cardLeader2.getPlayerBoard().getNickname().equals(this.getNickname())) {
+        if (!cardLeader1.getPlayerName().equals(this.getNickname())
+                || !cardLeader2.getPlayerName().equals(this.getNickname())) {
             throw new CardLeaderWrongOwnerException();
         }
         cardsLeader.add(cardLeader1);
@@ -383,7 +383,7 @@ public class PlayerBoard implements Serializable {
         if (cardLeaderToBeActivated.getClass() != CardLeaderProduction.class)
             throw new IllegalArgumentException("this CardLeader is not a CardLeaderProduction");
         setCardLeaderProductionOutput(output);
-        cardLeaderToBeActivated.activate();
+        cardLeaderToBeActivated.activate(this);
     }
 
     public Integer getVictoryPoints() {

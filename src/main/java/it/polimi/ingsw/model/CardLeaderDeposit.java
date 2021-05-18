@@ -19,8 +19,8 @@ public class CardLeaderDeposit extends CardLeader{
      * adds resource to the LeaderDepositType in player. activate() should be called only if canActivate() == true
      */
     @Override
-    public void activate() {
-        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+    public void activate(PlayerBoard playerBoard) {
+        if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         if(!active) {
             playerBoard.getDepositLeaderCardInstance().addLeaderDepositType(resource);
             active = true;

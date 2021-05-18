@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.HashMap;
-
 public class CardLeaderProduction extends CardLeader{
 
     /**
@@ -21,8 +19,8 @@ public class CardLeaderProduction extends CardLeader{
      * activate() should be called only if canActivate() == true
      */
     @Override
-    public void activate() {
-        if(!canActivate() && !active) throw new CardLeaderRequirementsNotMetException();
+    public void activate(PlayerBoard playerBoard) {
+        if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         active = true;
         if (playerBoard.getCardLeaderProductionOutput() == null) throw new IllegalArgumentException();
         playerBoard.getDepositInstance().discard(resource);
