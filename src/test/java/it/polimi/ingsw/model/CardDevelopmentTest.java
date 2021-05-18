@@ -1,22 +1,19 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.ResultIterator;
+import org.junit.Test;
 
 import java.lang.reflect.Array;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CardDevelopmentTest {
+public class CardDevelopmentTest {
 
 
     @Test
-    void testCloneConstructor() {
+    public void testCloneConstructor() {
 
         //Check that all attributes of clone hold the same values as test, but pointers are different.
 
@@ -48,7 +45,7 @@ class CardDevelopmentTest {
     }
 
     @Test
-    void testCanActivateProduction() {
+    public void testCanActivateProduction() {
 
         CardDevelopment firstCard = new CardDevelopment(0, 0, 0);
         CardDevelopment secondCard = new CardDevelopment(0, 0, 1);
@@ -100,7 +97,7 @@ class CardDevelopmentTest {
     }
 
     @Test
-    void testActivateProduction() {
+    public void testActivateProduction() {
 
         CardDevelopment test = new CardDevelopment(0, 0, 0);
 
@@ -138,10 +135,10 @@ class CardDevelopmentTest {
         assertEquals(0, (int) player.getDepositInstance().getContent().get(Resource.Stones));
 
         //Check strongbox consistency
-        assertEquals(0, player.getStrongboxInstance().getContent().get(Resource.Coins));
-        assertEquals(1, player.getStrongboxInstance().getContent().get(Resource.Servants));
-        assertEquals(0, player.getStrongboxInstance().getContent().get(Resource.Shields));
-        assertEquals(1, player.getStrongboxInstance().getContent().get(Resource.Stones));
+        assertEquals(new Integer(0), player.getStrongboxInstance().getContent().get(Resource.Coins));
+        assertEquals(new Integer(1), player.getStrongboxInstance().getContent().get(Resource.Servants));
+        assertEquals(new Integer(0), player.getStrongboxInstance().getContent().get(Resource.Shields));
+        assertEquals(new Integer(1), player.getStrongboxInstance().getContent().get(Resource.Stones));
 
 
         assertEquals(1, table.getFaithTrailInstance().getPosition(player));

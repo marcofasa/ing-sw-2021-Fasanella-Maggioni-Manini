@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,25 +21,25 @@ public class FaithCellTest {
             cells.add(new FaithCell(i));
         }
         //Victory Points test
-        Assertions.assertEquals(0,cells.get(2).getVictoryPoints());
-        Assertions.assertEquals(1,cells.get(4).getVictoryPoints());
-        Assertions.assertEquals(2,cells.get(7).getVictoryPoints());
-        Assertions.assertEquals(4,cells.get(9).getVictoryPoints());
-        Assertions.assertEquals(4,cells.get(11).getVictoryPoints());
-        Assertions.assertEquals(6,cells.get(14).getVictoryPoints());
-        Assertions.assertEquals(9,cells.get(17).getVictoryPoints());
-        Assertions.assertEquals(12,cells.get(20).getVictoryPoints());
-        Assertions.assertEquals(16,cells.get(23).getVictoryPoints());
-        Assertions.assertEquals(20,cells.get(24).getVictoryPoints());
+        assertEquals(0,cells.get(2).getVictoryPoints());
+        assertEquals(1,cells.get(4).getVictoryPoints());
+        assertEquals(2,cells.get(7).getVictoryPoints());
+        assertEquals(4,cells.get(9).getVictoryPoints());
+        assertEquals(4,cells.get(11).getVictoryPoints());
+        assertEquals(6,cells.get(14).getVictoryPoints());
+        assertEquals(9,cells.get(17).getVictoryPoints());
+        assertEquals(12,cells.get(20).getVictoryPoints());
+        assertEquals(16,cells.get(23).getVictoryPoints());
+        assertEquals(20,cells.get(24).getVictoryPoints());
 
         //Cell Type test
-        Assertions.assertEquals(FaithCellType.Pope,cells.get(8).getType());
-        Assertions.assertEquals(FaithCellType.Pope,cells.get(16).getType());
-        Assertions.assertEquals(FaithCellType.Pope,cells.get(24).getType());
-        Assertions.assertEquals(FaithCellType.Not_Report,cells.get(1).getType());
-        Assertions.assertEquals(FaithCellType.Not_Report,cells.get(10).getType());
-        Assertions.assertEquals(FaithCellType.Not_Report,cells.get(18).getType());
-        Assertions.assertEquals(FaithCellType.Report,cells.get(5).getType());
-        Assertions.assertEquals(FaithCellType.Report,cells.get(23).getType());
+        assertEquals(FaithCellType.Pope,cells.get(8).getType());
+        assertEquals(FaithCellType.Pope,cells.get(16).getType());
+        assertEquals(FaithCellType.Pope,cells.get(24).getType());
+        assertEquals(FaithCellType.Not_Report,cells.get(1).getType());
+        assertEquals(FaithCellType.Not_Report,cells.get(10).getType());
+        assertEquals(FaithCellType.Not_Report,cells.get(18).getType());
+        assertEquals(FaithCellType.Report,cells.get(5).getType());
+        assertEquals(FaithCellType.Report,cells.get(23).getType());
     }
 }

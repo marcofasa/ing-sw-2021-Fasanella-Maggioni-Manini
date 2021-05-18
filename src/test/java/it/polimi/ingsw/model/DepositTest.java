@@ -1,16 +1,16 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DepositTest {
+public class DepositTest {
 
     @Test
-    void tryAdd() {
+    public void tryAdd() {
 
         ArrayList<String> nicknames = new ArrayList<>();
         nicknames.add("test");

@@ -20,6 +20,7 @@ public class CardLeaderDeposit extends CardLeader{
      */
     @Override
     public void activate(PlayerBoard playerBoard) {
+        if(!playerBoard.getNickname().equals(playerName)) throw new CardLeaderWrongOwnerException();
         if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         if(!active) {
             playerBoard.getDepositLeaderCardInstance().addLeaderDepositType(resource);
