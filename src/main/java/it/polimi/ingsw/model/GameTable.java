@@ -318,6 +318,6 @@ public class GameTable implements Serializable {
         }
 
         //This return should never be reached!
-        return null;
+        throw new IllegalArgumentException("No player has that nickname");
     }
 }

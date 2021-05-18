@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerBoard implements Serializable {
+public class PlayerBoard {
 
     private String nickname;
     private boolean first;
