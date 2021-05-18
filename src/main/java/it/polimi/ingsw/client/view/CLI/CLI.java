@@ -199,6 +199,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
+        HashMap<Resource, Integer> temp = new HashMap<>(choice);
         HashMap<Resource, Integer> selection = new HashMap<>();
 
         utils.printListResource(choice);
@@ -206,11 +207,21 @@ public class CLI implements ViewInterface {
         if (utils.readYesOrNo(true)) {
             do {
                 Resource resource = utils.readResource(false);
-                if (selection.containsKey(resource)) {
-                    int i = selection.get(resource);
-                    selection.replace(resource, i + 1);
-                } else {
-                    selection.put(resource, 1);
+                if (temp.get(resource)>0) {
+                    int i = temp.get(resource);
+                    if(!selection.containsKey(resource)){
+                        selection.replace(resource,1);
+                    }
+                    else {
+                        int r=selection.get(resource);
+                        selection.put(resource, r + 1);
+                    }
+                    temp.replace(resource,i-1);
+                }
+                else{
+                    out.println("You can't discard this resource, try with another.");
+                    out.println("Here's a list of available resources to discard:");
+                    utils.printListResource(temp);
                 }
                 out.println("Discard another resource?");
             } while (utils.readYesOrNo(false));

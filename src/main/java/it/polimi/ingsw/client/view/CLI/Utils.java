@@ -873,6 +873,9 @@ public class Utils {
         }
     }
 
+    /**
+     * Clears Screen
+     */
     public void clearScreen(){
         try
         {
@@ -921,10 +924,17 @@ public void setColoredCLI(){
     }
 }
 
+    /**
+     * Sets variable coloredCLI in
+     * @param b boolean
+     */
     public void setColors(boolean b) {
         this.coloredCLI=b;
     }
 
+    /**
+     * Changes the current boolean coloredCLI into its negation
+     */
     public void colorize() {
         if (coloredCLI) {
             coloredCLI=false;

@@ -98,11 +98,6 @@ public class ParsingCommand {
             case "card development":
                 cli.displayCardDevelopment();
                 break;
-            case "colors":
-                cli.colorize();
-                break;
-            case "no colors":
-                cli.colorize();
             case "end turn":
                 cli.askEndTurn();
                 return false;
