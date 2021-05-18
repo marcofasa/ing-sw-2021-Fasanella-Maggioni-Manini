@@ -552,8 +552,13 @@ public class Utils {
         out.println();
     }
 
-    private void printCardDevelopment(CardDevelopment cardDevelopments){
-        out.println("Card Development type " + cardDevelopments.getCardType().toString()+ "of level " + cardDevelopments.getCardLevel().toString() );
+    private void printCardDevelopment(CardDevelopment cardDevelopment){
+        out.println(
+                "\n\tCard Development type " + cardDevelopment.getCardType().toString() +
+                        " of level " + cardDevelopment.getCardLevel().toString() +
+                        "\n\tProduction input : " + cardDevelopment.getProductionInput().toString() +
+                        "\n\tProduction output: " + cardDevelopment.getProductionOutput().toString() +
+                        "\n\tand victory points : " + cardDevelopment.getVictoryPoints());
     }
 
     /**
