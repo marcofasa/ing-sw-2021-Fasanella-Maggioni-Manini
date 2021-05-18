@@ -10,7 +10,7 @@ public class LightModel {
     private Client client;
     private int numberOfPlayers;
     private ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket;
-    private ArrayList<CardDevelopment> cardDevelopment;
+    private ArrayList<CardDevelopment> cardsDevelopment;
     private ArrayList<CardLeader> cardsLeader;
     private HashMap<Resource, Integer> deposit;
     private HashMap<Resource, Integer> strongbox;
@@ -45,8 +45,8 @@ public class LightModel {
         this.cardsLeader = new ArrayList<CardLeader>(cardsLeader);
     }
 
-    public void setCardDevelopment(ArrayList<CardDevelopment> cardDevelopment) {
-        this.cardDevelopment = new ArrayList<CardDevelopment>(cardDevelopment);
+    public void setCardsDevelopment(ArrayList<CardDevelopment> cardsDevelopment) {
+        this.cardsDevelopment = new ArrayList<CardDevelopment>(cardsDevelopment);
     }
 
     public void setMarket(ArrayList<ArrayList<MarbleType>> market) {
@@ -113,29 +113,28 @@ public class LightModel {
     }
 
     public ArrayList<CardLeader> getCardsLeader() {
-        if(cardsLeader==null) cardsLeader= new ArrayList<CardLeader>();
-        /*
+        if(cardsLeader == null) cardsLeader= new ArrayList<CardLeader>();
+
         try {
-            client.sendAndWait(new RequestCardLeaderInstance(),-1);
-        }catch (RequestTimeoutException e){
+            client.sendAndWait(new RequestCardLeaders(),-1);
+        } catch (RequestTimeoutException e){
             e.printStackTrace();
         }
 
-         */
+
         return cardsLeader;
     }
 
-    public ArrayList<CardDevelopment> getCardDevelopment() {
-        if(cardDevelopment==null) cardDevelopment= new ArrayList<CardDevelopment>();
-        /*
+    public ArrayList<CardDevelopment> getCardsDevelopment() {
+        if(cardsDevelopment == null) cardsDevelopment = new ArrayList<CardDevelopment>();
+
         try {
-            client.sendAndWait(new RequestCardDevelopmentInstance(),-1);
-        }catch (RequestTimeoutException e){
+            client.sendAndWait(new RequestTopCardsDevelopment(),-1);
+        } catch (RequestTimeoutException e){
             e.printStackTrace();
         }
 
-         */
-        return cardDevelopment;
+        return cardsDevelopment;
     }
 
     public HashMap<Resource, Integer> getStrongbox() {

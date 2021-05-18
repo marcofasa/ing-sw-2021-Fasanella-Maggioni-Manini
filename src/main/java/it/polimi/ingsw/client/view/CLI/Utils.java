@@ -748,7 +748,13 @@ public class Utils {
      */
     public void printCardDevelopmentDeck(ArrayList<CardDevelopment> cardDevelopment) {
         for (int i=0; i<cardDevelopment.size();i++){
-            printCardDevelopment(cardDevelopment.get(i));
+
+            if (cardDevelopment.get(i) != null) {
+                System.out.print("Slot number " + i + " holds the following as the top card: ");
+                printCardDevelopment(cardDevelopment.get(i));
+            } else {
+                System.out.println("Slot number " + i + " is empty! ");
+            }
         }
     }
 

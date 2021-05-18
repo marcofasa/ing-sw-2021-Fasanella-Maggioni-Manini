@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 public class PlayerBoard implements Serializable {
@@ -63,6 +64,25 @@ public class PlayerBoard implements Serializable {
             tempList = new ArrayList<>(cardDevelopmentSlot.getCards());
             outputList.addAll(tempList);
         }
+        return outputList;
+    }
+
+    public ArrayList<CardDevelopment> getTopDevelopmentCards() {
+        ArrayList<CardDevelopment> outputList = new ArrayList<>();
+        CardDevelopment card;
+
+        for (CardDevelopmentSlot slot : cardSlotArray) {
+
+            try {
+                card = slot.getTop();
+                outputList.add(card);
+
+            } catch (EmptyStackException ex) {
+                outputList.add(null);
+
+            }
+        }
+
         return outputList;
     }
 

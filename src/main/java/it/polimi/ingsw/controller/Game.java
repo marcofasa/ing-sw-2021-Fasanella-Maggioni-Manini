@@ -233,6 +233,20 @@ public class Game implements Runnable {
         return output;
     }
 
+    public ArrayList<CardLeader> getLeaderCards(VirtualClient _vClient) {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        return gameTable.getPlayerByNickname(nickname).getCardsLeader();
+    }
+
+    public ArrayList<CardDevelopment> getTopDevelopmentCards(VirtualClient _vClient) {
+
+        String nickname = clientNicknameMap.get(_vClient);
+        PlayerBoard board = gameTable.getPlayerByNickname(nickname);
+
+        return board.getTopDevelopmentCards();
+    }
+
     // Public action methods to be invoked when a ClientRequest is received
 
     /**
@@ -427,4 +441,5 @@ public class Game implements Runnable {
             player.send(serverMessage);
         }
     }
+
 }
