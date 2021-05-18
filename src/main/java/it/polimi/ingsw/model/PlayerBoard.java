@@ -141,9 +141,14 @@ public class PlayerBoard {
         return cardSlotArray[index];
     }
 
-
-    void discardCardLeader(CardLeader cardLeader) {
+    /**
+     * Discard cardLeader from player's deck
+     * @param cardLeader to discard
+     */
+    public void discardCardLeader(CardLeader cardLeader) {
+        if(!cardsLeader.contains(cardLeader)) throw new CardLeaderWrongOwnerException();
         cardsLeader.remove(cardLeader);
+        moveFaith(1);
     }
 
     /**

@@ -98,9 +98,9 @@ public class VirtualClientCommandDispatcher {
         virtualClient.getGame().advanceTurn(virtualClient);
     }
 
-    private void sendWithTimeoutID(ServerMessage responseSuccess, int timeoutID) {
-        responseSuccess.setTimeoutID(timeoutID);
-        virtualClient.send(responseSuccess);
+    private void sendWithTimeoutID(ServerMessage serverMessage, int timeoutID) {
+        serverMessage.setTimeoutID(timeoutID);
+        virtualClient.send(serverMessage);
     }
 
     public void discardResourceSelection(HashMap<Resource, Integer> discardSelection, int _timeoutID) {
@@ -125,8 +125,13 @@ public class VirtualClientCommandDispatcher {
         }
     }
 
-    public void requestDiscardCardLeader(CardLeader cardLeader) {
-        //TODO
+    public void requestDiscardCardLeader(CardLeader cardLeader, int timeoutID) {
+        try{
+            virtualClient.getGame().discardCardLeader(virtualClient, cardLeader);
+            sendWithTimeoutID(new ResponseSuccess(), timeoutID);
+        } catch (Exception e) {
+            sendWithTimeoutID(new ResponseUnexpectedMove(), timeoutID);
+        }
     }
 
     public void useMarket(int _index, String _selection, int _timeoutID) {

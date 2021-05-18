@@ -364,4 +364,8 @@ public class Controller {
 
         return scores;
     }
+
+    public void discardCardLeader(String nickname, CardLeader cardLeader) {
+        getActionController().discardCardLeader(getPlayerBoardByNickname(nickname), cardLeader);
+    }
 }

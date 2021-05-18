@@ -179,6 +179,10 @@ public class ActionController {
        }
     }
 
+    public void discardCardLeader(PlayerBoard playerBoard, CardLeader cardLeader){
+        playerBoard.discardCardLeader(cardLeader);
+    }
+
     /**
      * Method invoked after a player has ended his turn in a single player match, forcing Lorenzo to make a move.
      */
