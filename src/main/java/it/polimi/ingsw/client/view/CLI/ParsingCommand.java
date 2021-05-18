@@ -59,6 +59,9 @@ public class ParsingCommand {
             case "help":
                 utils.printHelp();
                 break;
+            case "colorize":
+                cli.colorize();
+                break;
             case "buy resource":
                     cli.askMarketChoice(); //1 chance
                 break;
@@ -96,10 +99,10 @@ public class ParsingCommand {
                 cli.displayCardDevelopment();
                 break;
             case "colors":
-                cli.colorize(true);
+                cli.colorize();
                 break;
             case "no colors":
-                cli.colorize(false);
+                cli.colorize();
             case "end turn":
                 cli.askEndTurn();
                 return false;

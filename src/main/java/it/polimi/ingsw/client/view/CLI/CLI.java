@@ -24,7 +24,6 @@ public class CLI implements ViewInterface {
     private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
-    private int startingGame;
 
     /**
      * Constructor of CLI
@@ -36,8 +35,6 @@ public class CLI implements ViewInterface {
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
-        startingGame=0;
-        //displayWelcome();
     }
 
     public LightModel getLightModel() {
@@ -47,10 +44,6 @@ public class CLI implements ViewInterface {
     @Override
     public LightFaithTrail getLightFaithTrail() {
         return lightFaithTrail;
-    }
-
-    public ParsingCommand getParsingCommand() {
-        return parsingCommand;
     }
 
     @Override
@@ -143,8 +136,6 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayTurn(String currentPlayer) {
-
-
         //utils.clearScreen();
         if (currentPlayer.equals(lightModel.getNickname())){
             parsingCommand.Menu();
@@ -212,9 +203,9 @@ public class CLI implements ViewInterface {
 
         utils.printListResource(choice);
         out.println("Do you want to discard a resource?");
-        if (utils.readYesOrNo()) {
+        if (utils.readYesOrNo(true)) {
             do {
-                Resource resource = utils.readResource();
+                Resource resource = utils.readResource(false);
                 if (selection.containsKey(resource)) {
                     int i = selection.get(resource);
                     selection.replace(resource, i + 1);
@@ -222,7 +213,7 @@ public class CLI implements ViewInterface {
                     selection.put(resource, 1);
                 }
                 out.println("Discard another resource?");
-            } while (utils.readYesOrNo());
+            } while (utils.readYesOrNo(false));
         }
         return selection;
     }
@@ -288,11 +279,11 @@ public class CLI implements ViewInterface {
         String s;
         utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
 
-
+        //Reads the card to buy
         out.println("Type the number in the round brackets of the corresponding card that you want to buy");
         s = utils.readString();
         char[] array = s.toCharArray();
-        while (array.length!=2){
+        while (array.length!=2 || (!Character.isDigit(s.charAt(0)) || !Character.isDigit(s.charAt(1))) || (0>Integer.parseInt(String.valueOf(array[0])) || Integer.parseInt(String.valueOf(array[0]))>2) || (0>Integer.parseInt(String.valueOf(array[1])) || Integer.parseInt(String.valueOf(array[1]))>3)){
             out.println("Invalid input. Type only the the two digits in the round brackets!");
             s = utils.readString();
             array = s.toCharArray();
@@ -319,14 +310,14 @@ public class CLI implements ViewInterface {
 
         //Ask for basic production
         out.println("Do you want to activate basic production?");
-        productionSelection.setBasicProduction(utils.readYesOrNo());
+        productionSelection.setBasicProduction(utils.readYesOrNo(false));
         if (productionSelection.getBasicProduction()){
             productionSelection.setBasicProdInfo(utils.getBasicProduction());
         }
 
         //Ask for Card Development production
         out.println("Do you want to activate Card Development production?");
-        if (utils.readYesOrNo()) productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardsDevelopment()));
+        if (utils.readYesOrNo(false)) productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardsDevelopment()));
         else {
             Boolean[] falseArray =new Boolean[3];
             falseArray[0]=false;
@@ -338,7 +329,7 @@ public class CLI implements ViewInterface {
 
         //Ask for Card Leader production and output
         out.println("Do you want to activate Card Leader production?");
-        if (utils.readYesOrNo()) {
+        if (utils.readYesOrNo(false)) {
             CardLeader[] cardLeaders;
             cardLeaders=utils.getCardLeaderActivation(lightModel.getCardsLeader());
             productionSelection.setCardLeadersToActivate(cardLeaders);
@@ -393,13 +384,13 @@ public class CLI implements ViewInterface {
                 break;
             case 1: case 2:
                 out.println("Choose one resource : ");
-                resources.add(utils.readResource());
+                resources.add(utils.readResource(true));
                 resources.add(null);
                 break;
             case 3:
                 out.println("Choose two resources : ");
-                resources.add(utils.readResource());
-                resources.add(utils.readResource());
+                resources.add(utils.readResource(true));
+                resources.add(utils.readResource(false));
                 break;
         }
 
@@ -428,7 +419,9 @@ public class CLI implements ViewInterface {
     }
 
 
-    public void colorize(boolean b) {
-        utils.setColors(b);
+    public void colorize() {
+        utils.colorize();
     }
+
+
 }

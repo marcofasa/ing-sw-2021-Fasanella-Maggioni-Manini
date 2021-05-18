@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.view.CLI;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.FaithTileStatus;
 import it.polimi.ingsw.model.MarbleType;
@@ -51,6 +53,7 @@ public class UtilsTest {
 
     @Test
     public void FaithTrailTest(){
+        Client client=new Client(true);
         String nickname="Marco";
 
         HashMap<String, Integer> playersPosition=new HashMap<>();
@@ -61,9 +64,15 @@ public class UtilsTest {
 
         ArrayList<FaithTileStatus> tileStatuses=new ArrayList<>();
         tileStatuses.add(FaithTileStatus.Reached);
-        tileStatuses.add(FaithTileStatus.Discarded);
         tileStatuses.add(FaithTileStatus.Not_Reached);
+        tileStatuses.add(FaithTileStatus.Discarded);
+        LightFaithTrail lightFaithTrail=new LightFaithTrail(client);
+        lightFaithTrail.setFaithTrail(playersPosition,tileStatuses);
 
+        utils.printFaithTrail("Marco",lightFaithTrail);
+       utils.clearScreen();
+
+        utils.printFaithTrail("Elia",lightFaithTrail);
 
     }
 
