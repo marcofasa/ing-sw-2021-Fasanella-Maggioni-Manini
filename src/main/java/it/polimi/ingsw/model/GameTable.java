@@ -249,10 +249,8 @@ public class GameTable implements Serializable {
     }
 
     public void moveOthersFaithTrail(PlayerBoard notMovingPlayer) {
-        ListIterator<PlayerBoard> iterator = players.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().equals(notMovingPlayer)) continue;
-            else getFaithTrailInstance().movePlayer(iterator.next(), 1);
+        for (PlayerBoard board : players) {
+            if (!board.getNickname().equals(notMovingPlayer.getNickname())) getFaithTrailInstance().movePlayer(board, 1);
         }
     }
 
