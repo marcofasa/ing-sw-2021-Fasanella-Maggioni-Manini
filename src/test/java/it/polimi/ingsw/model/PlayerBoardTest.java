@@ -21,7 +21,11 @@ public class PlayerBoardTest {
 
     @Test
     public void getAllDevelopmentCards() {
-        PlayerBoard playerBoard = newPlayerBoard();
+        ArrayList<String> players = new ArrayList<>();
+        players.add("uno");
+        players.add("due");
+        GameTable gametable = new GameTable(players);
+        PlayerBoard playerBoard = new PlayerBoard("uno", true, PlayerState.PLAYING, gametable);
         playerBoard.getAllDevelopmentCards();
         assertSame(playerBoard.getAllDevelopmentCards().size(), 0);
         ArrayList<Marble> marbles = new ArrayList<>(Arrays.asList(new MarbleNormal(Resource.Coins),new MarbleNormal(Resource.Coins), new MarbleNormal(Resource.Coins)));
@@ -31,144 +35,166 @@ public class PlayerBoardTest {
             if (res != Resource.Coins){
                 assertEquals(resource.get(res), new Integer(0));
             } else {
-                assertEquals(resource.get(res), new Integer(4));
+                assertEquals(resource.get(res), new Integer(3));
             }
         }
+        playerBoard.tryAddResources(resource);
+        for (Resource res :
+                Resource.values()) {
+            if (res != Resource.Coins){
+                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(0));
+            } else {
+                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(3));
+            }
+        }
+        ArrayList<Marble> marbles2 = new ArrayList<>(Arrays.asList(new MarbleNormal(Resource.Coins)));
+        HashMap<Resource, Integer> resource2 = playerBoard.consumeMarbles(marbles2);
+        var resources3 = playerBoard.tryAddResources(resource2);
+        for (Resource res :
+                Resource.values()) {
+            if (res != Resource.Coins){
+                assertEquals(resources3.get(res), new Integer(0));
+            } else {
+                assertEquals(resources3.get(res), new Integer(1));
+            }
+        }
+        assertEquals(gametable.getFaithTrailInstance().getPosition(gametable.getPlayerByIndex(1)), 0);
+        assertEquals(gametable.getFaithTrailInstance().getPosition(gametable.getPlayerByIndex(0)), 0);
     }
 
     @Test
-    void getMarketRow() {
+    public void getMarketRow() {
     }
 
     @Test
-    void getTempDeposit() {
+    public void getTempDeposit() {
     }
 
     @Test
-    void getMarketCol() {
+    public void getMarketCol() {
     }
 
     @Test
-    void getCardsLeader() {
+    public void getCardsLeader() {
     }
 
     @Test
-    void getCardsLeaderBeforeSelecting() {
+    public void getCardsLeaderBeforeSelecting() {
     }
 
     @Test
-    void addCardLeaderBeforeSelecting() {
+    public void addCardLeaderBeforeSelecting() {
     }
 
     @Test
-    void getStrongboxInstance() {
+    public void getStrongboxInstance() {
     }
 
     @Test
-    void getDepositInstance() {
+    public void getDepositInstance() {
     }
 
     @Test
-    void getCardDevelopmentSlotByIndex() {
+    public void getCardDevelopmentSlotByIndex() {
     }
 
     @Test
-    void discardCardLeaderController() {
+    public void discardCardLeaderController() {
     }
 
     @Test
-    void discardCardLeader() {
+    public void discardCardLeader() {
     }
 
     @Test
-    void addToTemporaryDeposit() {
+    public void addToTemporaryDeposit() {
     }
 
     @Test
-    void discardFromTemporaryDeposit() {
+    public void discardFromTemporaryDeposit() {
     }
 
     @Test
-    void consumeMarbles() {
+    public void consumeMarbles() {
     }
 
     @Test
-    void tryAddResources() {
+    public void tryAddResources() {
     }
 
     @Test
-    void tryAddMarbles() {
+    public void tryAddMarbles() {
     }
 
     @Test
-    void activateCardLeader() {
+    public void activateCardLeader() {
     }
 
     @Test
-    void drawCardLeaderFromDeck() {
+    public void drawCardLeaderFromDeck() {
     }
 
     @Test
-    void selectCardsLeader() {
+    public void selectCardsLeader() {
     }
 
     @Test
-    void getWhiteEffect() {
+    public void getWhiteEffect() {
     }
 
     @Test
-    void setWhiteEffect() {
+    public void setWhiteEffect() {
     }
 
     @Test
-    void moveFaith() {
+    public void moveFaith() {
     }
 
     @Test
-    void getCardLeaderProductionOutput() {
+    public void getCardLeaderProductionOutput() {
     }
 
     @Test
-    void hasResources() {
+    public void hasResources() {
     }
 
     @Test
-    void discountResource() {
+    public void discountResource() {
     }
 
     @Test
-    void getDepositLeaderCardInstance() {
+    public void getDepositLeaderCardInstance() {
     }
 
     @Test
-    void isFirst() {
+    public void isFirst() {
     }
 
     @Test
-    void getPlayerState() {
+    public void getPlayerState() {
     }
 
     @Test
-    void setPlayerState() {
+    public void setPlayerState() {
     }
 
     @Test
-    void activateLeaderProduction() {
+    public void activateLeaderProduction() {
     }
 
     @Test
-    void getVictoryPoints() {
+    public void getVictoryPoints() {
     }
 
     @Test
-    void buyCardDevelopmentCardFromMarket() {
+    public void buyCardDevelopmentCardFromMarket() {
     }
 
     @Test
-    void placeCardDevelopmentCardOnBoard() {
+    public void placeCardDevelopmentCardOnBoard() {
     }
 
     @Test
-    void tryActivateProductions() {
+    public void tryActivateProductions() {
     }
 }

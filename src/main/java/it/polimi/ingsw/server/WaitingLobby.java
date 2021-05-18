@@ -45,9 +45,9 @@ public class WaitingLobby {
                 addFirstPlayer(virtualClient);
             else {
                 players.add(virtualClient);
-                if( players.size() == lobbyCapacity ){
-                    server.startGame();
-                }
+            }
+            if( players.size() == lobbyCapacity ){
+                server.startGame();
             }
         }
     }
