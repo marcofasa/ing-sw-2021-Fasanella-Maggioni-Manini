@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.Arrays;

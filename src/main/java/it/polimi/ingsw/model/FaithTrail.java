@@ -109,7 +109,7 @@ public class FaithTrail {
     public void moveLorenzo(){
         lorenzoPosition++;
         try {
-            throw new ExecutionControl.NotImplementedException("roba commentata qui, occhio");
+            throw new ExecutionControl.NotImplementedException("Not Implemented Yet");
         } catch (ExecutionControl.NotImplementedException e) {
             e.printStackTrace();
         }

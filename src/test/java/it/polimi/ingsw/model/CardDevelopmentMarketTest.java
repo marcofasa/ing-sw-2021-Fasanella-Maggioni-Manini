@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
 import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class CardDevelopmentMarketTest {
 
