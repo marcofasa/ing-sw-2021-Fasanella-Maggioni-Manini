@@ -342,7 +342,7 @@ public class Controller {
         if (isActivePlayer(_nickname)) {
 
             if (gamePhase == 1 || gamePhase == 2) {
-                return actionController.activateLeaderCard(_cardToBeActivated);
+                return actionController.activateLeaderCard(turnController.getActivePlayer(), _cardToBeActivated);
             }
 
         } else throw new NotActivePlayerException(_nickname);

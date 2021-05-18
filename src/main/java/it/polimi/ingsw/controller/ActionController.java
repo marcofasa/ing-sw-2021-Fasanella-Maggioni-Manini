@@ -121,10 +121,10 @@ public class ActionController {
      * @param _leaderToBeActivated CardLeader to be activated.
      * @return true if the CardLeader was successfully activated, false if the card could not be activated.
      */
-    public boolean activateLeaderCard(CardLeader _leaderToBeActivated) {
+    public boolean activateLeaderCard(PlayerBoard _board, CardLeader _leaderToBeActivated) {
 
-        if (_leaderToBeActivated.canActivate()) {
-            _leaderToBeActivated.activate();
+        if (_leaderToBeActivated.canActivate(_board)) {
+            _leaderToBeActivated.activate(_board);
             return true;
         } else
             return false;
