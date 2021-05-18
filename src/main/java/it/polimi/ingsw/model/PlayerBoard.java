@@ -320,7 +320,8 @@ public class PlayerBoard {
         }
 
         for (Resource res : Resource.values()) {
-            if (numberOfResources.get(res) > temp.get(res)) return false;
+            if(numberOfResources.get(res) != null)
+                if (numberOfResources.get(res) > temp.get(res)) return false;
         }
 
         return true;

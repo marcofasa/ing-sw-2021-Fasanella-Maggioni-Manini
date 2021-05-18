@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
@@ -11,19 +9,19 @@ public class CardDevelopmentMarketTest {
 
 
     @Test
-    void getNUMBER_OF_COLUMNS() {
+    public void getNUMBER_OF_COLUMNS() {
 
         assertEquals(4, new CardDevelopmentMarket().getNUMBER_OF_COLUMNS());
     }
 
     @Test
-    void getNUMBER_OF_ROWS() {
+    public void getNUMBER_OF_ROWS() {
 
         assertEquals(3, new CardDevelopmentMarket().getNUMBER_OF_ROWS());
     }
 
     @Test
-    void getMarket() {
+    public void getMarket() {
 
         CardDevelopmentMarket market = new CardDevelopmentMarket();
 
@@ -34,7 +32,7 @@ public class CardDevelopmentMarketTest {
     }
 
     @Test
-    void testCloneConstructor() {
+    public void testCloneConstructor() {
 
         CardDevelopmentMarket cardDevMarket = new CardDevelopmentMarket();
         CardDevelopmentMarket clone = new CardDevelopmentMarket(cardDevMarket);
@@ -48,7 +46,7 @@ public class CardDevelopmentMarketTest {
     }
 
     @Test
-    void buyCardFromStack() {
+    public void buyCardFromStack() {
 
         /*
         This test creates a GameTable with a single player, deposits 100 of each resource in his deposit and buys
@@ -77,7 +75,7 @@ public class CardDevelopmentMarketTest {
     }
 
     @Test
-    void discardCards() {
+    public void discardCards() {
 
         CardDevelopmentMarket market = new CardDevelopmentMarket();
 
@@ -153,7 +151,7 @@ public class CardDevelopmentMarketTest {
     }
 
     @Test
-    void isColumnEmpty() {
+    public void isColumnEmpty() {
 
         CardDevelopmentMarket market = new CardDevelopmentMarket();
 

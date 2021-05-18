@@ -1,16 +1,19 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CardDevelopmentSlotTest {
+public class CardDevelopmentSlotTest {
 
     @Test
-    void testCloneConstructor() throws InvalidCardDevelopmentPlacementException, FullSlotException {
+    public void testCloneConstructor() {
         CardDevelopmentSlot slot1 = new CardDevelopmentSlot(CardDevelopmentSlotID.ONE);
-        slot1.placeCard(new CardDevelopment(0, 0, 0));
+        try {
+            slot1.placeCard(new CardDevelopment(0, 0, 0));
+        } catch (Exception e) {
+            System.out.println("Unexpected exception was thrown.");
+        }
 
         CardDevelopmentSlot clone1 = new CardDevelopmentSlot(slot1);
 
@@ -21,7 +24,7 @@ class CardDevelopmentSlotTest {
     }
 
     @Test
-    void getTop() {
+    public void getTop() {
 
         CardDevelopment card1 = new CardDevelopment(0, 0, 0);
         CardDevelopment card2 = new CardDevelopment(0, 0, 1);
@@ -49,7 +52,7 @@ class CardDevelopmentSlotTest {
     }
 
     @Test
-    void placeCard() throws InvalidCardDevelopmentPlacementException, FullSlotException {
+    public void placeCard() throws InvalidCardDevelopmentPlacementException, FullSlotException {
 
         CardDevelopment green_level1 = new CardDevelopment(0, 0, 0);
         CardDevelopment green_level2 = new CardDevelopment(1, 0, 0);
@@ -62,96 +65,92 @@ class CardDevelopmentSlotTest {
         CardDevelopmentSlot slot2 = new CardDevelopmentSlot(CardDevelopmentSlotID.TWO);
 
 
-
-        //Place 3 cards correctly in the slot
-        assertDoesNotThrow(new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot1.placeCard(green_level1);
-                slot1.placeCard(green_level2);
-                slot1.placeCard(green_level3);
-            }
-        });
+        try {
+            slot1.placeCard(green_level1);
+            slot1.placeCard(green_level2);
+            slot1.placeCard(green_level3);
+        } catch (Exception e) {
+            System.out.println("Unexpected exception thrown! : ");
+            e.printStackTrace();
+        }
 
         //Place a 4th card in the slot, should throw FullSlotException!
-        assertThrows(FullSlotException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot1.placeCard(yellow_level1);
-            }
-        });
+        try {
+            slot1.placeCard(yellow_level1);
+            fail("Exception was not thrown.");
+        } catch (FullSlotException ignored) {
+
+        }
 
         //Place cards in random ways, always checking if the expected behaviour is met.
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(green_level2);
-            }
-        });
+        try {
+            slot2.placeCard(green_level2);
+            fail("Exception that should have been thrown, was not.");
+        } catch (InvalidCardDevelopmentPlacementException ignored) {
 
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(green_level3);
-            }
-        });
+        }
 
         //Place 1 card correctly
-        assertDoesNotThrow(new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(yellow_level1);
-            }
-        });
+        try {
+            slot2.placeCard(yellow_level1);
+        } catch (Exception e) {
+            System.out.println("Unexpected exception thrown! : ");
+            e.printStackTrace();
+        }
 
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(green_level1);
-            }
-        });
+        //Place cards in incorrect ways : exceptions should be thrown here
+        try {
+            slot2.placeCard(green_level1);
+            fail("Exception that should have been thrown, was not.");
+        } catch (InvalidCardDevelopmentPlacementException ignored) {
 
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(yellow_level3);
-            }
-        });
+        }
 
-        assertDoesNotThrow(new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(yellow_level2);
-            }
-        });
+        try {
+            slot2.placeCard(yellow_level3);
+            fail("Exception that should have been thrown, was not.");
+        } catch (InvalidCardDevelopmentPlacementException ignored) {
 
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(green_level2);
-            }
-        });
+        }
 
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(yellow_level1);
-            }
-        });
+        //Place second card correctly
+        try {
+            slot2.placeCard(yellow_level2);
+        } catch (Exception e) {
+            System.out.println("Unexpected exception thrown! : ");
+            e.printStackTrace();
+        }
 
-        assertDoesNotThrow(new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(yellow_level3);
-            }
-        });
+        //Place more cards incorrectly
+        try {
+            slot2.placeCard(green_level2);
+            fail("Exception that should have been thrown, was not.");
+        } catch (InvalidCardDevelopmentPlacementException ignored) {
 
-        assertThrows(FullSlotException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                slot2.placeCard(green_level3);
-            }
-        });
+        }
+
+        try {
+            slot2.placeCard(yellow_level1);
+            fail("Exception that should have been thrown, was not.");
+        } catch (InvalidCardDevelopmentPlacementException ignored) {
+
+        }
+
+        //Place third card correctly
+        try {
+            slot2.placeCard(yellow_level3);
+        } catch (Exception e) {
+            System.out.println("Unexpected exception thrown! : ");
+            e.printStackTrace();
+        }
+
+        //Place a card on a full slot
+        try {
+            slot2.placeCard(green_level3);
+            fail("Exception that should have been thrown, was not.");
+        } catch (FullSlotException ignored) {
+
+        }
 
         assertEquals(3, slot1.getCards().size());
         assertEquals(3, slot2.getCards().size());
