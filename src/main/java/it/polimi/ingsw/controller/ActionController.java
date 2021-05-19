@@ -146,10 +146,11 @@ public class ActionController {
        for (Resource res : Resource.values()) {
 
            //Check that the player has not discarded more Resources that he can discard
-           if (tempDepositClone.get(res) < _discardSelection.get(res)) return tempDepositClone;
-           else {
+
+           if (_discardSelection.containsKey(res)) {
                tempDepositClone.put(res, tempDepositClone.get(res) - _discardSelection.get(res));
            }
+
        }
 
        //Try adding the obtained resources
