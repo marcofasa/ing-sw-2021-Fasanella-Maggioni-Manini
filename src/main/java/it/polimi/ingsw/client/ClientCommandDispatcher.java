@@ -119,4 +119,12 @@ public class ClientCommandDispatcher {
     public void setTopCardsDevelopment(ArrayList<CardDevelopment> developmentCards) {
         client.getView().getLightModel().setCardsDevelopment(developmentCards);
     }
+
+    public void startingEndGame(String payload) {
+        client.getView().displayStartingEndGame(payload);
+    }
+
+    public void showScoreBoard(HashMap<String, Integer> showScoreBoard) {
+        client.getView().displayScoreBoard(showScoreBoard);
+    }
 }
