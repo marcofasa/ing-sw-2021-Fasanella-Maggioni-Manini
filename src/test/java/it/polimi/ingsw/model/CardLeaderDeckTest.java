@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CardLeaderDeckTest {
 
@@ -28,13 +28,13 @@ public class CardLeaderDeckTest {
         }
     }
 
-    @Test (expected = CardLeaderRequirementsNotMetException.class)
+    @Test
     public void cardLeaderActivationTest_shouldThrowExceptionCannotActivate(){
         GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
         CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
         cardleaderWhite.playerName = playerBoard.getNickname();
-        cardleaderWhite.activate(playerBoard);
+        assertThrows(CardLeaderRequirementsNotMetException.class, () -> cardleaderWhite.activate(playerBoard));
     }
 
     public void cardLeaderActivationTest(){

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class PlayerBoardTest {
     public void getNickname() {
     }
 
-    @Test(expected = CardLeaderWrongOwnerException.class)
+    @Test
     public void marketUsage() {
         ArrayList<String> players = new ArrayList<>();
         players.add("uno");
@@ -66,10 +66,10 @@ public class PlayerBoardTest {
         playerBoard.selectCardsLeader(playerBoard.getCardsLeaderBeforeSelecting().get(0), playerBoard.getCardsLeaderBeforeSelecting().get(1));
         assertArrayEquals(Arrays.stream(Arrays.stream((cardsLeaderBeforeSelecting.toArray())).toArray()).limit(2).toArray(), playerBoard.getCardsLeader().toArray());
         // cardLeader.draw(playerBoard);
-        cardLeader.activate(playerBoard);
+        assertThrows(CardLeaderWrongOwnerException.class, () -> cardLeader.activate(playerBoard));
     }
 
-    @Test(expected = CardLeaderRequirementsNotMetException.class)
+    @Test
     public void marketUsage2() {
         ArrayList<String> players = new ArrayList<>();
         players.add("uno");
@@ -116,7 +116,7 @@ public class PlayerBoardTest {
         playerBoard.selectCardsLeader(playerBoard.getCardsLeaderBeforeSelecting().get(0), playerBoard.getCardsLeaderBeforeSelecting().get(1));
         assertArrayEquals(Arrays.stream(Arrays.stream((cardsLeaderBeforeSelecting.toArray())).toArray()).limit(2).toArray(), playerBoard.getCardsLeader().toArray());
         cardLeader.draw(playerBoard);
-        cardLeader.activate(playerBoard);
+        assertThrows(CardLeaderRequirementsNotMetException.class, () -> cardLeader.activate(playerBoard));
     }
 
     @Test
