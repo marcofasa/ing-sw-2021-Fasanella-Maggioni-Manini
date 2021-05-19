@@ -434,6 +434,15 @@ public class Utils {
         return cardLeaders.get(readNumberWithBounds(1,cardLeaders.size())-1);
     }
 
+    public Integer printAndGetCardLeaderIndex(ArrayList<CardLeader> cardLeaders) {
+        //Print Card Leader Deck
+        printCardLeaderDeck(cardLeaders);
+
+        //Selection
+        out.println("Type the corresponding number in the list");
+        return readNumberWithBounds(1,cardLeaders.size());
+    }
+
     /**
      * Prints a given Card Leader Deck
      * @param cardLeaders
@@ -759,10 +768,14 @@ public class Utils {
      */
     public Boolean[] getCardDevelopmentActivation(ArrayList<CardDevelopment> cardDevelopments){
         Boolean[] cardDevelopmentSlotActive= new Boolean[3];
+
         for(int i=0; i<cardDevelopments.size();i++){
-            if(cardDevelopments.get(i)!=null){
+
+            if (cardDevelopments.get(i)!=null) {
                 printCardDevelopment(cardDevelopments.get(i));
                 cardDevelopmentSlotActive[i]=readYesOrNo(false);
+            } else {
+                cardDevelopmentSlotActive[i] = false;
             }
         }
         return cardDevelopmentSlotActive;

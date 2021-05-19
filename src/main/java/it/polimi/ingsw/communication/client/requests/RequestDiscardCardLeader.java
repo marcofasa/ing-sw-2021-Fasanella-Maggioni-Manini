@@ -1,20 +1,19 @@
 package it.polimi.ingsw.communication.client.requests;
 
 import it.polimi.ingsw.communication.client.ClientRequest;
-import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.server.VirtualClient;
 
 public class RequestDiscardCardLeader extends ClientRequest {
 
-    CardLeader cardLeader;
+    Integer cardLeaderIndex;
 
-    public RequestDiscardCardLeader(CardLeader cardLeaderToDiscard) {
+    public RequestDiscardCardLeader(Integer _cardLeaderIndex) {
         super(null, null);
-        this.cardLeader = cardLeaderToDiscard;
+        this.cardLeaderIndex = _cardLeaderIndex;
     }
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getCommandDispatcher().requestDiscardCardLeader(cardLeader, super.getTimeoutID());
+        virtualClient.getCommandDispatcher().requestDiscardCardLeader(cardLeaderIndex, super.getTimeoutID());
     }
 }

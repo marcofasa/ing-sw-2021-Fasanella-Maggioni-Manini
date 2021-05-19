@@ -69,8 +69,11 @@ public class VirtualClientCommandDispatcher {
 
         } catch (NotEnoughResourcesException e) {
             sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
-        }
 
+        } catch (CardLeaderRequirementsNotMetException e) {
+            sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), _timeoutID);
+
+        }
     }
 
     public void requestBuyAndPlaceDevelopmentCard(int _rowIndex, int _columnIndex, int _placementIndex, int _timeoutID) {
@@ -125,9 +128,9 @@ public class VirtualClientCommandDispatcher {
         }
     }
 
-    public void requestDiscardCardLeader(CardLeader cardLeader, int timeoutID) {
+    public void requestDiscardCardLeader(Integer cardLeaderIndex, int timeoutID) {
         try{
-            virtualClient.getGame().discardCardLeader(virtualClient, cardLeader);
+            virtualClient.getGame().discardCardLeader(virtualClient, cardLeaderIndex);
             sendWithTimeoutID(new ResponseSuccess(), timeoutID);
         } catch (Exception e) {
             sendWithTimeoutID(new ResponseUnexpectedMove(), timeoutID);

@@ -179,8 +179,13 @@ public class ActionController {
        }
     }
 
-    public void discardCardLeader(PlayerBoard playerBoard, CardLeader cardLeader){
-        playerBoard.discardCardLeader(cardLeader);
+    public void discardCardLeader(PlayerBoard playerBoard, Integer cardLeaderIndex){
+
+        CardLeader cardLeader = playerBoard.getCardsLeader().get(cardLeaderIndex - 1);
+
+        cardLeader.discard(playerBoard);
+
+        //cardLeader.discard(playerBoard);
     }
 
     /**

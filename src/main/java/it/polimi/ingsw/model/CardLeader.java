@@ -46,8 +46,8 @@ public abstract class CardLeader implements Serializable {
      * discard this CardLeader from the player's deck
      */
     public void discard(PlayerBoard playerBoard){
-        playerBoard.moveFaith(1);
         playerBoard.discardCardLeader(this);
+        playerBoard.moveFaith(1);
     }
 
     /**

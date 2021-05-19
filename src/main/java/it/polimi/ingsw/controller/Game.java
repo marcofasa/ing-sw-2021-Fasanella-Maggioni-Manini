@@ -340,8 +340,6 @@ public class Game implements Runnable {
      */
     public boolean activateLeaderCard(VirtualClient _vClient, CardLeader _cardToBeActivated) throws NotActivePlayerException {
 
-        //TODO : Questo metodo va modificato perche` non funzionera` se riceve come parametro la carta da attivare!
-
         String nickname = clientNicknameMap.get(_vClient);
         return controller.activateLeaderCard(nickname, _cardToBeActivated);
 
@@ -442,7 +440,7 @@ public class Game implements Runnable {
         }
     }
 
-    public void discardCardLeader(VirtualClient virtualClient, CardLeader cardLeader) {
-        controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeader);
+    public void discardCardLeader(VirtualClient virtualClient, Integer cardLeaderIndex) {
+        controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 }

@@ -250,9 +250,10 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askCardLeaderDiscard() {
+
         out.println("Choose a card leader to discard:");
         try {
-            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())), -1);
+            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeaderIndex(lightModel.getCardsLeader())), -1);
         } catch (RequestTimeoutException e) {
             e.printStackTrace();
         }
@@ -394,8 +395,6 @@ public class CLI implements ViewInterface {
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {

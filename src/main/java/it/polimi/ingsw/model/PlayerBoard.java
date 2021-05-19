@@ -146,9 +146,8 @@ public class PlayerBoard {
      * @param cardLeader to discard
      */
     public void discardCardLeader(CardLeader cardLeader) {
-        if(!cardsLeader.contains(cardLeader)) throw new CardLeaderWrongOwnerException();
+        if (!cardsLeader.contains(cardLeader)) throw new CardLeaderWrongOwnerException();
         cardsLeader.remove(cardLeader);
-        moveFaith(1);
     }
 
     /**
