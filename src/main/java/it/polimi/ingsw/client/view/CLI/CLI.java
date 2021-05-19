@@ -251,7 +251,7 @@ public class CLI implements ViewInterface {
     public void askCardLeaderDiscard() {
         out.println("Choose a card leader to discard:");
         try{
-            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())),-1);
+            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeaderIndex(lightModel.getCardsLeader())),-1);
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
@@ -273,7 +273,6 @@ public class CLI implements ViewInterface {
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
         String winner= utils.checkWinner(showScoreBoard);
     }
-
 
     @Override
     public void askMarketChoice() {

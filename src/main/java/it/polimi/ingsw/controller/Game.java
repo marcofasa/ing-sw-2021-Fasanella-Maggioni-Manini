@@ -231,6 +231,10 @@ public class Game implements Runnable {
             output.put(nickname, gameTable.getFaithTrailInstance().getPosition(board));
         }
 
+        if (gameTable.isSinglePlayer()) {
+            output.put("Lorenzo", gameTable.getFaithTrailInstance().getLorenzoPosition());
+        }
+
         return output;
     }
 
@@ -259,7 +263,8 @@ public class Game implements Runnable {
     public void advanceTurn(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
-        PlayerBoard previousPlayer=controller.getTurnController().getActivePlayer();
+        PlayerBoard previousPlayer = controller.getTurnController().getActivePlayer();
+
         try {
             controller.advanceTurn(nickname);
             send(nickname, new ResponseSuccess());
@@ -267,14 +272,15 @@ public class Game implements Runnable {
             send(nickname, new ResponseNotActivePlayerError());
         }
 
-        if(controller.getGamePhase()==2 && displayStartingEndGame){
+        if (controller.getGamePhase()==2 && displayStartingEndGame){
             sendAll(new StartingEndGameMessage(previousPlayer.getNickname()) {
             });
             displayStartingEndGame=false;
         }
-        if(controller.getGamePhase()==3){
+
+        if (controller.getGamePhase()==3){
             sendAll(new ScoreBoardMessage(controller.calculateScores()));
-        }else{
+        } else {
         // Notify new active player that it's his turn to play
         sendAll(
                 new RequestSignalActivePlayer(
