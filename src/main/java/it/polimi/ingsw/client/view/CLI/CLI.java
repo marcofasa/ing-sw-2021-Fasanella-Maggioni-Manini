@@ -115,12 +115,12 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayWin() {
-        out.println("You win!");
+        utils.printWinnerMessage();
     }
 
     @Override
     public void displayLost() {
-        out.println("You've lost!");
+        utils.printLoserMessage();
     }
 
     @Override
@@ -274,7 +274,15 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
-        String winner= utils.checkWinner(showScoreBoard);
+       int maxPoints=utils.checkWinner(showScoreBoard);
+       String nickName=lightModel.getNickname();
+       if(showScoreBoard.get(nickName)==maxPoints){
+           displayWin();
+       }
+       else{
+           displayLost();
+       }
+       utils.printScoreBoard(showScoreBoard,nickName);
     }
 
 
