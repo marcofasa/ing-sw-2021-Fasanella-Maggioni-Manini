@@ -114,12 +114,12 @@ public class Utils {
      * @param marble
      */
     private void printMarbleColored(MarbleType marble) {
-        if (marble==MarbleType.MarbleBlue) out.printf(BACKGROUND_BLUE+BLACK+" B "+RESET);
-        else if (marble==MarbleType.MarbleGrey) out.printf(BACKGROUND_GRAY +BLACK+" G "+RESET);
-        else if (marble==MarbleType.MarbleRed) out.printf(BACKGROUND_RED+ BLACK+" R " +RESET);
-        else if (marble==MarbleType.MarbleWhite) out.printf(BACKGROUND_WHITE+BLACK+" W "+RESET);
-        else if (marble==MarbleType.MarbleYellow) out.printf(BACKGROUND_YELLOW+BLACK+" Y "+RESET);
-        else if (marble==MarbleType.MarblePurple) out.printf(BACKGROUND_MAGENTA + BLACK+" P "+RESET);
+        if (marble==MarbleType.MarbleBlue) out.printf(BACKGROUND_BLUE+" B "+RESET);
+        else if (marble==MarbleType.MarbleGrey) out.printf(BACKGROUND_GRAY +" G "+RESET);
+        else if (marble==MarbleType.MarbleRed) out.printf(BACKGROUND_RED+" R " +RESET);
+        else if (marble==MarbleType.MarbleWhite) out.printf(BACKGROUND_WHITE+" W "+RESET);
+        else if (marble==MarbleType.MarbleYellow) out.printf(BACKGROUND_YELLOW+" Y "+RESET);
+        else if (marble==MarbleType.MarblePurple) out.printf(BACKGROUND_MAGENTA +" P "+RESET);
     }
 
     /**
@@ -455,7 +455,9 @@ public class Utils {
     private void printCardLeader(CardLeader cardLeader) {
         int victoryPoints = cardLeader.getVictoryPointsValue();
         CardLeaderRequirements cardLeaderRequirements= cardLeader.getRequirements();
-        out.printf("Card Leader (requirements for production): ");
+        out.printf("Card Leader ");
+        cardLeader.getDescription();
+        out.printf(" (requirements for activation): ");
         switch (cardLeaderRequirements.getCardLeaderRequirementsType()){
             case NumberOfDevelopmentCardTypes:
                 printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());

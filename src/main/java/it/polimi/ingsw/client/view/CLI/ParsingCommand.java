@@ -10,7 +10,7 @@ public class ParsingCommand {
     private final PrintWriter out ;
     private final Scanner in;
     private boolean haveMove=false;
-
+    
     /**
      * Constructor of Parsing Command
      * @param utils

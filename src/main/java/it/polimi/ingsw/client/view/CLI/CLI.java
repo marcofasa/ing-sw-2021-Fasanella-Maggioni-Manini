@@ -197,11 +197,17 @@ public class CLI implements ViewInterface {
         return utils.readNumberWithBounds(1,4);
     }
 
+    /**
+     * Let player select which resources to discard
+     * @param choice HashMap of available resources
+     * @return HashMap of selected resources
+     */
     @Override
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         HashMap<Resource, Integer> temp = new HashMap<>(choice);
         HashMap<Resource, Integer> selection = new HashMap<>();
 
+        //Read resources
         utils.printListResource(choice);
         out.println("Do you want to discard a resource?");
         if (utils.readYesOrNo(true)) {
@@ -226,8 +232,11 @@ public class CLI implements ViewInterface {
                 out.println("Discard another resource?");
             } while (utils.readYesOrNo(false));
         }
+
         return selection;
     }
+
+
 
     @Override
     public void displayWaiting(int timeoutInSeconds) {
@@ -246,10 +255,10 @@ public class CLI implements ViewInterface {
         //client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader()),-1));
     }
 
+
     @Override
     public void displayCardDevelopmentMarket() {
         utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
-
     }
 
 

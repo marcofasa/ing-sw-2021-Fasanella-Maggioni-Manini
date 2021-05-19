@@ -89,4 +89,6 @@ public abstract class CardLeader implements Serializable {
     public String getPlayerName() {
         return playerName;
     }
+
+    public abstract CardLeaderType getDescription();
 }
