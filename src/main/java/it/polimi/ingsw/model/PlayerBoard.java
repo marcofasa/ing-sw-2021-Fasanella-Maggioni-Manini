@@ -141,10 +141,6 @@ public class PlayerBoard {
         return cardSlotArray[index];
     }
 
-    //RISOLVERE IN QUALCHE MODO QUESTE DUE
-    void discardCardLeaderController(CardLeader cardLeader) {
-        cardLeader.discard(this);
-    }
 
     void discardCardLeader(CardLeader cardLeader) {
         cardsLeader.remove(cardLeader);
@@ -313,9 +309,9 @@ public class PlayerBoard {
         }
 
         //Card Leader deposit content
-        if (depositLeaderCard.getContent().size() > 0) {
-            for (Resource res : depositLeaderCard.getContent().keySet()) {
-                temp.replace(res, depositLeaderCard.getContent().get(res) + temp.get(res));
+        if (getDepositLeaderCardInstance().getContent().size() > 0) {
+            for (Resource res : getDepositLeaderCardInstance().getContent().keySet()) {
+                temp.replace(res, getDepositLeaderCardInstance().getContent().get(res) + temp.get(res));
             }
         }
 
@@ -405,7 +401,7 @@ public class PlayerBoard {
         for (Resource res : Resource.values()) {
             totalResources += getDepositInstance().getContent().get(res);
             totalResources += getStrongboxInstance().getContent().get(res);
-            totalResources += depositLeaderCard.getContent().get(res);
+            totalResources += getDepositLeaderCardInstance().getContent().get(res);
         }
 
         victoryPoints += Math.floorDiv(totalResources, 5);

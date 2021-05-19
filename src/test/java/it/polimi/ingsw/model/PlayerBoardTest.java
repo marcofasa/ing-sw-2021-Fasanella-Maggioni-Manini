@@ -12,7 +12,7 @@ public class PlayerBoardTest {
 
     private PlayerBoard newPlayerBoard(){
         GameTable gametable = new GameTable(new ArrayList<>().add("uno"));
-        return new PlayerBoard("uno", true, PlayerState.PLAYING, gametable);
+        return gametable.getPlayerByIndex(0);
     }
 
     @Test
@@ -172,65 +172,13 @@ public class PlayerBoardTest {
         assertNull(resources3);
     }
 
-
-    @Test
-    public void getMarketRow() {
-    }
-
-    @Test
-    public void getTempDeposit() {
-    }
-
-    @Test
-    public void getMarketCol() {
-    }
-
-    @Test
-    public void getCardsLeader() {
-    }
-
-    @Test
-    public void getCardsLeaderBeforeSelecting() {
-    }
-
-    @Test
-    public void addCardLeaderBeforeSelecting() {
-    }
-
-    @Test
-    public void getStrongboxInstance() {
-    }
-
-    @Test
-    public void getDepositInstance() {
-    }
-
-    @Test
-    public void getCardDevelopmentSlotByIndex() {
-    }
-
-    @Test
-    public void discardCardLeaderController() {
-    }
-
-    @Test
-    public void discardCardLeader() {
-    }
-
-    @Test
-    public void addToTemporaryDeposit() {
-    }
-
-    @Test
-    public void activateCardLeader() {
-    }
-
-    @Test
-    public void drawCardLeaderFromDeck() {
-    }
-
     @Test
     public void selectCardsLeader() {
+        PlayerBoard playerBoard = newPlayerBoard();
+        var cards = playerBoard.getCardsLeaderBeforeSelecting();
+        assertEquals(0, playerBoard.getCardsLeader().size());
+        playerBoard.selectCardsLeader(playerBoard.getCardsLeaderBeforeSelecting().get(1), playerBoard.getCardsLeaderBeforeSelecting().get(0));
+        assertArrayEquals(playerBoard.getCardsLeader().toArray(), Arrays.asList(playerBoard.getCardsLeaderBeforeSelecting().get(1), playerBoard.getCardsLeaderBeforeSelecting().get(0)).toArray());
     }
 
     @Test

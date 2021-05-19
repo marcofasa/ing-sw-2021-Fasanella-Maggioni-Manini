@@ -32,22 +32,22 @@ public class CardLeaderRequirements implements Serializable {
                                   @Nullable HashMap<Resource, Integer> numberOfResources
                                   ){
         this.cardLeaderRequirementsType = cardLeaderRequirementsTypes;
-        switch (cardLeaderRequirementsTypes){
-            case NumberOfDevelopmentCardTypes:
-                if(numberOfDevelopmentCardTypes == null)
+        switch (cardLeaderRequirementsTypes) {
+            case NumberOfDevelopmentCardTypes -> {
+                if (numberOfDevelopmentCardTypes == null)
                     throw new IllegalArgumentException();
                 this.numberOfDevelopmentCardTypes = numberOfDevelopmentCardTypes;
-                break;
-            case NumberOfDevelopmentCardLevel:
-                if(numberOfDevelopmentCardLevel == null)
+            }
+            case NumberOfDevelopmentCardLevel -> {
+                if (numberOfDevelopmentCardLevel == null)
                     throw new IllegalArgumentException();
                 this.numberOfDevelopmentCardLevel = numberOfDevelopmentCardLevel;
-                break;
-            case NumberOfResources:
-                if(numberOfResources == null)
+            }
+            case NumberOfResources -> {
+                if (numberOfResources == null)
                     throw new IllegalArgumentException();
                 this.numberOfResources = numberOfResources;
-                break;
+            }
         }
     }
 
