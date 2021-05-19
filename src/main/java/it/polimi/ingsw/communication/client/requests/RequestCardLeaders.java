@@ -11,6 +11,6 @@ public class RequestCardLeaders extends ClientRequest {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getCommandDispatcher().requestLeaderCards(virtualClient, getTimeoutID());
+        virtualClient.getCommandDispatcher().requestLeaderCards(getTimeoutID());
     }
 }

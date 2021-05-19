@@ -45,12 +45,10 @@ public class ClientCommandDispatcher {
         return client.getView().askForInitialResourcesSelection(playerNumber);
     }
 
-    public void requestDiscardResourceSelection(HashMap<Resource, Integer> resources, int timeoutID) {
+    public void discardResourceSelection(HashMap<Resource, Integer> resources) {
         HashMap<Resource,Integer> resources1= client.getView().askForResourceToDiscard(resources);
 
-        RequestAddResourceSelection response = new RequestAddResourceSelection(resources1);
-
-        sendWithTimeoutID(response, timeoutID);
+        client.send(new RequestAddResourceSelection(resources1));
     }
 
     public void notActivePlayerError() {

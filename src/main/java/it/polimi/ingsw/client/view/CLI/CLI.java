@@ -287,14 +287,7 @@ public class CLI implements ViewInterface {
         2 arg: number of row/column
 
          */
-        try{
-            client.sendAndWait(new RequestMarketUse(message,key),-1);
-        }
-        catch (RequestTimeoutException e){
-            displayTimeOut();
-            e.printStackTrace();
-        }
-
+        client.send(new RequestMarketUse(message,key));
     }
 
     @Override

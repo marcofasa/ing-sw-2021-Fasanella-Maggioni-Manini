@@ -201,10 +201,10 @@ public class VirtualClientCommandDispatcher {
         sendWithTimeoutID(new ResponseLightFaithTrail(tileStatuses, playerPositions), _timeoutID);
     }
 
-    public void requestLeaderCards(VirtualClient _vClient, int _timeoutID) {
+    public void requestLeaderCards(int _timeoutID) {
 
         ArrayList<CardLeader> leaderCards;
-        leaderCards = virtualClient.getGame().getLeaderCards(_vClient);
+        leaderCards = virtualClient.getGame().getLeaderCards(virtualClient);
 
         sendWithTimeoutID(new ResponseCardLeaders(leaderCards), _timeoutID);
     }
