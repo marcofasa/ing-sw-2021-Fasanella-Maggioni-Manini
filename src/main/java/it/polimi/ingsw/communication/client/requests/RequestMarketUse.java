@@ -1,7 +1,5 @@
 package it.polimi.ingsw.communication.client.requests;
 
-import it.polimi.ingsw.communication.client.ClientRequest;
-import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.server.VirtualClient;
 
 public class RequestMarketUse extends ClientRequest {

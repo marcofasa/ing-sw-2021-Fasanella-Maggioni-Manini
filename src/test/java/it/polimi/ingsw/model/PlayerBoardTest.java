@@ -11,7 +11,9 @@ import java.util.HashMap;
 public class PlayerBoardTest {
 
     private PlayerBoard newPlayerBoard(){
-        GameTable gametable = new GameTable(new ArrayList<>().add("uno"));
+        var players = new ArrayList<String>();
+        players.add("uno");
+        GameTable gametable = new GameTable(players);
         return gametable.getPlayerByIndex(0);
     }
 

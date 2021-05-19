@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.communication.server.*;
-import it.polimi.ingsw.communication.server.requests.RequestDiscardResourceSelection;
+import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
@@ -115,7 +115,7 @@ public class VirtualClientCommandDispatcher {
                 sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
 
             } else {
-                RequestDiscardResourceSelection request = new RequestDiscardResourceSelection(residualResources);
+                ResponseDiscardResourceSelection request = new ResponseDiscardResourceSelection(residualResources);
 
                 sendWithTimeoutID(request, _timeoutID);
             }
@@ -139,7 +139,7 @@ public class VirtualClientCommandDispatcher {
             if (residualResources == null) {
                 sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
             } else {
-                sendWithTimeoutID(new RequestDiscardResourceSelection(residualResources), _timeoutID);
+                sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }
 
         } catch (NotActivePlayerException ex) {
@@ -210,6 +210,10 @@ public class VirtualClientCommandDispatcher {
         developmentCards = virtualClient.getGame().getTopDevelopmentCards(_vClient);
 
         sendWithTimeoutID(new ResponseTopCardsDevelopment(developmentCards), _timeoutID);
+
+    }
+
+    public void requestAddResourceSelection(HashMap<Resource, Integer> resources) {
 
     }
 }

@@ -1,5 +1,6 @@
-package it.polimi.ingsw.communication.client;
+package it.polimi.ingsw.communication.client.requests;
 
+import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.server.VirtualClient;
 
 public abstract class ClientRequest extends ClientMessage {
