@@ -210,11 +210,11 @@ public class CLI implements ViewInterface {
                 if (temp.get(resource)>0) {
                     int i = temp.get(resource);
                     if(!selection.containsKey(resource)){
-                        selection.replace(resource,1);
+                        selection.put(resource,1);
                     }
                     else {
                         int r=selection.get(resource);
-                        selection.put(resource, r + 1);
+                        selection.replace(resource, r + 1);
                     }
                     temp.replace(resource,i-1);
                 }
@@ -328,7 +328,9 @@ public class CLI implements ViewInterface {
 
         //Ask for Card Development production
         out.println("Do you want to activate Card Development production?");
-        if (utils.readYesOrNo(false)) productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardsDevelopment()));
+        if (utils.readYesOrNo(false)) {
+            productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardsDevelopment()));
+        }
         else {
             Boolean[] falseArray =new Boolean[3];
             falseArray[0]=false;
