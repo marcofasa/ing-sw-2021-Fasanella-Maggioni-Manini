@@ -442,4 +442,7 @@ public class Game implements Runnable {
         }
     }
 
+    public void discardCardLeader(VirtualClient virtualClient, CardLeader cardLeader) {
+        controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeader);
+    }
 }

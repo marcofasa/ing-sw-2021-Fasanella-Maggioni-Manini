@@ -1,4 +1,4 @@
-package it.polimi.ingsw.communication.client.requests;
+package it.polimi.ingsw.communication.client;
 
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.server.VirtualClient;
