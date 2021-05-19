@@ -207,14 +207,14 @@ public class CLI implements ViewInterface {
         HashMap<Resource, Integer> temp = new HashMap<>(choice);
         HashMap<Resource, Integer> selection = new HashMap<>();
         boolean firstCall= true;
-        boolean loop=true;
+        boolean loop=false;
+
         //Read resources
         out.println("Ops, you must discard at least one resource:");
         utils.printListResource(choice);
         out.println("Here's a list of available resources to discard:");
             do {
-                Resource resource = utils.readResource(firstCall);
-                firstCall=false;
+                Resource resource = utils.readResource(loop);
                 if (temp.get(resource)>0) {
                     int i = temp.get(resource);
                     if(!selection.containsKey(resource)){

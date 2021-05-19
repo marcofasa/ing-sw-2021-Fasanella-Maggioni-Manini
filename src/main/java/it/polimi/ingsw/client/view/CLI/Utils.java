@@ -697,9 +697,9 @@ public class Utils {
         Resource resource;
         out.println("(Remember that resources are: coin, stone, servant, shield)");
         if(firstCall) in.nextLine();
-        String s= in.nextLine();
+        String s= readString();
         while (!s.equals("coin") && !s.equals("stone") && !s.equals("servant") && !s.equals("shield") ){
-            if(!s.equals("") || !s.equals("\r\n")) {
+            if(!s.equals("") && !s.equals("\r\n")) {
                 if (coloredCLI) {
                     out.println(RED + "Invalid choice. Type the correct name of the resource:");
                     out.println("(Remember that resources are: coin, stone, servant, shield)" + RESET);

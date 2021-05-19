@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.CLI;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 
 public class ParsingCommand {
 
@@ -76,7 +77,7 @@ public class ParsingCommand {
                 break;
             case "buy card development":
                 cli.askDevelopmentCardChoice(); //1 chance
-                        break;
+                 break;
             case "production":
                     cli.askProductionActivation(); //1 chance
                 break;
@@ -101,6 +102,7 @@ public class ParsingCommand {
             case "end turn":
                 cli.askEndTurn();
                 return false;
+
             default: utils.printCommandError();
         }
         return true;
@@ -112,4 +114,5 @@ public class ParsingCommand {
     private void printInvalidMove() {
         out.println("Invalid move, you have already done a one-chance action!");
     }
+
 }

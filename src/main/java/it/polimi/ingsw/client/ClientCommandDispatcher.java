@@ -28,6 +28,7 @@ public class ClientCommandDispatcher {
         sendWithTimeoutID(new ResponsePlayersNumber(client.getView().askPlayerNumber()), timeoutID);
     }
 
+
     public void nicknameIsUnavailable(){ /* TODO */
         System.out.println("Nickname is unavailable");
     }
