@@ -464,9 +464,7 @@ public class Utils {
     private void printCardLeader(CardLeader cardLeader) {
         int victoryPoints = cardLeader.getVictoryPointsValue();
         CardLeaderRequirements cardLeaderRequirements= cardLeader.getRequirements();
-        out.printf("Card Leader ");
-        cardLeader.getDescription();
-        out.printf(" (requirements for activation): ");
+        out.printf("Card Leader "+cardLeader.getDescription().toString()+" (requirements for activation): ");
         switch (cardLeaderRequirements.getCardLeaderRequirementsType()){
             case NumberOfDevelopmentCardTypes:
                 printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());
@@ -491,6 +489,7 @@ public class Utils {
         out.printf(" with "+victoryPoints+" victory points;");
         out.println();
     }
+
 
     /**
      * Prints descriptions if CardLeaderRequirementsType==NumberOfDevelopmentCardLevel
@@ -955,6 +954,10 @@ public void setColoredCLI(){
         else coloredCLI=true;
         if(coloredCLI) out.println(Colors.GREEN+"Done!"+RESET);
         else out.println("Done!");
+    }
+
+    public String checkWinner(HashMap<String, Integer> showScoreBoard) {
+        return null;
     }
 }
 

@@ -137,4 +137,8 @@ public interface ViewInterface {
     void askCardLeaderDiscard();
 
     void displayCardDevelopmentMarket();
+
+    void displayStartingEndGame(String payload);
+
+    void displayScoreBoard(HashMap<String, Integer> showScoreBoard);
 }

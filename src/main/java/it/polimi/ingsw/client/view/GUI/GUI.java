@@ -192,4 +192,16 @@ public class GUI extends Application implements ViewInterface {
     public void displayCardDevelopmentMarket() {
 
     }
+
+    @Override
+    public void displayStartingEndGame(String payload) {
+
+    }
+
+    @Override
+    public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
+
+    }
+
+
 }
