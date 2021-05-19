@@ -206,13 +206,15 @@ public class CLI implements ViewInterface {
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         HashMap<Resource, Integer> temp = new HashMap<>(choice);
         HashMap<Resource, Integer> selection = new HashMap<>();
-
+        boolean firstCall= true;
+        boolean loop=true;
         //Read resources
         out.println("Ops, you must discard at least one resource:");
         utils.printListResource(choice);
         out.println("Here's a list of available resources to discard:");
             do {
-                Resource resource = utils.readResource(false);
+                Resource resource = utils.readResource(firstCall);
+                firstCall=false;
                 if (temp.get(resource)>0) {
                     int i = temp.get(resource);
                     if(!selection.containsKey(resource)){
@@ -223,14 +225,15 @@ public class CLI implements ViewInterface {
                         selection.replace(resource, r + 1);
                     }
                     temp.replace(resource,i-1);
+                    out.println("Discard another resource?");
+                    loop=utils.readYesOrNo(false);
                 }
                 else{
                     out.println("You can't discard this resource, try with another.");
                     out.println("Here's a list of available resources to discard:");
                     utils.printListResource(temp);
                 }
-                out.println("Discard another resource?");
-            } while (utils.readYesOrNo(false));
+            } while (loop);
 
         return selection;
     }
@@ -294,16 +297,12 @@ public class CLI implements ViewInterface {
         /*
         1 arg: row=1 or col=0
         2 arg: number of row/column
-
          */
-        try{
-            client.sendAndWait(new RequestMarketUse(message,key),-1);
-        }
-        catch (RequestTimeoutException e){
-            displayTimeOut();
+        try {
+            client.sendAndWait(new RequestMarketUse(message,key), -1);
+        } catch (RequestTimeoutException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
