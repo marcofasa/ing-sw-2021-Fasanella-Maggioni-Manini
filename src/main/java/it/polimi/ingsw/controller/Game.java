@@ -33,6 +33,7 @@ public class Game implements Runnable {
     private final LinkedHashMap<String, VirtualClient> nicknameClientMap;
     private final LinkedHashMap<VirtualClient, String> clientNicknameMap;
     private final LinkedHashMap<Integer, VirtualClient> idPlayerClientMap;
+    boolean displayStartingEndGame=true;
 
     /**
      * Basic constructor which instantiates the private LinkedHashMaps
@@ -258,7 +259,7 @@ public class Game implements Runnable {
     public void advanceTurn(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
-
+        PlayerBoard previousPlayer=controller.getTurnController().getActivePlayer();
         try {
             controller.advanceTurn(nickname);
             send(nickname, new ResponseSuccess());
@@ -266,11 +267,19 @@ public class Game implements Runnable {
             send(nickname, new ResponseNotActivePlayerError());
         }
 
+        if(controller.getGamePhase()==2 && displayStartingEndGame){
+            sendAll(new StartingEndGameMessage(previousPlayer.getNickname()) {
+            });
+            displayStartingEndGame=false;
+        }
+        if(controller.getGamePhase()==3){
+            sendAll(new ScoreBoardMessage(controller.calculateScores()));
+        }else{
         // Notify new active player that it's his turn to play
         sendAll(
                 new RequestSignalActivePlayer(
                         controller.getTurnController().getActivePlayer().getNickname()));
-    }
+    }}
 
     /**
      * This method is called by a RequestBuyDevelopmentCard's read() method.

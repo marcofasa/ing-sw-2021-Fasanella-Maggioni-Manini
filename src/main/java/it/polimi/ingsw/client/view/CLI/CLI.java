@@ -208,9 +208,9 @@ public class CLI implements ViewInterface {
         HashMap<Resource, Integer> selection = new HashMap<>();
 
         //Read resources
+        out.println("Ops, you must discard at least one resource:");
         utils.printListResource(choice);
-        out.println("Do you want to discard a resource?");
-        if (utils.readYesOrNo(true)) {
+        out.println("Here's a list of available resources to discard:");
             do {
                 Resource resource = utils.readResource(false);
                 if (temp.get(resource)>0) {
@@ -231,7 +231,6 @@ public class CLI implements ViewInterface {
                 }
                 out.println("Discard another resource?");
             } while (utils.readYesOrNo(false));
-        }
 
         return selection;
     }
@@ -251,9 +250,10 @@ public class CLI implements ViewInterface {
     @Override
     public void askCardLeaderDiscard() {
         out.println("Choose a card leader to discard:");
-        try {
-            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())), -1);
-        } catch (RequestTimeoutException e) {
+        try{
+            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())),-1);
+        }
+        catch (RequestTimeoutException e){
             e.printStackTrace();
         }
     }
@@ -262,6 +262,16 @@ public class CLI implements ViewInterface {
     @Override
     public void displayCardDevelopmentMarket() {
         utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+    }
+
+    @Override
+    public void displayStartingEndGame(String NickName) {
+        out.println(NickName + " has activated endgame!");
+    }
+
+    @Override
+    public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
+        String winner= utils.checkWinner(showScoreBoard);
     }
 
 

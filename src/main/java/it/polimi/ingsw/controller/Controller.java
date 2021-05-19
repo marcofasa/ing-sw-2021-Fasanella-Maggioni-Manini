@@ -82,6 +82,10 @@ public class Controller {
         return null;
     }
 
+    public int getGamePhase() {
+        return gamePhase;
+    }
+
     /**
      * Method to evaluate if a given nickname is associated to the active PlayerBoard.
      * @param _nickname the nickname we are looking for.
