@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.*;
+import it.polimi.ingsw.communication.client.requests.RequestAddResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
 import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
@@ -47,7 +48,7 @@ public class ClientCommandDispatcher {
     public void requestDiscardResourceSelection(HashMap<Resource, Integer> resources, int timeoutID) {
         HashMap<Resource,Integer> resources1= client.getView().askForResourceToDiscard(resources);
 
-        ResponseDiscardResourceSelection response = new ResponseDiscardResourceSelection(resources1);
+        RequestAddResourceSelection response = new RequestAddResourceSelection(resources1);
 
         sendWithTimeoutID(response, timeoutID);
     }

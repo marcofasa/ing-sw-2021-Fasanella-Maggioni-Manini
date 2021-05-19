@@ -212,8 +212,4 @@ public class VirtualClientCommandDispatcher {
         sendWithTimeoutID(new ResponseTopCardsDevelopment(developmentCards), _timeoutID);
 
     }
-
-    public void requestAddResourceSelection(HashMap<Resource, Integer> resources) {
-
-    }
 }

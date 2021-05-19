@@ -16,6 +16,6 @@ public class RequestAddResourceSelection extends ClientRequest {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        virtualClient.getCommandDispatcher().requestAddResourceSelection(resources);
+        virtualClient.getCommandDispatcher().discardResourceSelection(resources, super.getTimeoutID());
     }
 }

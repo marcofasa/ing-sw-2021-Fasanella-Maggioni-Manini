@@ -24,4 +24,9 @@ public class CardLeaderWhiteMarble extends CardLeader {
         playerBoard.setWhiteEffect(resource);
         active = true;
     }
+
+    @Override
+    public CardLeaderType getDescription() {
+        return CardLeaderType.WhiteMarble;
+    }
 }

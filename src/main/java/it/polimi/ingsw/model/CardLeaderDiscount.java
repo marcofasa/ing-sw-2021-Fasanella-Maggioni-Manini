@@ -26,4 +26,9 @@ public class CardLeaderDiscount extends CardLeader {
             active = true;
         }
     }
+
+    @Override
+    public CardLeaderType getDescription() {
+        return CardLeaderType.Discount;
+    }
 }

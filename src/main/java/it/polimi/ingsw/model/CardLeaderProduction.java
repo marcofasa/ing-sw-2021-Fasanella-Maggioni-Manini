@@ -28,4 +28,9 @@ public class CardLeaderProduction extends CardLeader{
         playerBoard.getStrongboxInstance().addResource(playerBoard.getCardLeaderProductionOutput(), 1);
         playerBoard.moveFaith(1);
     }
+
+    @Override
+    public CardLeaderType getDescription() {
+        return CardLeaderType.Production;
+    }
 }

@@ -27,4 +27,9 @@ public class CardLeaderDeposit extends CardLeader{
             active = true;
         }
     }
+
+    @Override
+    public CardLeaderType getDescription() {
+        return CardLeaderType.Deposit;
+    }
 }
