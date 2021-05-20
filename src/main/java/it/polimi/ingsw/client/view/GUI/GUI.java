@@ -203,5 +203,10 @@ public class GUI extends Application implements ViewInterface {
 
     }
 
+    @Override
+    public void displayMainMoveAlreadyMade() {
+
+    }
+
 
 }

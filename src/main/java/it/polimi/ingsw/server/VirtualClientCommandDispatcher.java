@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
+import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 
@@ -59,6 +60,7 @@ public class VirtualClientCommandDispatcher {
 
         try {
             virtualClient.getGame().activateProductionPowers(virtualClient, productionSelection);
+            virtualClient.getGame().setMainMoveMade(true);
             sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
 
         } catch (NotActivePlayerException e) {
@@ -73,6 +75,8 @@ public class VirtualClientCommandDispatcher {
         } catch (CardLeaderRequirementsNotMetException e) {
             sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), _timeoutID);
 
+        } catch (MainMoveAlreadyMadeException e) {
+            sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
         }
     }
 
@@ -81,6 +85,7 @@ public class VirtualClientCommandDispatcher {
         try {
 
             virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, _placementIndex);
+            virtualClient.getGame().setMainMoveMade(true);
             sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
 
         } catch (NotActivePlayerException ex) {
@@ -90,6 +95,10 @@ public class VirtualClientCommandDispatcher {
         } catch (NotEnoughResourcesException ex) {
 
             sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+
+        } catch (MainMoveAlreadyMadeException ex) {
+
+            sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
 
         } catch (InvalidCardDevelopmentPlacementException | InvalidSlotIndexException | FullSlotException ex) {
 
@@ -143,6 +152,7 @@ public class VirtualClientCommandDispatcher {
 
         try {
             residualResources = virtualClient.getGame().useMarket(virtualClient, _index, _selection);
+            virtualClient.getGame().setMainMoveMade(true);
 
             if (residualResources == null) {
                 sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
@@ -156,6 +166,8 @@ public class VirtualClientCommandDispatcher {
         } catch (IllegalArgumentException ex) {
             sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
 
+        } catch (MainMoveAlreadyMadeException e) {
+            sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
         }
     }
 

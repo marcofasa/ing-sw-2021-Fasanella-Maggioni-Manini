@@ -141,4 +141,6 @@ public interface ViewInterface {
     void displayStartingEndGame(String payload);
 
     void displayScoreBoard(HashMap<String, Integer> showScoreBoard);
+
+    void displayMainMoveAlreadyMade();
 }

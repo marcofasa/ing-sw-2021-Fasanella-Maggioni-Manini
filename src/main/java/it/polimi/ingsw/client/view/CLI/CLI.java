@@ -278,6 +278,12 @@ public class CLI implements ViewInterface {
     }
 
     @Override
+    public void displayMainMoveAlreadyMade() {
+        out.println("You can't make more than one main move in a single turn!\n" +
+                "Main moves are : \"buy resource\", \"buy card development\" and \"production\"");
+    }
+
+    @Override
     public void askMarketChoice() {
         displayMarket();
         int rowcolumn;
@@ -453,6 +459,8 @@ public class CLI implements ViewInterface {
     public void colorize() {
         utils.colorize();
     }
+
+
 
 
 }

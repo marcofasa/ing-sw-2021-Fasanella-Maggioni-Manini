@@ -28,6 +28,7 @@ public class Controller {
     private final InitialSelectionController initialSelectionController;
     private final TurnController turnController;
     private final boolean isSinglePlayer;
+    private boolean mainActionDone;
     private int gamePhase;
 
     /**
@@ -111,6 +112,7 @@ public class Controller {
 
         if (isActivePlayer(_nickname)) {
             turnController.advanceTurn();
+            mainActionDone = false;
 
             // Single player match logic
             if (isSinglePlayer) {

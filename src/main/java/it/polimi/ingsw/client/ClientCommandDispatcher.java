@@ -125,4 +125,7 @@ public class ClientCommandDispatcher {
     public void showScoreBoard(HashMap<String, Integer> showScoreBoard) {
         client.getView().displayScoreBoard(showScoreBoard);
     }
+
+    public void mainMoveAlreadyMade() { client.getView().displayMainMoveAlreadyMade();
+    }
 }

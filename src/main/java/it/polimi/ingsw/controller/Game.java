@@ -6,6 +6,7 @@ import it.polimi.ingsw.communication.server.requests.RequestInitialSelection;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseNotActivePlayerError;
 import it.polimi.ingsw.communication.server.responses.ResponseSuccess;
+import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
@@ -33,7 +34,8 @@ public class Game implements Runnable {
     private final LinkedHashMap<String, VirtualClient> nicknameClientMap;
     private final LinkedHashMap<VirtualClient, String> clientNicknameMap;
     private final LinkedHashMap<Integer, VirtualClient> idPlayerClientMap;
-    boolean displayStartingEndGame=true;
+    private boolean displayStartingEndGame = true;
+    private boolean mainMoveMade = false;
 
     /**
      * Basic constructor which instantiates the private LinkedHashMaps
@@ -252,6 +254,10 @@ public class Game implements Runnable {
         return board.getTopDevelopmentCards();
     }
 
+    public void setMainMoveMade(boolean b) {
+        mainMoveMade = b;
+    }
+
     // Public action methods to be invoked when a ClientRequest is received
 
     /**
@@ -267,6 +273,7 @@ public class Game implements Runnable {
 
         try {
             controller.advanceTurn(nickname);
+            setMainMoveMade(false);
             send(nickname, new ResponseSuccess());
         } catch (NotActivePlayerException ex) {
             send(nickname, new ResponseNotActivePlayerError());
@@ -308,11 +315,13 @@ public class Game implements Runnable {
             InvalidCardDevelopmentPlacementException,
             InvalidSlotIndexException,
             NotEnoughResourcesException,
-            FullSlotException {
+            FullSlotException, MainMoveAlreadyMadeException {
 
         String nickname = clientNicknameMap.get(_vClient);
 
-        controller.buyAndPlaceDevCard(nickname, _rowIndex, _colIndex, _placementIndex);
+        if (!mainMoveMade) {
+            controller.buyAndPlaceDevCard(nickname, _rowIndex, _colIndex, _placementIndex);
+        } else throw new MainMoveAlreadyMadeException();
 
     }
 
@@ -326,10 +335,14 @@ public class Game implements Runnable {
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      * @throws IllegalArgumentException : thrown if an invalid _index was selected by the player.
      */
-    public HashMap<Resource, Integer> useMarket(VirtualClient _vClient, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException {
+    public HashMap<Resource, Integer> useMarket(VirtualClient _vClient, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException, MainMoveAlreadyMadeException {
 
         String nickname = clientNicknameMap.get(_vClient);
-        return controller.useMarket(nickname, _index, _selection);
+
+        if (!mainMoveMade) {
+            return controller.useMarket(nickname, _index, _selection);
+        } else throw new MainMoveAlreadyMadeException();
+
     }
 
     /**
@@ -368,10 +381,12 @@ public class Game implements Runnable {
      * @throws InvalidSlotIndexException : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
      * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all of the selected production powers.
      */
-    public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException {
+    public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, MainMoveAlreadyMadeException {
 
         String nickname = clientNicknameMap.get(_vClient);
-        controller.activateProductionPowers(nickname, _selection);
+        if (!mainMoveMade) {
+            controller.activateProductionPowers(nickname, _selection);
+        } else throw new MainMoveAlreadyMadeException();
     }
 
     /* Overloaded send method */
@@ -458,4 +473,5 @@ public class Game implements Runnable {
     public void discardCardLeader(VirtualClient virtualClient, Integer cardLeaderIndex) {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
+
 }
