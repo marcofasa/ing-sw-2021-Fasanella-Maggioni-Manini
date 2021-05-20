@@ -71,8 +71,10 @@ public class VirtualClient implements Runnable{
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
             ClientMessage inputClass;
             while (connected) {
+   //           System.out.println("Client" + this +" is waiting...");
                 inputClass = (ClientMessage) inputStream.readObject();
                 ClientMessage finalInputClass = inputClass;
+   //           System.out.println("Reading" + inputClass);
                 try {
                     if(finalInputClass instanceof ClientResponse) {
                         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.communication.server.*;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
+import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
@@ -103,6 +105,10 @@ public class VirtualClientCommandDispatcher {
         virtualClient.send(serverMessage);
     }
 
+    private void send(ServerMessage message) {
+        virtualClient.send(message);
+    }
+
     public void discardResourceSelection(HashMap<Resource, Integer> discardSelection, int _timeoutID) {
 
         HashMap<Resource, Integer> residualResources;
@@ -113,11 +119,11 @@ public class VirtualClientCommandDispatcher {
             if (residualResources == null) {
 
                 sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
 
             } else {
-                ResponseDiscardResourceSelection request = new ResponseDiscardResourceSelection(residualResources);
 
-                sendWithTimeoutID(request, _timeoutID);
+                sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }
 
         } catch (NotActivePlayerException e) {
@@ -143,6 +149,7 @@ public class VirtualClientCommandDispatcher {
 
             if (residualResources == null) {
                 sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
             } else {
                 sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }

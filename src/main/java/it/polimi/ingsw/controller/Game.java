@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.*;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestInitialSelection;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseNotActivePlayerError;
@@ -11,7 +12,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.VirtualClient;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -43,7 +43,16 @@ public class Game implements Runnable {
         clientNicknameMap = new LinkedHashMap<>();
         idPlayerClientMap = new LinkedHashMap<>();
     }
-
+    
+    public String getNicknameByClient(VirtualClient virtualClient){
+        for (String nickname :
+                nicknameClientMap.keySet()) {
+            if (nicknameClientMap.get(nickname) == virtualClient)
+                return nickname;
+        }
+        throw new IllegalArgumentException("Unknown client");
+    }
+    
     /**
      * This method is called by ResponseInitialSelection's read() method.
      * It is used to assign a player's selection of card leaders and bonus resources.
@@ -143,7 +152,7 @@ public class Game implements Runnable {
 
         //sendAll signaling its the first player's turn to play
         String firstNickname = clientNicknameMap.get(players.get(0));
-        sendAll(new RequestSignalActivePlayer(firstNickname));
+        sendAll(new RequestSignalActivePlayer(firstNickname, GamePhase.Initial));
 
     }
 
@@ -278,7 +287,7 @@ public class Game implements Runnable {
         // Notify new active player that it's his turn to play
         sendAll(
                 new RequestSignalActivePlayer(
-                        controller.getTurnController().getActivePlayer().getNickname()));
+                        controller.getTurnController().getActivePlayer().getNickname(), GamePhase.Initial));
     }}
 
     /**

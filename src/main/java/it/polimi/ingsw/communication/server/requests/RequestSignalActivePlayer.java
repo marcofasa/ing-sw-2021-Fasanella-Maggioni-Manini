@@ -5,8 +5,11 @@ import it.polimi.ingsw.communication.server.ServerRequest;
 
 public class RequestSignalActivePlayer extends ServerRequest {
 
-    public RequestSignalActivePlayer(String nickname) {
+    private final GamePhase phase;
+
+    public RequestSignalActivePlayer(String nickname, GamePhase phase) {
         super(nickname, null);
+        this.phase = phase;
     }
 
     /**
@@ -16,6 +19,6 @@ public class RequestSignalActivePlayer extends ServerRequest {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.displayTurn(getPayload());
+        commandDispatcher.displayTurn(getPayload(), phase);
     }
 }

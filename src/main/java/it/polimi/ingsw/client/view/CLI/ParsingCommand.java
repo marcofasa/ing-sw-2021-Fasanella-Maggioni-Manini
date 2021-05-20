@@ -65,7 +65,7 @@ public class ParsingCommand {
                 break;
             case "buy resource":
                     cli.askMarketChoice(); //1 chance
-                break;
+                return false;
             case "resource market":
                     cli.displayMarket();
                 break;
@@ -77,7 +77,7 @@ public class ParsingCommand {
                 break;
             case "buy card development":
                 cli.askDevelopmentCardChoice(); //1 chance
-                 break;
+                break;
             case "production":
                     cli.askProductionActivation(); //1 chance
                 break;

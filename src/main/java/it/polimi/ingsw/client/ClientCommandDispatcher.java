@@ -3,9 +3,9 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.communication.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.communication.client.requests.RequestAddResourceSelection;
-import it.polimi.ingsw.communication.client.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
 import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class ClientCommandDispatcher {
         client.getView().displayNotActivePlayerError();
     }
 
-    public void displayTurn(String nickname) {
+    public void displayTurn(String nickname, GamePhase gamePhase) {
         client.getView().displayTurn(nickname);
     }
 
