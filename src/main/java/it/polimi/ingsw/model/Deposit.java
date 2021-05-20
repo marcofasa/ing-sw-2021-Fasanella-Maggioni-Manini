@@ -32,14 +32,16 @@ public class Deposit extends Strongbox {
             temp.addResource(res, content.get(res));
 
             //Resources the player wishes to add
-            temp.addResource(res, resourcesToBeAdded.get(res));
+            if(resourcesToBeAdded.get(res) != null)
+                temp.addResource(res, resourcesToBeAdded.get(res));
         }
 
         if (temp.checkInvariant()) {
 
             // If invariant is valid for temp, apply changes to real deposit content and return true
             for (Resource res : Resource.values()) {
-                addResource(res, resourcesToBeAdded.get(res));
+                if(resourcesToBeAdded.get(res) != null)
+                    addResource(res, resourcesToBeAdded.get(res));
             }
 
             return true;

@@ -23,7 +23,7 @@ public class CardLeaderProduction extends CardLeader{
         if(!playerBoard.getNickname().equals(playerName)) throw new CardLeaderWrongOwnerException();
         if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         active = true;
-        if (playerBoard.getCardLeaderProductionOutput() == null) throw new IllegalArgumentException();
+        if (playerBoard.getCardLeaderProductionOutput() == null) throw new IllegalArgumentException("Production output is not set!");
         playerBoard.getDepositInstance().discard(resource);
         playerBoard.getStrongboxInstance().addResource(playerBoard.getCardLeaderProductionOutput(), 1);
         playerBoard.moveFaith(1);
