@@ -214,7 +214,7 @@ public class CLI implements ViewInterface {
         utils.printListResource(choice);
         out.println("Here's a list of available resources to discard:");
             do {
-                Resource resource = utils.readResource(loop);
+                Resource resource = utils.readResource(false);
                 if (temp.get(resource)>0) {
                     int i = temp.get(resource);
                     if(!selection.containsKey(resource)){
@@ -225,10 +225,20 @@ public class CLI implements ViewInterface {
                         selection.replace(resource, r + 1);
                     }
                     temp.replace(resource,i-1);
+                    if(utils.checkEmptyResourceMap(temp)){
+                        break;
+                    }
                     out.println("Discard another resource?");
                     loop=utils.readYesOrNo(false);
                 }
                 else{
+                    /*
+                    if(firstCall) {
+                        firstCall=false;
+                        continue;
+                    }
+
+                     */
                     out.println("You can't discard this resource, try with another.");
                     out.println("Here's a list of available resources to discard:");
                     utils.printListResource(temp);
