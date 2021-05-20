@@ -210,7 +210,9 @@ public class CLI implements ViewInterface {
         boolean loop=true;
 
         //Read resources
-        out.println("Ops, you must discard at least one resource:");
+        out.println("Ops, there's not enough space:");
+        out.println("(Remember that you have to discard resources all in one move starting from now, and if selection is incorrect you will have to discard again)");
+        displayDeposit();
         utils.printListResource(choice);
         out.println("Here's a list of available resources to discard:");
             do {
