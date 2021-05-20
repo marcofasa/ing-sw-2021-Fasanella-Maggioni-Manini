@@ -58,9 +58,7 @@ public class Client {
                                 handleResponse(finalInputClass);
                             } catch (RequestTimeoutException e) {
                                 e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
+                            } catch (ExecutionException | InterruptedException e) {
                                 e.printStackTrace();
                             }
                         });
