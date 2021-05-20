@@ -513,7 +513,7 @@ public class PlayerBoard {
             // **Activate all powers**
 
             // Activate basic production
-            activateBasicProduction(
+            if (productionSelection.getBasicProduction()) activateBasicProduction(
                     productionSelection.getBasicProdInfo()[0],
                     productionSelection.getBasicProdInfo()[1],
                     productionSelection.getBasicProdInfo()[2]

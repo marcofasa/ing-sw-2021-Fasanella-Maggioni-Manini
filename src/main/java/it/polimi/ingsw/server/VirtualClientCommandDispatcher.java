@@ -175,6 +175,7 @@ public class VirtualClientCommandDispatcher {
 
         } catch (MainMoveAlreadyMadeException e) {
             sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
+            send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Initial));
         }
     }
 

@@ -174,8 +174,8 @@ public class ActionController {
 
        } else {
 
-           //Selection was not effective: return false and force another selection
-           return tempDepositClone;
+           //Selection was not effective: return the resources obtained from the market and force another selection
+           return new HashMap<>(_player.getTempDeposit());
        }
     }
 
