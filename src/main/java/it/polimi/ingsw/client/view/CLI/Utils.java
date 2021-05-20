@@ -1016,5 +1016,17 @@ public void setColoredCLI(){
             out.println("You've Lost!");
         }
     }
+
+    /**
+     * Checks if a given Resource HashMap is empty
+     * @param temp
+     * @return
+     */
+    public boolean checkEmptyResourceMap(HashMap<Resource, Integer> temp) {
+        for (Resource resource: temp.keySet()){
+            if(temp.get(resource)>0) return false;
+        }
+        return true;
+    }
 }
 
