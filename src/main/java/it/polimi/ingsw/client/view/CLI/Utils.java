@@ -163,7 +163,7 @@ public class Utils {
      * Print Colored Welcome message in ANSI
      */
     public void printANSIWelcome(){
-        System.out.println(BACKGROUND_BLACK + BLUE +"    ...     ..      ..                    .x+=:.        s                                                            ..      ...                                             .       .x+=:.      .x+=:.                                                  \n" +
+        /*System.out.println(BACKGROUND_BLACK + BLUE +"    ...     ..      ..                    .x+=:.        s                                                            ..      ...                                             .       .x+=:.      .x+=:.                                                  \n" +
                 "  x*8888x.:*8888: -\"888:                 z`    ^%      :8                                             oec :       :~\"8888x :\"%888x                                          @88>    z`    ^%    z`    ^%                                                 \n" +
                 " X   48888X `8888H  8888                    .   <k    .88                  .u    .             u.    @88888      8    8888Xf  8888>                u.    u.                 %8P        .   <k      .   <k                u.    u.                        \n" +
                 "X8x.  8888X  8888X  !888>        u        .@8Ned8\"   :888ooo      .u     .d88B :@8c      ...ue888b   8\"*88%     X88x. ?8888k  8888X       .u     x@88k u@88c.       u        .       .@8Ned8\"    .@8Ned8\"       u      x@88k u@88c.       .        .u    \n" +
@@ -178,6 +178,15 @@ public class Utils {
                 "                                                                                                      88>                                                                                                                                                \n" +
                 "                                                                                                      48                                                                                                                                                 \n" +
                 "                                                                                                      '8                                                                                                                                                 \n"+ RESET);
+
+         */
+        out.println(BACKGROUND_BLACK+BLUE+"███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ ███████╗     ██████╗ ███████╗    ██████╗ ███████╗███╗   ██╗ █████╗ ██╗███████╗███████╗ █████╗ ███╗   ██╗ ██████╗███████╗\n" +
+                "████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝    ██╔═══██╗██╔════╝    ██╔══██╗██╔════╝████╗  ██║██╔══██╗██║██╔════╝██╔════╝██╔══██╗████╗  ██║██╔════╝██╔════╝\n" +
+                "██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝███████╗    ██║   ██║█████╗      ██████╔╝█████╗  ██╔██╗ ██║███████║██║███████╗███████╗███████║██╔██╗ ██║██║     █████╗  \n" +
+                "██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗╚════██║    ██║   ██║██╔══╝      ██╔══██╗██╔══╝  ██║╚██╗██║██╔══██║██║╚════██║╚════██║██╔══██║██║╚██╗██║██║     ██╔══╝  \n" +
+                "██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║███████║    ╚██████╔╝██║         ██║  ██║███████╗██║ ╚████║██║  ██║██║███████║███████║██║  ██║██║ ╚████║╚██████╗███████╗\n" +
+                "╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝         ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝\n" +
+                "                                                                                                                                                                            "+RESET);
     }
 
     /**
@@ -706,7 +715,7 @@ public class Utils {
         Resource resource;
         out.println("(Remember that resources are: coin, stone, servant, shield)");
         if(firstCall) in.nextLine();
-        String s= in.nextLine();
+        String s= readString();
         while (!s.equals("coin") && !s.equals("stone") && !s.equals("servant") && !s.equals("shield") ){
             if(!s.equals("") && !s.equals("\r\n")) {
                 if (coloredCLI) {
@@ -948,16 +957,64 @@ public void setColoredCLI(){
      * Changes the current boolean coloredCLI into its negation
      */
     public void colorize() {
-        if (coloredCLI) {
-            coloredCLI=false;
-        }
-        else coloredCLI=true;
+        coloredCLI= !coloredCLI;
         if(coloredCLI) out.println(Colors.GREEN+"Done!"+RESET);
         else out.println("Done!");
     }
 
-    public String checkWinner(HashMap<String, Integer> showScoreBoard) {
-        return null;
+    public Integer checkWinner(HashMap<String, Integer> showScoreBoard) {
+        Integer maxValue = 0;
+        for (String name: showScoreBoard.keySet()){
+            if(showScoreBoard.get(name)>maxValue) maxValue=showScoreBoard.get(name);
+        }
+        return maxValue;
+    }
+
+    public void printScoreBoard(HashMap<String, Integer> showScoreBoard, String nickName) {
+        if(coloredCLI){
+            out.println(GREEN+"You have scored "+showScoreBoard.get(nickName)+" points!!!"+RESET);
+            out.println(BACKGROUND_GRAY +"Other players:"+ RESET);
+            for (String string: showScoreBoard.keySet()){
+                if(!string.equals(nickName)) out.println(RED+string+ RESET +": "+showScoreBoard.get(string)+";");
+            }}
+        else {
+            out.println("You have scored "+showScoreBoard.get(nickName)+" points!!!");
+            out.println("Other players:");
+            for (String string: showScoreBoard.keySet()) {
+                if (!string.equals(nickName)) out.println(string +": "+showScoreBoard.get(string)+";");
+            }
+        }
+    }
+
+    public void printWinnerMessage() {
+        if(coloredCLI){
+            out.printf(BACKGROUND_BLACK + BLUE +"██╗    ██╗██╗███╗   ██╗\n" +
+                    "██║    ██║██║████╗  ██║\n" +
+                    "██║ █╗ ██║██║██╔██╗ ██║\n" +
+                    "██║███╗██║██║██║╚██╗██║\n" +
+                    "╚███╔███╔╝██║██║ ╚████║\n" +
+                    " ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝\n" +
+                    "                       \n"+RESET);
+            out.println();
+        }
+        else {
+            out.println("You Win!");
+        }
+    }
+
+    public void printLoserMessage() {
+        if(coloredCLI){
+            out.printf(BACKGROUND_BLACK + BLUE+"██╗      ██████╗ ███████╗████████╗\n" +
+                    "██║     ██╔═══██╗██╔════╝╚══██╔══╝\n" +
+                    "██║     ██║   ██║███████╗   ██║   \n" +
+                    "██║     ██║   ██║╚════██║   ██║   \n" +
+                    "███████╗╚██████╔╝███████║   ██║   \n" +
+                    "╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   \n" +
+                    "                                  \n"+RESET);
+            out.println();
+        }else {
+            out.println("You've Lost!");
+        }
     }
 }
 

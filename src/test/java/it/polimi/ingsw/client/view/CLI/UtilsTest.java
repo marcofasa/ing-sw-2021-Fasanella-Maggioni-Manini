@@ -2,11 +2,9 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.LightFaithTrail;
-import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.FaithTileStatus;
 import it.polimi.ingsw.model.MarbleType;
 import it.polimi.ingsw.model.Resource;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -21,6 +19,11 @@ public class UtilsTest {
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
     private static final Utils utils=new Utils(out,in);
+
+    @Test
+    public void WelcomeTest(){
+        utils.printANSIWelcome();
+    }
 
     @Test
     public void MarketTest() {
@@ -87,11 +90,6 @@ public class UtilsTest {
     }
 
     @Test
-    public void WaitingTest() throws IOException, InterruptedException {
-     utils.printWaitingMessage(10);
-    }
-
-    @Test
     public void CardDevelopmentTest(){
 
     }
@@ -105,8 +103,24 @@ public class UtilsTest {
     }
 
 
+
+
     @Test
-    public void printWaitingMessage() throws IOException, InterruptedException {
-        utils.printWaitingMessage(10);
+    public void printScoreBoard() {
+        String nickname="Marco";
+
+        HashMap<String, Integer> showScoreBoard =new HashMap<>();
+        showScoreBoard.put("Marco",2);
+        showScoreBoard.put("Lucas", 14);
+        showScoreBoard.put("Elia",12);
+        showScoreBoard.put("Mister X", 22);
+        int maxPoints=utils.checkWinner(showScoreBoard);
+        if(showScoreBoard.get(nickname)==maxPoints){
+            utils.printWinnerMessage();
+        }
+        else{
+            utils.printLoserMessage();
+        }
+        utils.printScoreBoard(showScoreBoard,nickname);
     }
 }

@@ -115,12 +115,12 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayWin() {
-        out.println("You win!");
+        utils.printWinnerMessage();
     }
 
     @Override
     public void displayLost() {
-        out.println("You've lost!");
+        utils.printLoserMessage();
     }
 
     @Override
@@ -207,14 +207,14 @@ public class CLI implements ViewInterface {
         HashMap<Resource, Integer> temp = new HashMap<>(choice);
         HashMap<Resource, Integer> selection = new HashMap<>();
         boolean firstCall= true;
-        boolean loop=true;
+        boolean loop=false;
+
         //Read resources
         out.println("Ops, you must discard at least one resource:");
         utils.printListResource(choice);
         out.println("Here's a list of available resources to discard:");
             do {
-                Resource resource = utils.readResource(firstCall);
-                firstCall=false;
+                Resource resource = utils.readResource(loop);
                 if (temp.get(resource)>0) {
                     int i = temp.get(resource);
                     if(!selection.containsKey(resource)){
@@ -274,7 +274,15 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
-        String winner= utils.checkWinner(showScoreBoard);
+       int maxPoints=utils.checkWinner(showScoreBoard);
+       String nickName=lightModel.getNickname();
+       if(showScoreBoard.get(nickName)==maxPoints){
+           displayWin();
+       }
+       else{
+           displayLost();
+       }
+       utils.printScoreBoard(showScoreBoard,nickName);
     }
 
     @Override
