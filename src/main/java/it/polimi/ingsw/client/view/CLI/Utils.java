@@ -669,6 +669,7 @@ public class Utils {
                         " of level " + cardDevelopment.getCardLevel().toString() +
                         "\n\tProduction input : " + cardDevelopment.getProductionInput().toString() +
                         "\n\tProduction output: " + cardDevelopment.getProductionOutput().toString() +
+                        "\n\tRed Resource produced : " + cardDevelopment.getNumberOfRedResourceProduced() +
                         "\n\tand victory points : " + cardDevelopment.getVictoryPoints());
     }
 
