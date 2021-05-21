@@ -143,6 +143,7 @@ public class PlayerBoard {
 
     /**
      * Discard cardLeader from player's deck
+     *
      * @param cardLeader to discard
      */
     public void discardCardLeader(CardLeader cardLeader) {
@@ -178,8 +179,8 @@ public class PlayerBoard {
     /**
      * For each call all the players move of one step except this player
      *
-     * @deprecated this function doesn't have a reason to exist anymore.
      * @param resource type of Resource to be discarded from temporary deposit
+     * @deprecated this function doesn't have a reason to exist anymore.
      */
     @Deprecated
     public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected {
@@ -196,7 +197,7 @@ public class PlayerBoard {
      * @param marbles marbles to be activated
      * @return new HashMap of Resource, numerosity
      */
-    public HashMap<Resource, Integer> consumeMarbles(ArrayList<Marble> marbles){
+    public HashMap<Resource, Integer> consumeMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
         for (Marble marble : marbles
         ) {
@@ -212,9 +213,9 @@ public class PlayerBoard {
      * @return Resources to be added (this is less or equal the input resources and represents the resources after
      * adding the maximum amount to the leader's deposit), null if all the resources have been added
      */
-    public HashMap<Resource, Integer> tryAddResources(HashMap<Resource, Integer> resources){
+    public HashMap<Resource, Integer> tryAddResources(HashMap<Resource, Integer> resources) {
         getDepositLeaderCardInstance().add(resources);
-        if (deposit.tryAdd(resources)){
+        if (deposit.tryAdd(resources)) {
             return null;
         } else {
             return resources;
@@ -224,9 +225,9 @@ public class PlayerBoard {
     /**
      * Resets the Temporary Deposit and tries to add the given arraylist of marbles
      *
-     * @deprecated Use {@link #consumeMarbles(ArrayList)} and {@link #tryAddResources(HashMap)}instead
      * @param marbles to be added
      * @return True if action has succeeded, False otherwise
+     * @deprecated Use {@link #consumeMarbles(ArrayList)} and {@link #tryAddResources(HashMap)}instead
      */
     @Deprecated
     public boolean tryAddMarbles(ArrayList<Marble> marbles) {
@@ -320,7 +321,7 @@ public class PlayerBoard {
         }
 
         for (Resource res : Resource.values()) {
-            if(numberOfResources.get(res) != null)
+            if (numberOfResources.get(res) != null)
                 if (numberOfResources.get(res) > temp.get(res)) return false;
         }
 
@@ -358,8 +359,19 @@ public class PlayerBoard {
      * @param output output of basic production power
      */
     private void activateBasicProduction(Resource input1, Resource input2, Resource output) {
-        getDepositInstance().useResource(input1, 1);
-        getDepositInstance().useResource(input2, 1);
+
+        HashMap<Resource, Integer> cost = new HashMap<>();
+
+        for (Resource res : Resource.values()) cost.put(res, 0);
+
+        if (input1 == input2) cost.put(input1, 2);
+        else {
+            cost.put(input1, 1);
+            cost.put(input2, 1);
+        }
+
+        consumeResources(cost);
+
         getStrongboxInstance().addResource(output, 1);
     }
 
@@ -370,7 +382,7 @@ public class PlayerBoard {
      * @param cardDevelopmentSlotToActivate slot whose highest production power is to be activated
      */
     private void activateCardProduction(CardDevelopmentSlot cardDevelopmentSlotToActivate) {
-        boolean success = cardDevelopmentSlotToActivate.getTop().tryActivateProduction(this);
+        cardDevelopmentSlotToActivate.getTop().tryActivateProduction(this);
     }
 
     /**
@@ -420,6 +432,27 @@ public class PlayerBoard {
 
     }
 
+    void consumeResources(HashMap<Resource, Integer> cost) {
+        // Pay what you can with the depositLeader
+        cost = getDepositLeaderCardInstance().tryConsume(cost);
+
+        // Consume the card cost for each resource
+        for (Resource res : cost.keySet()) {
+
+            if (deposit.hasResource(res, cost.get(res))) {
+
+                // If true, consume resources only from deposit
+                deposit.useResource(res, cost.get(res));
+            } else {
+
+                // Else, consume all of deposit and take delta from strongbox
+                int delta = cost.get(res) - deposit.getContent().get(res);
+                strongbox.useResource(res, delta);
+                deposit.useResource(res, deposit.getContent().get(res));
+            }
+        }
+    }
+
     //FUNZIONI GROSSE
 
     public CardDevelopment buyCardDevelopmentCardFromMarket(int rowIndex, int colIndex) throws NotEnoughResourcesException {
@@ -464,7 +497,7 @@ public class PlayerBoard {
      * @return true if player has enough resources to activate powers, false otherwise
      * @throws InvalidSlotIndexException - thrown if an index not in range [0, 2] is selected
      */
-    public boolean tryActivateProductions(ProductionSelection productionSelection) throws InvalidSlotIndexException {
+    public boolean tryActivateProductions(ProductionSelection productionSelection) throws InvalidSlotIndexException, CardLeaderRequirementsNotMetException {
 
         /* *** 1. Compute total cost of production powers to be activated *** */
 
@@ -503,7 +536,9 @@ public class PlayerBoard {
         for (CardLeader card : productionSelection.getCardLeadersToActivate()) {
 
             if (card != null) {
-                totalCost.put(card.resource, totalCost.get(card.resource) + 1);
+                if (card.canActivate(this)) {
+                    totalCost.put(card.resource, totalCost.get(card.resource) + 1);
+                } else throw new CardLeaderRequirementsNotMetException();
             }
         }
 
@@ -534,6 +569,8 @@ public class PlayerBoard {
                     activateLeaderProduction(
                             productionSelection.getCardLeadersToActivate()[i],
                             productionSelection.getCardLeaderProdOutputs()[i]);
+
+
                 }
             }
             return true;

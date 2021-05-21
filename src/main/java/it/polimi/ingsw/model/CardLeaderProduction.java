@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.HashMap;
+
 public class CardLeaderProduction extends CardLeader{
 
     /**
@@ -24,7 +26,14 @@ public class CardLeaderProduction extends CardLeader{
         if(!canActivate(playerBoard) && !active) throw new CardLeaderRequirementsNotMetException();
         active = true;
         if (playerBoard.getCardLeaderProductionOutput() == null) throw new IllegalArgumentException();
-        playerBoard.getDepositInstance().discard(resource);
+
+        HashMap<Resource, Integer> cost = new HashMap<>();
+        for (Resource res : Resource.values()) cost.put(res, 0);
+
+        cost.put(resource, 1);
+
+        playerBoard.consumeResources(cost);
+
         playerBoard.getStrongboxInstance().addResource(playerBoard.getCardLeaderProductionOutput(), 1);
         playerBoard.moveFaith(1);
     }

@@ -79,7 +79,6 @@ public class CardDevelopment implements Serializable {
         if (cardCosts.get(res) > 0) {
             cardCosts.put(res, cardCosts.get(res) - 1);
         }
-
     }
 
     public HashMap<Resource, Integer> getProductionInput() {
@@ -142,26 +141,14 @@ public class CardDevelopment implements Serializable {
      */
     void activateProduction(PlayerBoard board) {
 
-        //TODO Add logic to consume DepositLeaderCard content
         Strongbox strongbox = board.getStrongboxInstance();
-        Deposit deposit = board.getDepositInstance();
 
         // Local variables to make methods less verbose
         HashMap<Resource, Integer> prodInput = getProductionInput();
         HashMap<Resource, Integer> prodOutput = getProductionOutput();
-        HashMap<Resource, Integer> depContent = deposit.getContent();
 
-        // Consume inputs from deposit first, if deposit can't cover the whole cost, the rest is taken from strongbox
-        for (Resource resource : Resource.values()) {
-
-            if (deposit.hasResource(resource, prodInput.get(resource))) {
-                deposit.useResource(resource, prodInput.get(resource));
-            } else {
-                int delta = prodInput.get(resource) - depContent.get(resource);
-                strongbox.useResource(resource, delta);
-                deposit.useResource(resource, depContent.get(resource));
-            }
-        }
+        // Pay production input
+        board.consumeResources(prodInput);
 
         // Insert outputs in strongbox
         strongbox.tryAdd(prodOutput);

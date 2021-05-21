@@ -289,8 +289,7 @@ public class Game implements Runnable {
         }
 
         if (controller.getGamePhase()==2 && displayStartingEndGame){
-            sendAll(new StartingEndGameMessage(previousPlayer.getNickname()) {
-            });
+            sendAll(new StartingEndGameMessage(previousPlayer.getNickname()));
             displayStartingEndGame=false;
         }
 
@@ -390,7 +389,8 @@ public class Game implements Runnable {
      * @throws InvalidSlotIndexException : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
      * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all of the selected production powers.
      */
-    public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, MainMoveAlreadyMadeException {
+    public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection)
+            throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, MainMoveAlreadyMadeException, CardLeaderRequirementsNotMetException {
 
         String nickname = clientNicknameMap.get(_vClient);
         if (!mainMoveMade) {

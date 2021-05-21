@@ -45,4 +45,32 @@ public class DepositLeaderCard {
     public HashMap<Resource, Integer> getContent(){
         return new HashMap<>(content);
     }
+
+    /**
+     * This method is used to consume the resources held by DepositCardLeader.
+     * @param cost an instance of HashMap representing the cost that is to be paid.
+     * @return an instance of HashMap, representing the cost map minus the amount the DepositLeaderCard was able
+     * to pay, if applicable.
+     */
+    public HashMap<Resource, Integer> tryConsume(HashMap<Resource, Integer> cost) {
+
+        for (Resource res : resourceTypes) {
+
+            if (content.get(res) > 0 && cost.get(res) > 0) {
+
+                if (content.get(res) >= cost.get(res)) {
+                    content.put(res, content.get(res) - cost.get(res));
+                    cost.put(res, 0);
+
+                } else {
+                    cost.put(res, cost.get(res) - content.get(res));
+                    content.put(res, 0);
+
+                }
+            }
+        }
+
+        return cost;
+    }
+
 }

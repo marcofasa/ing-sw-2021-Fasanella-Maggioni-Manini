@@ -117,7 +117,7 @@ public class Controller {
             // Single player match logic
             if (isSinglePlayer) {
 
-                if (checkPlayerEndGameConditions(getPlayerBoardByNickname(_nickname))) {
+                if (checkPlayerEndGameConditions()) {
                     //Player has won!
                     gamePhase = 3;
                     return;
@@ -141,7 +141,7 @@ public class Controller {
                     //The last player has made his move in the end game : display the leaderboards and terminate the game
                     gamePhase = 3;
                 }
-                else if (gamePhase == 1 && checkPlayerEndGameConditions(getPlayerBoardByNickname(_nickname))) {
+                else if (gamePhase == 1 && checkPlayerEndGameConditions()) {
                     //The player that last played has reached an end game condition! Advance game state to endGame
                     gamePhase = 2;
                 }
@@ -153,15 +153,16 @@ public class Controller {
     /**
      * Private method to be called every time a player ends his turn. It checks if a player has reached one of the two
      * win conditions.
-     * @param _player The PlayerBoard we want to inspect for valid end game conditions
      * @return true if _player has achieved an end game condition, false otherwise
      */
-    private boolean checkPlayerEndGameConditions(PlayerBoard _player) {
+    private boolean checkPlayerEndGameConditions() {
 
-        if (_player == null) return false;
+        for (PlayerBoard player : gameTable.getPlayerBoards()) {
 
-        if (_player.getAllDevelopmentCards().size() == 7) return true;
-        if (gameTable.getFaithTrailInstance().getPosition(_player) == 24) return true;
+            if (player.getAllDevelopmentCards().size() == 7) return true;
+            if (gameTable.getFaithTrailInstance().getPosition(player) == 24) return true;
+
+        }
 
         return false;
     }
@@ -324,7 +325,8 @@ public class Controller {
      * @throws InvalidSlotIndexException : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
      * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all of the selected production powers.
      */
-    void activateProductionPowers(String _nickname, ProductionSelection _selection) throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException {
+    void activateProductionPowers(String _nickname, ProductionSelection _selection)
+            throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, CardLeaderRequirementsNotMetException {
 
         if (isActivePlayer(_nickname)) {
 

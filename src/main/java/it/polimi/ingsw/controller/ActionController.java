@@ -109,7 +109,8 @@ public class ActionController {
             ProductionSelection _productionSelection)
                 throws
                 InvalidSlotIndexException,
-                NotEnoughResourcesException {
+                NotEnoughResourcesException,
+                CardLeaderRequirementsNotMetException {
 
         if (!_player.tryActivateProductions(_productionSelection)) {
             throw new NotEnoughResourcesException(_player.getNickname());
@@ -179,13 +180,17 @@ public class ActionController {
        }
     }
 
+    /**
+     * Method to discard a leader card, advancing the player's faith trail position by one and throwing away the
+     * selected card.
+     * @param playerBoard The playerboard of the player that wishes to discard his leader card.
+     * @param cardLeaderIndex The index of the leader card within the leader card array list.
+     */
     public void discardCardLeader(PlayerBoard playerBoard, Integer cardLeaderIndex){
 
         CardLeader cardLeader = playerBoard.getCardsLeader().get(cardLeaderIndex - 1);
 
         cardLeader.discard(playerBoard);
-
-        //cardLeader.discard(playerBoard);
     }
 
     /**

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.HashMap;
+
 public class CardDevelopmentMarket {
 
     private final int NUMBER_OF_ROWS = 3;
@@ -58,34 +60,23 @@ public class CardDevelopmentMarket {
     CardDevelopment buyCardFromStack(PlayerBoard board, int rowIndex, int colIndex) {
 
         /*
-         Payment logic : resources are first taken from deposit, if deposit cannot cover the whole cost
-         the rest is taken from strongbox
+        Payment logic : Resources are taken from the player's storages with the following priorities :
+        First from the leader deposit, then from the deposit and then from the strongbox.
          */
-        // TODO Logic to pay with the card leader deposit is yet to be added
-        //DepositLeaderCard depositLeaderCard = board.getDepositLeaderCardInstance();
+
+        // TODO Logic for paying with leaderDeposit is yet to be tested!
+
+        DepositLeaderCard depositLeader = board.getDepositLeaderCardInstance();
         Strongbox strongbox = board.getStrongboxInstance();
         Deposit deposit = board.getDepositInstance();
         CardDevelopment desiredCard = market[rowIndex][colIndex].peek();
 
-        // Consume the card cost for each resource
-        for (Resource res : desiredCard.getCardCosts().keySet()) {
+        HashMap<Resource, Integer> cardCost = desiredCard.getCardCosts();
 
-            if (deposit.hasResource(res, desiredCard.getCardCosts().get(res))) {
-
-                // If true, consume resources only from deposit
-                deposit.useResource(res, desiredCard.getCardCosts().get(res));
-            } else {
-
-                // Else, consume all of deposit and take delta from strongbox
-                int delta = desiredCard.getCardCosts().get(res) - deposit.getContent().get(res);
-                strongbox.useResource(res, delta);
-                deposit.useResource(res, deposit.getContent().get(res));
-            }
-        }
+        board.consumeResources(cardCost);
 
         // Card cost has now been paid, pop the card from the market and return it to caller
         return market[rowIndex][colIndex].pop();
-
     }
 
     /**
