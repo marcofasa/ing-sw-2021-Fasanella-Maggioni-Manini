@@ -65,7 +65,6 @@ public class Server {
     }
 
     void setCurrentLobbySize(VirtualClient virtualClient, Integer currentLobbySize) {
-        // IF ... /* TODO */
         lobby.setLobbyCapacity(currentLobbySize);
     }
 

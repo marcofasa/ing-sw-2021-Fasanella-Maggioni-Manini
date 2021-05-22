@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.communication.ClientTimeoutHandler;
+import it.polimi.ingsw.communication.timeout_handler.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.*;
 import it.polimi.ingsw.communication.client.requests.RequestAddResourceSelection;
 import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
@@ -8,6 +8,7 @@ import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,6 +32,8 @@ public class ClientCommandDispatcher {
 
     public void nicknameIsUnavailable(){ /* TODO */
         System.out.println("Nickname is unavailable");
+        client.setConnected(false);
+        client.closeStream();
     }
 
     public void gameHasStarted(int gameID) {
@@ -99,8 +102,8 @@ public class ClientCommandDispatcher {
         client.getView().getLightModel().setStrongbox(strongboxClone);
     }
 
-    public void setMarketInstance(ArrayList<ArrayList<MarbleType>> marketClone) {
-        client.getView().getLightModel().setMarket(marketClone);
+    public void setMarketInstance(ArrayList<ArrayList<MarbleType>> marketClone, Marble spareMarble) {
+        client.getView().getLightModel().setMarket(marketClone); /* TODO spare marble */
     }
 
     public void setCardDevelopmentMarketInstance(ArrayList<ArrayList<CardDevelopment>> _cardMarketClone) {
@@ -128,5 +131,8 @@ public class ClientCommandDispatcher {
     }
 
     public void mainMoveAlreadyMade() { client.getView().displayMainMoveAlreadyMade();
+    }
+
+    public void notifyBriefModel(BriefModel briefModel) {
     }
 }

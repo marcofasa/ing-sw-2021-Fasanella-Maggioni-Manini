@@ -143,4 +143,8 @@ public interface ViewInterface {
     void displayScoreBoard(HashMap<String, Integer> showScoreBoard);
 
     void displayMainMoveAlreadyMade();
+
+    void displayConnectionError();
+
+    void displayTimeoutError();
 }

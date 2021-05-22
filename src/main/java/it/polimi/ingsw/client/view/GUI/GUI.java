@@ -15,7 +15,6 @@ public class GUI extends Application implements ViewInterface {
 
     public static void main(String[] args) {
         launch(args);
-
     }
 
     @Override
@@ -205,6 +204,16 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayMainMoveAlreadyMade() {
+
+    }
+
+    @Override
+    public void displayConnectionError() {
+
+    }
+
+    @Override
+    public void displayTimeoutError() {
 
     }
 

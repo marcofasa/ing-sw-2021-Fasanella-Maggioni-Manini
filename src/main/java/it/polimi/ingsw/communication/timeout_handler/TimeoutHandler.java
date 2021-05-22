@@ -1,7 +1,8 @@
-package it.polimi.ingsw.communication;
+package it.polimi.ingsw.communication.timeout_handler;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.communication.SerializedNetworkMessage;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.server.VirtualClient;

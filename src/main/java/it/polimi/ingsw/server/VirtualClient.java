@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
-import it.polimi.ingsw.communication.ServerTimeoutHandler;
+import it.polimi.ingsw.communication.timeout_handler.ServerTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.ClientResponse;
 import it.polimi.ingsw.communication.server.ServerMessage;

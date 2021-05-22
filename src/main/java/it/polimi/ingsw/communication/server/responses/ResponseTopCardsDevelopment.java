@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ResponseTopCardsDevelopment extends ServerResponse {
 
-    ArrayList<CardDevelopment> developmentCards;
+    final ArrayList<CardDevelopment> developmentCards;
 
     public ResponseTopCardsDevelopment(ArrayList<CardDevelopment> _developmentCards) {
         super(null, null);

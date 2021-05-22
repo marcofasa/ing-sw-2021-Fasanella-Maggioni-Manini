@@ -35,7 +35,7 @@ public class DepositLeaderCard {
      */
     public void add(HashMap<Resource, Integer> resourcesToBeAdded) {
         for (Resource resource : resourceTypes) {
-            while(content.get(resource) <= 2 && resourcesToBeAdded.get(resource) > 0 ){
+            while(content.get(resource) < 2 && resourcesToBeAdded.get(resource) > 0 ){
                 content.put(resource, content.get(resource) + 1);
                 resourcesToBeAdded.replace(resource, resourcesToBeAdded.get(resource) - 1);
             }

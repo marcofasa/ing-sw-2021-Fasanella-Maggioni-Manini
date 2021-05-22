@@ -1,12 +1,9 @@
-package it.polimi.ingsw.communication;
+package it.polimi.ingsw.communication.timeout_handler;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.server.VirtualClient;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class ServerTimeoutHandler {

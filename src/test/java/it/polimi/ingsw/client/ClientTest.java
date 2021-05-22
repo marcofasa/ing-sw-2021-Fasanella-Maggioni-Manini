@@ -13,14 +13,6 @@ import java.nio.charset.StandardCharsets;
 
 public class ClientTest {
 
-    @Test
-    private void singleClient() throws InterruptedException {
-        Client client = new Client(true);
-        System.out.println("Client has started");
-        int port = 25556;
-        String ip = "127.0.0.1";
-        new Thread(() -> client.startConnectionAndListen(ip,port, "nickname"));
-    }
 
     private void sendAndWait() {
         Client.main(new String[0]);
