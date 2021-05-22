@@ -483,4 +483,7 @@ public class Game implements Runnable {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 
+    public Marble getSpareMarble() {
+        return gameTable.getMarketInstance().getSpareMarble();
+    }
 }

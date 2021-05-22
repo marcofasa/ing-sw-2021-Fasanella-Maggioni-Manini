@@ -328,7 +328,7 @@ public class PlayerBoard {
     }
 
     public void discountResource(Resource resource) {
-        discountedResource = resource; /* TODO */
+        discountedResource = resource;
     }
 
     public DepositLeaderCard getDepositLeaderCardInstance() {

@@ -287,6 +287,16 @@ public class CLI implements ViewInterface {
     }
 
     @Override
+    public void displayConnectionError() {
+
+    }
+
+    @Override
+    public void displayTimeoutError() {
+
+    }
+
+    @Override
     public void askMarketChoice() {
         displayMarket();
         int rowcolumn;

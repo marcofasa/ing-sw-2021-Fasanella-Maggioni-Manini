@@ -260,35 +260,20 @@ public class PlayerBoardTest {
     }
 
     @Test
-    public void moveFaith() {
-    }
-
-    @Test
-    public void getCardLeaderProductionOutput() {
-    }
-
-    @Test
-    public void hasResources() {
-    }
-
-    @Test
-    public void discountResource() {
-    }
-
-    @Test
-    public void getDepositLeaderCardInstance() {
-    }
-
-    @Test
-    public void isFirst() {
-    }
-
-    @Test
-    public void getPlayerState() {
-    }
-
-    @Test
-    public void setPlayerState() {
+    public void cardLeaderDeposit2() throws InvalidCardDevelopmentPlacementException, InvalidSlotIndexException, FullSlotException {
+        PlayerBoard playerBoard = newPlayerBoard();
+        CardLeader cardLeader = new CardLeaderFactory().produce(CardLeaderType.Deposit, Resource.Coins);
+        cardLeader.draw(playerBoard);
+        assertThrows( CardLeaderRequirementsNotMetException.class , () -> cardLeader.activate(playerBoard));
+        playerBoard.getStrongboxInstance().addResource(Resource.Shields, 5);
+        HashMap<Resource,Integer> marketResult = new HashMap<>();
+        marketResult.put(Resource.Coins, 5);
+        assertEquals(marketResult, playerBoard.tryAddResources(marketResult));
+        cardLeader.activate(playerBoard);
+        marketResult.put(Resource.Coins, 6);
+        HashMap<Resource,Integer> marketRemains = new HashMap<>();
+        marketRemains.put(Resource.Coins, 4);
+        assertEquals(marketRemains, playerBoard.tryAddResources(marketResult));
     }
 
     @Test

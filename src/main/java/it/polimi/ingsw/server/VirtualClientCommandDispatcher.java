@@ -199,8 +199,8 @@ public class VirtualClientCommandDispatcher {
 
         ArrayList<ArrayList<MarbleType>> marketClone;
         marketClone = virtualClient.getGame().getMarketClone();
-
-        sendWithTimeoutID(new ResponseMarketInstance(marketClone), _timeoutID);
+        Marble spareMarble = virtualClient.getGame().getSpareMarble();
+        sendWithTimeoutID(new ResponseMarketInstance(marketClone, spareMarble), _timeoutID);
 
     }
 
