@@ -2,12 +2,9 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.LightFaithTrail;
-import it.polimi.ingsw.model.FaithTileStatus;
-import it.polimi.ingsw.model.MarbleType;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.*;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +47,7 @@ public class UtilsTest {
         market.add(row0);
         market.add(row1);
         market.add(row2);
-        utils.printMarket(market);
+        utils.printMarket(market,MarbleType.MarbleBlue);
     }
 
 
@@ -98,7 +95,7 @@ public class UtilsTest {
     @Test
     public void MessageTests(){
         utils.printErrorMessage();
-        utils.printHelp();
+        utils.printHelpMenu(true);
         utils.printWelcomeMessage();
     }
 

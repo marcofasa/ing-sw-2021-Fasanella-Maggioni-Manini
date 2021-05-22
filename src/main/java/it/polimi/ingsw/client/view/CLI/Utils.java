@@ -14,6 +14,7 @@ public class Utils {
     private final PrintWriter out;
     private final Scanner in;
     private boolean coloredCLI=true;
+    private boolean correctNickName=true;
 
     //ANSI escape codes for Colors
 
@@ -83,9 +84,20 @@ public class Utils {
     /**
      * Print Marble Market
      * @param market
+     * @param spareMarble
      */
-    public void printMarket(ArrayList<ArrayList<MarbleType>> market){
+    public void printMarket(ArrayList<ArrayList<MarbleType>> market, MarbleType spareMarble){
+    out.println("---MARKET---");
+        if(coloredCLI){
+            printMarbleColored(spareMarble);
+            out.println(" 1  2  3  4  ");
+        }
+        else {
+            printMarble(spareMarble);
+            out.println(" 1  2  3  4  ");
+        }
         for (int i = 0; i < market.size(); i++) {
+            out.printf(" "+ (i+1)+" ");
             for (int j = 0; j < market.get(i).size(); j++) {
                 if(coloredCLI){
                     printMarbleColored(market.get(i).get(j));
@@ -473,7 +485,21 @@ public class Utils {
     private void printCardLeader(CardLeader cardLeader) {
         int victoryPoints = cardLeader.getVictoryPointsValue();
         CardLeaderRequirements cardLeaderRequirements= cardLeader.getRequirements();
-        out.printf("Card Leader "+cardLeader.getDescription().toString()+" (requirements for activation): ");
+        if(coloredCLI) {
+            out.printf("Card Leader of type ");
+            printCardLeaderType(cardLeader.getDescription()) ;
+            printResourceColored(cardLeader.getResource());
+            out.println();
+            out.printf("(Requirements for activation): ");
+        }
+        else {
+            out.printf("Card Leader of type ");
+            printCardLeaderType(cardLeader.getDescription()) ;
+            out.printf(cardLeader.getResource().toString());
+                    out.println();
+                    out.printf("(Requirements for activation): ");
+        }
+
         switch (cardLeaderRequirements.getCardLeaderRequirementsType()){
             case NumberOfDevelopmentCardTypes:
                 printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());
@@ -498,6 +524,26 @@ public class Utils {
         out.printf(" with "+victoryPoints+" victory points;");
         out.println();
     }
+
+    private void printCardLeaderType(CardLeaderType description) {
+        String s=description.toString();
+        switch (description){
+            case Deposit:
+           s=s+ " where you can deposit ";
+        break;
+            case Discount:
+            s=s+" that discounts of one ";
+            break;
+
+            case WhiteMarble:
+            s=s+" that has effect for ";
+            break;
+
+            case Production:
+            s=s+" using as input ";
+        }
+        out.printf(s);
+        }
 
 
     /**
@@ -555,17 +601,19 @@ public class Utils {
 
 
     /**
-     * Error Message
+     * Player Error Message
      */
-    public void printCommandError() {
+    public void printPlayerCommandError() {
         if (coloredCLI) out.println(RED +"Command not found, please try again! (type \"help\" for command list)"+ RESET);
         else out.println("Command not found, please try again! (type \"help\" for command list)");
     }
 
+
+
     /**
-     * Help Message
+     * Player Help Message Menu
      */
-    public void printHelp() {
+    public void printHelpMenu(boolean active) {
         if(coloredCLI) {
             out.println(BACKGROUND_BLACK + "Help Command List" + RESET);
             out.println("Here's a list of all commands that you can execute:");
@@ -582,6 +630,7 @@ public class Utils {
 
             out.println();
 
+            if(active){
             out.println(BACKGROUND_GRAY +"Command list for actions"+ RESET);
             out.println(GREEN +"buy resource"+ RESET +" to use market and get new resources");
             out.println(GREEN +"buy card development"+ RESET +" to use market and get new resources");
@@ -589,7 +638,7 @@ public class Utils {
             out.println(GREEN +"end turn"+ RESET +" to end your turn ");
             out.println(GREEN +"activate card leader"+ RESET +" to activate a card leader");
             out.println(GREEN +"discard card leader"+ RESET +" to discard a card leader");
-            out.println();
+            out.println();}
         }
         else {
             out.println("Help Command List:");
@@ -607,6 +656,7 @@ public class Utils {
 
             out.println();
 
+            if(active){
             out.println("Command list for actions:");
             out.println("\"buy resource\" to use market and get new resources");
             out.println("\"buy card development\" to use market and get new resources");
@@ -615,8 +665,10 @@ public class Utils {
             out.println("\"activate card leader\" to activate a card leader");
             out.println("\"discard card leader\" to discard a card leader");
             out.println();
-        }
+        }}
     }
+
+
 
     /**
      * Read a number between
@@ -841,8 +893,11 @@ public class Utils {
      * Welcome Message
      */
     public void printWelcomeMessage() {
+        if(correctNickName){
         if(coloredCLI) printANSIWelcome();
         else out.println("Welcome to Masters of Renaissance!");
+        correctNickName=false;
+        }
     }
 
     /**
@@ -1028,6 +1083,14 @@ public void setColoredCLI(){
             if(temp.get(resource)>0) return false;
         }
         return true;
+    }
+
+    /**
+     * Waiting Player Error Message
+     */
+    public void printWaitingCommandError() {
+        if (coloredCLI) out.println(RED +"Waiting for your turn... it will start soon! (type \"help\" for command list)"+ RESET);
+        else out.println("Waiting for your turn... it will start soon!");
     }
 }
 

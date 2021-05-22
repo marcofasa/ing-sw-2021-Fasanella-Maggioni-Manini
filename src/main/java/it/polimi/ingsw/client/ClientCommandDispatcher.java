@@ -31,7 +31,7 @@ public class ClientCommandDispatcher {
 
 
     public void nicknameIsUnavailable(){ /* TODO */
-        System.out.println("Nickname is unavailable");
+        System.out.println("Nickname is unavailable! Please try another one...");
         client.setConnected(false);
         client.closeStream();
     }
@@ -60,6 +60,7 @@ public class ClientCommandDispatcher {
     }
 
     public void displayTurn(String nickname, GamePhase gamePhase) {
+
         client.getView().displayTurn(nickname);
     }
 
@@ -104,6 +105,7 @@ public class ClientCommandDispatcher {
 
     public void setMarketInstance(ArrayList<ArrayList<MarbleType>> marketClone, Marble spareMarble) {
         client.getView().getLightModel().setMarket(marketClone); /* TODO spare marble */
+        client.getView().getLightModel().setSpareMarble(spareMarble);
     }
 
     public void setCardDevelopmentMarketInstance(ArrayList<ArrayList<CardDevelopment>> _cardMarketClone) {

@@ -40,9 +40,9 @@ public interface ViewInterface {
     void displayTimeOut();
 
     /*
-    Display Market
+    Display Resource Market
      */
-    void displayMarket();
+    void displayResourceMarket();
 
     /*
     Display StrongBox
