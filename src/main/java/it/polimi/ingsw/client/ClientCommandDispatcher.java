@@ -132,4 +132,7 @@ public class ClientCommandDispatcher {
 
     public void mainMoveAlreadyMade() { client.getView().displayMainMoveAlreadyMade();
     }
+
+    public void notifyBriefModel(BriefModel briefModel) {
+    }
 }

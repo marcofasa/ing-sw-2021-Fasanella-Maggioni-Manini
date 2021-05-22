@@ -7,14 +7,14 @@ import java.util.HashMap;
 
 public class PlayerBoard {
 
-    private String nickname;
-    private boolean first;
+    private final String nickname;
+    private final boolean first;
     private PlayerState playerState;
     private Resource whiteEffect;
     private CardDevelopmentSlot[] cardSlotArray;
-    private GameTable gameTable;
+    private final GameTable gameTable;
     private ArrayList<CardLeader> cardsLeaderBeforeSelecting;
-    private ArrayList<CardLeader> cardsLeader;
+    private final ArrayList<CardLeader> cardsLeader;
     private HashMap<Resource, Integer> tempDeposit;
     private Deposit deposit;
     private Strongbox strongbox;
@@ -542,4 +542,7 @@ public class PlayerBoard {
         }
     }
 
+    public Integer getFaithTrailPosition() {
+        return gameTable.getFaithTrailInstance().getPosition(this);
+    }
 }

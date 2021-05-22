@@ -24,7 +24,7 @@ public class Client {
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Socket clientSocket;
-    private ClientCommandDispatcher clientCommandDispatcher;
+    private final ClientCommandDispatcher clientCommandDispatcher;
     private final ViewInterface view;
     private final ExecutorService executors;
 
