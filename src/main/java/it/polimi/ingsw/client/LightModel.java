@@ -15,6 +15,7 @@ public class LightModel {
     private HashMap<Resource, Integer> deposit;
     private HashMap<Resource, Integer> strongbox;
     private ArrayList<ArrayList<MarbleType>> market;
+    private Marble spareMarble;
 
 
     //Light Version of the Model, with only the essential parts useful to View
@@ -31,6 +32,10 @@ public class LightModel {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void setSpareMarble(Marble spareMarble) {
+        this.spareMarble = spareMarble;
     }
 
 
@@ -64,6 +69,12 @@ public class LightModel {
 
 
     //Getters
+
+
+    public MarbleType getSpareMarble() {
+        return spareMarble.getType();
+    }
+
     public String getNickname() {
         return nickname;
     }

@@ -73,10 +73,9 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void displayMarket() {
+    public void displayResourceMarket() {
         ArrayList<ArrayList<MarbleType>> marketClone = lightModel.getMarket();
-
-        utils.printMarket(marketClone);
+        utils.printMarket(marketClone,lightModel.getSpareMarble());
     }
 
     @Override
@@ -126,9 +125,17 @@ public class CLI implements ViewInterface {
     public void displayTurn(String currentPlayer) {
         //utils.clearScreen();
         if (currentPlayer.equals(lightModel.getNickname())){
-            parsingCommand.Menu();
+            parsingCommand.PlayerMenu();
         }
-        else displayWaitingOpponent(currentPlayer);
+        else {
+            displayWaitingOpponent(currentPlayer);
+            out.println();
+            out.println();
+            displayPosition();
+            out.println();
+            out.println();
+            displayResourceMarket();
+        }
     }
 
     @Override
@@ -298,7 +305,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askMarketChoice() {
-        displayMarket();
+        displayResourceMarket();
         int rowcolumn;
         String key;
         String message;

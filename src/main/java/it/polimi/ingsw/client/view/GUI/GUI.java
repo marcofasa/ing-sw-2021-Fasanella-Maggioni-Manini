@@ -58,7 +58,7 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public void displayMarket() {
+    public void displayResourceMarket() {
 
     }
 

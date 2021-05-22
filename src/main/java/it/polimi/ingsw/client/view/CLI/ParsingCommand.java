@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view.CLI;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.concurrent.Semaphore;
 
 public class ParsingCommand {
 
@@ -27,18 +26,12 @@ public class ParsingCommand {
     }
 
     /**
-     * Menu displayed
+     * PlayerMenu displayed
      */
-    public void Menu(){
+    public void PlayerMenu(){
         haveMove=true;
         printMenu();
-        /*if(in.hasNext("") || in.hasNext("\r")) {
-            in.nextLine();
-        }
-
-         */
-        //in.nextLine();
-        while(readCommand());
+        while(readPlayerCommand());
     }
 
     private void printMenu() {
@@ -51,14 +44,14 @@ public class ParsingCommand {
      * Reads a user command during the turn
      * @return
      */
-    private boolean readCommand(){
+    private boolean readPlayerCommand(){
         String command = utils.readString();
         switch (command){
             case"":
             case"\n":
                 break;
             case "help":
-                utils.printHelp();
+                utils.printHelpMenu(true);
                 break;
             case "colorize":
                 cli.colorize();
@@ -67,7 +60,7 @@ public class ParsingCommand {
                     cli.askMarketChoice(); //1 chance
                 return false;
             case "resource market":
-                    cli.displayMarket();
+                    cli.displayResourceMarket();
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();
@@ -103,7 +96,7 @@ public class ParsingCommand {
                 cli.askEndTurn();
                 return false;
 
-            default: utils.printCommandError();
+            default: utils.printPlayerCommandError();
         }
         return true;
     }
@@ -115,4 +108,48 @@ public class ParsingCommand {
         out.println("Invalid move, you have already done a one-chance action!");
     }
 
+    public void WaitingMenu() {
+        while(readWaitingCommand());
+    }
+
+    private boolean readWaitingCommand() {
+        String command = utils.readString();
+        switch (command){
+            case"":
+            case"\n":
+                break;
+            case "help":
+                utils.printHelpMenu(false);
+                break;
+            case "colorize":
+                cli.colorize();
+                break;
+            case "resource market":
+                cli.displayResourceMarket();
+                break;
+            case "card development market":
+                cli.displayCardDevelopmentMarket();
+                break;
+            case "discard card leader":
+                cli.askCardLeaderDiscard();
+                break;
+            case "faith trail":
+                cli.displayPosition();
+                break;
+            case "deposit":
+                cli.displayDeposit();
+                break;
+            case "strongbox":
+                cli.displayStrongBox();
+                break;
+            case "card leader":
+                cli.displayCardLeader();
+                break;
+            case "card development":
+                cli.displayCardDevelopment();
+                break;
+            default: utils.printWaitingCommandError();
+        }
+        return true;
+    }
 }
