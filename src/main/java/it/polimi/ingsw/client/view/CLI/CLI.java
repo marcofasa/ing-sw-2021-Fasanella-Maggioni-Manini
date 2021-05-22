@@ -83,18 +83,6 @@ public class CLI implements ViewInterface {
     public void displayStrongBox() {
         out.println("---StrongBox---");
         HashMap<Resource, Integer> strongboxClone = lightModel.getStrongbox();
-
-        //TODO Fix with semaphore the second call
-
-        /*
-
-        // If first call ever fails for some reason, grab a strongbox clone again
-        if (strongboxClone.size() == 0) {
-            strongboxClone = lightModel.getStrongbox();
-        }
-
-         */
-
         utils.printListResource(strongboxClone);
     }
 
@@ -153,13 +141,6 @@ public class CLI implements ViewInterface {
         out.println("---Deposit---");
         HashMap<Resource, Integer> cloneDeposit = lightModel.getDeposit();
 
-        /*
-        // If first call ever fails, grab deposit again
-        if (cloneDeposit.size() == 0) {
-            cloneDeposit = lightModel.getDeposit();
-        }
-         */
-
         utils.printListResource(cloneDeposit);
 
     }
@@ -210,9 +191,13 @@ public class CLI implements ViewInterface {
         boolean loop=true;
 
         //Read resources
-        out.println("Ops, you must discard at least one resource:");
-        utils.printListResource(choice);
+        out.println("Ops, there's not enough space:");
+        out.println("(Remember that you have to discard resources all in one move starting from now, and if selection is incorrect you will have to discard again)");
+        out.println();
+        displayDeposit();
+        out.println();
         out.println("Here's a list of available resources to discard:");
+        utils.printListResource(choice);
             do {
                 Resource resource = utils.readResource(false);
                 if (temp.get(resource)>0) {

@@ -53,16 +53,19 @@ public class Client {
                     inputClass = (ServerMessage) inputStream.readObject();
                     ServerMessage finalInputClass = inputClass;
                     if (inputClass instanceof ServerResponse) {
-                        timeoutHandler.tryDisengage(inputClass.getTimeoutID());
-                        executors.submit(() -> finalInputClass.read(clientCommandDispatcher)).get();
-                        timeoutHandler.defuse(inputClass.getTimeoutID());
+                        executors.submit(() -> {
+                            try {
+                                handleResponse(finalInputClass);
+                            } catch (RequestTimeoutException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
                     } else {
                         executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
                     }
-                } catch (RequestTimeoutException e) {
-                    System.err.println("Timed out server response received");
-                    e.printStackTrace();
-                } catch (IOException | ClassNotFoundException | InterruptedException | ExecutionException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -70,6 +73,12 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleResponse(ServerMessage finalInputClass) throws RequestTimeoutException, ExecutionException, InterruptedException {
+        timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
+        finalInputClass.read(clientCommandDispatcher);
+        timeoutHandler.defuse(finalInputClass.getTimeoutID());
     }
 
     public void notifyConnected() {
