@@ -594,20 +594,16 @@ public class CardDevelopment implements Serializable {
          */
         private static Resource toResource(String str) {
 
-            switch (str) {
-                case "COIN":
-                    return Resource.Coins;
-                case "STONE":
-                    return Resource.Stones;
-                case "SERVANT":
-                    return Resource.Servants;
-                case "SHIELD":
-                    return Resource.Shields;
-            }
+            return switch (str) {
+                case "COIN" -> Resource.Coins;
+                case "STONE" -> Resource.Stones;
+                case "SERVANT" -> Resource.Servants;
+                case "SHIELD" -> Resource.Shields;
+                default ->
 
-            //This return should never be reached!
-            return null;
-
+                        //This return should never be reached!
+                        null;
+            };
         }
     }
 }

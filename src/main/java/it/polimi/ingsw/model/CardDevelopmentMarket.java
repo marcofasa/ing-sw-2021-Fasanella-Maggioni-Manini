@@ -144,6 +144,21 @@ public class CardDevelopmentMarket {
     }
 
     /**
+     * Method to apply a discount of 1 resource of the passed type to the selected card.
+     * @param rowIndex row index of the selected card, whose cost is to be decremented.
+     * @param colIndex column index of the selected card, whose cost is to be decremented.
+     * @param resourceToBeDiscounted Resource type to be discounted.
+     */
+    CardDevelopment applyDiscount(int rowIndex, int colIndex, Resource resourceToBeDiscounted) {
+
+        CardDevelopment temp = market[rowIndex][colIndex].pop();
+        temp.applyDiscount(resourceToBeDiscounted);
+        market[rowIndex][colIndex].push(temp);
+        return temp;
+    }
+
+
+    /**
      * Initialization function, creates 12 CardDevelopmentStack.
      * Each CardDevelopmentStack creates 4 CardDevelopment with same type and level.
      * @param market 3 by 4 matrix of CardDevelopmentStack to be populated, ready for initial game move.

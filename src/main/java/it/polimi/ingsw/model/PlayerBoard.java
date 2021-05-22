@@ -462,7 +462,7 @@ public class PlayerBoard {
         CardDevelopment desiredCard = desiredStack.peek();
 
         if (discountedResource != null && desiredCard.getCardCosts().get(discountedResource) > 0) {
-            desiredCard.applyDiscount(discountedResource);
+            desiredCard = marketInstance.applyDiscount(rowIndex, colIndex, discountedResource);
         }
 
         if (hasResources(desiredCard.getCardCosts())) {
