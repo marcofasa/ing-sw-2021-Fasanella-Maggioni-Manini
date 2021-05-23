@@ -21,8 +21,6 @@ public class GUI extends Application implements ViewInterface {
         launch(args);
     }
 
-
-
     @Override
     public LightModel getLightModel() {
         return null;
@@ -221,8 +219,16 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void start(Stage stage) throws Exception {
-    Parent root=FXMLLoader.load(getClass().getResource("LogIn.fxml"));
-    stage.setScene(new Scene(root));
-    stage.show();
+       Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
+        stage.setScene(new Scene(loader));
+        stage.show();
+
+        /*
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
+        stage.setTitle("Log In");
+        stage.setScene(new Scene(root));
+        stage.show();
+         */
+
     }
 }
