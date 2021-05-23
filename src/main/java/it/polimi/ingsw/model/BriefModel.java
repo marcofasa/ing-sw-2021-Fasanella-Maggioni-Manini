@@ -16,6 +16,7 @@ public class BriefModel implements Serializable {
 
     private final Integer faithTrailPosition;
 
+    private final boolean isEmpty;
 
 
     public BriefModel(PlayerBoard playerBoard){
@@ -31,6 +32,7 @@ public class BriefModel implements Serializable {
         }
         cardsDevelopment = playerBoard.getAllDevelopmentCards();
         faithTrailPosition = playerBoard.getFaithTrailPosition();
+        isEmpty = false;
     }
 
     public BriefModel() {
@@ -39,6 +41,11 @@ public class BriefModel implements Serializable {
         visibleCardsLeaders = new ArrayList<>();
         cardsDevelopment = new ArrayList<>();
         faithTrailPosition = 0;
+        isEmpty = true;
+    }
+
+    public Boolean isEmpty(){
+        return isEmpty;
     }
 
     public HashMap<Resource, Integer> getDeposit() {

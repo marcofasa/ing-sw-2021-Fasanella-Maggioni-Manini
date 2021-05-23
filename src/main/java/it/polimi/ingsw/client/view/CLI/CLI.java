@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class CLI implements ViewInterface {
 
@@ -29,7 +28,6 @@ public class CLI implements ViewInterface {
     private final ParsingCommand parsingCommand;
     private boolean waitingMenu;
     private ExecutorService executors;
-    private Future<?> waitingMenuFuture;
 
     /**
      * Constructor of CLI
@@ -126,13 +124,12 @@ public class CLI implements ViewInterface {
         out.println("Ops, requirements for this Card Leader are not met! ");
     }
 
-
     @Override
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
         if (currentPlayer.equals(getLightModel().getNickname())){
-            parsingCommand.setWaitingMenu(false);
-            parsingCommand.PlayerMenu(gamePhase);
+            // parsingCommand.exitWaitingMenu();
+            parsingCommand.playerMenu(gamePhase);
         }
         else {
             displayWaitingOpponent(currentPlayer);
@@ -142,10 +139,7 @@ public class CLI implements ViewInterface {
             out.println();
             out.println();
             displayResourceMarket();
-            if(!waitingMenu) {
-                parsingCommand.PlayerMenu(gamePhase);
-                waitingMenu = true;
-            }
+            // parsingCommand.waitingMenu();
         }
     }
 
@@ -489,5 +483,24 @@ public class CLI implements ViewInterface {
 
     public void colorize() {
         utils.colorize();
+    }
+
+    public void checkoutPlayer() {
+        String nickname = null;
+        while (!client.getPlayersNickname().contains(nickname) || client.getNickname().equals(nickname)){
+            out.println("Insert the player's nickname");
+            nickname = utils.readString();
+            if(client.getNickname().equals(nickname))
+                out.println("You can't checkout yourself!");
+        }
+        BriefModel briefModel = client.getModelByNickname(nickname);
+        if (briefModel.isEmpty()){
+            out.println("This player have not played yet, his player board is empty");
+            return;
+        }
+        utils.printCardDevelopmentDeck(briefModel.getCardsDevelopment());
+        utils.printListResource(briefModel.getDeposit());
+        utils.printListResource(briefModel.getStrongBox());
+        utils.printCardLeaderDeck(briefModel.getVisibleCardsLeaders());
     }
 }

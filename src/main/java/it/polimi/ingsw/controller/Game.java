@@ -284,6 +284,7 @@ public class Game implements Runnable {
             controller.advanceTurn(nickname);
             setMainMoveMade(false);
             send(nickname, new ResponseSuccess(GamePhase.Ended));
+            sendAll(new NotifyBriefModel(gameTable.getPlayerByNickname(nickname)));
         } catch (NotActivePlayerException ex) {
             send(nickname, new ResponseNotActivePlayerError());
         }
