@@ -20,7 +20,6 @@ public class CLI implements ViewInterface {
     private final Client client;
     private static final PrintWriter out = new PrintWriter(System.out, true);
     private static final Scanner in = new Scanner(System.in);
-    private final LightModel lightModel;
     private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
@@ -31,14 +30,13 @@ public class CLI implements ViewInterface {
      */
     public CLI(Client client){
         this.client=client;
-        this.lightModel =new LightModel(client);
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
     }
 
     public LightModel getLightModel() {
-        return lightModel;
+        return client.getLightModel();
     }
 
     @Override
@@ -63,7 +61,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayPosition() {
-        String nickname = lightModel.getNickname();
+        String nickname = getLightModel().getNickname();
         utils.printFaithTrail(nickname, lightFaithTrail.getFaithTrail());
     }
 
@@ -74,14 +72,14 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayResourceMarket() {
-        ArrayList<ArrayList<MarbleType>> marketClone = lightModel.getMarket();
-        utils.printMarket(marketClone,lightModel.getSpareMarble());
+        ArrayList<ArrayList<MarbleType>> marketClone = getLightModel().getMarket();
+        utils.printMarket(marketClone,getLightModel().getSpareMarble());
     }
 
     @Override
     public void displayStrongBox() {
         out.println("---StrongBox---");
-        HashMap<Resource, Integer> strongboxClone = lightModel.getStrongbox();
+        HashMap<Resource, Integer> strongboxClone = getLightModel().getStrongbox();
         utils.printListResource(strongboxClone);
     }
 
@@ -124,7 +122,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayTurn(String currentPlayer) {
         //utils.clearScreen();
-        if (currentPlayer.equals(lightModel.getNickname())){
+        if (currentPlayer.equals(getLightModel().getNickname())){
             parsingCommand.PlayerMenu();
         }
         else {
@@ -146,7 +144,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayDeposit() {
         out.println("---Deposit---");
-        HashMap<Resource, Integer> cloneDeposit = lightModel.getDeposit();
+        HashMap<Resource, Integer> cloneDeposit = getLightModel().getDeposit();
 
         utils.printListResource(cloneDeposit);
 
@@ -155,13 +153,13 @@ public class CLI implements ViewInterface {
     @Override
     public void displayCardLeader() {
         out.println("---Card Leader---");
-        utils.printCardLeaderDeck(lightModel.getCardsLeader());
+        utils.printCardLeaderDeck(getLightModel().getCardsLeader());
     }
 
     @Override
     public void displayCardDevelopment() {
         out.println("---Card Development---");
-        utils.printCardDevelopmentDeck(lightModel.getCardsDevelopment());
+        utils.printCardDevelopmentDeck(getLightModel().getCardsDevelopment());
     }
 
     @Override
@@ -174,7 +172,7 @@ public class CLI implements ViewInterface {
         String input;
         out.println("NickName:");
         input = utils.readString();
-        lightModel.setNickname(input);
+        getLightModel().setNickname(input);
 
         return input;
     }
@@ -256,7 +254,7 @@ public class CLI implements ViewInterface {
     public void askCardLeaderDiscard() {
         out.println("Choose a card leader to discard:");
         try{
-            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeaderIndex(lightModel.getCardsLeader())),-1);
+            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeaderIndex(getLightModel().getCardsLeader())),-1);
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
@@ -266,7 +264,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayCardDevelopmentMarket() {
-        utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+        utils.printDevelopmentCardMarket(getLightModel().getCardDevelopmentMarket());
     }
 
     @Override
@@ -277,7 +275,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
        int maxPoints=utils.checkWinner(showScoreBoard);
-       String nickName=lightModel.getNickname();
+       String nickName=getLightModel().getNickname();
        if(showScoreBoard.get(nickName)==maxPoints){
            displayWin();
        }
@@ -334,7 +332,7 @@ public class CLI implements ViewInterface {
     @Override
     public void askDevelopmentCardChoice() {
         String s;
-        utils.printDevelopmentCardMarket(lightModel.getCardDevelopmentMarket());
+        utils.printDevelopmentCardMarket(getLightModel().getCardDevelopmentMarket());
 
         //Reads the card to buy
         out.println("Type the number in the round brackets of the corresponding card that you want to buy");
@@ -375,7 +373,7 @@ public class CLI implements ViewInterface {
         //Ask for Card Development production
         out.println("Do you want to activate Card Development production?");
         if (utils.readYesOrNo(false)) {
-            productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(lightModel.getCardsDevelopment()));
+            productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(getLightModel().getCardsDevelopment()));
         }
         else {
             Boolean[] falseArray =new Boolean[3];
@@ -390,7 +388,7 @@ public class CLI implements ViewInterface {
         out.println("Do you want to activate Card Leader production?");
         if (utils.readYesOrNo(false)) {
             CardLeader[] cardLeaders;
-            cardLeaders=utils.getCardLeaderActivation(lightModel.getCardsLeader());
+            cardLeaders=utils.getCardLeaderActivation(getLightModel().getCardsLeader());
             productionSelection.setCardLeadersToActivate(cardLeaders);
             Resource[] resourcesOutput;
             resourcesOutput=utils.getCardLeaderOutputs(productionSelection.getCardLeadersToActivate());
@@ -422,7 +420,7 @@ public class CLI implements ViewInterface {
     public void askCardLeaderActivation() {
         out.println("Choose which card leader to activate:");
         try {
-            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(lightModel.getCardsLeader())),-1);
+            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(getLightModel().getCardsLeader())),-1);
         } catch (RequestTimeoutException e) {
             displayTimeOut();
             e.printStackTrace();

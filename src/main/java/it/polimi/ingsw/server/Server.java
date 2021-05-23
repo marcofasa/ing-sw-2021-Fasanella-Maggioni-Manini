@@ -89,7 +89,7 @@ public class Server {
                 players) {
             gameMap.put(player, currentGame);
         }
-        lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1));
+        lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1, playersNickname));
         currentGame = new Game();
         gamesID.put(currentGame, nextGameID);
         nextGameID++;

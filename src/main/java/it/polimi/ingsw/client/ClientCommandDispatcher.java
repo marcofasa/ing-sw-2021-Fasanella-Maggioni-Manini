@@ -36,8 +36,9 @@ public class ClientCommandDispatcher {
         client.closeStream();
     }
 
-    public void gameHasStarted(int gameID) {
+    public void gameHasStarted(int gameID, ArrayList<String> playersNickname) {
         System.out.println("Game Has Started. Game ID: " + gameID);
+        client.setPlayersNicknames(playersNickname);
     }
 
     private ArrayList<CardLeader> subRequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
@@ -135,6 +136,7 @@ public class ClientCommandDispatcher {
     public void mainMoveAlreadyMade() { client.getView().displayMainMoveAlreadyMade();
     }
 
-    public void notifyBriefModel(BriefModel briefModel) {
+    public void notifyBriefModel(BriefModel briefModel, String nickname) {
+        client.setModelForPlayer(briefModel, nickname);
     }
 }

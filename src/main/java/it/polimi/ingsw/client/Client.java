@@ -8,9 +8,12 @@ import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerResponse;
+import it.polimi.ingsw.model.BriefModel;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,9 +30,15 @@ public class Client {
     private final ClientCommandDispatcher clientCommandDispatcher;
     private final ViewInterface view;
     private final ExecutorService executors;
+    private ArrayList<String> playersNickname;
+    private final LightModel lightModel;
+    private final ArrayList<BriefModel> players;
+    private HashMap<String, BriefModel> modelByNickname;
 
 
     public Client(Boolean cli) {
+        players = new ArrayList<>();
+        this.lightModel =new LightModel(this);
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new ClientTimeoutHandler(this);
@@ -146,5 +155,25 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setPlayersNicknames(ArrayList<String> playersNickname) {
+        this.playersNickname = playersNickname;
+        for (String nickname :
+                playersNickname) {
+            modelByNickname.put(nickname, new BriefModel());
+        }
+    }
+
+    public LightModel getLightModel() {
+        return lightModel;
+    }
+
+    public void setModelForPlayer(BriefModel briefModel, String nickname) {
+        modelByNickname.put(nickname, briefModel);
+    }
+
+    public void printModelByPlayer(String nickname){
+        System.out.println(modelByNickname.get(nickname).toString());
     }
 }

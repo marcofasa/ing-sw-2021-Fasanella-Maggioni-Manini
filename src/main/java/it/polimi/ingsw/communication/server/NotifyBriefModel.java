@@ -6,11 +6,13 @@ import it.polimi.ingsw.model.PlayerBoard;
 
 public class NotifyBriefModel extends ServerMessage {
 
-    private BriefModel briefModel;
+    private final BriefModel briefModel;
+    private final String nickname;
 
     public NotifyBriefModel(PlayerBoard playerBoard) {
         super(null, null);
         briefModel = new BriefModel(playerBoard);
+        nickname = playerBoard.getNickname();
     }
 
     /**
@@ -20,6 +22,6 @@ public class NotifyBriefModel extends ServerMessage {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.notifyBriefModel(briefModel);
+        commandDispatcher.notifyBriefModel(briefModel, nickname);
     }
 }

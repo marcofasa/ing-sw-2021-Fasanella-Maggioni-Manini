@@ -33,6 +33,14 @@ public class BriefModel implements Serializable {
         faithTrailPosition = playerBoard.getFaithTrailPosition();
     }
 
+    public BriefModel() {
+        deposit = new HashMap<>();
+        strongBox = new HashMap<>();
+        visibleCardsLeaders = new ArrayList<>();
+        cardsDevelopment = new ArrayList<>();
+        faithTrailPosition = 0;
+    }
+
     public HashMap<Resource, Integer> getDeposit() {
         return deposit;
     }
