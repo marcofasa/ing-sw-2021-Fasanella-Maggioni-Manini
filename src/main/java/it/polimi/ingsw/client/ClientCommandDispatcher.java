@@ -61,8 +61,7 @@ public class ClientCommandDispatcher {
     }
 
     public void displayTurn(String nickname, GamePhase gamePhase) {
-
-        client.getView().displayTurn(nickname);
+        client.getView().displayTurn(nickname, gamePhase);
     }
 
     public void notEnoughResource() {

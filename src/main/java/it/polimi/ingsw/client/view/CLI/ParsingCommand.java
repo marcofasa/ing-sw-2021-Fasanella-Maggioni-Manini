@@ -1,4 +1,6 @@
 package it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
+
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -28,10 +30,10 @@ public class ParsingCommand {
     /**
      * PlayerMenu displayed
      */
-    public void PlayerMenu(){
+    public void PlayerMenu(GamePhase gamePhase){
         haveMove=true;
         printMenu();
-        while(readPlayerCommand());
+        while(readPlayerCommand(gamePhase));
     }
 
     private void printMenu() {
@@ -44,7 +46,7 @@ public class ParsingCommand {
      * Reads a user command during the turn
      * @return
      */
-    private boolean readPlayerCommand(){
+    private boolean readPlayerCommand(GamePhase gamePhase){
         String command = utils.readString();
         switch (command){
             case"":
@@ -57,10 +59,18 @@ public class ParsingCommand {
                 cli.colorize();
                 break;
             case "buy resource":
-                    cli.askMarketChoice(); //1 chance
+                    if(gamePhase != GamePhase.Final)
+                        cli.askMarketChoice(); //1 chance
+                    else {
+                        printInvalidMove();
+                        break;
+                    }
                 return false;
             case "resource market":
+                if(gamePhase != GamePhase.Final)
                     cli.displayResourceMarket();
+                else
+                    printInvalidMove();
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();
@@ -69,10 +79,16 @@ public class ParsingCommand {
                     cli.displayCardDevelopmentMarket();
                 break;
             case "buy card development":
-                cli.askDevelopmentCardChoice(); //1 chance
+                if(gamePhase != GamePhase.Final)
+                    cli.askDevelopmentCardChoice(); //1 chance
+                else
+                    printInvalidMove();
                 break;
             case "production":
+                if(gamePhase != GamePhase.Final)
                     cli.askProductionActivation(); //1 chance
+                else
+                    printInvalidMove();
                 break;
             case "discard card leader":
                 cli.askCardLeaderDiscard();
@@ -106,6 +122,7 @@ public class ParsingCommand {
      */
     private void printInvalidMove() {
         out.println("Invalid move, you have already done a one-chance action!");
+        out.println("You can make a secondary action or write 'end turn' to pass");
     }
 
     public void WaitingMenu() {

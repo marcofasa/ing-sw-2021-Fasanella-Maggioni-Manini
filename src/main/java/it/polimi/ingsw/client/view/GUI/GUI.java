@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.application.Application;
@@ -103,7 +104,7 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public void displayTurn(String currentPlayer) {
+    public void displayTurn(String currentPlayer, GamePhase gamePhase) {
 
     }
 

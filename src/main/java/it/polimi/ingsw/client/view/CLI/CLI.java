@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.*;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
@@ -120,10 +121,10 @@ public class CLI implements ViewInterface {
 
 
     @Override
-    public void displayTurn(String currentPlayer) {
+    public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
         if (currentPlayer.equals(getLightModel().getNickname())){
-            parsingCommand.PlayerMenu();
+            parsingCommand.PlayerMenu(gamePhase);
         }
         else {
             displayWaitingOpponent(currentPlayer);

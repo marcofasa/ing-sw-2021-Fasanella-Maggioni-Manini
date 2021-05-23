@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 
@@ -87,7 +88,7 @@ public interface ViewInterface {
     /*
     Display
      */
-    void displayTurn(String currentPlayer);
+    void displayTurn(String currentPlayer, GamePhase gamePhase);
 
     void displayWaitingOpponent(String currentPlayer);
 
