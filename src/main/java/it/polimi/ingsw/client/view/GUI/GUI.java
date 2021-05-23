@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -17,10 +20,7 @@ public class GUI extends Application implements ViewInterface {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-      primaryStage.show();
-    }
+
 
     @Override
     public LightModel getLightModel() {
@@ -218,4 +218,10 @@ public class GUI extends Application implements ViewInterface {
     }
 
 
+    @Override
+    public void start(Stage stage) throws Exception {
+    Parent root=FXMLLoader.load(getClass().getResource("LogIn.fxml"));
+    stage.setScene(new Scene(root));
+    stage.show();
+    }
 }

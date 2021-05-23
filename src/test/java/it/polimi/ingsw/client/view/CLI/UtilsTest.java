@@ -1,5 +1,4 @@
 package it.polimi.ingsw.client.view.CLI;
-
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.model.*;

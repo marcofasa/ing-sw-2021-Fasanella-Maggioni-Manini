@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -19,16 +20,17 @@
                      <children>
                         <ImageView fitHeight="250.0" fitWidth="541.0" layoutX="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="25.0">
                            <image>
-                              <Image url="@Masters of Renaissance_Logo.png" />
+                              <Image url="@../../../../../../../resources/Masters of Renaissance_Logo.png" />
                            </image>
                         </ImageView>
-                        <TextField layoutX="43.0" layoutY="265.0" />
-                        <TextField layoutX="220.0" layoutY="265.0" text="localhost" />
-                        <Button layoutX="277.0" layoutY="311.0" mnemonicParsing="false" text="Start" />
+                        <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
+                        <TextField fx:id="ip_field" layoutX="220.0" layoutY="265.0" text="localhost" />
+                        <Button fx:id="login_button" layoutX="277.0" layoutY="311.0" mnemonicParsing="false" onAction="#loginAction" text="Start" />
                         <Text layoutX="94.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NickName" />
-                        <TextField layoutX="411.0" layoutY="265.0" text="2556" />
+                        <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="2556" />
                         <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
                         <Text layoutX="460.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" />
+                        <Label fx:id="status_label" layoutX="34.0" layoutY="313.0" prefHeight="23.0" prefWidth="150.0" text="Status: NOT LOGGED" />
                      </children>
                   </AnchorPane>
             </content>
