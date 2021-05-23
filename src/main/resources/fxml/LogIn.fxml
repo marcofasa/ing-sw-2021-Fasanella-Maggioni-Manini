@@ -20,7 +20,7 @@
                      <children>
                         <ImageView fitHeight="250.0" fitWidth="541.0" layoutX="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="25.0">
                            <image>
-                              <Image url="@../Masters of Renaissance_Logo.png" />
+                              <Image url="@../images/Masters of Renaissance_Logo.png" />
                            </image>
                         </ImageView>
                         <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
