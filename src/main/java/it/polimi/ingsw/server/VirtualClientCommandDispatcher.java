@@ -42,7 +42,7 @@ public class VirtualClientCommandDispatcher {
             success = virtualClient.getGame().activateLeaderCard(virtualClient, cardLeader);
 
             if (success) {
-                sendWithTimeoutID(new ResponseSuccess(), timeoutID);
+                sendWithTimeoutID(new ResponseSuccess(GamePhase.Unmodified), timeoutID);
             } else {
                 sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), timeoutID);
             }
@@ -63,7 +63,7 @@ public class VirtualClientCommandDispatcher {
         try {
             virtualClient.getGame().activateProductionPowers(virtualClient, productionSelection);
             virtualClient.getGame().setMainMoveMade(true);
-            sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+            sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
 
         } catch (NotActivePlayerException e) {
             sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
@@ -88,7 +88,7 @@ public class VirtualClientCommandDispatcher {
 
             virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, _placementIndex);
             virtualClient.getGame().setMainMoveMade(true);
-            sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+            sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
 
         } catch (NotActivePlayerException ex) {
 
@@ -130,8 +130,8 @@ public class VirtualClientCommandDispatcher {
 
             if (residualResources == null) {
 
-                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
-                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
+                //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
 
             } else {
 
@@ -146,7 +146,7 @@ public class VirtualClientCommandDispatcher {
     public void requestDiscardCardLeader(Integer cardLeaderIndex, int timeoutID) {
         try{
             virtualClient.getGame().discardCardLeader(virtualClient, cardLeaderIndex);
-            sendWithTimeoutID(new ResponseSuccess(), timeoutID);
+            sendWithTimeoutID(new ResponseSuccess(GamePhase.Unmodified), timeoutID);
         } catch (Exception e) {
             sendWithTimeoutID(new ResponseUnexpectedMove(), timeoutID);
         }
@@ -161,8 +161,8 @@ public class VirtualClientCommandDispatcher {
             virtualClient.getGame().setMainMoveMade(true);
 
             if (residualResources == null) {
-                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
-                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
+                //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
             } else {
                 sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }

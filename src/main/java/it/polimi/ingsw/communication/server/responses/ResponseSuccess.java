@@ -3,10 +3,15 @@ package it.polimi.ingsw.communication.server.responses;
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.ServerResponse;
+import it.polimi.ingsw.communication.server.requests.GamePhase;
 
 public class ResponseSuccess extends ServerResponse {
-    public ResponseSuccess() {
+
+    private final GamePhase gamePhase;
+
+    public ResponseSuccess(GamePhase gamePhase) {
         super(null, null);
+        this.gamePhase = gamePhase;
     }
 
     /**
@@ -16,6 +21,6 @@ public class ResponseSuccess extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.success();
+        commandDispatcher.success(gamePhase);
     }
 }

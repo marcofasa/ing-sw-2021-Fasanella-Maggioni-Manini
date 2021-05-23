@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Utils {
 
     private final PrintWriter out;
-    private final Scanner in;
+    private Scanner in;
     private boolean coloredCLI=true;
     private boolean correctNickName=true;
 

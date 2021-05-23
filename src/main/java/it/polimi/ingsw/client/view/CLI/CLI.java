@@ -14,16 +14,22 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class CLI implements ViewInterface {
 
     // Attributes
     private final Client client;
     private static final PrintWriter out = new PrintWriter(System.out, true);
-    private static final Scanner in = new Scanner(System.in);
+    private static Scanner in = new Scanner(System.in);
     private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
+    private boolean waitingMenu;
+    private ExecutorService executors;
+    private Future<?> waitingMenuFuture;
 
     /**
      * Constructor of CLI
@@ -34,6 +40,7 @@ public class CLI implements ViewInterface {
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
         this.parsingCommand=new ParsingCommand(utils,this,out,in);
+        executors = Executors.newFixedThreadPool(1);
     }
 
     public LightModel getLightModel() {
@@ -124,6 +131,7 @@ public class CLI implements ViewInterface {
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
         if (currentPlayer.equals(getLightModel().getNickname())){
+            parsingCommand.setWaitingMenu(false);
             parsingCommand.PlayerMenu(gamePhase);
         }
         else {
@@ -134,6 +142,10 @@ public class CLI implements ViewInterface {
             out.println();
             out.println();
             displayResourceMarket();
+            if(!waitingMenu) {
+                parsingCommand.PlayerMenu(gamePhase);
+                waitingMenu = true;
+            }
         }
     }
 
@@ -174,7 +186,7 @@ public class CLI implements ViewInterface {
         out.println("NickName:");
         input = utils.readString();
         getLightModel().setNickname(input);
-
+        client.setNickname(input);
         return input;
     }
 
@@ -478,8 +490,4 @@ public class CLI implements ViewInterface {
     public void colorize() {
         utils.colorize();
     }
-
-
-
-
 }

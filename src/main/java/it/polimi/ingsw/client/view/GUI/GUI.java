@@ -163,6 +163,7 @@ public class GUI extends Application implements ViewInterface {
 
     }
 
+
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         return null;

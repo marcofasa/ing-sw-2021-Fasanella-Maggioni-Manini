@@ -34,6 +34,7 @@ public class Client {
     private final LightModel lightModel;
     private final ArrayList<BriefModel> players;
     private HashMap<String, BriefModel> modelByNickname;
+    private String nickname = new String();
 
 
     public Client(Boolean cli) {
@@ -175,5 +176,13 @@ public class Client {
 
     public void printModelByPlayer(String nickname){
         System.out.println(modelByNickname.get(nickname).toString());
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
