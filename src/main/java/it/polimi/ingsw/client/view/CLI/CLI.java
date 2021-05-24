@@ -32,12 +32,13 @@ public class CLI implements ViewInterface {
     /**
      * Constructor of CLI
      * @param client
+     * @param debug
      */
-    public CLI(Client client){
+    public CLI(Client client, Boolean debug){
         this.client=client;
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
-        this.parsingCommand=new ParsingCommand(utils,this,out,in);
+        this.parsingCommand=new ParsingCommand(utils,this,out,in,debug);
         executors = Executors.newFixedThreadPool(1);
     }
 
@@ -91,7 +92,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayNotActivePlayerError() {
-        out.println("Ops, you are no more active!");
+        out.println("Ops, you can't do that!");
     }
 
     @Override
@@ -306,6 +307,13 @@ public class CLI implements ViewInterface {
     @Override
     public void displayTimeoutError() {
 
+    }
+
+    @Override
+    public Integer askForDevelopmentCardPlacement(CardDevelopmentLevel level) {
+        utils.printCardDevelopmentDeck(client.getLightModel().getCardsDevelopment());
+        out.println("You need to specify a slot for the placement of a level " + level + " card");
+        return utils.readNumberWithBounds(1,3);
     }
 
     @Override

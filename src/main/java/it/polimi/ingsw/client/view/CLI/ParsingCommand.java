@@ -22,8 +22,9 @@ public class ParsingCommand {
      * @param cli
      * @param out
      * @param in
+     * @param debug
      */
-    public ParsingCommand(Utils utils, CLI cli, PrintWriter out, Scanner in){
+    public ParsingCommand(Utils utils, CLI cli, PrintWriter out, Scanner in, Boolean debug){
         this.utils=utils;
         this.cli=cli;
         this.out=out;

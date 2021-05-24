@@ -140,4 +140,9 @@ public class ClientCommandDispatcher {
     public void notifyBriefModel(BriefModel briefModel, String nickname) {
         client.setModelForPlayer(briefModel, nickname);
     }
+
+    public void requestDevelopmentCardPlacement(CardDevelopmentLevel level, int timeoutID) {
+        sendWithTimeoutID(new ResponseDevelopmentCardPlacement(
+                client.getView().askForDevelopmentCardPlacement(level)), timeoutID);
+    }
 }
