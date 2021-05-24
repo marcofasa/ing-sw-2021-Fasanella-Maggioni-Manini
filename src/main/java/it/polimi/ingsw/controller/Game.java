@@ -330,7 +330,7 @@ public class Game implements Runnable {
 
         String nickname = clientNicknameMap.get(_vClient);
 
-        if (!mainMoveMade) {
+        if (!mainMoveMade || debug) {
             controller.buyAndPlaceDevCard(nickname, _rowIndex, _colIndex, _placementIndex);
         } else throw new MainMoveAlreadyMadeException();
 
@@ -350,7 +350,7 @@ public class Game implements Runnable {
 
         String nickname = clientNicknameMap.get(_vClient);
 
-        if (!mainMoveMade) {
+        if (!mainMoveMade || debug) {
             return controller.useMarket(nickname, _index, _selection);
         } else throw new MainMoveAlreadyMadeException();
 
@@ -396,7 +396,7 @@ public class Game implements Runnable {
             throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, MainMoveAlreadyMadeException, CardLeaderRequirementsNotMetException {
 
         String nickname = clientNicknameMap.get(_vClient);
-        if (!mainMoveMade) {
+        if (!mainMoveMade || debug) {
             controller.activateProductionPowers(nickname, _selection);
         } else throw new MainMoveAlreadyMadeException();
     }

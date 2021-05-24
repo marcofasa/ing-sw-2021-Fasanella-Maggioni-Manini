@@ -90,7 +90,7 @@ public class VirtualClientCommandDispatcher {
         while(true) {
             try {
 
-                virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _columnIndex, _rowIndex, developmentCardPlacementIndex);
+                virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, developmentCardPlacementIndex);
                 virtualClient.getGame().setMainMoveMade(true);
                 sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
                 return;
