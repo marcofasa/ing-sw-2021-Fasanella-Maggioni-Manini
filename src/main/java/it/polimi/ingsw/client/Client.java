@@ -34,17 +34,17 @@ public class Client {
     private final LightModel lightModel;
     private final ArrayList<BriefModel> players;
     private HashMap<String, BriefModel> modelByNickname;
-    private String nickname = "";
+    private String nickname = new String();
 
 
-    public Client(Boolean cli, Boolean debug) {
+    public Client(Boolean cli) {
         players = new ArrayList<>();
         this.lightModel =new LightModel(this);
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new ClientTimeoutHandler(this);
         if (cli) {
-            view = new CLI(this, debug);
+            view = new CLI(this);
         } else {
             view = new GUI();
        //     Application.launch(view);
@@ -117,22 +117,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Boolean debug = false;
-        Boolean CLI = true;
-        for (String arg :
-                args) {
-            switch (arg) {
-                case "--h":
-                    System.out.println("--d to start in debug");
-                    System.out.println("--g to start in GUI");
-                    break;
-                case "--d":
-                    debug = true;
-                case "--g":
-                    CLI = false;
-            }
-        }
-        Client client = new Client(CLI, debug);
+        Client client = new Client(true);
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";

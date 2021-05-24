@@ -52,7 +52,7 @@ public class UtilsTest {
 
     @Test
     public void FaithTrailTest(){
-        Client client=new Client(true, false);
+        Client client=new Client(true);
         String nickname="Marco";
 
         HashMap<String, Integer> playersPosition=new HashMap<>();
