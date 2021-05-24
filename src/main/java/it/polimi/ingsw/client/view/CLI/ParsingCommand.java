@@ -8,6 +8,7 @@ import java.util.concurrent.*;
 public class ParsingCommand {
 
 
+    private final Boolean debug;
     private Utils utils;
     private CLI cli;
     private final PrintWriter out ;
@@ -29,6 +30,7 @@ public class ParsingCommand {
         this.cli=cli;
         this.out=out;
         this.in=in;
+        this.debug = debug;
     }
 
     /**
@@ -63,7 +65,7 @@ public class ParsingCommand {
                 cli.colorize();
                 break;
             case "buy resource":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug)
                     cli.askMarketChoice(); //1 chance
                 else {
                     printInvalidMove();
@@ -71,7 +73,7 @@ public class ParsingCommand {
                 }
                 return false;
             case "resource market":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug)
                     cli.displayResourceMarket();
                 else
                     printInvalidMove();
@@ -83,13 +85,13 @@ public class ParsingCommand {
                 cli.displayCardDevelopmentMarket();
                 break;
             case "buy card development":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug)
                     cli.askDevelopmentCardChoice(); //1 chance
                 else
                     printInvalidMove();
                 break;
             case "production":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug)
                     cli.askProductionActivation(); //1 chance
                 else
                     printInvalidMove();
@@ -116,7 +118,7 @@ public class ParsingCommand {
                 cli.checkoutPlayer();
                 break;
             case "end turn":
-                if(gamePhase == GamePhase.Final) {
+                if(gamePhase == GamePhase.Final || debug) {
                     cli.askEndTurn();
                     return false;
                 }

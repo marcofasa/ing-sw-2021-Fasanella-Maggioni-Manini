@@ -25,7 +25,7 @@ public class Server {
     public Server(){
         nextGameID = 1;
         gamesID = new HashMap<>();
-        currentGame = new Game();
+        currentGame = new Game(true);
         lobby = new WaitingLobby(this);
         clientsNickname = new HashMap<>();
         gameMap = new HashMap<>();
@@ -90,7 +90,7 @@ public class Server {
             gameMap.put(player, currentGame);
         }
         lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1, playersNickname));
-        currentGame = new Game();
+        currentGame = new Game(true);
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
         lobby = new WaitingLobby(this);
