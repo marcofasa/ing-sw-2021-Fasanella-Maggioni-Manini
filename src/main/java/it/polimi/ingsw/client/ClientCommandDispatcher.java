@@ -68,10 +68,8 @@ public class ClientCommandDispatcher {
         client.getView().displayNotEnoughResource();
     }
 
-    public void success(GamePhase gamePhase) {
+    public void success() {
         client.getView().displaySuccess();
-        if(gamePhase == GamePhase.Initial || gamePhase == GamePhase.Final)
-            client.getView().displayTurn(client.getNickname(), gamePhase);
     }
 
     public void leaderRequirementsNotMet() {

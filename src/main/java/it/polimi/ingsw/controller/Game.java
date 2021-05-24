@@ -69,7 +69,7 @@ public class Game implements Runnable {
 
         try {
             controller.assignInitialBenefits(nickname, _cardLeader, _resource1, _resource2);
-            send(_vClient, new ResponseSuccess(GamePhase.Unmodified));
+            send(_vClient, new ResponseSuccess());
         } catch (NotActivePlayerException ex) {
             send(_vClient, new ResponseNotActivePlayerError());
         }
@@ -283,7 +283,7 @@ public class Game implements Runnable {
         try {
             controller.advanceTurn(nickname);
             setMainMoveMade(false);
-            send(nickname, new ResponseSuccess(GamePhase.Ended));
+            send(nickname, new ResponseSuccess());
         } catch (NotActivePlayerException ex) {
             send(nickname, new ResponseNotActivePlayerError());
         }
