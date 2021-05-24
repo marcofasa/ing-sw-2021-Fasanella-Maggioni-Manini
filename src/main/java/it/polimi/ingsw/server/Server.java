@@ -59,7 +59,19 @@ public class Server {
 
 
     public static void main(String[] args) {
-        Boolean debug = true;
+        Boolean debug = false;
+        for (String arg :
+                args) {
+            switch (arg) {
+                case "--h":
+                    System.out.println("--d to start in debug");
+                    return;
+                case "--d":
+                    System.out.println("debug mode on");
+                    debug = true;
+                    break;
+            }
+        }
         if (debug)
             System.out.println("Launching server with debug on!");
         Server server = new Server(debug);
