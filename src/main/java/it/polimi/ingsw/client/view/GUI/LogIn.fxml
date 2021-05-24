@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.LogInController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.LogInController">
    <children>
       <TabPane layoutX="56.0" layoutY="20.0" prefHeight="212.0" prefWidth="543.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -20,7 +20,7 @@
                      <children>
                         <ImageView fitHeight="250.0" fitWidth="541.0" layoutX="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="25.0">
                            <image>
-                              <Image url="@../images/Masters of Renaissance_Logo.png" />
+                              <Image url="@../../../../../../../resources/Masters of Renaissance_Logo.png" />
                            </image>
                         </ImageView>
                         <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
