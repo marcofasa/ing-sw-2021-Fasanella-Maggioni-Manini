@@ -28,7 +28,6 @@ import java.util.LinkedHashMap;
 
 public class Game implements Runnable {
 
-    private final Boolean debug;
     private ArrayList<VirtualClient> players;
     private GameTable gameTable;
     private Controller controller;
@@ -41,11 +40,10 @@ public class Game implements Runnable {
     /**
      * Basic constructor which instantiates the private LinkedHashMaps
      */
-    public Game(Boolean debug) {
+    public Game() {
         nicknameClientMap = new LinkedHashMap<>();
         clientNicknameMap = new LinkedHashMap<>();
         idPlayerClientMap = new LinkedHashMap<>();
-        this.debug = debug;
     }
     
     public String getNicknameByClient(VirtualClient virtualClient){
