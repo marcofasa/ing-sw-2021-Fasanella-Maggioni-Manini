@@ -125,7 +125,7 @@ public class Client {
                 case "--h":
                     System.out.println("--d to start in debug");
                     System.out.println("--g to start in GUI");
-                    return;
+                    break;
                 case "--d":
                     System.out.println("debug mode on");
                     debug = true;
