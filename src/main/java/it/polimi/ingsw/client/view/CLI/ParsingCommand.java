@@ -31,6 +31,8 @@ public class ParsingCommand {
         this.out=out;
         this.in=in;
         this.debug = debug;
+        if(debug)
+            out.println("Debug mode on!");
     }
 
     /**

@@ -127,9 +127,12 @@ public class Client {
                     System.out.println("--g to start in GUI");
                     break;
                 case "--d":
+                    System.out.println("debug mode on");
                     debug = true;
+                    break;
                 case "--g":
                     CLI = false;
+                    break;
             }
         }
         Client client = new Client(CLI, debug);

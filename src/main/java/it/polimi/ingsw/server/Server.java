@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
+    private final Boolean debug;
     private SocketServer socketServer;
     private final HashMap<Integer, VirtualClient> virtualClientIDMap;
     private final HashMap<VirtualClient, Game> gameMap;
@@ -22,10 +23,11 @@ public class Server {
     private final ExecutorService executors;
     private final Object lobbyLocked;
 
-    public Server(){
+    public Server(Boolean debug){
+        this.debug = debug;
         nextGameID = 1;
         gamesID = new HashMap<>();
-        currentGame = new Game(true);
+        currentGame = new Game(debug);
         lobby = new WaitingLobby(this);
         clientsNickname = new HashMap<>();
         gameMap = new HashMap<>();
@@ -57,7 +59,10 @@ public class Server {
 
 
     public static void main(String[] args) {
-        Server server = new Server();
+        Boolean debug = true;
+        if (debug)
+            System.out.println("Launching server with debug on!");
+        Server server = new Server(debug);
         Integer port = 25556;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);
@@ -90,7 +95,7 @@ public class Server {
             gameMap.put(player, currentGame);
         }
         lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1, playersNickname));
-        currentGame = new Game(true);
+        currentGame = new Game(debug);
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
         lobby = new WaitingLobby(this);
