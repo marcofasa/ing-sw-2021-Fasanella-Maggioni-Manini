@@ -34,6 +34,7 @@ public class Client {
     private final LightModel lightModel;
     private final ArrayList<BriefModel> players;
     private HashMap<String, BriefModel> modelByNickname;
+    private String nickname = "";
 
 
     public Client(Boolean cli) {
@@ -48,6 +49,7 @@ public class Client {
             view = new GUI();
        //     Application.launch(view);
         }
+        modelByNickname = new HashMap<>();
     }
 
     public void startConnectionAndListen(String ip, int port, String nickname) throws IOException {
@@ -175,5 +177,21 @@ public class Client {
 
     public void printModelByPlayer(String nickname){
         System.out.println(modelByNickname.get(nickname).toString());
+    }
+
+    public ArrayList<String> getPlayersNickname() {
+        return playersNickname;
+    }
+
+    public BriefModel getModelByNickname(String nickname) {
+        return modelByNickname.get(nickname);
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String input) {
+        this.nickname = nickname;
     }
 }

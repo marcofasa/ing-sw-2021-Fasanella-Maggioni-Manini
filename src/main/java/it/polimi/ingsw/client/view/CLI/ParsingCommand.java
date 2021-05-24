@@ -108,13 +108,23 @@ public class ParsingCommand {
             case "card development":
                 cli.displayCardDevelopment();
                 break;
+            case "checkout player":
+                cli.checkoutPlayer();
+                break;
             case "end turn":
-                cli.askEndTurn();
-                return false;
-
+                if(gamePhase == GamePhase.Final) {
+                    cli.askEndTurn();
+                    return false;
+                }
+                printInvalidMovePass();
+                break;
             default: utils.printPlayerCommandError();
         }
         return true;
+    }
+
+    private void printInvalidMovePass() {
+        out.println("Invalid move, you need to make a primary action before passing");
     }
 
     /**

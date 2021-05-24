@@ -174,7 +174,7 @@ public class CLI implements ViewInterface {
         out.println("NickName:");
         input = utils.readString();
         getLightModel().setNickname(input);
-
+        client.setNickname(input);
         return input;
     }
 
@@ -479,7 +479,23 @@ public class CLI implements ViewInterface {
         utils.colorize();
     }
 
-
-
+    public void checkoutPlayer() {
+        String nickname = null;
+        while (!client.getPlayersNickname().contains(nickname) || client.getNickname().equals(nickname)){
+            out.println("Insert the player's nickname");
+            nickname = utils.readString();
+            if(client.getNickname().equals(nickname))
+                out.println("You can't checkout yourself!");
+        }
+        BriefModel briefModel = client.getModelByNickname(nickname);
+        if (briefModel.isEmpty()){
+            out.println("This player have not played yet, his player board is empty");
+            return;
+        }
+        utils.printCardDevelopmentDeck(briefModel.getCardsDevelopment());
+        utils.printListResource(briefModel.getDeposit());
+        utils.printListResource(briefModel.getStrongBox());
+        utils.printCardLeaderDeck(briefModel.getVisibleCardsLeaders());
+    }
 
 }
