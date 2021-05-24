@@ -151,8 +151,11 @@ public class ParsingCommand {
     }
 
     private boolean readWaitingCommand() {
-        String command;
-        command = utils.readString();
+        String command = null;
+        try {
+            command = executorService.submit(() -> utils.readString())
+                    .get(200, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException ignored) {}
         if(command == null) return true;
         switch (command){
             case"":
