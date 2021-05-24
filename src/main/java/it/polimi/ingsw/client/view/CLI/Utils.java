@@ -627,7 +627,6 @@ public class Utils {
             out.println(GREEN +"card development"+ RESET +" to display your card development deck ");
             out.println(GREEN +"resource market"+ RESET +" to display resource market");
             out.println(GREEN +"card development market"+ RESET +" to display card development market");
-            out.println(GREEN +"checkout player"+ RESET +" to display a player's brief model");
 
             out.println();
 

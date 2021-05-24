@@ -49,7 +49,6 @@ public class Client {
             view = new GUI();
        //     Application.launch(view);
         }
-        modelByNickname = new HashMap<>();
     }
 
     public void startConnectionAndListen(String ip, int port, String nickname) throws IOException {
@@ -185,13 +184,5 @@ public class Client {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public ArrayList<String> getPlayersNickname() {
-        return playersNickname;
-    }
-
-    public BriefModel getModelByNickname(String nickname) {
-        return modelByNickname.get(nickname);
     }
 }
