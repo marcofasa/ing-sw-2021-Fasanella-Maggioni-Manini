@@ -25,7 +25,7 @@
                         </ImageView>
                         <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
                         <TextField fx:id="ip_field" layoutX="220.0" layoutY="265.0" text="localhost" />
-                        <Button fx:id="login_button" layoutX="277.0" layoutY="311.0" mnemonicParsing="false" onAction="#loginAction" text="Start" />
+                        <Button fx:id="login_button" layoutX="264.0" layoutY="305.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="39.0" prefWidth="73.0" text="Start" />
                         <Text layoutX="94.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NickName" />
                         <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="2556" />
                         <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
@@ -35,7 +35,23 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Single Player" />
+          <Tab text="Single Player">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="-8.0" layoutY="31.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="240.0" fitWidth="431.0" layoutX="91.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/LorenzoilMagnifico.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="single_player_button" layoutX="244.0" layoutY="281.0" mnemonicParsing="false" onAction="#singlePlayerAction" prefHeight="43.0" prefWidth="113.0" text="Single Player" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
         </tabs>
       </TabPane>
    </children>

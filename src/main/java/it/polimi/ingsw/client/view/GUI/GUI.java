@@ -1,30 +1,66 @@
 package it.polimi.ingsw.client.view.GUI;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
+import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.CardDevelopmentLevel;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUI extends Application implements ViewInterface {
+
+    private Client client;
+    private Stage primaryStage;
+    private FXMLLoader fxmlLoader;
+
+
+    private void mainScene(String fxmlPath) {
+
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(fxmlPath));
+
+        Scene scene;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+            scene = new Scene(new Label("Error during FXML Loading"));
+        }
+
+        ((StandardScene) fxmlLoader.getController()).init();
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(true);
+        primaryStage.show();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
+    public void start(Stage stage) throws Exception {
+        //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
+        this.primaryStage=stage;
+        displayCardDevelopmentMarket();
+
+    }
+
+    @Override
     public LightModel getLightModel() {
-        return null;
+        return client.getLightModel();
     }
 
     @Override
@@ -33,8 +69,13 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public void displayWelcome() {
+    public void setClient(Client client) {
+        this.client= client;
+    }
 
+    @Override
+    public void displayWelcome() {
+       mainScene("/fxml/LogIn.fxml");
     }
 
     @Override
@@ -189,7 +230,33 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public void displayCardDevelopmentMarket() {
+    public void displayCardDevelopmentMarket()  {
+
+        //cardDevelop Market Array
+        ArrayList<ArrayList<CardDevelopment>> cardDevelopments=new ArrayList<ArrayList<CardDevelopment>>();
+        for(int i=0;i<3;i++){
+            cardDevelopments.add(new ArrayList<CardDevelopment>());
+            for (int j=0;j<4;j++){
+                cardDevelopments.get(i).add(new CardDevelopment(i,j,1));
+            }
+        }
+
+
+
+
+
+        mainScene("/fxml/CardDevelopmentMarket.fxml");
+
+
+        CardDevelopmentMarketController cardDevelopmentMarketController= fxmlLoader.getController();
+
+        //REAL LINE
+        //cardDevelopmentMarketController.setDevelopmentMarket(client.getLightModel().getCardDevelopmentMarket());
+
+        //TEST LINE
+        cardDevelopmentMarketController.setDevelopmentMarket(cardDevelopments);
+
+
 
     }
 
@@ -223,19 +290,4 @@ public class GUI extends Application implements ViewInterface {
         return null;
     }
 
-
-    @Override
-    public void start(Stage stage) throws Exception {
-       Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        stage.setScene(new Scene(loader));
-        stage.show();
-
-        /*
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        stage.setTitle("Log In");
-        stage.setScene(new Scene(root));
-        stage.show();
-         */
-
-    }
 }
