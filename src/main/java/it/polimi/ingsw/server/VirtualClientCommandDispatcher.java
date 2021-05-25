@@ -134,8 +134,8 @@ public class VirtualClientCommandDispatcher {
 
             if (residualResources == null) {
 
-                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
-                //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
 
             } else {
 
