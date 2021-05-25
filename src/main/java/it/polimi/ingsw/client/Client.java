@@ -37,14 +37,14 @@ public class Client {
     private String nickname = "";
 
 
-    public Client(Boolean cli) {
+    public Client(Boolean cli, Boolean debug) {
         players = new ArrayList<>();
         this.lightModel =new LightModel(this);
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new ClientTimeoutHandler(this);
         if (cli) {
-            view = new CLI(this);
+            view = new CLI(this, debug);
         } else {
             view = new GUI();
        //     Application.launch(view);
@@ -117,7 +117,24 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Client client = new Client(true);
+        boolean debug = false;
+        boolean CLI = true;
+        for (String arg :
+                args) {
+            switch (arg) {
+                case "--h":
+                    System.out.println("--d to start in debug");
+                    System.out.println("--g to start in GUI");
+                    break;
+                case "--d":
+                    debug = true;
+                    break;
+                case "--g":
+                    CLI = false;
+                    break;
+            }
+        }
+        Client client = new Client(CLI, debug);
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
@@ -191,7 +208,7 @@ public class Client {
         return nickname;
     }
 
-    public void setNickname(String input) {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 }

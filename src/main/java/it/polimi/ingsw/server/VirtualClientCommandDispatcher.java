@@ -159,10 +159,9 @@ public class VirtualClientCommandDispatcher {
         try {
             residualResources = virtualClient.getGame().useMarket(virtualClient, _index, _selection);
             virtualClient.getGame().setMainMoveMade(true);
-
             if (residualResources == null) {
-                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
-                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
+//                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
             } else {
                 sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }

@@ -28,12 +28,13 @@ public class CLI implements ViewInterface {
     /**
      * Constructor of CLI
      * @param client
+     * @param debug
      */
-    public CLI(Client client){
+    public CLI(Client client, Boolean debug){
         this.client=client;
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
-        this.parsingCommand=new ParsingCommand(utils,this,out,in);
+        this.parsingCommand=new ParsingCommand(utils,this,out,in, debug);
     }
 
     public LightModel getLightModel() {

@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class ParsingCommand {
 
 
+    private final Boolean debug;
     private Utils utils;
     private CLI cli;
     private final PrintWriter out ;
@@ -19,12 +20,14 @@ public class ParsingCommand {
      * @param cli
      * @param out
      * @param in
+     * @param debug
      */
-    public ParsingCommand(Utils utils, CLI cli, PrintWriter out, Scanner in){
+    public ParsingCommand(Utils utils, CLI cli, PrintWriter out, Scanner in, Boolean debug){
         this.utils=utils;
         this.cli=cli;
         this.out=out;
         this.in=in;
+        this.debug = debug;
     }
 
     /**
@@ -59,16 +62,19 @@ public class ParsingCommand {
                 cli.colorize();
                 break;
             case "buy resource":
-                    if(gamePhase != GamePhase.Final)
-                        cli.askMarketChoice(); //1 chance
-                    else {
-                        printInvalidMove();
-                        break;
-                    }
-                return false;
+                if(gamePhase != GamePhase.Final || debug) {
+                    cli.askMarketChoice(); //1 chance
+                    return false;
+                }
+                else {
+                    printInvalidMove();
+                }
+                break;
             case "resource market":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug) {
                     cli.displayResourceMarket();
+                    return false;
+                }
                 else
                     printInvalidMove();
                 break;
@@ -76,17 +82,21 @@ public class ParsingCommand {
                 cli.askCardLeaderActivation();
                 break;
             case "card development market":
-                    cli.displayCardDevelopmentMarket();
+                cli.displayCardDevelopmentMarket();
                 break;
             case "buy card development":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug) {
                     cli.askDevelopmentCardChoice(); //1 chance
+                    return false;
+                }
                 else
                     printInvalidMove();
                 break;
             case "production":
-                if(gamePhase != GamePhase.Final)
+                if(gamePhase != GamePhase.Final || debug) {
                     cli.askProductionActivation(); //1 chance
+                    return false;
+                }
                 else
                     printInvalidMove();
                 break;
@@ -116,8 +126,10 @@ public class ParsingCommand {
                     cli.askEndTurn();
                     return false;
                 }
-                printInvalidMovePass();
-                break;
+                else {
+                    printInvalidMovePass();
+                    break;
+                }
             default: utils.printPlayerCommandError();
         }
         return true;
