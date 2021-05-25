@@ -47,8 +47,8 @@ public class Game implements Runnable {
         clientNicknameMap = new LinkedHashMap<>();
         idPlayerClientMap = new LinkedHashMap<>();
     }
-    
-    public String getNicknameByClient(VirtualClient virtualClient){
+
+    public String getNicknameByClient(VirtualClient virtualClient) {
         for (String nickname :
                 nicknameClientMap.keySet()) {
             if (nicknameClientMap.get(nickname) == virtualClient)
@@ -56,14 +56,15 @@ public class Game implements Runnable {
         }
         throw new IllegalArgumentException("Unknown client");
     }
-    
+
     /**
      * This method is called by ResponseInitialSelection's read() method.
      * It is used to assign a player's selection of card leaders and bonus resources.
-     * @param _vClient The VirtualClient corresponding to the player that has sent the response.
+     *
+     * @param _vClient    The VirtualClient corresponding to the player that has sent the response.
      * @param _cardLeader An ArrayList of CardLeader, which contains the cards selected by the player.
-     * @param _resource1 The first bonus resource selected, null if the player does not have rights to obtain the resource.
-     * @param _resource2 The second bonus resource selected, null if the player does not have rights to obtain the resource.
+     * @param _resource1  The first bonus resource selected, null if the player does not have rights to obtain the resource.
+     * @param _resource2  The second bonus resource selected, null if the player does not have rights to obtain the resource.
      */
     public void distributeInitialSelection(VirtualClient _vClient, ArrayList<CardLeader> _cardLeader, Resource _resource1, Resource _resource2) {
 
@@ -79,7 +80,7 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Game "+ this + "has begun");
+        System.out.println("Game " + this + "has begun");
         start();
         solicitInitialSelections();
     }
@@ -96,7 +97,8 @@ public class Game implements Runnable {
 
     /**
      * This method populates all private LinkedHashMaps.
-     * @param virtualClients ArrayList of VirtualClient, contains all virtualClients for the current match
+     *
+     * @param virtualClients   ArrayList of VirtualClient, contains all virtualClients for the current match
      * @param playersNicknames ArrayList of String, contains all nicknames selected by the players
      */
     public void addAllPlayers(ArrayList<VirtualClient> virtualClients, ArrayList<String> playersNicknames) {
@@ -275,6 +277,7 @@ public class Game implements Runnable {
      * This method is called by a RequestEndTurn's read() method.
      * It calls Controller's advanceTurn() method and responds to the ClientRequest accordingly.
      * Finally, it notifies all players who the new active player has become.
+     *
      * @param _vClient The VirtualClient associated with the player that requested to end his turn.
      */
     public void advanceTurn(VirtualClient _vClient) {
@@ -291,31 +294,34 @@ public class Game implements Runnable {
             send(nickname, new ResponseNotActivePlayerError());
         }
 
-        if (controller.getGamePhase()==2 && displayStartingEndGame){
+        if (controller.getGamePhase() == 2 && displayStartingEndGame) {
             sendAll(new StartingEndGameMessage(previousPlayer.getNickname()));
-            displayStartingEndGame=false;
+            displayStartingEndGame = false;
         }
 
-        if (controller.getGamePhase()==3){
+        if (controller.getGamePhase() == 3) {
             sendAll(new ScoreBoardMessage(controller.calculateScores()));
         } else {
-        // Notify new active player that it's his turn to play
-        sendAll(
-                new RequestSignalActivePlayer(
-                        controller.getTurnController().getActivePlayer().getNickname(), GamePhase.Initial));
-    }}
+            // Notify new active player that it's his turn to play
+            sendAll(
+                    new RequestSignalActivePlayer(
+                            controller.getTurnController().getActivePlayer().getNickname(), GamePhase.Initial));
+
+        }
+    }
 
     /**
      * This method is called by a RequestBuyDevelopmentCard's read() method.
-     * @param _vClient The VirtualClient associated with the player that sent the request.
-     * @param _rowIndex The row index of the desired CardDevelopment within the market matrix.
-     * @param _colIndex The column index of the desired CardDevelopment within the market matrix.
+     *
+     * @param _vClient        The VirtualClient associated with the player that sent the request.
+     * @param _rowIndex       The row index of the desired CardDevelopment within the market matrix.
+     * @param _colIndex       The column index of the desired CardDevelopment within the market matrix.
      * @param _placementIndex The placement index of the selected CardDevelopmentSlot, in which the newly bought card is to placed.
      * @throws InvalidCardDevelopmentPlacementException : thrown if the selected placement index would not consent for a legal placement.
-     * @throws InvalidSlotIndexException : thrown if an invalid index was selected as the placement index.
-     * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to buy the desired card.
-     * @throws FullSlotException : thrown if the slot at _placementIndex already holds 3 cards.
-     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
+     * @throws InvalidSlotIndexException                : thrown if an invalid index was selected as the placement index.
+     * @throws NotEnoughResourcesException              : thrown if the player does not hold enough resources to buy the desired card.
+     * @throws FullSlotException                        : thrown if the slot at _placementIndex already holds 3 cards.
+     * @throws NotActivePlayerException                 : thrown if a player who is not the active player has tried to make this action.
      */
     public void buyAndPlaceDevCard(
             VirtualClient _vClient,
@@ -338,11 +344,12 @@ public class Game implements Runnable {
 
     /**
      * This method is called by a RequestMarketUse's read() method.
-     * @param _vClient The VirtualClient associated with the player that sent the request.
-     * @param _index The index of the selected line from which to retrieve the Marbles.
+     *
+     * @param _vClient   The VirtualClient associated with the player that sent the request.
+     * @param _index     The index of the selected line from which to retrieve the Marbles.
      * @param _selection Field must be either "row" or "column".
      * @return null if no resources must be discarded after obtaining them from the market, an instance of HashMap<Resource,Integer>
-     *         containing the newly obtained resources if one or more resources must be discarded.
+     * containing the newly obtained resources if one or more resources must be discarded.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      * @throws IllegalArgumentException : thrown if an invalid _index was selected by the player.
      */
@@ -358,10 +365,11 @@ public class Game implements Runnable {
 
     /**
      * This method is called by a ResponseDiscardResourceSelection's read() method.
-     * @param _vClient The VirtualClient associated with the player that sent the request.
+     *
+     * @param _vClient          The VirtualClient associated with the player that sent the request.
      * @param _discardSelection An instance of HashMap containing the amounts to be discarded for each Resource
      * @return null if _discardSelection allowed for the remaining resources to be added to the player's deposit, an instance of HashMap<Resource,Integer>
-     *         containing the previously obtained resources if the selection did not allow for the remaining resources to be added to the deposit.
+     * containing the previously obtained resources if the selection did not allow for the remaining resources to be added to the deposit.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      */
     public HashMap<Resource, Integer> discardResources(VirtualClient _vClient, HashMap<Resource, Integer> _discardSelection) throws NotActivePlayerException {
@@ -372,7 +380,8 @@ public class Game implements Runnable {
 
     /**
      * This method is called by a RequestActivateCardLeader's read() method.
-     * @param _vClient The VirtualClient associated with the player that sent the request.
+     *
+     * @param _vClient           The VirtualClient associated with the player that sent the request.
      * @param _cardToBeActivated The CardLeader to be activated.
      * @return true if CardLeader was successfully activated, false if it could not be activated.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
@@ -386,10 +395,11 @@ public class Game implements Runnable {
 
     /**
      * This method is called by a RequestActivateProduction's read() method.
-     * @param _vClient The VirtualClient associated with the player that sent the request.
+     *
+     * @param _vClient   The VirtualClient associated with the player that sent the request.
      * @param _selection An instance of ProductionSelection.
-     * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
-     * @throws InvalidSlotIndexException : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
+     * @throws NotActivePlayerException    : thrown if a player who is not the active player has tried to make this action.
+     * @throws InvalidSlotIndexException   : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
      * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all of the selected production powers.
      */
     public void activateProductionPowers(VirtualClient _vClient, ProductionSelection _selection)
@@ -405,6 +415,7 @@ public class Game implements Runnable {
 
     /**
      * Overloaded send() method. This method is used to send a ServerMessage to a VirtualClient.
+     *
      * @param virtualClient Target VirtualClient.
      * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
      */
@@ -414,7 +425,8 @@ public class Game implements Runnable {
 
     /**
      * Overloaded send() method. This method is used to send a ServerMessage to a VirtualClient.
-     * @param nickname The nickname bound to the target VirtualClient.
+     *
+     * @param nickname      The nickname bound to the target VirtualClient.
      * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
      */
     public void send(String nickname, ServerMessage serverMessage) {
@@ -423,7 +435,8 @@ public class Game implements Runnable {
 
     /**
      * Overloaded send() method. This method is used to send a ServerMessage to a VirtualClient.
-     * @param playerID The ID associated with the target VirtualClient.
+     *
+     * @param playerID      The ID associated with the target VirtualClient.
      * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
      */
     public void send(Integer playerID, ServerMessage serverMessage) {
@@ -435,8 +448,9 @@ public class Game implements Runnable {
     /**
      * Overloaded sendAndWait() method. This method is used to send a ServerMessage to a VirtualClient and block
      * the thread until the Client has sent his response.
-     * @param virtualClient Target VirtualClient.
-     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     *
+     * @param virtualClient    Target VirtualClient.
+     * @param serverMessage    Instance of ServerMessage to be sent to target VirtualClient.
      * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
      *                         If timeoutInSeconds == -1, the thread will wait forever.
      * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
@@ -448,8 +462,9 @@ public class Game implements Runnable {
     /**
      * Overloaded sendAndWait() method. This method is used to send a ServerMessage to a VirtualClient and block
      * the thread until the Client has sent his response.
-     * @param nickname The nickname bound to the target VirtualClient.
-     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     *
+     * @param nickname         The nickname bound to the target VirtualClient.
+     * @param serverMessage    Instance of ServerMessage to be sent to target VirtualClient.
      * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
      *                         If timeoutInSeconds == -1, the thread will wait forever.
      * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
@@ -461,8 +476,9 @@ public class Game implements Runnable {
     /**
      * Overloaded sendAndWait() method. This method is used to send a ServerMessage to a VirtualClient and block
      * the thread until the Client has sent his response.
-     * @param playerID The ID associated with the target VirtualClient.
-     * @param serverMessage Instance of ServerMessage to be sent to target VirtualClient.
+     *
+     * @param playerID         The ID associated with the target VirtualClient.
+     * @param serverMessage    Instance of ServerMessage to be sent to target VirtualClient.
      * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
      *                         If timeoutInSeconds == -1, the thread will wait forever.
      * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
@@ -473,6 +489,7 @@ public class Game implements Runnable {
 
     /**
      * Method used to send an instance of ServerMessage in broadcast to all players.
+     *
      * @param serverMessage Instance of ServerMessage to be sent to all players.
      */
     public void sendAll(ServerMessage serverMessage) {

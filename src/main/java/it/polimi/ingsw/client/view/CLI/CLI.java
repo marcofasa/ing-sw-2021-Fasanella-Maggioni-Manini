@@ -358,12 +358,7 @@ public class CLI implements ViewInterface {
 
         Integer placementIndex = Integer.parseInt(s);
 
-        try {
-            client.sendAndWait(new RequestBuyDevelopmentCard(rowIndex,columnIndex,placementIndex),-1);
-        } catch (RequestTimeoutException e) {
-            displayTimeOut();
-            e.printStackTrace();
-        }
+        client.send(new RequestBuyDevelopmentCard(rowIndex,columnIndex,placementIndex));
     }
 
     @Override
@@ -413,12 +408,7 @@ public class CLI implements ViewInterface {
         }
 
         //Sending request to Server
-        try {
-            client.sendAndWait(new RequestActivateProduction(productionSelection),-1);
-        } catch (RequestTimeoutException e) {
-            displayTimeOut();
-            e.printStackTrace();
-        }
+        client.send(new RequestActivateProduction(productionSelection));
     }
 
 
