@@ -128,7 +128,10 @@ public class CLI implements ViewInterface {
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
         if (currentPlayer.equals(getLightModel().getNickname())){
-            if(open) throw new RuntimeException("There is a console opened already!");
+            if(open){
+                System.out.println("There is a console opened already! Exploding...");
+                throw new RuntimeException("There is a console opened already!");
+            }
             open = true;
             parsingCommand.PlayerMenu(gamePhase);
             open = false;

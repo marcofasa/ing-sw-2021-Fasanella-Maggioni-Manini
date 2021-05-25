@@ -136,6 +136,8 @@ public class Client {
                     break;
             }
         }
+        if (debug)
+            System.out.println("Client is running in debug!");
         Client client = new Client(CLI, debug);
         System.out.println("Client has started");
         int port = 25556;
