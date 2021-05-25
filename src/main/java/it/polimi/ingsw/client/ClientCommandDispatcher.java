@@ -95,7 +95,7 @@ public class ClientCommandDispatcher {
     }
 
     public void unexpectedMove() {
-        System.out.println("ClientCommandDispatcher.unexpectedMove : METHOD HOLDS ONLY THIS PRINT, IT IS NOT IMPLEMENTED");
+        System.out.println("A game logic error was encountered, the move has been reverted.");
     }
 
     public void setDeposit(HashMap<Resource, Integer> depositClone) {
@@ -140,5 +140,9 @@ public class ClientCommandDispatcher {
 
     public void notifyBriefModel(BriefModel briefModel, String nickname) {
         client.setModelForPlayer(briefModel, nickname);
+    }
+
+    public void displayInvalidPlacementSelection() {
+        client.getView().displayInvalidPlacementSelection();
     }
 }

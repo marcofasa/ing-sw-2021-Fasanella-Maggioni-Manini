@@ -310,6 +310,14 @@ public class CLI implements ViewInterface {
     }
 
     @Override
+    public void displayInvalidPlacementSelection() {
+
+        System.out.println("The placement index you have selected would not allow for a legal card placement!" +
+                "\nEither you selected to place the card in a full slot or the placement would not follow the game rules.");
+
+    }
+
+    @Override
     public void askMarketChoice() {
         displayResourceMarket();
         int rowcolumn;

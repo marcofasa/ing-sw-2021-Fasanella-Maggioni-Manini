@@ -148,4 +148,6 @@ public interface ViewInterface {
     void displayConnectionError();
 
     void displayTimeoutError();
+
+    void displayInvalidPlacementSelection();
 }
