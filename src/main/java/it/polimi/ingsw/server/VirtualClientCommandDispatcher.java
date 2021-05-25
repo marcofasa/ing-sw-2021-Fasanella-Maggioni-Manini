@@ -5,6 +5,7 @@ import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
+import it.polimi.ingsw.controller.Game;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
@@ -63,7 +64,7 @@ public class VirtualClientCommandDispatcher {
         try {
             virtualClient.getGame().activateProductionPowers(virtualClient, productionSelection);
             virtualClient.getGame().setMainMoveMade(true);
-            sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+            sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
 
         } catch (NotActivePlayerException e) {
             sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
@@ -73,9 +74,17 @@ public class VirtualClientCommandDispatcher {
 
         } catch (NotEnoughResourcesException e) {
             sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+            send(new RequestSignalActivePlayer(
+                    virtualClient.getGame().getNicknameByClient(virtualClient),
+                    GamePhase.Initial)
+            );
 
         } catch (CardLeaderRequirementsNotMetException e) {
             sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), _timeoutID);
+            send(new RequestSignalActivePlayer(
+                    virtualClient.getGame().getNicknameByClient(virtualClient),
+                    GamePhase.Initial)
+            );
 
         } catch (MainMoveAlreadyMadeException e) {
             sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
@@ -109,6 +118,10 @@ public class VirtualClientCommandDispatcher {
         } catch (InvalidCardDevelopmentPlacementException | InvalidSlotIndexException | FullSlotException ex) {
 
             sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
+            send(
+                    new RequestSignalActivePlayer(
+                            virtualClient.getGame().getNicknameByClient(virtualClient),
+                            GamePhase.Initial));
         }
     }
 
@@ -134,8 +147,8 @@ public class VirtualClientCommandDispatcher {
 
             if (residualResources == null) {
 
-                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
-                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
+                //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
 
             } else {
 
