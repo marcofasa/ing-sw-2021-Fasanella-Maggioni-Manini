@@ -151,4 +151,6 @@ public interface ViewInterface {
     void displayTimeoutError();
 
     void displayLorenzoActivation(ActionCardEnum actionCardType);
+
+    void displayInvalidPlacementSelection();
 }

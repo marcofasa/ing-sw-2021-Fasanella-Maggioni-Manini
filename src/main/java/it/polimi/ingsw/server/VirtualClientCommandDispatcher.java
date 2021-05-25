@@ -117,7 +117,7 @@ public class VirtualClientCommandDispatcher {
 
         } catch (InvalidCardDevelopmentPlacementException | InvalidSlotIndexException | FullSlotException ex) {
 
-            sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
+            sendWithTimeoutID(new ResponseInvalidPlacementSelection(), _timeoutID);
             send(
                     new RequestSignalActivePlayer(
                             virtualClient.getGame().getNicknameByClient(virtualClient),

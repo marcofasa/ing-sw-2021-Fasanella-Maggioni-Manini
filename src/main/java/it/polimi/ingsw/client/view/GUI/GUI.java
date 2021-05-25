@@ -224,6 +224,11 @@ public class GUI extends Application implements ViewInterface {
 
     }
 
+    @Override
+    public void displayInvalidPlacementSelection() {
+
+    }
+
 
     @Override
     public void start(Stage stage) throws Exception {
