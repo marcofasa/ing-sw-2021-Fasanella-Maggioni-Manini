@@ -69,7 +69,9 @@ public class Client {
                             handleResponse(finalInputClass);
                         } catch (RequestTimeoutException e) {
                             getView().displayTimeoutError();
-                        } catch (ExecutionException | InterruptedException ignored) {}
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     });
                 } else {
                     executors.submit(() -> finalInputClass.read(clientCommandDispatcher));

@@ -24,6 +24,7 @@ public class CLI implements ViewInterface {
     private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
+    private boolean open = false;
 
     /**
      * Constructor of CLI
@@ -125,7 +126,10 @@ public class CLI implements ViewInterface {
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
         if (currentPlayer.equals(getLightModel().getNickname())){
+            if(open) throw new RuntimeException("There is a console opened already!");
+            open = true;
             parsingCommand.PlayerMenu(gamePhase);
+            open = false;
         }
         else {
             displayWaitingOpponent(currentPlayer);
@@ -324,11 +328,7 @@ public class CLI implements ViewInterface {
         1 arg: row=1 or col=0
         2 arg: number of row/column
          */
-        try {
-            client.sendAndWait(new RequestMarketUse(message,key), -1);
-        } catch (RequestTimeoutException e) {
-            e.printStackTrace();
-        }
+        client.send(new RequestMarketUse(message,key));
     }
 
     @Override

@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FaithTrail {
+public class FaithTrail implements Serializable {
     final private int length = 25;
     private ArrayList<FaithCell> cells;
     private HashMap<PlayerBoard, Integer> playerPosition;

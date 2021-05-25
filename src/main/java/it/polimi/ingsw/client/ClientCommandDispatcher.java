@@ -69,6 +69,7 @@ public class ClientCommandDispatcher {
     }
 
     public void success(GamePhase gamePhase) {
+        System.out.println("Successo attivato con Gamephase " + gamePhase.toString());
         client.getView().displaySuccess();
         if(gamePhase == GamePhase.Initial || gamePhase == GamePhase.Final)
             client.getView().displayTurn(client.getNickname(), gamePhase);

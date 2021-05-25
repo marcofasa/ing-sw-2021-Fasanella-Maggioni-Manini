@@ -6,6 +6,7 @@ import it.polimi.ingsw.communication.server.ServerResponse;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 
 public class ResponseSuccess extends ServerResponse {
+
     public ResponseSuccess() {
         super(GamePhase.Unmodified.toString(), null);
     }

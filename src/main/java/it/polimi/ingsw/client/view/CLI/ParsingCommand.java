@@ -27,7 +27,7 @@ public class ParsingCommand {
         this.cli=cli;
         this.out=out;
         this.in=in;
-        this.debug = debug;
+        this.debug = false;
     }
 
     /**

@@ -13,7 +13,7 @@ public class MarbleFactory {
      */
     public Marble produce(MarbleType marbleType, GameTable gameTable){
         return switch (marbleType) {
-            case MarbleRed -> new MarbleRed(gameTable.getFaithTrailInstance());
+            case MarbleRed -> new MarbleRed();
             case MarbleWhite -> new MarbleWhite();
             case MarbleBlue -> new MarbleNormal(Resource.Shields);
             case MarblePurple -> new MarbleNormal(Resource.Servants);

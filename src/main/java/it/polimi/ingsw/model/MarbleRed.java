@@ -5,14 +5,10 @@ package it.polimi.ingsw.model;
  */
 public class MarbleRed extends Marble {
 
-    private final FaithTrail faithTrail;
-
     /**
      * Constructor of the class
-     * @param faithTrail instance of FaithTrail where to move players
      */
-    MarbleRed(FaithTrail faithTrail){
-        this.faithTrail = faithTrail;
+    MarbleRed(){
     }
 
     /**
@@ -21,7 +17,7 @@ public class MarbleRed extends Marble {
      */
     @Override
     public Marble clone(){
-        return new MarbleRed(faithTrail);
+        return new MarbleRed();
     }
 
     /**
