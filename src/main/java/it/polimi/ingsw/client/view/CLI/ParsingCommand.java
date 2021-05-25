@@ -71,12 +71,7 @@ public class ParsingCommand {
                 }
                 break;
             case "resource market":
-                if(gamePhase != GamePhase.Final || debug) {
-                    cli.displayResourceMarket();
-                    return false;
-                }
-                else
-                    printInvalidMove();
+                cli.displayResourceMarket();
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();

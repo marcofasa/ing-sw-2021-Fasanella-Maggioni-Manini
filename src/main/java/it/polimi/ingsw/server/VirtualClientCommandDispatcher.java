@@ -88,7 +88,7 @@ public class VirtualClientCommandDispatcher {
 
             virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, _placementIndex);
             virtualClient.getGame().setMainMoveMade(true);
-            sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
+            sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
 
         } catch (NotActivePlayerException ex) {
 
@@ -97,6 +97,10 @@ public class VirtualClientCommandDispatcher {
         } catch (NotEnoughResourcesException ex) {
 
             sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+            send(
+                    new RequestSignalActivePlayer(
+                            virtualClient.getGame().getNicknameByClient(virtualClient),
+                            GamePhase.Initial));
 
         } catch (MainMoveAlreadyMadeException ex) {
 
@@ -130,8 +134,8 @@ public class VirtualClientCommandDispatcher {
 
             if (residualResources == null) {
 
-                sendWithTimeoutID(new ResponseSuccess(), _timeoutID);
-                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
+                //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
 
             } else {
 
@@ -174,7 +178,7 @@ public class VirtualClientCommandDispatcher {
 
         } catch (MainMoveAlreadyMadeException e) {
             sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
-            send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Initial));
+            //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Initial));
         }
     }
 
