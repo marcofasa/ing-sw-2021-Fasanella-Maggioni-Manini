@@ -158,7 +158,6 @@ public class CLI implements ViewInterface {
         HashMap<Resource, Integer> cloneDeposit = getLightModel().getDeposit();
 
         utils.printListResource(cloneDeposit);
-
     }
 
     @Override
@@ -304,12 +303,17 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayConnectionError() {
-
+        System.out.println("Server is unreachable!");
     }
 
     @Override
     public void displayTimeoutError() {
 
+    }
+
+    @Override
+    public void displayLorenzoActivation(ActionCardEnum actionCardType) {
+        out.println("A " + actionCardType + "Action Card has been used by Lorenzo!");
     }
 
     @Override

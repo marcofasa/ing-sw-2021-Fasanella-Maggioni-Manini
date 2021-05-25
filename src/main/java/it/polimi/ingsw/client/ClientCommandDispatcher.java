@@ -141,4 +141,8 @@ public class ClientCommandDispatcher {
     public void notifyBriefModel(BriefModel briefModel, String nickname) {
         client.setModelForPlayer(briefModel, nickname);
     }
+
+    public void displayLorenzoActivation(ActionCardEnum actionCardType) {
+        client.getView().displayLorenzoActivation(actionCardType);
+    }
 }

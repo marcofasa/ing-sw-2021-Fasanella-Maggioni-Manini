@@ -196,10 +196,10 @@ public class ActionController {
     /**
      * Method invoked after a player has ended his turn in a single player match, forcing Lorenzo to make a move.
      */
-    public void makeLorenzoMove() {
+    public ActionCardEnum makeLorenzoMove() {
 
         Lorenzo lorenzo = gameTable.getLorenzoInstance();
-        lorenzo.getActionCardDeck().getCard().activate();
+        return lorenzo.getActionCardDeck().getCard().activate();
     }
 
     /**

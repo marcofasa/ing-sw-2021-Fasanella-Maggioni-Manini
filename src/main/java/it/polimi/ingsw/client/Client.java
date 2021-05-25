@@ -142,14 +142,15 @@ public class Client {
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
-        while(true) {
+        connected = true;
+        while(connected) {
             try {
                 client.executors.submit(() -> {
                     try {
                         client.startConnectionAndListen(ip, port, client.getView().askNickName());
                     } catch (IOException e) {
                         client.getView().displayConnectionError();
-                        Client.connected = false;
+                        connected = true;
                     }
                 }).get();
             } catch (InterruptedException e) {
@@ -214,5 +215,14 @@ public class Client {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void killSocket(){
+        connected = false;
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
