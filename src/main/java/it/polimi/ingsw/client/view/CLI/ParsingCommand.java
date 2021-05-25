@@ -27,7 +27,7 @@ public class ParsingCommand {
         this.cli=cli;
         this.out=out;
         this.in=in;
-        this.debug = false;
+        this.debug = debug;
     }
 
     /**
@@ -71,12 +71,7 @@ public class ParsingCommand {
                 }
                 break;
             case "resource market":
-                if(gamePhase != GamePhase.Final || debug) {
-                    cli.displayResourceMarket();
-                    return false;
-                }
-                else
-                    printInvalidMove();
+                cli.displayResourceMarket();
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();

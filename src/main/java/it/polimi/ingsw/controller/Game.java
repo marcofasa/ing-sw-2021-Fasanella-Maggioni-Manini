@@ -28,6 +28,7 @@ import java.util.LinkedHashMap;
 
 public class Game implements Runnable {
 
+    private final Boolean debug;
     private ArrayList<VirtualClient> players;
     private GameTable gameTable;
     private Controller controller;
@@ -40,7 +41,8 @@ public class Game implements Runnable {
     /**
      * Basic constructor which instantiates the private LinkedHashMaps
      */
-    public Game() {
+    public Game(Boolean debug) {
+        this.debug = debug;
         nicknameClientMap = new LinkedHashMap<>();
         clientNicknameMap = new LinkedHashMap<>();
         idPlayerClientMap = new LinkedHashMap<>();
@@ -284,6 +286,7 @@ public class Game implements Runnable {
             controller.advanceTurn(nickname);
             setMainMoveMade(false);
             send(nickname, new ResponseSuccess());
+            sendAll(new NotifyBriefModel(gameTable.getPlayerByNickname(nickname)));
         } catch (NotActivePlayerException ex) {
             send(nickname, new ResponseNotActivePlayerError());
         }
@@ -327,7 +330,7 @@ public class Game implements Runnable {
 
         String nickname = clientNicknameMap.get(_vClient);
 
-        if (!mainMoveMade) {
+        if (!mainMoveMade || debug) {
             controller.buyAndPlaceDevCard(nickname, _rowIndex, _colIndex, _placementIndex);
         } else throw new MainMoveAlreadyMadeException();
 
@@ -347,7 +350,7 @@ public class Game implements Runnable {
 
         String nickname = clientNicknameMap.get(_vClient);
 
-        if (!mainMoveMade) {
+        if (!mainMoveMade || debug) {
             return controller.useMarket(nickname, _index, _selection);
         } else throw new MainMoveAlreadyMadeException();
 
@@ -393,7 +396,7 @@ public class Game implements Runnable {
             throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, MainMoveAlreadyMadeException, CardLeaderRequirementsNotMetException {
 
         String nickname = clientNicknameMap.get(_vClient);
-        if (!mainMoveMade) {
+        if (!mainMoveMade || debug) {
             controller.activateProductionPowers(nickname, _selection);
         } else throw new MainMoveAlreadyMadeException();
     }

@@ -165,7 +165,6 @@ public class VirtualClientCommandDispatcher {
             } else {
                 sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }
-
         } catch (NotActivePlayerException ex) {
             sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
 
@@ -174,7 +173,7 @@ public class VirtualClientCommandDispatcher {
 
         } catch (MainMoveAlreadyMadeException e) {
             sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
-            send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Initial));
+            send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
         }
     }
 
