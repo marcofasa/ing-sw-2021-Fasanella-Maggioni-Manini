@@ -16,6 +16,8 @@ public class LightModel {
     private HashMap<Resource, Integer> strongbox;
     private ArrayList<ArrayList<MarbleType>> market;
     private Marble spareMarble;
+    private ArrayList<Resource> depositLeaderResources;
+    private HashMap<Resource, Integer> depositLeaderContent;
 
 
     //Light Version of the Model, with only the essential parts useful to View
@@ -59,14 +61,21 @@ public class LightModel {
     }
 
     public void setStrongbox(HashMap<Resource, Integer> strongbox) {
-        this.strongbox = new HashMap<Resource, Integer>(strongbox);
+        this.strongbox = new HashMap<>(strongbox);
     }
 
 
     public void setDeposit(HashMap<Resource, Integer> deposit) {
-        this.deposit = new HashMap<Resource, Integer>(deposit);
+        this.deposit = new HashMap<>(deposit);
     }
 
+    public void setDepositLeaderContent(HashMap<Resource, Integer> depositLeaderContent) {
+        this.depositLeaderContent = depositLeaderContent;
+    }
+
+    public void setDepositLeaderResources(ArrayList<Resource> depositLeaderResources) {
+        this.depositLeaderResources = depositLeaderResources;
+    }
 
     //Getters
 
@@ -162,4 +171,11 @@ public class LightModel {
         return strongbox;
     }
 
+    public ArrayList<Resource> getDepositLeaderResources() {
+        return depositLeaderResources;
+    }
+
+    public HashMap<Resource, Integer> getDepositLeaderContent() {
+        return depositLeaderContent;
+    }
 }

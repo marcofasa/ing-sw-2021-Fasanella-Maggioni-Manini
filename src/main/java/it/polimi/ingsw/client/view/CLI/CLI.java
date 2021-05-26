@@ -156,8 +156,15 @@ public class CLI implements ViewInterface {
     public void displayDeposit() {
         out.println("---Deposit---");
         HashMap<Resource, Integer> cloneDeposit = getLightModel().getDeposit();
-
         utils.printListResource(cloneDeposit);
+
+        ArrayList<Resource> depositLeaderResources = getLightModel().getDepositLeaderResources();
+
+        if (depositLeaderResources.size() > 0) {
+
+            out.println("---Leader Deposit---");
+            utils.printLeaderDeposit(depositLeaderResources, getLightModel().getDepositLeaderContent());
+        }
     }
 
     @Override
@@ -289,7 +296,7 @@ public class CLI implements ViewInterface {
        if(showScoreBoard.get(nickName)==maxPoints){
            displayWin();
        }
-       else{
+       else {
            displayLost();
        }
        utils.printScoreBoard(showScoreBoard,nickName);

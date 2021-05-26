@@ -455,7 +455,7 @@ public class PlayerBoard {
 
     //FUNZIONI GROSSE
 
-    public CardDevelopment buyCardDevelopmentCardFromMarket(int rowIndex, int colIndex) throws NotEnoughResourcesException {
+    public CardDevelopment buyCardDevelopmentCardFromMarket(int rowIndex, int colIndex) throws NotEnoughResourcesException, EmptyStackException {
 
         CardDevelopmentMarket marketInstance = gameTable.getCardDevelopmentMarketInstance();
         CardDevelopmentStack desiredStack = marketInstance.getMarket()[rowIndex][colIndex];

@@ -5,12 +5,12 @@ import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
-import it.polimi.ingsw.controller.Game;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 public class VirtualClientCommandDispatcher {
@@ -122,6 +122,13 @@ public class VirtualClientCommandDispatcher {
                     new RequestSignalActivePlayer(
                             virtualClient.getGame().getNicknameByClient(virtualClient),
                             GamePhase.Initial));
+        } catch (EmptyStackException ex) {
+
+            sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
+            send(
+                    new RequestSignalActivePlayer(
+                            virtualClient.getGame().getNicknameByClient(virtualClient),
+                            GamePhase.Initial));
         }
     }
 
@@ -198,9 +205,22 @@ public class VirtualClientCommandDispatcher {
     public void requestDepositInstance(int _timeoutID) {
 
         HashMap<Resource, Integer> depositClone;
+        HashMap<Resource, Integer> leaderContentClone = new HashMap<>();
         depositClone = virtualClient.getGame().getDepositClone(virtualClient);
 
-        sendWithTimeoutID(new ResponseStorageInstance(true, depositClone), _timeoutID);
+        ArrayList<Resource> leaderResourcesClone = virtualClient.getGame().getLeaderResourcesClone(virtualClient);
+
+        if (leaderResourcesClone.size() > 0)
+            leaderContentClone = virtualClient.getGame().getLeaderContentClone(virtualClient);
+
+        sendWithTimeoutID(
+                new ResponseStorageInstance(
+                        true,
+                        depositClone,
+                        leaderResourcesClone,
+                        leaderContentClone
+                ),
+                _timeoutID);
     }
 
     public void requestStrongboxInstance(int _timeoutID) {
@@ -208,7 +228,7 @@ public class VirtualClientCommandDispatcher {
         HashMap<Resource, Integer> strongboxClone;
         strongboxClone = virtualClient.getGame().getStrongboxClone(virtualClient);
 
-        sendWithTimeoutID(new ResponseStorageInstance(false, strongboxClone), _timeoutID);
+        sendWithTimeoutID(new ResponseStorageInstance(false, strongboxClone, null, null), _timeoutID);
     }
 
     public void requestMarketInstance(int _timeoutID) {

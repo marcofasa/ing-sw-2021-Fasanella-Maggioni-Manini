@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.communication.server.LorenzoActivation;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
 
@@ -23,6 +24,7 @@ import java.util.Objects;
  */
 public class Controller {
 
+    private final Game gameHandler;
     private final GameTable gameTable;
     private final ActionController actionController;
     private final InitialSelectionController initialSelectionController;
@@ -35,7 +37,8 @@ public class Controller {
      * Basic constructor, it instantiates all sub controllers and sets gamePhase to 0 [InitialSelection phase]
      * @param _gameTable instance of GameTable used for this match
      */
-    public Controller(GameTable _gameTable) {
+    public Controller(Game _gameHandler, GameTable _gameTable) {
+        gameHandler = _gameHandler;
         gameTable = _gameTable;
         actionController = new ActionController(gameTable);
         initialSelectionController = new InitialSelectionController(gameTable);
@@ -124,7 +127,8 @@ public class Controller {
                 }
 
                 //Time for Lorenzo to make a move
-                actionController.makeLorenzoMove();
+                ActionCardEnum lorenzoAction = actionController.makeLorenzoMove();
+                gameHandler.sendAll(new LorenzoActivation(lorenzoAction));
 
                 if (checkLorenzoEndGameConditions()) {
                     gamePhase = 4; //Lorenzo has won. Player has lost.

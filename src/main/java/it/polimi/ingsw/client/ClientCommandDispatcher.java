@@ -98,8 +98,10 @@ public class ClientCommandDispatcher {
         System.out.println("A game logic error was encountered, the move has been reverted.");
     }
 
-    public void setDeposit(HashMap<Resource, Integer> depositClone) {
+    public void setDeposit(HashMap<Resource, Integer> depositClone, ArrayList<Resource> leaderRes, HashMap<Resource, Integer> leaderContent) {
         client.getView().getLightModel().setDeposit(depositClone);
+        client.getView().getLightModel().setDepositLeaderResources(leaderRes);
+        client.getView().getLightModel().setDepositLeaderContent(leaderContent);
     }
 
     public void setStrongbox(HashMap<Resource, Integer> strongboxClone) {
@@ -148,5 +150,20 @@ public class ClientCommandDispatcher {
 
     public void displayInvalidPlacementSelection() {
         client.getView().displayInvalidPlacementSelection();
+    }
+
+    public void displaySinglePlayerOutcome(boolean hasWon, Integer points) {
+
+        if (hasWon) {
+
+            HashMap<String, Integer> scoreMap = new HashMap<>();
+            scoreMap.put(client.getNickname(), points);
+
+            client.getView().displayScoreBoard(scoreMap);
+        } else {
+
+            client.getView().displayLost();
+        }
+
     }
 }

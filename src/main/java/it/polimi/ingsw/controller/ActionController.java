@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 
@@ -48,7 +49,8 @@ public class ActionController {
                 NotEnoughResourcesException,
                 InvalidCardDevelopmentPlacementException,
                 InvalidSlotIndexException,
-                FullSlotException {
+                FullSlotException,
+                EmptyStackException {
 
         /*
         Conditions for InvalidCardDevelopmentPlacementException, InvalidSlotIndexException and FullSlotException

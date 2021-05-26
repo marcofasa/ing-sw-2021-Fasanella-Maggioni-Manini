@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import com.sun.javafx.image.IntPixelGetter;
 import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
@@ -14,6 +15,7 @@ import it.polimi.ingsw.server.VirtualClient;
 
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -126,7 +128,7 @@ public class Game implements Runnable {
         }
 
         // Initialize controller
-        controller = new Controller(gameTable);
+        controller = new Controller(this, gameTable);
 
         // Distribute initial cards
         gameTable.startGame();
@@ -208,8 +210,12 @@ public class Game implements Runnable {
             output.add(new ArrayList<>());
             for (int j = 0; j < cardSlotMatrix[0].length; j++) {
 
-                CardDevelopment topCard = cardSlotMatrix[i][j].getCards().peek();
-                output.get(i).add(topCard);
+                try {
+                    CardDevelopment topCard = cardSlotMatrix[i][j].getCards().peek();
+                    output.get(i).add(topCard);
+                } catch (EmptyStackException ex) {
+                    output.get(i).add(null);
+                }
             }
         }
 
@@ -267,6 +273,26 @@ public class Game implements Runnable {
         return board.getTopDevelopmentCards();
     }
 
+    public Marble getSpareMarble() {
+        return gameTable.getMarketInstance().getSpareMarble();
+    }
+
+    public ArrayList<Resource> getLeaderResourcesClone(VirtualClient _virtualClient) {
+
+        String nickname = clientNicknameMap.get(_virtualClient);
+        PlayerBoard board = gameTable.getPlayerByNickname(nickname);
+
+        return board.getDepositLeaderCardInstance().getResourceTypes();
+    }
+
+    public HashMap<Resource, Integer> getLeaderContentClone(VirtualClient _virtualClient) {
+
+        String nickname = clientNicknameMap.get(_virtualClient);
+        PlayerBoard board = gameTable.getPlayerByNickname(nickname);
+
+        return board.getDepositLeaderCardInstance().getContent();
+    }
+
     public void setMainMoveMade(boolean b) {
         mainMoveMade = b;
     }
@@ -290,24 +316,48 @@ public class Game implements Runnable {
             setMainMoveMade(false);
             send(nickname, new ResponseSuccess());
             sendAll(new NotifyBriefModel(gameTable.getPlayerByNickname(nickname)));
+
         } catch (NotActivePlayerException ex) {
             send(nickname, new ResponseNotActivePlayerError());
         }
 
-        if (controller.getGamePhase() == 2 && displayStartingEndGame) {
-            sendAll(new StartingEndGameMessage(previousPlayer.getNickname()));
-            displayStartingEndGame = false;
+        // Multi player logic
+        if (!gameTable.isSinglePlayer()) {
+
+            if (controller.getGamePhase() == 2 && displayStartingEndGame) {
+                sendAll(new StartingEndGameMessage(previousPlayer.getNickname()));
+                displayStartingEndGame = false;
+            }
+
+            if (controller.getGamePhase() == 3) {
+                sendAll(new ScoreBoardMessage(controller.calculateScores()));
+            } else {
+                // Notify new active player that it's his turn to play
+                sendAll(
+                        new RequestSignalActivePlayer(
+                                controller.getTurnController().getActivePlayer().getNickname(), GamePhase.Initial));
+            }
+        }
+        // Single player logic
+        else {
+
+            if (controller.getGamePhase() == 3) {
+                // Player has won
+                HashMap<String, Integer> playerScore = controller.calculateScores();
+
+                sendAll(new SinglePlayerOutcomeMessage(true, playerScore.get(nickname)));
+            } else if (controller.getGamePhase() == 4) {
+                // Player has lost
+                sendAll(new SinglePlayerOutcomeMessage(false, -1));
+            } else {
+                // Game keeps going on
+                sendAll(
+                        new RequestSignalActivePlayer(
+                                controller.getTurnController().getActivePlayer().getNickname(), GamePhase.Initial));
+            }
+
         }
 
-        if (controller.getGamePhase() == 3) {
-            sendAll(new ScoreBoardMessage(controller.calculateScores()));
-        } else {
-            // Notify new active player that it's his turn to play
-            sendAll(
-                    new RequestSignalActivePlayer(
-                            controller.getTurnController().getActivePlayer().getNickname(), GamePhase.Initial));
-
-        }
     }
 
     /**
@@ -503,7 +553,4 @@ public class Game implements Runnable {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 
-    public Marble getSpareMarble() {
-        return gameTable.getMarketInstance().getSpareMarble();
-    }
 }

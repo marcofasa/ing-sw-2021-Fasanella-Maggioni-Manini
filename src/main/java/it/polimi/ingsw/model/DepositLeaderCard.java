@@ -21,6 +21,10 @@ public class DepositLeaderCard {
         }
     }
 
+    public ArrayList<Resource> getResourceTypes() {
+        return new ArrayList<>(resourceTypes);
+    }
+
     /**
      * Adds a given deposit type
      * @param resource to be added
