@@ -450,8 +450,8 @@ public class CLI implements ViewInterface {
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
-        ArrayList<Resource> resources =new ArrayList<>();
-        switch (playerNumber){
+        ArrayList<Resource> resources = new ArrayList<>();
+        switch (playerNumber) {
             case 0:
                 out.println("You have no resources to choose because you're the first player!");
                 out.println();

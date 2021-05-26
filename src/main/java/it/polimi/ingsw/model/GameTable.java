@@ -200,7 +200,7 @@ public class GameTable implements Serializable {
      */
     void discardDevelopmentCardFromSlot(CardDevelopmentType discardType) {
 
-        cardDevelopmentMarket.discardCards(discardType);
+        getCardDevelopmentMarketInstance().discardCards(discardType);
 
         if (cardDevelopmentMarket.isColumnEmpty(discardType)) activateEndGame();
     }
