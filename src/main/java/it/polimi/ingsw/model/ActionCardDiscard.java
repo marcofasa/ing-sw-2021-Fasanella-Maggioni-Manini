@@ -18,7 +18,8 @@ public class ActionCardDiscard extends ActionCard{
      * Discard two development cards of the type selected when activated
      */
     @Override
-    public void activate() {
+    public ActionCardEnum activate() {
         gameTable.discardDevelopmentCardFromSlot(cardDevelopmentType);
+        return ActionCardEnum.Discard;
     }
 }

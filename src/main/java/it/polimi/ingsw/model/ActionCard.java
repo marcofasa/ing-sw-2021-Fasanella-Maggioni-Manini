@@ -8,5 +8,5 @@ public abstract class ActionCard {
     /**
      * Action of the card
      */
-    public abstract void activate();
+    public abstract ActionCardEnum activate();
 }

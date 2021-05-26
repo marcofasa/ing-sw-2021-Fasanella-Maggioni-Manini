@@ -14,20 +14,18 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class CLI implements ViewInterface {
 
     // Attributes
     private final Client client;
     private static final PrintWriter out = new PrintWriter(System.out, true);
-    private static Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in);
     private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
-    private boolean waitingMenu;
-    private ExecutorService executors;
+    private final Boolean debug;
+    private boolean open = false;
 
     /**
      * Constructor of CLI
@@ -38,8 +36,8 @@ public class CLI implements ViewInterface {
         this.client=client;
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
-        this.parsingCommand=new ParsingCommand(utils,this,out,in,debug);
-        executors = Executors.newFixedThreadPool(1);
+        this.debug = debug;
+        this.parsingCommand=new ParsingCommand(utils,this,out,in, debug);
     }
 
     public LightModel getLightModel() {
@@ -92,7 +90,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayNotActivePlayerError() {
-        out.println("Ops, you can't do that!");
+        out.println("Ops, you are no more active!");
     }
 
     @Override
@@ -125,12 +123,18 @@ public class CLI implements ViewInterface {
         out.println("Ops, requirements for this Card Leader are not met! ");
     }
 
+
     @Override
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
         if (currentPlayer.equals(getLightModel().getNickname())){
-            // parsingCommand.exitWaitingMenu();
-            parsingCommand.playerMenu(gamePhase);
+            if(open){
+                System.out.println("There is a console opened already! Exploding...");
+                throw new RuntimeException("There is a console opened already!");
+            }
+            open = true;
+            parsingCommand.PlayerMenu(gamePhase);
+            open = false;
         }
         else {
             displayWaitingOpponent(currentPlayer);
@@ -140,7 +144,6 @@ public class CLI implements ViewInterface {
             out.println();
             out.println();
             displayResourceMarket();
-            // parsingCommand.waitingMenu();
         }
     }
 
@@ -155,7 +158,6 @@ public class CLI implements ViewInterface {
         HashMap<Resource, Integer> cloneDeposit = getLightModel().getDeposit();
 
         utils.printListResource(cloneDeposit);
-
     }
 
     @Override
@@ -301,7 +303,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayConnectionError() {
-
+        System.out.println("Server is unreachable!");
     }
 
     @Override
@@ -310,10 +312,16 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public Integer askForDevelopmentCardPlacement(CardDevelopmentLevel level) {
-        utils.printCardDevelopmentDeck(client.getLightModel().getCardsDevelopment());
-        out.println("You need to specify a slot for the placement of a level " + level + " card");
-        return utils.readNumberWithBounds(1,3);
+    public void displayInvalidPlacementSelection() {
+
+        System.out.println("The placement index you have selected would not allow for a legal card placement!" +
+                "\nEither you selected to place the card in a full slot or the placement would not follow the game rules.");
+
+    }
+
+    @Override
+    public void displayLorenzoActivation(ActionCardEnum actionCardType) {
+        out.println("A " + actionCardType + "Action Card has been used by Lorenzo!");
     }
 
     @Override
@@ -337,11 +345,7 @@ public class CLI implements ViewInterface {
         1 arg: row=1 or col=0
         2 arg: number of row/column
          */
-        try {
-            client.sendAndWait(new RequestMarketUse(message,key), -1);
-        } catch (RequestTimeoutException e) {
-            e.printStackTrace();
-        }
+        client.send(new RequestMarketUse(message,key));
     }
 
     @Override
@@ -366,12 +370,7 @@ public class CLI implements ViewInterface {
 
         Integer placementIndex = Integer.parseInt(s);
 
-        try {
-            client.sendAndWait(new RequestBuyDevelopmentCard(rowIndex,columnIndex,placementIndex),-1);
-        } catch (RequestTimeoutException e) {
-            displayTimeOut();
-            e.printStackTrace();
-        }
+        client.send(new RequestBuyDevelopmentCard(rowIndex,columnIndex,placementIndex));
     }
 
     @Override
@@ -421,12 +420,7 @@ public class CLI implements ViewInterface {
         }
 
         //Sending request to Server
-        try {
-            client.sendAndWait(new RequestActivateProduction(productionSelection),-1);
-        } catch (RequestTimeoutException e) {
-            displayTimeOut();
-            e.printStackTrace();
-        }
+        client.send(new RequestActivateProduction(productionSelection));
     }
 
 
@@ -511,4 +505,5 @@ public class CLI implements ViewInterface {
         utils.printListResource(briefModel.getStrongBox());
         utils.printCardLeaderDeck(briefModel.getVisibleCardsLeaders());
     }
+
 }

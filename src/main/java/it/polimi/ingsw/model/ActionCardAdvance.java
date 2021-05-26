@@ -18,7 +18,8 @@ public class ActionCardAdvance extends ActionCard{
      * moves Lorenzo forward 2 times
      */
     @Override
-    public void activate() {
+    public ActionCardEnum activate() {
         lorenzo.advanceFaith(2);
+        return ActionCardEnum.Advance;
     }
 }

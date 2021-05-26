@@ -7,11 +7,12 @@ import it.polimi.ingsw.communication.server.requests.GamePhase;
 
 public class ResponseSuccess extends ServerResponse {
 
-    private final GamePhase gamePhase;
+    public ResponseSuccess() {
+        super(GamePhase.Unmodified.toString(), null);
+    }
 
     public ResponseSuccess(GamePhase gamePhase) {
-        super(null, null);
-        this.gamePhase = gamePhase;
+        super(gamePhase.toString(), null);
     }
 
     /**
@@ -21,6 +22,6 @@ public class ResponseSuccess extends ServerResponse {
      */
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        commandDispatcher.success(gamePhase);
+        commandDispatcher.success(GamePhase.valueOf(super.getPayload()));
     }
 }

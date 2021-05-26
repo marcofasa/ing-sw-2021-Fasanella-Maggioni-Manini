@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
-import it.polimi.ingsw.model.CardDevelopmentLevel;
+import it.polimi.ingsw.model.ActionCardEnum;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.application.Application;
@@ -21,6 +21,8 @@ public class GUI extends Application implements ViewInterface {
     public static void main(String[] args) {
         launch(args);
     }
+
+
 
     @Override
     public LightModel getLightModel() {
@@ -162,7 +164,6 @@ public class GUI extends Application implements ViewInterface {
 
     }
 
-
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         return null;
@@ -219,23 +220,20 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public Integer askForDevelopmentCardPlacement(CardDevelopmentLevel level) {
-        return null;
+    public void displayLorenzoActivation(ActionCardEnum actionCardType) {
+
+    }
+
+    @Override
+    public void displayInvalidPlacementSelection() {
+
     }
 
 
     @Override
     public void start(Stage stage) throws Exception {
-       Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        stage.setScene(new Scene(loader));
-        stage.show();
-
-        /*
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        stage.setTitle("Log In");
-        stage.setScene(new Scene(root));
-        stage.show();
-         */
-
+    Parent root=FXMLLoader.load(getClass().getResource("LogIn.fxml"));
+    stage.setScene(new Scene(root));
+    stage.show();
     }
 }

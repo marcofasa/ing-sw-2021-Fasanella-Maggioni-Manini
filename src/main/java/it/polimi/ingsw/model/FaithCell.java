@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class FaithCell {
+import java.io.Serializable;
+
+public class FaithCell implements Serializable {
     private int victoryPoints;
     private FaithSection section;
     private FaithCellType type;

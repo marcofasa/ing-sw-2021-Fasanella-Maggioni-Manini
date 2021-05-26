@@ -69,6 +69,7 @@ public class ClientCommandDispatcher {
     }
 
     public void success(GamePhase gamePhase) {
+        System.out.println("Successo attivato con Gamephase " + gamePhase.toString());
         client.getView().displaySuccess();
         if(gamePhase == GamePhase.Initial || gamePhase == GamePhase.Final)
             client.getView().displayTurn(client.getNickname(), gamePhase);
@@ -94,7 +95,7 @@ public class ClientCommandDispatcher {
     }
 
     public void unexpectedMove() {
-        System.out.println("ClientCommandDispatcher.unexpectedMove : METHOD HOLDS ONLY THIS PRINT, IT IS NOT IMPLEMENTED");
+        System.out.println("A game logic error was encountered, the move has been reverted.");
     }
 
     public void setDeposit(HashMap<Resource, Integer> depositClone) {
@@ -141,8 +142,11 @@ public class ClientCommandDispatcher {
         client.setModelForPlayer(briefModel, nickname);
     }
 
-    public void requestDevelopmentCardPlacement(CardDevelopmentLevel level, int timeoutID) {
-        sendWithTimeoutID(new ResponseDevelopmentCardPlacement(
-                client.getView().askForDevelopmentCardPlacement(level)), timeoutID);
+    public void displayLorenzoActivation(ActionCardEnum actionCardType) {
+        client.getView().displayLorenzoActivation(actionCardType);
+    }
+
+    public void displayInvalidPlacementSelection() {
+        client.getView().displayInvalidPlacementSelection();
     }
 }

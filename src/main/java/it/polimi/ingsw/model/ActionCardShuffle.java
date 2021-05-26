@@ -19,8 +19,9 @@ public class ActionCardShuffle extends ActionCard{
      * move Lorenzo forward by 1 and shuffles the deck
      */
     @Override
-    public void activate() {
+    public ActionCardEnum activate() {
         lorenzo.advanceFaith(1);
         lorenzo.getActionCardDeck().shuffleDeck();
+        return ActionCardEnum.Shuffle;
     }
 }

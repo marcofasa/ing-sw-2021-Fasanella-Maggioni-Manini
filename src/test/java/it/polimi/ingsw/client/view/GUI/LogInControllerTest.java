@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.view.GUI;
 
 
+import it.polimi.ingsw.client.view.GUI.GUI;
+
 class LogInControllerTest {
 
 

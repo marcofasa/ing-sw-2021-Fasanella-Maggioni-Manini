@@ -1,12 +1,11 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
-import it.polimi.ingsw.communication.server.requests.RequestDevelopmentCardPlacement;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
+import it.polimi.ingsw.controller.Game;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 public class VirtualClientCommandDispatcher {
 
     private final VirtualClient virtualClient;
-    private int developmentCardPlacementIndex;
 
     public VirtualClientCommandDispatcher(VirtualClient virtualClient) {
         this.virtualClient = virtualClient;
@@ -45,7 +43,7 @@ public class VirtualClientCommandDispatcher {
             success = virtualClient.getGame().activateLeaderCard(virtualClient, cardLeader);
 
             if (success) {
-                sendWithTimeoutID(new ResponseSuccess(GamePhase.Unmodified), timeoutID);
+                sendWithTimeoutID(new ResponseSuccess(), timeoutID);
             } else {
                 sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), timeoutID);
             }
@@ -76,9 +74,17 @@ public class VirtualClientCommandDispatcher {
 
         } catch (NotEnoughResourcesException e) {
             sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+            send(new RequestSignalActivePlayer(
+                    virtualClient.getGame().getNicknameByClient(virtualClient),
+                    GamePhase.Initial)
+            );
 
         } catch (CardLeaderRequirementsNotMetException e) {
             sendWithTimeoutID(new ResponseLeaderRequirementsNotMet(), _timeoutID);
+            send(new RequestSignalActivePlayer(
+                    virtualClient.getGame().getNicknameByClient(virtualClient),
+                    GamePhase.Initial)
+            );
 
         } catch (MainMoveAlreadyMadeException e) {
             sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
@@ -86,35 +92,36 @@ public class VirtualClientCommandDispatcher {
     }
 
     public void requestBuyAndPlaceDevelopmentCard(int _rowIndex, int _columnIndex, int _placementIndex, int _timeoutID) {
-        this.developmentCardPlacementIndex = _placementIndex;
-        while(true) {
-            try {
 
-                virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, developmentCardPlacementIndex);
-                virtualClient.getGame().setMainMoveMade(true);
-                sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
-                return;
-            } catch (NotActivePlayerException ex) {
+        try {
 
-                sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
-                return;
-            } catch (NotEnoughResourcesException ex) {
+            virtualClient.getGame().buyAndPlaceDevCard(virtualClient, _rowIndex, _columnIndex, _placementIndex);
+            virtualClient.getGame().setMainMoveMade(true);
+            sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
 
-                sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
-                return;
-            } catch (MainMoveAlreadyMadeException ex) {
+        } catch (NotActivePlayerException ex) {
 
-                sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
-                return;
-            } catch (InvalidCardDevelopmentPlacementException | InvalidSlotIndexException | FullSlotException ex) {
-                sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
-                CardDevelopment cardDevelopment = virtualClient.getGame().getCardDevMarketClone().get(_rowIndex).get(_columnIndex);
-                try {
-                    virtualClient.sendAndWait(new RequestDevelopmentCardPlacement(cardDevelopment.getCardLevel()), -1);
-                } catch (RequestTimeoutException e) {
-                    e.printStackTrace();
-                }
-            }
+            sendWithTimeoutID(new ResponseNotActivePlayerError(), _timeoutID);
+
+        } catch (NotEnoughResourcesException ex) {
+
+            sendWithTimeoutID(new ResponseNotEnoughResources(), _timeoutID);
+            send(
+                    new RequestSignalActivePlayer(
+                            virtualClient.getGame().getNicknameByClient(virtualClient),
+                            GamePhase.Initial));
+
+        } catch (MainMoveAlreadyMadeException ex) {
+
+            sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
+
+        } catch (InvalidCardDevelopmentPlacementException | InvalidSlotIndexException | FullSlotException ex) {
+
+            sendWithTimeoutID(new ResponseInvalidPlacementSelection(), _timeoutID);
+            send(
+                    new RequestSignalActivePlayer(
+                            virtualClient.getGame().getNicknameByClient(virtualClient),
+                            GamePhase.Initial));
         }
     }
 
@@ -156,7 +163,7 @@ public class VirtualClientCommandDispatcher {
     public void requestDiscardCardLeader(Integer cardLeaderIndex, int timeoutID) {
         try{
             virtualClient.getGame().discardCardLeader(virtualClient, cardLeaderIndex);
-            sendWithTimeoutID(new ResponseSuccess(GamePhase.Unmodified), timeoutID);
+            sendWithTimeoutID(new ResponseSuccess(), timeoutID);
         } catch (Exception e) {
             sendWithTimeoutID(new ResponseUnexpectedMove(), timeoutID);
         }
@@ -169,10 +176,9 @@ public class VirtualClientCommandDispatcher {
         try {
             residualResources = virtualClient.getGame().useMarket(virtualClient, _index, _selection);
             virtualClient.getGame().setMainMoveMade(true);
-
             if (residualResources == null) {
                 sendWithTimeoutID(new ResponseSuccess(GamePhase.Final), _timeoutID);
-                //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
+//                send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Final));
             } else {
                 sendWithTimeoutID(new ResponseDiscardResourceSelection(residualResources), _timeoutID);
             }
@@ -185,7 +191,7 @@ public class VirtualClientCommandDispatcher {
 
         } catch (MainMoveAlreadyMadeException e) {
             sendWithTimeoutID(new ResponseMainMoveAlreadyMade(), _timeoutID);
-            send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Initial));
+            //send(new RequestSignalActivePlayer(virtualClient.getGame().getNicknameByClient(virtualClient), GamePhase.Initial));
         }
     }
 
@@ -249,9 +255,5 @@ public class VirtualClientCommandDispatcher {
 
         sendWithTimeoutID(new ResponseTopCardsDevelopment(developmentCards), _timeoutID);
 
-    }
-
-    public void setNewDevelopmentPlacement(Integer developmentCardPlacementIndex) {
-        this.developmentCardPlacementIndex = developmentCardPlacementIndex;
     }
 }

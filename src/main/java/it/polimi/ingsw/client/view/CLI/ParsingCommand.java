@@ -3,7 +3,6 @@ import it.polimi.ingsw.communication.server.requests.GamePhase;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.concurrent.*;
 
 public class ParsingCommand {
 
@@ -14,9 +13,7 @@ public class ParsingCommand {
     private final PrintWriter out ;
     private final Scanner in;
     private boolean haveMove=false;
-    ExecutorService executorService = Executors.newFixedThreadPool(1);
-    private boolean waitingMenu = true;
-
+    
     /**
      * Constructor of Parsing Command
      * @param utils
@@ -31,14 +28,12 @@ public class ParsingCommand {
         this.out=out;
         this.in=in;
         this.debug = debug;
-        if(debug)
-            out.println("Debug mode on!");
     }
 
     /**
      * PlayerMenu displayed
      */
-    public void playerMenu(GamePhase gamePhase){
+    public void PlayerMenu(GamePhase gamePhase){
         haveMove=true;
         printMenu();
         while(readPlayerCommand(gamePhase));
@@ -67,18 +62,16 @@ public class ParsingCommand {
                 cli.colorize();
                 break;
             case "buy resource":
-                if(gamePhase != GamePhase.Final || debug)
+                if(gamePhase != GamePhase.Final || debug) {
                     cli.askMarketChoice(); //1 chance
+                    return false;
+                }
                 else {
                     printInvalidMove();
-                    break;
                 }
-                return false;
+                break;
             case "resource market":
-                if(gamePhase != GamePhase.Final || debug)
-                    cli.displayResourceMarket();
-                else
-                    printInvalidMove();
+                cli.displayResourceMarket();
                 break;
             case "activate card leader":
                 cli.askCardLeaderActivation();
@@ -87,14 +80,18 @@ public class ParsingCommand {
                 cli.displayCardDevelopmentMarket();
                 break;
             case "buy card development":
-                if(gamePhase != GamePhase.Final || debug)
+                if(gamePhase != GamePhase.Final || debug) {
                     cli.askDevelopmentCardChoice(); //1 chance
+                    return false;
+                }
                 else
                     printInvalidMove();
                 break;
             case "production":
-                if(gamePhase != GamePhase.Final || debug)
+                if(gamePhase != GamePhase.Final || debug) {
                     cli.askProductionActivation(); //1 chance
+                    return false;
+                }
                 else
                     printInvalidMove();
                 break;
@@ -120,15 +117,21 @@ public class ParsingCommand {
                 cli.checkoutPlayer();
                 break;
             case "end turn":
-                if(gamePhase == GamePhase.Final || debug) {
+                if(gamePhase == GamePhase.Final) {
                     cli.askEndTurn();
                     return false;
                 }
-                printInvalidMovePass();
-                break;
+                else {
+                    printInvalidMovePass();
+                    break;
+                }
             default: utils.printPlayerCommandError();
         }
         return true;
+    }
+
+    private void printInvalidMovePass() {
+        out.println("Invalid move, you need to make a primary action before passing");
     }
 
     /**
@@ -139,26 +142,12 @@ public class ParsingCommand {
         out.println("You can make a secondary action or write 'end turn' to pass");
     }
 
-    /**
-     * Prints an invalid move message
-     */
-    private void printInvalidMovePass() {
-        out.println("Invalid move, you need to make a primary action before passing");
-    }
-
-    public void waitingMenu() {
-        waitingMenu = true;
-        while(readWaitingCommand() && waitingMenu);
-    }
-
-    public void exitWaitingMenu(){
-        waitingMenu = false;
+    public void WaitingMenu() {
+        while(readWaitingCommand());
     }
 
     private boolean readWaitingCommand() {
-        String command;
-        command = utils.readString();
-        if(command == null) return true;
+        String command = utils.readString();
         switch (command){
             case"":
             case"\n":
