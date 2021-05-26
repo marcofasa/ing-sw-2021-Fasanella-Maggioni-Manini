@@ -42,7 +42,6 @@ public class CLI implements ViewInterface {
         executors = Executors.newFixedThreadPool(1);
     }
 
-
     public LightModel getLightModel() {
         return client.getLightModel();
     }
@@ -50,10 +49,6 @@ public class CLI implements ViewInterface {
     @Override
     public LightFaithTrail getLightFaithTrail() {
         return lightFaithTrail;
-    }
-
-    @Override
-    public void setClient(Client client) {
     }
 
     @Override

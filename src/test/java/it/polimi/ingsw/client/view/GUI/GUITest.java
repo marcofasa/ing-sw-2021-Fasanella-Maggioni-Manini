@@ -8,6 +8,6 @@ import static org.junit.Assert.*;
 public class GUITest {
       @Test
     public void WelcomeTest(){
-         // ViewInterface viewInterface=new GUI();
+          ViewInterface viewInterface=new GUI();
       }
 }

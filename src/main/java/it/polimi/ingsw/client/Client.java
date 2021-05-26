@@ -47,8 +47,7 @@ public class Client {
             view = new CLI(this, debug);
         } else {
             view = new GUI();
-            view.setClient(this); //TODO check if it's okay to set this client and launch
-            //GUI.main(null);
+       //     Application.launch(view);
         }
         modelByNickname = new HashMap<>();
     }
