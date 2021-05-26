@@ -5,11 +5,7 @@ import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
-import it.polimi.ingsw.model.ActionCardEnum;
-import it.polimi.ingsw.model.CardDevelopment;
-import it.polimi.ingsw.model.CardDevelopmentLevel;
-import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,7 +38,7 @@ public class GUI extends Application implements ViewInterface {
 
         ((StandardScene) fxmlLoader.getController()).init();
         primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -57,7 +53,12 @@ public class GUI extends Application implements ViewInterface {
     public void start(Stage stage) throws Exception {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
         this.primaryStage=stage;
+
+        //Card Development Market
         displayCardDevelopmentMarket();
+
+        //Resource Market
+        //displayResourceMarket();
 
     }
 
@@ -103,6 +104,38 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayResourceMarket() {
+        //Test Market
+        ArrayList<ArrayList<MarbleType>> market = new ArrayList<ArrayList<MarbleType>>();
+
+        ArrayList<MarbleType> row0 = new ArrayList<>();
+        row0.add(MarbleType.MarbleWhite);
+        row0.add(MarbleType.MarbleBlue);
+        row0.add(MarbleType.MarbleRed);
+        row0.add(MarbleType.MarblePurple);
+
+        ArrayList<MarbleType> row1 = new ArrayList<>();
+        row1.add(MarbleType.MarbleRed);
+        row1.add(MarbleType.MarbleRed);
+        row1.add(MarbleType.MarblePurple);
+        row1.add(MarbleType.MarbleBlue);
+
+        ArrayList<MarbleType> row2 = new ArrayList<>();
+        row2.add(MarbleType.MarbleBlue);
+        row2.add(MarbleType.MarbleWhite);
+        row2.add(MarbleType.MarblePurple);
+        row2.add(MarbleType.MarbleBlue);
+
+        market.add(row0);
+        market.add(row1);
+        market.add(row2);
+
+
+        //Loading Scene
+        mainScene("/fxml/ResourceMarket.fxml");
+
+
+        ResourceMarketController resourceMarketController= fxmlLoader.getController();
+        resourceMarketController.setResourceMarket(market);
 
     }
 

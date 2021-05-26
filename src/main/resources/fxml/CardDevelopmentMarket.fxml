@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.CardDevelopmentMarketController">
+<AnchorPane prefHeight="380.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.CardDevelopmentMarketController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="610.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="428.0" fitWidth="698.0" layoutX="-88.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/brown_background.jpg" />
          </image>
@@ -28,6 +28,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button fx:id="purchase_cardDevelop_button" alignment="CENTER" layoutX="247.0" layoutY="360.0" mnemonicParsing="false" onAction="#buyCardDevelopment" prefHeight="23.0" prefWidth="106.0" text="Purchase" textAlignment="CENTER" />
+      <Button fx:id="purchase_cardDevelop_button" alignment="CENTER" layoutX="247.0" layoutY="360.0" mnemonicParsing="false" onAction="#buyCardDevelopment" text="Purchase" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="257.0" AnchorPane.topAnchor="363.0" />
    </children>
 </AnchorPane>

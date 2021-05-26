@@ -12,6 +12,21 @@ import java.util.ArrayList;
 
 public class CardDevelopmentMarketController extends StandardScene{
 
+    //TODO scelta del posto dove mettere le carte
+    
+
+    /*
+    IMAGE FORMAT
+    Card_Development_a-b
+
+    (a=victory points, b=color)
+
+    green=0
+    purple=1
+    blue=2
+    yellow=3
+     */
+
     private int nRow=3;
     private int nCol=4;
 
@@ -54,8 +69,12 @@ public class CardDevelopmentMarketController extends StandardScene{
                     default:
                         throw new IllegalStateException("Unexpected value: " + cardDevelopments.get(i).get(j).getCardType());
                 }
-                //String path="/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
-                String path="/images/CardDevelopment/Card_Development_1-0.jpg";
+
+                //REAL PATH
+                String path="/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
+
+                //TEST PATH
+                //String path="/images/CardDevelopment/Card_Development_1-0.jpg";
 
 
                 Image image=new Image(GUI.class.getResourceAsStream(path));
