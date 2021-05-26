@@ -162,6 +162,7 @@ public class ClientCommandDispatcher {
             client.getView().displayScoreBoard(scoreMap);
         } else {
 
+            System.out.println("Lorenzo has reached a win condition...\n");
             client.getView().displayLost();
         }
 

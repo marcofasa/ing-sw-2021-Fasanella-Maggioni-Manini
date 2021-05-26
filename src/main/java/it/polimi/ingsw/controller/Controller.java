@@ -178,7 +178,7 @@ public class Controller {
      */
     private boolean checkLorenzoEndGameConditions() {
 
-        if (gameTable.getFaithTrailInstance().getLorenzoPosition() == 24) return true;
+        if (gameTable.getFaithTrailInstance().getLorenzoPosition() >= 24) return true;
 
         for (int i = 0; i < 4; i++) {
 

@@ -110,18 +110,10 @@ public class FaithTrail implements Serializable {
     }
 
     public void moveLorenzo(){
-        lorenzoPosition++;
-
-        /*
-        try {
-            throw new ExecutionControl.NotImplementedException("Not Implemented Yet");
-        } catch (ExecutionControl.NotImplementedException e) {
-            e.printStackTrace();
+        if (lorenzoPosition < 24) {
+            lorenzoPosition++;
+            if (checkPopeCellLorenzo(getSection(lorenzoPosition))) popeActive(getSection(lorenzoPosition));
         }
-         */
-
-        if(checkPopeCellLorenzo(getSection(lorenzoPosition))) popeActive(getSection(lorenzoPosition));
-        // --->  if(checkEndGame(lorenzoPosition)) gameTable.activateEndGame(lorenzo,lorenzoPosition);
     }
 
 
@@ -175,8 +167,7 @@ public class FaithTrail implements Serializable {
      */
     private boolean checkPopeCellLorenzo(FaithSection section) {
         FaithCellType cellType = cells.get(lorenzoPosition).getType();
-        if (cellType == FaithCellType.Pope) return true;
-        else return false;
+        return cellType == FaithCellType.Pope;
     }
 
     /**
