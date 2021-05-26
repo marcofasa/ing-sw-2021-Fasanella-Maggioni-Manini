@@ -40,6 +40,7 @@ public class CLI implements ViewInterface {
         this.parsingCommand=new ParsingCommand(utils,this,out,in, debug);
     }
 
+
     public LightModel getLightModel() {
         return client.getLightModel();
     }
@@ -47,6 +48,10 @@ public class CLI implements ViewInterface {
     @Override
     public LightFaithTrail getLightFaithTrail() {
         return lightFaithTrail;
+    }
+
+    @Override
+    public void setClient(Client client) {
     }
 
     @Override

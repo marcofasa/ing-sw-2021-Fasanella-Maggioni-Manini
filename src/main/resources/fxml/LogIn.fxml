@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.LogInController">
+   <children>
+      <TabPane layoutX="56.0" layoutY="20.0" prefHeight="212.0" prefWidth="543.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Multiplayer">
+            <content>
+              <AnchorPane>
+                     <children>
+                        <ImageView fitHeight="250.0" fitWidth="541.0" layoutX="34.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="25.0">
+                           <image>
+                              <Image url="@../images/Masters of Renaissance_Logo.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
+                        <TextField fx:id="ip_field" layoutX="220.0" layoutY="265.0" text="localhost" />
+                        <Button fx:id="login_button" layoutX="264.0" layoutY="305.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="39.0" prefWidth="73.0" text="Start" />
+                        <Text layoutX="94.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NickName" />
+                        <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="2556" />
+                        <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
+                        <Text layoutX="460.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" />
+                        <Label fx:id="status_label" layoutX="34.0" layoutY="313.0" prefHeight="23.0" prefWidth="150.0" text="Status: NOT LOGGED" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Single Player">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="-8.0" layoutY="31.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="240.0" fitWidth="431.0" layoutX="91.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/LorenzoilMagnifico.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="single_player_button" layoutX="244.0" layoutY="281.0" mnemonicParsing="false" onAction="#singlePlayerAction" prefHeight="43.0" prefWidth="113.0" text="Single Player" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
