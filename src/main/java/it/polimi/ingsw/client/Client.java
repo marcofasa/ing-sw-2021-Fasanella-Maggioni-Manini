@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.view.CLI.CLI;
-import it.polimi.ingsw.client.view.GUI.GUI;
+import it.polimi.ingsw.client.view.cli.CLI;
+import it.polimi.ingsw.client.view.gui.GUI;
 import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.timeout_handler.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
