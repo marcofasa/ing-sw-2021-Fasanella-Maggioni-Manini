@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
+import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 import javafx.application.Application;
@@ -24,12 +25,36 @@ public class GUI extends Application implements ViewInterface {
     private Stage primaryStage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
+    private LightFaithTrail lightFaithTrail;
 
+    private Stage Scene(String fxmlPath){
+
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(fxmlPath));
+
+
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+            scene = new Scene(new Label("Error during FXML Loading"));
+        }
+        ((StandardScene) fxmlLoader.getController()).init();
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setResizable(false);
+return stage;
+    }
+
+    private void showAndWait(Stage stage){
+        stage.showAndWait();
+    }
 
     private void mainScene(String fxmlPath) {
-        //Platform.runLater(() -> {
+
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlPath));
+
 
             try {
                 scene = new Scene(fxmlLoader.load());
@@ -37,25 +62,15 @@ public class GUI extends Application implements ViewInterface {
                 e.printStackTrace();
                 scene = new Scene(new Label("Error during FXML Loading"));
             }
-/*
-        ((StandardScene) fxmlLoader.getController()).init();
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-
-
- */
-            //primaryStage.showAndWait();
-
-            //else primaryStage.show();
-    //    });
-}
-
-    public void showScene(){
-
         ((StandardScene) fxmlLoader.getController()).init();
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+
+}
+
+    public void show(Stage stage){
+        stage.show();
     }
 
 
@@ -70,10 +85,14 @@ public class GUI extends Application implements ViewInterface {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
         this.primaryStage=stage;
 
+
         primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
         });
+
+        //displayWelcome();
+        //showScene();
 
         //TESTS
         ArrayList<CardLeader> cardLeaders=new ArrayList<>();
@@ -89,12 +108,16 @@ public class GUI extends Application implements ViewInterface {
         //displayResourceMarket();
 
         //Initial Selection
+       /*
         ArrayList<CardLeader> list=askForLeaderCardSelection(cardLeaders);
-        list.size();
-       // askForInitialResourcesSelection(2);
+         int m=list.size();
+        ArrayList<Resource> resources=askForInitialResourcesSelection(2);
+        int i= resources.size();
+
+        */
 
         //displayTurn
-        //displayTurn("io",GamePhase.Initial);
+        displayTurn("io",GamePhase.Initial);
 
     }
 
@@ -105,12 +128,13 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public LightFaithTrail getLightFaithTrail() {
-        return null;
+        return lightFaithTrail;
     }
 
     @Override
     public void setClient(Client client) {
         this.client= client;
+        lightFaithTrail=new LightFaithTrail(client);
     }
 
     @Override
@@ -219,7 +243,8 @@ public class GUI extends Application implements ViewInterface {
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
 
         mainScene("/fxml/PlayerBoard.fxml");
-       // primaryStage.setResizable(true);
+        PlayerBoardController playerBoardController=fxmlLoader.getController();
+        playerBoardController.setModels(getLightModel(),getLightFaithTrail(),gamePhase);
     }
 
     @Override
@@ -264,7 +289,15 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void askProductionActivation() {
+        Stage stage=Scene("/fxml/Production.fxml");
+        ProductionController productionController=fxmlLoader.getController();
+        productionController.setProduction(getLightModel().getCardsDevelopment(),getLightModel().getCardsLeader());
+        stage.showAndWait();
 
+
+        //Sends Request to Client
+        client.send(new RequestActivateProduction(productionController.getProductionSelection()));
+        //
     }
 
     @Override
@@ -280,17 +313,22 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         //Remove
+        Stage stage=Scene("/fxml/InitialSelection.fxml");
         InitialSelectionController initialSelectionController= fxmlLoader.getController();
         initialSelectionController.setPlayerNumber(playerNumber);
+        stage.showAndWait();
+
         return initialSelectionController.getResourceSelection();
     }
 
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-        mainScene("/fxml/InitialSelection.fxml");
+
+        Stage stage=Scene("/fxml/InitialSelection.fxml");
         InitialSelectionController initialSelectionController= fxmlLoader.getController();
         initialSelectionController.setCardLeaderDeck(cardLeaders);
-        showScene();
+
+        stage.showAndWait();
 
         return initialSelectionController.getCardLeaderSelection();
 

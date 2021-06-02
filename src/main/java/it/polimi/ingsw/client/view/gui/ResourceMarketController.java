@@ -18,6 +18,7 @@ public class ResourceMarketController extends StandardScene {
 
     private String key;
     private int message;
+    private boolean viewOnly=false;
 
     private ImageView[][] resourceMatrix;
 
@@ -49,7 +50,17 @@ public class ResourceMarketController extends StandardScene {
     }
 
     public void ResourceMarketPurchase(ActionEvent actionEvent) {
-        //Send MarketChoice
+        if(viewOnly){
+            printError("Action not admitted. View only mode!");
+        }
+        else {
+            printClick("Purchase button");
+            //Send MarketChoice
+
+
+        }
+
+
     }
 
     public void setCol3(ActionEvent actionEvent) {
@@ -122,5 +133,9 @@ public class ResourceMarketController extends StandardScene {
             }
 
         }
+    }
+
+    public void setViewOnly() {
+        viewOnly=true;
     }
 }

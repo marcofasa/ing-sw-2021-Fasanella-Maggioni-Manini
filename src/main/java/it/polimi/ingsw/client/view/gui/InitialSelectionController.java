@@ -18,12 +18,13 @@ public class InitialSelectionController extends StandardScene{
     GridPane initialCardLeader_grid;
 
 
-    private int playerNumber=-1;
+    private int pNumber =-1;
     private ImageView[] cardLeaderArray;
     private int nRow=4;
     private ArrayList<CardLeader> cardSelection;
     private ArrayList<CardLeader> cardsLeader;
     private ArrayList<Resource> resourceSelection;
+    private int resourceSize=-1;
     
     
 
@@ -42,37 +43,69 @@ public class InitialSelectionController extends StandardScene{
 
     public void coinClick(MouseEvent mouseEvent) {
         printClick("coin");
+        if(resourceSelection==null){
+            resourceSelection=new ArrayList<>();
+        }
         resourceSelection.add(Resource.Coins);
     }
 
     public void stoneClick(MouseEvent mouseEvent) {
         printClick("stone");
+        if(resourceSelection==null){
+            resourceSelection=new ArrayList<>();
+        }
         resourceSelection.add(Resource.Stones);
     }
 
     public void servantClick(MouseEvent mouseEvent) {
         printClick("servant");
+        if(resourceSelection==null){
+            resourceSelection=new ArrayList<>();
+        }
         resourceSelection.add(Resource.Servants);
     }
 
     public void shieldClick(MouseEvent mouseEvent) {
         printClick("shield");
+        if(resourceSelection==null){
+            resourceSelection=new ArrayList<>();
+        }
         resourceSelection.add(Resource.Shields);
     }
 
-    public void setPlayerNumber(int playerNumber) {
-        this.playerNumber=playerNumber;
+    public void setPlayerNumber(int pNumber) {
+        this.pNumber = pNumber;
     }
 
     public void resourceSelection(ActionEvent actionEvent) {
         printClick("resource button");
-       
+        if(pNumber<0){
+            printError("Not right time to choose resources!");
+            resourceSelection.clear();
+        }else {
+            if(pNumber==0) {
+                resourceSize=0;
+            }
+            else if(pNumber==1 || pNumber==2){
+                resourceSize=1;
+            }
+            else resourceSize=2;
+            if(resourceSelection.size()==resourceSize){
+            printClick("resource selection button");
+            final Node source = (Node) actionEvent.getSource();
+            final Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();}
+            else{
+                printError("Not enough / Too much resources picked! You have to choose "+resourceSize+" resources.");
+                resourceSelection.clear();
+            }
+        }
     }
 
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeader) {
         this.cardsLeader=cardsLeader;
         cardSelection=new ArrayList<>();
-        resourceSelection=new ArrayList<>();
+        resourceSelection=new ArrayList<>(10);
         cardLeaderArray = new ImageView[4];
         for (int i = 0; i < nRow; i++) {
             
@@ -137,7 +170,15 @@ public class InitialSelectionController extends StandardScene{
 }
 
 public void setResources(int playerNumber){
-    this.playerNumber=playerNumber;
+   // resourceSelection=new ArrayList<>(10);
+    this.pNumber =playerNumber;
+    if(pNumber==0) {
+        resourceSize=0;
+    }
+    else if(pNumber==1 || pNumber==2){
+        resourceSize=1;
+    }
+    else resourceSize=2;
 }
 
     private void setClick(int finalI) {

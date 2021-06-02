@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 public class CardDevelopmentMarketController extends StandardScene{
 
+
+
+
     //TODO place to put card
     
 
@@ -40,6 +43,7 @@ public class CardDevelopmentMarketController extends StandardScene{
     private int buyCol=-1;
     private ImageView[][] cardDevelopmentMatrix;
     private int pos;
+    private boolean viewOnly=false;
 
     @FXML
     GridPane cardDevelop_grid;
@@ -122,6 +126,10 @@ public class CardDevelopmentMarketController extends StandardScene{
      * @param actionEvent
      */
     public void buyCardDevelopment(ActionEvent actionEvent) {
+        if(viewOnly){
+            printError("Action not admitted. View only mode!");
+        }
+        else{
         if(pos<0 || buyCol<0 || buyCol<0){
             printError("Position still not selected or Card not Picked");
         }
@@ -130,7 +138,7 @@ public class CardDevelopmentMarketController extends StandardScene{
             final Node source = (Node) actionEvent.getSource();
             final Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
-        }
+        }}
     }
 
     public void selectionPositionCardDevelop(ActionEvent actionEvent) {
@@ -156,5 +164,9 @@ public class CardDevelopmentMarketController extends StandardScene{
 
         newWindow.showAndWait();
         pos=cardDevelopmentSelection.getPos();
+    }
+
+    public void setViewOnly() {
+        viewOnly=true;
     }
 }
