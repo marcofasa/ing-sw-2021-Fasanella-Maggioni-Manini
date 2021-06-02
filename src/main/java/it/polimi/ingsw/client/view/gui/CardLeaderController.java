@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.CardLeader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 public class CardLeaderController extends StandardScene{
     @FXML
     GridPane cardleader_grid;
+
+    private Client client;
 
     private ImageView[] cardLeaderArray;
     private int nRow=3;

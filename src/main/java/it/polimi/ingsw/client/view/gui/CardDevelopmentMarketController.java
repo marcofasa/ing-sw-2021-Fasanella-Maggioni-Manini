@@ -135,6 +135,7 @@ public class CardDevelopmentMarketController extends StandardScene{
         }
         else{
             printClick("Purchase button");
+            //send al client
             final Node source = (Node) actionEvent.getSource();
             final Stage stage = (Stage) source.getScene().getWindow();
             stage.close();

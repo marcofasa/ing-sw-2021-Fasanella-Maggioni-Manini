@@ -80,18 +80,24 @@ return stage;
 
 
 
+
+
+
+
     @Override
     public void start(Stage stage) throws Exception {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
         this.primaryStage=stage;
 
 
-        primaryStage.setOnCloseRequest((WindowEvent t) -> {
+        /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
         });
 
-        //displayWelcome();
+         */
+
+        displayWelcome();
         //showScene();
 
         //TESTS
@@ -117,7 +123,7 @@ return stage;
         */
 
         //displayTurn
-        displayTurn("io",GamePhase.Initial);
+        //displayTurn("io",GamePhase.Initial);
 
     }
 
@@ -139,7 +145,13 @@ return stage;
 
     @Override
     public void displayWelcome() {
-       mainScene("/fxml/LogIn.fxml");
+       Stage stage=Scene("/fxml/LogIn.fxml");
+       LogInController logInController=fxmlLoader.getController();
+        stage.showAndWait();
+       //
+        String user=logInController.getUser_field();
+
+        //
     }
 
     @Override
@@ -245,6 +257,7 @@ return stage;
         mainScene("/fxml/PlayerBoard.fxml");
         PlayerBoardController playerBoardController=fxmlLoader.getController();
         playerBoardController.setModels(getLightModel(),getLightFaithTrail(),gamePhase);
+
     }
 
     @Override

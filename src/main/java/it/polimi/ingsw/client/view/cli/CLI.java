@@ -414,7 +414,7 @@ public class CLI implements ViewInterface {
         out.println("Do you want to activate Card Leader production?");
         if (utils.readYesOrNo(false)) {
             CardLeader[] cardLeaders;
-            cardLeaders=utils.getCardLeaderActivation(getLightModel().getCardsLeader());
+            cardLeaders=utils.activationCardLeaderForProduction(getLightModel().getCardsLeader());
             productionSelection.setCardLeadersToActivate(cardLeaders);
             Resource[] resourcesOutput;
             resourcesOutput=utils.getCardLeaderOutputs(productionSelection.getCardLeadersToActivate());

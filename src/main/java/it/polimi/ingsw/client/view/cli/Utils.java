@@ -782,7 +782,7 @@ public class Utils {
                     ": " + cardDevelopment.getVictoryPoints() + " victory points");
             printCardResourceCost(cardDevelopment.getCardCosts());
         } else {
-            out.printf( "(" + i + j + ") Stack is empty! The cards that were here have been bought by the players" );
+            out.printf("(" + i + j + ") Stack is empty! The cards that were here have been bought by the players");
         }
 
         out.println();
@@ -933,14 +933,17 @@ public class Utils {
      * @param cardsLeader that can be activated
      * @return array of CardLeader that will be Activated in corresponding index (else NULL)
      */
-    public CardLeader[] getCardLeaderActivation(ArrayList<CardLeader> cardsLeader) {
+    public CardLeader[] activationCardLeaderForProduction(ArrayList<CardLeader> cardsLeader) {
         CardLeader[] cardLeaders = new CardLeader[2];
         for (int i = 0; i < cardsLeader.size(); i++) {
-            if (cardsLeader.get(i) != null) {
-                printCardLeader(cardsLeader.get(i));
-                if (readYesOrNo(false)) cardLeaders[i] = cardsLeader.get(i);
-                else cardLeaders[i] = null;
+            if (cardsLeader.get(i).getDescription() == CardLeaderType.Production) {
+                if (cardsLeader.get(i) != null) {
+                    printCardLeader(cardsLeader.get(i));
+                    if (readYesOrNo(false)) cardLeaders[i] = cardsLeader.get(i);
+                    else cardLeaders[i] = null;
+                }
             }
+            else cardLeaders[i] = null;
         }
         return cardLeaders;
     }

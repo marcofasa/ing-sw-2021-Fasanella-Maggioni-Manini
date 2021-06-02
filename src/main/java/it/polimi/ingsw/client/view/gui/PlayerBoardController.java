@@ -96,6 +96,7 @@ public class PlayerBoardController extends StandardScene{
         }
 
         CardLeaderController cardLeaderController=loader.getController();
+
         cardLeaderController.setCardLeaderDeck(lightModel.getCardsLeader());
 
 

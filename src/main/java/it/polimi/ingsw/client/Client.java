@@ -46,9 +46,9 @@ public class Client {
         if (cli) {
             view = new CLI(this, debug);
         } else {
-            view = new GUI();
-            view.setClient(this); //TODO check if it's okay to set this client and launch
-            //GUI.main(null);
+            view= new GUI();
+            view.setClient(this);//TODO check if it's okay to set this client and launch.sta
+            GUI.main(null);
         }
         modelByNickname = new HashMap<>();
     }
@@ -139,7 +139,7 @@ public class Client {
         }
         if (debug)
             System.out.println("Client is running in debug!");
-        Client client = new Client(CLI, debug);
+        Client client = new Client(false, debug);
         System.out.println("Client has started");
         int port = 25556;
         String ip = "127.0.0.1";
