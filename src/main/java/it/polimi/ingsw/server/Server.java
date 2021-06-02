@@ -76,7 +76,7 @@ public class Server {
         if (debug)
             System.out.println("Client is running in debug!");
         Server server = new Server(true);
-        Integer port = 25556;
+        Integer port = 51214;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);
         thread.start();

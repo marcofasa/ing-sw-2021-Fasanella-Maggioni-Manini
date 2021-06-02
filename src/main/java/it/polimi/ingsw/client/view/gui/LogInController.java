@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client.view.gui;
 
 
+import it.polimi.ingsw.client.ConnectionInfo;
+import it.polimi.ingsw.client.IllegalAddressException;
+import it.polimi.ingsw.client.IllegalNicknameException;
+import it.polimi.ingsw.client.IllegalPortException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -19,19 +23,30 @@ public class LogInController extends StandardScene{
 @FXML
     TextField port_field;
 
+    private ConnectionInfo connectionInfo;
+
 
     public void loginAction(ActionEvent actionEvent) {
-        String user_text=user_field.getText();
-        String ip_text=ip_field.getText();
-        String port_text=port_field.getText();
+        connectionInfo = new ConnectionInfo();
+        boolean invalid = true;
+        while (invalid) {
+            try {
+                connectionInfo.setNickname(user_field.getText());
+                connectionInfo.setPort(Integer.parseInt(port_field.getText()));
+                connectionInfo.setIP(ip_field.getText());
+                invalid = false;
+            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException ignore) {
+            }
+        }
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
+        /*
         if(user_text.compareTo("admin")==0) {
             status_label.setText("admin status");
         }
-
+         */
     }
 
     @Override
@@ -43,16 +58,7 @@ public class LogInController extends StandardScene{
 
     }
 
-
-    public String getIp_field() {
-        return ip_field.getText();
-    }
-
-    public String getPort_field() {
-        return port_field.getText();
-    }
-
-    public String getUser_field() {
-        return user_field.getText();
+    public ConnectionInfo getConnectionInfo() {
+        return connectionInfo;
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ConnectionInfo;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
@@ -8,12 +9,10 @@ import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class GUI extends Application implements ViewInterface {
     private Scene scene;
     private LightFaithTrail lightFaithTrail;
 
-    private Stage Scene(String fxmlPath){
+    private Stage Scene(String fxmlPath) {
 
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(fxmlPath));
@@ -43,33 +42,33 @@ public class GUI extends Application implements ViewInterface {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setResizable(false);
-return stage;
+        return stage;
     }
 
-    private void showAndWait(Stage stage){
+    private void showAndWait(Stage stage) {
         stage.showAndWait();
     }
 
     private void mainScene(String fxmlPath) {
 
-            fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource(fxmlPath));
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(fxmlPath));
 
 
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                e.printStackTrace();
-                scene = new Scene(new Label("Error during FXML Loading"));
-            }
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+            scene = new Scene(new Label("Error during FXML Loading"));
+        }
         ((StandardScene) fxmlLoader.getController()).init();
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
 
-}
+    }
 
-    public void show(Stage stage){
+    public void show(Stage stage) {
         stage.show();
     }
 
@@ -79,15 +78,10 @@ return stage;
     }
 
 
-
-
-
-
-
     @Override
     public void start(Stage stage) throws Exception {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        this.primaryStage=stage;
+        this.primaryStage = stage;
 
 
         /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
@@ -101,8 +95,8 @@ return stage;
         //showScene();
 
         //TESTS
-        ArrayList<CardLeader> cardLeaders=new ArrayList<>();
-        for(int i=0;i<4;i++){
+        ArrayList<CardLeader> cardLeaders = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
             CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
             cardLeaders.add(cardleaderWhite);
         }
@@ -139,19 +133,16 @@ return stage;
 
     @Override
     public void setClient(Client client) {
-        this.client= client;
-        lightFaithTrail=new LightFaithTrail(client);
+        this.client = client;
+        lightFaithTrail = new LightFaithTrail(client);
     }
 
     @Override
-    public void displayWelcome() {
-       Stage stage=Scene("/fxml/LogIn.fxml");
-       LogInController logInController=fxmlLoader.getController();
+    public ConnectionInfo displayWelcome() {
+        Stage stage = Scene("/fxml/LogIn.fxml");
+        LogInController logInController = fxmlLoader.getController();
         stage.showAndWait();
-       //
-        String user=logInController.getUser_field();
-
-        //
+        return logInController.getConnectionInfo();
     }
 
     @Override
@@ -206,7 +197,7 @@ return stage;
         mainScene("/fxml/ResourceMarket.fxml");
 
 
-        ResourceMarketController resourceMarketController= fxmlLoader.getController();
+        ResourceMarketController resourceMarketController = fxmlLoader.getController();
         resourceMarketController.setResourceMarket(market);
 
     }
@@ -255,8 +246,8 @@ return stage;
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
 
         mainScene("/fxml/PlayerBoard.fxml");
-        PlayerBoardController playerBoardController=fxmlLoader.getController();
-        playerBoardController.setModels(getLightModel(),getLightFaithTrail(),gamePhase);
+        PlayerBoardController playerBoardController = fxmlLoader.getController();
+        playerBoardController.setModels(getLightModel(), getLightFaithTrail(), gamePhase);
 
     }
 
@@ -302,9 +293,9 @@ return stage;
 
     @Override
     public void askProductionActivation() {
-        Stage stage=Scene("/fxml/Production.fxml");
-        ProductionController productionController=fxmlLoader.getController();
-        productionController.setProduction(getLightModel().getCardsDevelopment(),getLightModel().getCardsLeader());
+        Stage stage = Scene("/fxml/Production.fxml");
+        ProductionController productionController = fxmlLoader.getController();
+        productionController.setProduction(getLightModel().getCardsDevelopment(), getLightModel().getCardsLeader());
         stage.showAndWait();
 
 
@@ -326,8 +317,8 @@ return stage;
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         //Remove
-        Stage stage=Scene("/fxml/InitialSelection.fxml");
-        InitialSelectionController initialSelectionController= fxmlLoader.getController();
+        Stage stage = Scene("/fxml/InitialSelection.fxml");
+        InitialSelectionController initialSelectionController = fxmlLoader.getController();
         initialSelectionController.setPlayerNumber(playerNumber);
         stage.showAndWait();
 
@@ -337,8 +328,8 @@ return stage;
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
 
-        Stage stage=Scene("/fxml/InitialSelection.fxml");
-        InitialSelectionController initialSelectionController= fxmlLoader.getController();
+        Stage stage = Scene("/fxml/InitialSelection.fxml");
+        InitialSelectionController initialSelectionController = fxmlLoader.getController();
         initialSelectionController.setCardLeaderDeck(cardLeaders);
 
         stage.showAndWait();
@@ -363,36 +354,34 @@ return stage;
     }
 
     @Override
-    public void displayCardDevelopmentMarket()  {
+    public void displayCardDevelopmentMarket() {
 
         //cardDevelop Market Array
-        ArrayList<ArrayList<CardDevelopment>> cardDevelopments=new ArrayList<ArrayList<CardDevelopment>>();
-        for(int i=0;i<3;i++){
+        ArrayList<ArrayList<CardDevelopment>> cardDevelopments = new ArrayList<ArrayList<CardDevelopment>>();
+        for (int i = 0; i < 3; i++) {
             cardDevelopments.add(new ArrayList<CardDevelopment>());
-            for (int j=0;j<4;j++){
-                cardDevelopments.get(i).add(new CardDevelopment(i,j,1));
+            for (int j = 0; j < 4; j++) {
+                cardDevelopments.get(i).add(new CardDevelopment(i, j, 1));
             }
         }
 
         //Personal Card test
-        ArrayList<CardDevelopment> card=new ArrayList<CardDevelopment>();
-        for(int i=0;i<3;i++){
-                card.add(null);
+        ArrayList<CardDevelopment> card = new ArrayList<CardDevelopment>();
+        for (int i = 0; i < 3; i++) {
+            card.add(null);
         }
-
 
 
         mainScene("/fxml/CardDevelopmentMarket.fxml");
 
 
-        CardDevelopmentMarketController cardDevelopmentMarketController= fxmlLoader.getController();
+        CardDevelopmentMarketController cardDevelopmentMarketController = fxmlLoader.getController();
 
         //REAL LINE
         //cardDevelopmentMarketController.setDevelopmentMarket(client.getLightModel().getCardDevelopmentMarket());
 
         //TEST LINE
-        cardDevelopmentMarketController.setDevelopmentMarket( cardDevelopments,card);
-
+        cardDevelopmentMarketController.setDevelopmentMarket(cardDevelopments, card);
 
 
     }
@@ -430,5 +419,10 @@ return stage;
     @Override
     public void displayInvalidPlacementSelection() {
 
+    }
+
+    @Override
+    public ConnectionInfo getConnectionInfo() {
+        return displayWelcome();
     }
 }

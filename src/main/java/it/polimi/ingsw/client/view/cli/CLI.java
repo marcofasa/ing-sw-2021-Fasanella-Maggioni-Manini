@@ -1,10 +1,7 @@
 package it.polimi.ingsw.client.view.cli;
 
-import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.LightFaithTrail;
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.view.ViewInterface;
-import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
@@ -55,8 +52,47 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void displayWelcome() {
+    public ConnectionInfo displayWelcome() {
         utils.printWelcomeMessage();
+        ConnectionInfo connectionInfo = new ConnectionInfo();
+        boolean invalid = true;
+        while(invalid) {
+            try {
+                connectionInfo.setNickname(askNickName());
+                invalid = false;
+            } catch (IllegalNicknameException e) {
+                out.println(e.getMessage());
+            }
+        }
+        invalid = true;
+        while(invalid) {
+            try {
+                connectionInfo.setIP(askIP());
+                invalid = false;
+            } catch (IllegalAddressException e) {
+                out.println(e.getMessage());
+            }
+        }
+        invalid = true;
+        while(invalid) {
+            try {
+                connectionInfo.setPort(askPortNumber());
+                invalid = false;
+            } catch (IllegalPortException e) {
+                out.println(e.getMessage());
+            }
+        }
+        return connectionInfo;
+    }
+
+    private int askPortNumber() {
+        out.println("Port Number (default 51214):");
+        return utils.readNumberWithBounds(49152, 65535);
+    }
+
+    private String askIP() {
+        out.println("IP:");
+        return utils.readString();
     }
 
     @Override
@@ -188,8 +224,7 @@ public class CLI implements ViewInterface {
     public String askNickName() {
         //utils.setColoredCLI();
         //Welcome Message
-        displayWelcome();
-
+        //displayWelcome();
         //Reads the nickname
         String input;
         out.println("NickName:");
@@ -329,6 +364,11 @@ public class CLI implements ViewInterface {
         System.out.println("The placement index you have selected would not allow for a legal card placement!" +
                 "\nEither you selected to place the card in a full slot or the placement would not follow the game rules.");
 
+    }
+
+    @Override
+    public ConnectionInfo getConnectionInfo() {
+        return displayWelcome();
     }
 
     @Override

@@ -46,8 +46,8 @@ public class Client {
         if (cli) {
             view = new CLI(this, debug);
         } else {
-            view= new GUI();
-            view.setClient(this);//TODO check if it's okay to set this client and launch.sta
+            view = new GUI();
+            view.setClient(this); //TODO check if it's okay to set this client and launch
             GUI.main(null);
         }
         modelByNickname = new HashMap<>();
@@ -70,9 +70,7 @@ public class Client {
                             handleResponse(finalInputClass);
                         } catch (RequestTimeoutException e) {
                             getView().displayTimeoutError();
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        } catch (ExecutionException | InterruptedException ignored) {}
                     });
                 } else {
                     executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
@@ -120,8 +118,8 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        boolean debug = false;
-        boolean CLI = true;
+        Boolean debug = false;
+        Boolean CLI = true;
         for (String arg :
                 args) {
             switch (arg) {
@@ -130,6 +128,7 @@ public class Client {
                     System.out.println("--g to start in GUI");
                     return;
                 case "--d":
+                    System.out.println("debug mode on");
                     debug = true;
                     break;
                 case "--g":
@@ -137,21 +136,20 @@ public class Client {
                     break;
             }
         }
-        if (debug)
-            System.out.println("Client is running in debug!");
-        Client client = new Client(false, debug);
+        Client client = new Client(CLI, debug);
         System.out.println("Client has started");
-        int port = 25556;
-        String ip = "127.0.0.1";
-        connected = true;
-        while(connected) {
+        while(true) {
+            ConnectionInfo connectionInfo = client.getView().getConnectionInfo();
+            int port = connectionInfo.getPort();
+            String ip = connectionInfo.getNickname();
+            String nickname = connectionInfo.getNickname();
             try {
                 client.executors.submit(() -> {
                     try {
-                        client.startConnectionAndListen(ip, port, client.getView().askNickName());
+                        client.startConnectionAndListen(ip, port, nickname);
                     } catch (IOException e) {
                         client.getView().displayConnectionError();
-                        connected = true;
+                        Client.connected = false;
                     }
                 }).get();
             } catch (InterruptedException e) {
@@ -202,14 +200,6 @@ public class Client {
         System.out.println(modelByNickname.get(nickname).toString());
     }
 
-    public ArrayList<String> getPlayersNickname() {
-        return playersNickname;
-    }
-
-    public BriefModel getModelByNickname(String nickname) {
-        return modelByNickname.get(nickname);
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -218,12 +208,11 @@ public class Client {
         this.nickname = nickname;
     }
 
-    public void killSocket(){
-        connected = false;
-        try {
-            clientSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public ArrayList<String> getPlayersNickname() {
+        return playersNickname;
+    }
+
+    public BriefModel getModelByNickname(String nickname) {
+        return modelByNickname.get(nickname);
     }
 }

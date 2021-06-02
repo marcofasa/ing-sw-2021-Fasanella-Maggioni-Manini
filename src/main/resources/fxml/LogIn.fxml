@@ -24,10 +24,10 @@
                            </image>
                         </ImageView>
                         <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
-                        <TextField fx:id="ip_field" layoutX="220.0" layoutY="265.0" text="localhost" />
+                        <TextField fx:id="ip_field" layoutX="220.0" layoutY="265.0" text="192.168.1.1" />
                         <Button fx:id="login_button" layoutX="264.0" layoutY="305.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="39.0" prefWidth="73.0" text="Start" />
                         <Text layoutX="94.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NickName" />
-                        <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="2556" />
+                        <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="51214" />
                         <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
                         <Text layoutX="460.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" />
                         <Label fx:id="status_label" layoutX="34.0" layoutY="313.0" prefHeight="23.0" prefWidth="150.0" text="Status: NOT LOGGED" />

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view;
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ConnectionInfo;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
@@ -23,7 +24,7 @@ public interface ViewInterface {
     /*
     Display Welcome Message
      */
-    void displayWelcome();
+    ConnectionInfo displayWelcome();
 
     /*
     Display Match Starting
@@ -156,4 +157,6 @@ public interface ViewInterface {
     void displayLorenzoActivation(ActionCardEnum actionCardType);
 
     void displayInvalidPlacementSelection();
+
+    ConnectionInfo getConnectionInfo();
 }
