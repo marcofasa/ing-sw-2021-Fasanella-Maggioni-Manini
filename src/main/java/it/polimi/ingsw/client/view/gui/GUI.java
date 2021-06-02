@@ -9,6 +9,7 @@ import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -17,6 +18,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class GUI extends Application implements ViewInterface {
 
@@ -25,6 +29,8 @@ public class GUI extends Application implements ViewInterface {
     private FXMLLoader fxmlLoader;
     private Scene scene;
     private LightFaithTrail lightFaithTrail;
+    private LogInController logInController;
+    private ConnectionInfo connectionInfo;
 
     private Stage Scene(String fxmlPath) {
 
@@ -50,22 +56,22 @@ public class GUI extends Application implements ViewInterface {
     }
 
     private void mainScene(String fxmlPath) {
+        Platform.runLater(() -> {
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(fxmlPath));
 
-        fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(fxmlPath));
 
-
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-            scene = new Scene(new Label("Error during FXML Loading"));
-        }
-        ((StandardScene) fxmlLoader.getController()).init();
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
-
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+                scene = new Scene(new Label("Error during FXML Loading"));
+            }
+            ((StandardScene) fxmlLoader.getController()).init();
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        });
     }
 
     public void show(Stage stage) {
@@ -137,12 +143,35 @@ public class GUI extends Application implements ViewInterface {
         lightFaithTrail = new LightFaithTrail(client);
     }
 
+    /*
+        public ConnectionInfo displayWelcome() {
+        ConnectionInfo connectionInfo = new ConnectionInfo();
+        boolean invalid = true;
+        while (invalid) {
+            Stage stage = Scene("/fxml/LogIn.fxml");
+            LogInController logInController = fxmlLoader.getController();
+            stage.showAndWait();
+            try {
+                connectionInfo.setNickname(logInController.getUser_field());
+                connectionInfo.setPort(Integer.parseInt(logInController.getPort_field()));
+                connectionInfo.setIP(logInController.getIp_field());
+                invalid = false;
+            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException ignore) {
+            }
+        }
+        return connectionInfo;
+     */
+
     @Override
     public ConnectionInfo displayWelcome() {
-        Stage stage = Scene("/fxml/LogIn.fxml");
-        LogInController logInController = fxmlLoader.getController();
+        Stage stage=Scene("/fxml/LogIn.fxml");
+        LogInController logInController=fxmlLoader.getController();
         stage.showAndWait();
-        return logInController.getConnectionInfo();
+        //
+        String user=logInController.getUser_field();
+
+        //
+        return null;
     }
 
     @Override
