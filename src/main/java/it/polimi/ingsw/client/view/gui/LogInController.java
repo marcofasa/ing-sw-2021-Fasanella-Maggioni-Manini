@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client.view.gui;
 
 
+import it.polimi.ingsw.client.ConnectionInfo;
+import it.polimi.ingsw.client.IllegalAddressException;
+import it.polimi.ingsw.client.IllegalNicknameException;
+import it.polimi.ingsw.client.IllegalPortException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -10,28 +14,47 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LogInController extends StandardScene{
-    @FXML
-    Label status_label;
-    @FXML
+@FXML
+  Label status_label;
+@FXML
     TextField user_field;
-    @FXML
+@FXML
     TextField ip_field;
-    @FXML
+@FXML
     TextField port_field;
+
+    private ConnectionInfo connectionInfo;
+    private GUI gui;
 
 
     public void loginAction(ActionEvent actionEvent) {
-        String user_text=user_field.getText();
-        String ip_text=ip_field.getText();
-        String port_text=port_field.getText();
+        connectionInfo = new ConnectionInfo();
+        boolean invalid = true;
+        while (invalid) {
+            try {
+                connectionInfo.setNickname(user_field.getText());
+                connectionInfo.setPort(Integer.parseInt(port_field.getText()));
+                connectionInfo.setIP(ip_field.getText());
+                invalid = false;
+            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException ignore) {
+            }
+        }
+
+        gui.setConnectionInfo(connectionInfo);
+
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
+        /*
         if(user_text.compareTo("admin")==0) {
             status_label.setText("admin status");
         }
+         */
+    }
 
+    public void setGUI(GUI gui){
+        this.gui=gui;
     }
 
     @Override
@@ -43,16 +66,7 @@ public class LogInController extends StandardScene{
 
     }
 
-
-    public String getIp_field() {
-        return ip_field.getText();
-    }
-
-    public String getPort_field() {
-        return port_field.getText();
-    }
-
-    public String getUser_field() {
-        return user_field.getText();
+    public ConnectionInfo getConnectionInfo() {
+        return connectionInfo;
     }
 }

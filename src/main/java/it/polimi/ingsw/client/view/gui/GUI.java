@@ -56,7 +56,6 @@ public class GUI extends Application implements ViewInterface {
     }
 
     private void mainScene(String fxmlPath) {
-        Platform.runLater(() -> {
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlPath));
 
@@ -71,7 +70,6 @@ public class GUI extends Application implements ViewInterface {
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
-        });
     }
 
     public void show(Stage stage) {
@@ -101,11 +99,13 @@ public class GUI extends Application implements ViewInterface {
         //showScene();
 
         //TESTS
-        ArrayList<CardLeader> cardLeaders = new ArrayList<>();
+        /*ArrayList<CardLeader> cardLeaders = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
             cardLeaders.add(cardleaderWhite);
         }
+
+         */
 
         //Card Development Market
         //displayCardDevelopmentMarket();
@@ -164,13 +164,11 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public ConnectionInfo displayWelcome() {
-        Stage stage=Scene("/fxml/LogIn.fxml");
-        LogInController logInController=fxmlLoader.getController();
-        stage.showAndWait();
-        //
-        String user=logInController.getUser_field();
-
-        //
+        Platform.runLater(()->{
+            mainScene("/fxml/LogIn.fxml");
+            LogInController logInController=fxmlLoader.getController();
+            logInController.setGUI(this);
+        });
         return null;
     }
 
@@ -453,5 +451,10 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public ConnectionInfo getConnectionInfo() {
         return displayWelcome();
+    }
+
+    public void setConnectionInfo(ConnectionInfo connectionInfo) {
+        this.connectionInfo=connectionInfo;
+        //Now ready to start server connection
     }
 }
