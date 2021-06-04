@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.LogInController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.LogInController">
    <children>
       <TabPane layoutX="56.0" layoutY="20.0" prefHeight="212.0" prefWidth="543.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -30,7 +30,7 @@
                         <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="51214" />
                         <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
                         <Text layoutX="460.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" />
-                        <Label fx:id="status_label" layoutX="34.0" layoutY="313.0" prefHeight="23.0" prefWidth="150.0" text="Status: NOT LOGGED" />
+                        <Label fx:id="status_label" layoutX="13.0" layoutY="313.0" prefHeight="23.0" prefWidth="232.0" text="Status: NOT LOGGED" />
                      </children>
                   </AnchorPane>
             </content>

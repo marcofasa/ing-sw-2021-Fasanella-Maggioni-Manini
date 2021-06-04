@@ -12,16 +12,17 @@ public class LogoController extends StandardScene {
 
 
     public void okButton(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/LogIn.fxml"));
+        GUI.fxmlLoader = new FXMLLoader();
+        GUI.fxmlLoader.setLocation(getClass().getResource("/fxml/LogIn.fxml"));
         Scene secondScene = null;
         try {
-            secondScene = new Scene(loader.load());
+            secondScene = new Scene(GUI.fxmlLoader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        GUI.scene=secondScene;
 
-        GUI.primaryStage.setScene(secondScene);
+        GUI.primaryStage.setScene(GUI.scene);
         GUI.primaryStage.show();
 
 /*
