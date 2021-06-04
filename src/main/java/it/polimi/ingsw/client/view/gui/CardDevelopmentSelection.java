@@ -21,6 +21,7 @@ public class CardDevelopmentSelection extends StandardScene{
 
 
     public void cardDevelopSelected(ActionEvent actionEvent) {
+        /*
         if(pos<0){
             printError("Position still not selected");
         }
@@ -29,7 +30,12 @@ public class CardDevelopmentSelection extends StandardScene{
             final Node source = (Node) actionEvent.getSource();
             final Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
-        }
+        }*/
+        // DEBUG:
+        printClick("Position Selected button");
+        final Node source = (Node) actionEvent.getSource();
+        final Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     public void setCardDevelopmentSelection(ArrayList<CardDevelopment> cardsDevelopment) {

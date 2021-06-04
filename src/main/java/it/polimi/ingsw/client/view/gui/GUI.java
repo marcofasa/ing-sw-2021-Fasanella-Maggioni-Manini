@@ -29,7 +29,7 @@ public class GUI extends Application implements ViewInterface {
     private LightFaithTrail lightFaithTrail;
     private LogInController logInController;
     private static ConnectionInfo connectionInfo;
-    private Semaphore semaphore = new Semaphore(0);
+
 
     private Stage Scene(String fxmlPath) {
         setupStage(fxmlPath);
@@ -40,10 +40,12 @@ public class GUI extends Application implements ViewInterface {
     }
 
     private void mainScene(String fxmlPath) {
-        setupStage(fxmlPath);
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        Platform.runLater(() -> {
+            setupStage(fxmlPath);
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        });
     }
 
     private void setupStage(String fxmlPath) {
@@ -80,10 +82,11 @@ public class GUI extends Application implements ViewInterface {
         });
 
          */
-
         displayWelcome();
         //showScene();
-
+        //displayPosition();
+        //displayTurn();
+        //displayDisconnection(); /* TODO */
         //TESTS
         /*ArrayList<CardLeader> cardLeaders = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -149,9 +152,8 @@ public class GUI extends Application implements ViewInterface {
      */
 
     public void displayWelcome() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             mainScene("/fxml/LogIn.fxml");
-            LogInController logInController=fxmlLoader.getController();
         });
     }
 
@@ -201,12 +203,13 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayPosition() {
-
+        Platform.runLater(() -> {
+            mainScene("/fxml/FaithTrail.fxml");
+        });
     }
 
     @Override
     public void displayTimeOut() {
-
     }
 
     @Override
@@ -263,7 +266,7 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayDisconnection() {
-
+        mainScene("/fxml/CardDevelopmentSelection.fxml");
     }
 
     @Override
@@ -472,6 +475,8 @@ public class GUI extends Application implements ViewInterface {
 
         return connectionInfo;
     }
+
+
 
     public static void setConnectionInfo(ConnectionInfo connectionInfo) {
         System.out.println("setto " + connectionInfo);

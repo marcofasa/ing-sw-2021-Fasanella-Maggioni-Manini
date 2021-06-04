@@ -154,4 +154,5 @@ public interface ViewInterface {
     void displayInvalidPlacementSelection();
 
     ConnectionInfo getConnectionInfo();
+
 }

@@ -9,15 +9,13 @@ import it.polimi.ingsw.communication.client.SetupConnection;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerResponse;
 import it.polimi.ingsw.model.BriefModel;
+import javafx.application.Application;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 
 public class Client {
@@ -35,6 +33,7 @@ public class Client {
     private final ArrayList<BriefModel> players;
     private HashMap<String, BriefModel> modelByNickname;
     private String nickname = "";
+    public static Semaphore semaphore = new Semaphore(0);
 
 
     public Client(Boolean cli, Boolean debug) {
@@ -48,7 +47,7 @@ public class Client {
         } else {
             view = new GUI();
             view.setClient(this); //TODO check if it's okay to set this client and launch
-            GUI.main(null);
+            new Thread(() -> Application.launch(GUI.class, null)).start();
         }
         modelByNickname = new HashMap<>();
     }
@@ -139,6 +138,12 @@ public class Client {
         Client client = new Client(CLI, debug);
         System.out.println("Client has started");
         while(true) {
+            System.out.println("Waiting Semaphore");
+            try {
+                Client.semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             ConnectionInfo connectionInfo = client.getView().getConnectionInfo();
             int port = connectionInfo.getPort();
             String ip = connectionInfo.getNickname();
@@ -215,4 +220,5 @@ public class Client {
     public BriefModel getModelByNickname(String nickname) {
         return modelByNickname.get(nickname);
     }
+
 }

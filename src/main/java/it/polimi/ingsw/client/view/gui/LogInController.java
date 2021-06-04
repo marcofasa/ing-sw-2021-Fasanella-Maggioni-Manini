@@ -1,10 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 
-import it.polimi.ingsw.client.ConnectionInfo;
-import it.polimi.ingsw.client.IllegalAddressException;
-import it.polimi.ingsw.client.IllegalNicknameException;
-import it.polimi.ingsw.client.IllegalPortException;
+import it.polimi.ingsw.client.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -40,10 +37,11 @@ public class LogInController extends StandardScene{
         }
 
         GUI.setConnectionInfo(connectionInfo);
+        Client.semaphore.release();
 
-        final Node source = (Node) actionEvent.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        //final Node source = (Node) actionEvent.getSource();
+        //final Stage stage = (Stage) source.getScene().getWindow();
+        //stage.close();
 
         /*
         if(user_text.compareTo("admin")==0) {
