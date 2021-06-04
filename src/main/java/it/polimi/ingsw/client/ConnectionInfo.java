@@ -7,6 +7,16 @@ public class ConnectionInfo {
     private String ip = "127.0.0.1";
     String nickname;
 
+    public ConnectionInfo(ConnectionInfo connectionInfo) {
+        this.port = connectionInfo.getPort();
+        this.ip = connectionInfo.getIp();
+        this.nickname = connectionInfo.getNickname();
+    }
+
+    public ConnectionInfo() {
+
+    }
+
     public void setPort(int port) throws IllegalPortException {
         if ( port > 49152 && port < 65535)
             this.port = port;

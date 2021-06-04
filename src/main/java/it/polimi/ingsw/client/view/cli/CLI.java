@@ -51,7 +51,6 @@ public class CLI implements ViewInterface {
     public void setClient(Client client) {
     }
 
-    @Override
     public ConnectionInfo displayWelcome() {
         utils.printWelcomeMessage();
         ConnectionInfo connectionInfo = new ConnectionInfo();

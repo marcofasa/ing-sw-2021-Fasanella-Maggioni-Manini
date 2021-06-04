@@ -22,11 +22,6 @@ public interface ViewInterface {
     //DISPLAY
 
     /*
-    Display Welcome Message
-     */
-    ConnectionInfo displayWelcome();
-
-    /*
     Display Match Starting
      */
     void displayStartingGame();

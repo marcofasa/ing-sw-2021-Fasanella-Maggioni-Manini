@@ -24,7 +24,6 @@ public class LogInController extends StandardScene{
     TextField port_field;
 
     private ConnectionInfo connectionInfo;
-    private GUI gui;
 
 
     public void loginAction(ActionEvent actionEvent) {
@@ -40,7 +39,7 @@ public class LogInController extends StandardScene{
             }
         }
 
-        gui.setConnectionInfo(connectionInfo);
+        GUI.setConnectionInfo(connectionInfo);
 
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
@@ -51,10 +50,6 @@ public class LogInController extends StandardScene{
             status_label.setText("admin status");
         }
          */
-    }
-
-    public void setGUI(GUI gui){
-        this.gui=gui;
     }
 
     @Override

@@ -18,9 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 public class GUI extends Application implements ViewInterface {
 
@@ -30,14 +28,27 @@ public class GUI extends Application implements ViewInterface {
     private Scene scene;
     private LightFaithTrail lightFaithTrail;
     private LogInController logInController;
-    private ConnectionInfo connectionInfo;
+    private static ConnectionInfo connectionInfo;
+    private Semaphore semaphore = new Semaphore(0);
 
     private Stage Scene(String fxmlPath) {
+        setupStage(fxmlPath);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        return stage;
+    }
 
+    private void mainScene(String fxmlPath) {
+        setupStage(fxmlPath);
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+    private void setupStage(String fxmlPath) {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(fxmlPath));
-
-
         try {
             scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
@@ -45,31 +56,6 @@ public class GUI extends Application implements ViewInterface {
             scene = new Scene(new Label("Error during FXML Loading"));
         }
         ((StandardScene) fxmlLoader.getController()).init();
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setResizable(false);
-        return stage;
-    }
-
-    private void showAndWait(Stage stage) {
-        stage.showAndWait();
-    }
-
-    private void mainScene(String fxmlPath) {
-            fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource(fxmlPath));
-
-
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                e.printStackTrace();
-                scene = new Scene(new Label("Error during FXML Loading"));
-            }
-            ((StandardScene) fxmlLoader.getController()).init();
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
     }
 
     public void show(Stage stage) {
@@ -105,7 +91,7 @@ public class GUI extends Application implements ViewInterface {
             cardLeaders.add(cardleaderWhite);
         }
 
-         */
+        */
 
         //Card Development Market
         //displayCardDevelopmentMarket();
@@ -162,14 +148,45 @@ public class GUI extends Application implements ViewInterface {
         return connectionInfo;
      */
 
-    @Override
-    public ConnectionInfo displayWelcome() {
+    public void displayWelcome() {
         Platform.runLater(()->{
             mainScene("/fxml/LogIn.fxml");
             LogInController logInController=fxmlLoader.getController();
-            logInController.setGUI(this);
         });
-        return null;
+    }
+
+    /**
+     * Runs the specified {@link Runnable} on the
+     * JavaFX application thread and waits for completion.
+     *
+     * @param action the {@link Runnable} to run
+     * @throws NullPointerException if {@code action} is {@code null}
+     */
+    public static void runAndWait(Runnable action) {
+        if (action == null)
+            throw new NullPointerException("action");
+
+        // run synchronously on JavaFX thread
+        if (Platform.isFxApplicationThread()) {
+            action.run();
+            return;
+        }
+
+        // queue on JavaFX thread and wait for completion
+        final CountDownLatch doneLatch = new CountDownLatch(1);
+        Platform.runLater(() -> {
+            try {
+                action.run();
+            } finally {
+                doneLatch.countDown();
+            }
+        });
+
+        try {
+            doneLatch.await();
+        } catch (InterruptedException e) {
+            // ignore exception
+        }
     }
 
     @Override
@@ -450,11 +467,14 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public ConnectionInfo getConnectionInfo() {
-        return displayWelcome();
+        System.out.println("leggo " + connectionInfo);
+        displayWelcome();
+
+        return connectionInfo;
     }
 
-    public void setConnectionInfo(ConnectionInfo connectionInfo) {
-        this.connectionInfo=connectionInfo;
-        //Now ready to start server connection
+    public static void setConnectionInfo(ConnectionInfo connectionInfo) {
+        System.out.println("setto " + connectionInfo);
+        GUI.connectionInfo = connectionInfo;
     }
 }
