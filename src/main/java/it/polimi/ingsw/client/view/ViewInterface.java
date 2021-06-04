@@ -65,6 +65,7 @@ public interface ViewInterface {
      */
     void displayDisconnection();
 
+    void displayConnection();
     /*
     Display Win Message
      */
@@ -155,4 +156,7 @@ public interface ViewInterface {
 
     ConnectionInfo getConnectionInfo();
 
+    void displayNickNameUnavailable();
+
+    void displayServerUnreachable();
 }

@@ -22,6 +22,7 @@ public class ClientCommandDispatcher {
 
     public void clientAccepted() {
         System.out.println("Connected to server");
+
     }
 
     public void requestPlayersNumber(int timeoutID) {
@@ -31,7 +32,9 @@ public class ClientCommandDispatcher {
 
 
     public void nicknameIsUnavailable(){ /* TODO */
-        System.out.println("Nickname is unavailable! Please try another one...");
+        client.getView().displayNickNameUnavailable();
+        //System.out.println("Nickname is unavailable! Please try another one...");
+
         client.setConnected(false);
         client.closeStream();
     }

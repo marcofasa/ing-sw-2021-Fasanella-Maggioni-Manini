@@ -144,6 +144,11 @@ public class CLI implements ViewInterface {
     }
 
     @Override
+    public void displayConnection() {
+
+    }
+
+    @Override
     public void displayWin() {
         utils.printWinnerMessage();
     }
@@ -368,6 +373,16 @@ public class CLI implements ViewInterface {
     @Override
     public ConnectionInfo getConnectionInfo() {
         return displayWelcome();
+    }
+
+    @Override
+    public void displayNickNameUnavailable() {
+        System.out.println("NickName unavailable, please try again...");
+    }
+
+    @Override
+    public void displayServerUnreachable() {
+        getConnectionInfo();
     }
 
     @Override

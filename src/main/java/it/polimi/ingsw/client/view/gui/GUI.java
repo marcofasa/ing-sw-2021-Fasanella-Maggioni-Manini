@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
+import com.sun.javafx.tk.TKStage;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ConnectionInfo;
 import it.polimi.ingsw.client.LightFaithTrail;
@@ -23,7 +24,7 @@ import java.util.concurrent.*;
 public class GUI extends Application implements ViewInterface {
 
     private Client client;
-    private Stage primaryStage;
+    public static Stage primaryStage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
     private LightFaithTrail lightFaithTrail;
@@ -31,11 +32,14 @@ public class GUI extends Application implements ViewInterface {
     private static ConnectionInfo connectionInfo;
 
 
+
+
     private Stage Scene(String fxmlPath) {
         setupStage(fxmlPath);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setResizable(false);
+        primaryStage=stage;
         return stage;
     }
 
@@ -73,16 +77,16 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public void start(Stage stage) throws Exception {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        this.primaryStage = stage;
-
-
+        this.primaryStage = Scene("/fxml/Logo.fxml");
+        primaryStage.showAndWait();
         /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
         });
 
+
          */
-        displayWelcome();
+        //displayWelcome();
         //showScene();
         //displayPosition();
         //displayTurn();
@@ -267,6 +271,12 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public void displayDisconnection() {
         mainScene("/fxml/CardDevelopmentSelection.fxml");
+    }
+
+    @Override
+    public void displayConnection() {
+        this.primaryStage = Scene("/fxml/Logo.fxml");
+        //primaryStage.showAndWait();
     }
 
     @Override
@@ -471,11 +481,22 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public ConnectionInfo getConnectionInfo() {
         System.out.println("leggo " + connectionInfo);
-        displayWelcome();
+       // displayWelcome();
 
         return connectionInfo;
     }
 
+    @Override
+    public void displayNickNameUnavailable() {
+        LogInController logInController=fxmlLoader.getController();
+        logInController.setNickNameUnavailable();
+    }
+
+    @Override
+    public void displayServerUnreachable() {
+        LogInController logInController=fxmlLoader.getController();
+        logInController.setServerUnreachable();
+    }
 
 
     public static void setConnectionInfo(ConnectionInfo connectionInfo) {

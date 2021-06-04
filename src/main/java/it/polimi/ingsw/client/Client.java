@@ -21,6 +21,8 @@ import java.util.concurrent.*;
 public class Client {
 
     private volatile static boolean connected = false;
+    private  ConnectionInfo connectionInfo;
+    private  int port;
     private final ClientTimeoutHandler timeoutHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -34,6 +36,7 @@ public class Client {
     private HashMap<String, BriefModel> modelByNickname;
     private String nickname = "";
     public static Semaphore semaphore = new Semaphore(0);
+    private String ip;
 
 
     public Client(Boolean cli, Boolean debug) {
@@ -137,24 +140,29 @@ public class Client {
         }
         Client client = new Client(CLI, debug);
         System.out.println("Client has started");
+        try {
+            Client.semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+         client.connectionInfo = client.getView().getConnectionInfo();
+        client.port = client.connectionInfo.getPort();
+         client.ip = client.connectionInfo.getIp();
+         client.nickname = client.connectionInfo.getNickname();
         while(true) {
             System.out.println("Waiting Semaphore");
             try {
-                Client.semaphore.acquire();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ConnectionInfo connectionInfo = client.getView().getConnectionInfo();
-            int port = connectionInfo.getPort();
-            String ip = connectionInfo.getNickname();
-            String nickname = connectionInfo.getNickname();
-            try {
                 client.executors.submit(() -> {
                     try {
-                        client.startConnectionAndListen(ip, port, nickname);
-                    } catch (IOException e) {
+                        client.startConnectionAndListen(client.ip, client.port, client.nickname);
+                    } catch (IOException e){
                         client.getView().displayConnectionError();
                         Client.connected = false;
+                        client.getView().displayServerUnreachable();
+                         client.connectionInfo = client.getView().getConnectionInfo();
+                         client.port = client.connectionInfo.getPort();
+                         client.ip = client.connectionInfo.getIp();
+                         client.nickname = client.connectionInfo.getNickname();
                     }
                 }).get();
             } catch (InterruptedException e) {

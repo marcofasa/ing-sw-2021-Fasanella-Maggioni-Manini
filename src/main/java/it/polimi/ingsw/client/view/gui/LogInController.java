@@ -21,6 +21,7 @@ public class LogInController extends StandardScene{
     TextField port_field;
 
     private ConnectionInfo connectionInfo;
+    private boolean connected=false;
 
 
     public void loginAction(ActionEvent actionEvent) {
@@ -50,6 +51,7 @@ public class LogInController extends StandardScene{
          */
     }
 
+
     @Override
     public void init() {
         super.init();
@@ -61,5 +63,17 @@ public class LogInController extends StandardScene{
 
     public ConnectionInfo getConnectionInfo() {
         return connectionInfo;
+    }
+
+    public void setConnected(){
+        connected=true;
+    }
+
+    public void setNickNameUnavailable() {
+        status_label.setText("NickName unavailable");
+    }
+
+    public void setServerUnreachable(){
+        status_label.setText("Server unreachable");
     }
 }
