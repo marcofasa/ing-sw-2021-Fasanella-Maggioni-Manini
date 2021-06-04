@@ -77,7 +77,7 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public void start(Stage stage) throws Exception {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
-        this.primaryStage = Scene("/fxml/Logo.fxml");
+        primaryStage = Scene("/fxml/Logo.fxml");
         primaryStage.showAndWait();
         /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();

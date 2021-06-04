@@ -21,8 +21,8 @@ import java.util.concurrent.*;
 public class Client {
 
     private volatile static boolean connected = false;
-    private  ConnectionInfo connectionInfo;
-    private  int port;
+    private ConnectionInfo connectionInfo;
+    private int port;
     private final ClientTimeoutHandler timeoutHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -41,7 +41,7 @@ public class Client {
 
     public Client(Boolean cli, Boolean debug) {
         players = new ArrayList<>();
-        this.lightModel =new LightModel(this);
+        this.lightModel = new LightModel(this);
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new ClientTimeoutHandler(this);
@@ -72,12 +72,14 @@ public class Client {
                             handleResponse(finalInputClass);
                         } catch (RequestTimeoutException e) {
                             getView().displayTimeoutError();
-                        } catch (ExecutionException | InterruptedException ignored) {}
+                        } catch (ExecutionException | InterruptedException ignored) {
+                        }
                     });
                 } else {
                     executors.submit(() -> finalInputClass.read(clientCommandDispatcher));
                 }
-            } catch (IOException | ClassNotFoundException ignored) {}
+            } catch (IOException | ClassNotFoundException ignored) {
+            }
         }
         clientSocket.close();
     }
@@ -145,30 +147,29 @@ public class Client {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-         client.connectionInfo = client.getView().getConnectionInfo();
+        client.connectionInfo = client.getView().getConnectionInfo();
         client.port = client.connectionInfo.getPort();
-         client.ip = client.connectionInfo.getIp();
-         client.nickname = client.connectionInfo.getNickname();
-        while(true) {
+        client.ip = client.connectionInfo.getIp();
+        client.nickname = client.connectionInfo.getNickname();
+        while (true) {
             System.out.println("Waiting Semaphore");
             try {
                 client.executors.submit(() -> {
                     try {
                         client.startConnectionAndListen(client.ip, client.port, client.nickname);
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         client.getView().displayConnectionError();
                         Client.connected = false;
                         client.getView().displayServerUnreachable();
-                         client.connectionInfo = client.getView().getConnectionInfo();
-                         client.port = client.connectionInfo.getPort();
-                         client.ip = client.connectionInfo.getIp();
-                         client.nickname = client.connectionInfo.getNickname();
+                        client.connectionInfo = client.getView().getConnectionInfo();
+                        client.port = client.connectionInfo.getPort();
+                        client.ip = client.connectionInfo.getIp();
+                        client.nickname = client.connectionInfo.getNickname();
                     }
                 }).get();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }
@@ -209,7 +210,7 @@ public class Client {
         modelByNickname.put(nickname, briefModel);
     }
 
-    public void printModelByPlayer(String nickname){
+    public void printModelByPlayer(String nickname) {
         System.out.println(modelByNickname.get(nickname).toString());
     }
 

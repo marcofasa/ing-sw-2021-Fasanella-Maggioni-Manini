@@ -21,7 +21,7 @@ public class LogoController extends StandardScene {
             e.printStackTrace();
         }
 
-       GUI.primaryStage.setScene(secondScene);
+        GUI.primaryStage.setScene(secondScene);
         GUI.primaryStage.show();
 
 /*
