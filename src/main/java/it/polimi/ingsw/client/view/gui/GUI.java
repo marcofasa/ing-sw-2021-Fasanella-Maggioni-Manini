@@ -25,8 +25,8 @@ public class GUI extends Application implements ViewInterface {
 
     private Client client;
     public static Stage primaryStage;
-    private FXMLLoader fxmlLoader;
-    private Scene scene;
+    public static FXMLLoader fxmlLoader;
+    public static Scene scene;
     private LightFaithTrail lightFaithTrail;
     private LogInController logInController;
     private static ConnectionInfo connectionInfo;
@@ -78,7 +78,7 @@ public class GUI extends Application implements ViewInterface {
     public void start(Stage stage) throws Exception {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
         this.primaryStage = Scene("/fxml/Logo.fxml");
-        primaryStage.showAndWait();
+        primaryStage.show();
         /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
@@ -488,14 +488,30 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayNickNameUnavailable() {
+
         LogInController logInController=fxmlLoader.getController();
-        logInController.setNickNameUnavailable();
+        Platform.runLater(()-> {
+            logInController.status_label.setText("STATUS: NickName Unavailable");
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void displayServerUnreachable() {
+
         LogInController logInController=fxmlLoader.getController();
-        logInController.setServerUnreachable();
+        Platform.runLater(()-> {
+            logInController.status_label.setText("STATUS: Server Unreachable");
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
