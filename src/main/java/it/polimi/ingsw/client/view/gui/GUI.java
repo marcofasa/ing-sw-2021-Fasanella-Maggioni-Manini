@@ -13,12 +13,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.concurrent.*;
 
 public class GUI extends Application implements ViewInterface {
@@ -30,8 +33,11 @@ public class GUI extends Application implements ViewInterface {
     private LightFaithTrail lightFaithTrail;
     private LogInController logInController;
     private static ConnectionInfo connectionInfo;
+   private static int playerNumber;
 
-
+    public static void setPlayerNumber(int i) {
+        playerNumber=i;
+    }
 
 
     private Stage Scene(String fxmlPath) {
@@ -335,7 +341,41 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public int askPlayerNumber() {
-        return 0;
+
+        Platform.runLater(()->{
+            LogInController logInController= fxmlLoader.getController();
+            logInController.askPlayerNumber();
+
+        });
+        try {
+            Client.semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        /*
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("/fxml/PlayerNumber.fxml"));
+        Scene secondScene = null;
+        try {
+            secondScene = new Scene(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // New window (Selection)
+        Stage newWindow = new Stage();
+        newWindow.setScene(secondScene);
+
+        // Set position of second window, related to primary window.
+        //newWindow.setX(primaryStage.getX() + 200);
+        //newWindow.setY(primaryStage.getY() + 100);
+   GenericRequestController genericRequestController=loader.getController();
+        newWindow.showAndWait();
+
+         */
+      return   playerNumber;
     }
 
     @Override
@@ -493,11 +533,7 @@ public class GUI extends Application implements ViewInterface {
         Platform.runLater(()-> {
             logInController.status_label.setText("STATUS: NickName Unavailable");
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
@@ -507,11 +543,7 @@ public class GUI extends Application implements ViewInterface {
         Platform.runLater(()-> {
             logInController.status_label.setText("STATUS: Server Unreachable");
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
