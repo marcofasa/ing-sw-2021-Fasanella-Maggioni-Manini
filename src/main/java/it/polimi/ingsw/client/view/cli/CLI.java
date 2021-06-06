@@ -386,6 +386,16 @@ public class CLI implements ViewInterface {
     }
 
     @Override
+    public void gameHasStarted() {
+
+    }
+
+    @Override
+    public void displayClientAccepted() {
+        System.out.println("Connected to server");
+    }
+
+    @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
         out.println("A " + actionCardType + "Action Card has been used by Lorenzo!");
     }

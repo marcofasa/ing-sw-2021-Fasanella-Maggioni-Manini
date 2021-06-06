@@ -34,6 +34,7 @@ public class InitialSelectionController extends StandardScene{
             cardSelection.clear();
         }else {
             printClick("card leader button");
+            GUI.semaphoreRequest.release();
             final Node source = (Node) actionEvent.getSource();
             final Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
@@ -94,6 +95,7 @@ public class InitialSelectionController extends StandardScene{
             printClick("resource selection button");
             final Node source = (Node) actionEvent.getSource();
             final Stage stage = (Stage) source.getScene().getWindow();
+            GUI.semaphoreRequest.release();
             stage.close();}
             else{
                 printError("Not enough / Too much resources picked! You have to choose "+resourceSize+" resources.");

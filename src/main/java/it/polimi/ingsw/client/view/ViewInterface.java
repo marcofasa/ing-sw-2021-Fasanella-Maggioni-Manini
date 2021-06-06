@@ -159,4 +159,8 @@ public interface ViewInterface {
     void displayNickNameUnavailable();
 
     void displayServerUnreachable();
+
+    void gameHasStarted();
+
+    void displayClientAccepted();
 }

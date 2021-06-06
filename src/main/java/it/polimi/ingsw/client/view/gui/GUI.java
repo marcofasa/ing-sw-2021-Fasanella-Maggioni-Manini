@@ -26,6 +26,7 @@ import java.util.concurrent.*;
 
 public class GUI extends Application implements ViewInterface {
 
+    public static Semaphore semaphoreRequest = new Semaphore(0);
     private Client client;
     public static Stage primaryStage;
     public static FXMLLoader fxmlLoader;
@@ -348,7 +349,7 @@ public class GUI extends Application implements ViewInterface {
 
         });
         try {
-            Client.semaphore.acquire();
+            GUI.semaphoreRequest.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -414,22 +415,28 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         //Remove
-        Stage stage = Scene("/fxml/InitialSelection.fxml");
+        mainScene("/fxml/InitialSelection.fxml");
         InitialSelectionController initialSelectionController = fxmlLoader.getController();
         initialSelectionController.setPlayerNumber(playerNumber);
-        stage.showAndWait();
+        try {
+            semaphoreRequest.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return initialSelectionController.getResourceSelection();
     }
 
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-
-        Stage stage = Scene("/fxml/InitialSelection.fxml");
+        mainScene("/fxml/InitialSelection.fxml");
         InitialSelectionController initialSelectionController = fxmlLoader.getController();
         initialSelectionController.setCardLeaderDeck(cardLeaders);
-
-        stage.showAndWait();
+        try {
+            semaphoreRequest.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return initialSelectionController.getCardLeaderSelection();
 
@@ -528,7 +535,6 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayNickNameUnavailable() {
-
         LogInController logInController=fxmlLoader.getController();
         Platform.runLater(()-> {
             logInController.status_label.setText("STATUS: NickName Unavailable");
@@ -538,12 +544,27 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayServerUnreachable() {
-
         LogInController logInController=fxmlLoader.getController();
         Platform.runLater(()-> {
             logInController.status_label.setText("STATUS: Server Unreachable");
         });
+    }
 
+    @Override
+    public void gameHasStarted() {
+        LogInController logInController=fxmlLoader.getController();
+        Platform.runLater(()-> {
+            logInController.status_label.setText("STATUS: Game Started, hold on...");
+        });
+    }
+
+    @Override
+    public void displayClientAccepted() {
+        System.out.println("Connected to server");
+        LogInController logInController=fxmlLoader.getController();
+        Platform.runLater(()-> {
+            logInController.status_label.setText("STATUS: Server connected, waiting players");
+        });
     }
 
 

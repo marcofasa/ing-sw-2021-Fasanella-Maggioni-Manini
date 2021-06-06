@@ -152,7 +152,6 @@ public class Client {
         client.ip = client.connectionInfo.getIp();
         client.nickname = client.connectionInfo.getNickname();
         while (true) {
-            System.out.println("Waiting Semaphore");
             try {
                 client.executors.submit(() -> {
                     try {
@@ -161,6 +160,12 @@ public class Client {
                         client.getView().displayConnectionError();
                         Client.connected = false;
                         client.getView().displayServerUnreachable();
+                        try {
+                            Client.semaphore.acquire();
+                        } catch (InterruptedException ex) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Waiting Semaphore");
                         client.connectionInfo = client.getView().getConnectionInfo();
                         client.port = client.connectionInfo.getPort();
                         client.ip = client.connectionInfo.getIp();

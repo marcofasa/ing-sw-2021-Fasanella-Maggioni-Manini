@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class LogInController extends StandardScene{
 @FXML
-  Label status_label;
+    Label status_label;
 @FXML
     TextField user_field;
 @FXML
@@ -34,23 +34,20 @@ Label playerNumber_label;
 
     public void loginAction(ActionEvent actionEvent) {
         if(!playerNumberRequest){
-        connectionInfo = new ConnectionInfo();
-        boolean invalid = true;
-        while (invalid) {
+            connectionInfo = new ConnectionInfo();
             try {
                 connectionInfo.setNickname(user_field.getText());
                 connectionInfo.setPort(Integer.parseInt(port_field.getText()));
                 connectionInfo.setIP(ip_field.getText());
-                invalid = false;
-            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException ignore) {
+                GUI.setConnectionInfo(connectionInfo);
+                Client.semaphore.release();
+            } catch ( NumberFormatException ex) {
+                status_label.setText("Invalid port number");
+            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException e) {
+                status_label.setText(e.getMessage());
             }
         }
-
-        GUI.setConnectionInfo(connectionInfo);
-        Client.semaphore.release();}
         else printError("You have to choose the lobby size");
-
-
     }
 
 
@@ -80,8 +77,10 @@ Label playerNumber_label;
     }
 
     public void askPlayerNumber() {
-    playerNumberRequest=true;
+        playerNumberRequest=true;
+        status_label.setText("STATUS: Server connected");
         playerNumber_label.setText("Choose lobby size!");
+
     }
 
 
@@ -103,8 +102,10 @@ Label playerNumber_label;
         // Set position of second window, related to primary window.
         //newWindow.setX(primaryStage.getX() + 200);
         //newWindow.setY(primaryStage.getY() + 100);
-        PlayerNumberController playerNumberController =loader.getController();
+        PlayerNumberController playerNumberController = loader.getController();
         newWindow.showAndWait();
+        playerNumber_label.setText("Player Number set");
+            status_label.setText("STATUS: Waiting for others player to start");
         playerNumberRequest=false;
         }
         else printError("This button is not available!");

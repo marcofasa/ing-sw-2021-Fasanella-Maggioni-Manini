@@ -13,12 +13,9 @@ public class PlayerNumberController extends StandardScene{
     @FXML
     TextField text_label;
 
-
-
-
     public void two(ActionEvent actionEvent) {
         GUI.setPlayerNumber(2);
-        Client.semaphore.release();
+        GUI.semaphoreRequest.release();
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -26,7 +23,7 @@ public class PlayerNumberController extends StandardScene{
 
     public void three(ActionEvent actionEvent) {
         GUI.setPlayerNumber(3);
-        Client.semaphore.release();
+        GUI.semaphoreRequest.release();
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -34,7 +31,7 @@ public class PlayerNumberController extends StandardScene{
 
     public void four(ActionEvent actionEvent) {
         GUI.setPlayerNumber(4);
-        Client.semaphore.release();
+        GUI.semaphoreRequest.release();
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

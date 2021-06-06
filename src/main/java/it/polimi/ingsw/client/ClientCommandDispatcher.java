@@ -21,8 +21,7 @@ public class ClientCommandDispatcher {
     }
 
     public void clientAccepted() {
-        System.out.println("Connected to server");
-
+        client.getView().displayClientAccepted();
     }
 
     public void requestPlayersNumber(int timeoutID) {
@@ -42,11 +41,11 @@ public class ClientCommandDispatcher {
     public void gameHasStarted(int gameID, ArrayList<String> playersNickname) {
         System.out.println("Game Has Started. Game ID: " + gameID);
         client.setPlayersNicknames(playersNickname);
+        client.getView().gameHasStarted();
     }
 
     private ArrayList<CardLeader> subRequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
-        ArrayList<CardLeader> cardLeaders1 =  client.getView().askForLeaderCardSelection(cardLeaders);
-        return cardLeaders1;
+        return client.getView().askForLeaderCardSelection(cardLeaders);
     }
 
     private ArrayList<Resource> subRequestInitialResourcesSelection(int playerNumber) {
