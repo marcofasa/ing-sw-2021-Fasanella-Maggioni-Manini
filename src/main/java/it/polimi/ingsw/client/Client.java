@@ -33,10 +33,11 @@ public class Client {
     private ArrayList<String> playersNickname;
     private final LightModel lightModel;
     private final ArrayList<BriefModel> players;
-    private HashMap<String, BriefModel> modelByNickname;
+    private final HashMap<String, BriefModel> modelByNickname;
     private String nickname = "";
-    public static Semaphore semaphore = new Semaphore(0);
+    public static Semaphore connectionSetupSemaphore = new Semaphore(0);
     private String ip;
+    private boolean running;
 
 
     public Client(Boolean cli, Boolean debug) {
@@ -45,14 +46,16 @@ public class Client {
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
         this.timeoutHandler = new ClientTimeoutHandler(this);
+        modelByNickname = new HashMap<>();
+        running = true;
         if (cli) {
             view = new CLI(this, debug);
         } else {
-            view = new GUI();
-            view.setClient(this); //TODO check if it's okay to set this client and launch
-            new Thread(() -> Application.launch(GUI.class, null)).start();
+            GUI gui= new GUI();
+            gui.setClient(this);
+            view = gui;
+            executors.submit(() -> Application.launch(GUI.class, ""));
         }
-        modelByNickname = new HashMap<>();
     }
 
     public void startConnectionAndListen(String ip, int port, String nickname) throws IOException {
@@ -66,6 +69,7 @@ public class Client {
             try {
                 inputClass = (ServerMessage) inputStream.readObject();
                 ServerMessage finalInputClass = inputClass;
+                System.out.println(finalInputClass.toString());
                 if (inputClass instanceof ServerResponse) {
                     executors.submit(() -> {
                         try {
@@ -90,11 +94,8 @@ public class Client {
         timeoutHandler.defuse(finalInputClass.getTimeoutID());
     }
 
-    public void notifyConnected() {
-        System.out.println("Il client è connesso al server");
-    }
-
     public void send(ClientMessage clientMessage) {
+        System.out.println(clientMessage.toString());
         try {
             outputStream.reset();
             outputStream.writeObject(clientMessage);
@@ -122,29 +123,29 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Boolean debug = false;
-        Boolean CLI = true;
+        boolean debug = false;
+        boolean CLI = true;
         for (String arg :
                 args) {
             switch (arg) {
-                case "--h":
+                case "--h" -> {
                     System.out.println("--d to start in debug");
                     System.out.println("--g to start in GUI");
                     return;
-                case "--d":
+                }
+                case "--d" -> {
                     System.out.println("debug mode on");
                     debug = true;
-                    break;
-                case "--g":
-                    CLI = false;
-                    break;
+                }
+                case "--g" -> CLI = false;
             }
         }
         Client client = new Client(CLI, debug);
         System.out.println("Client has started");
-        client.parametersSetup();
-        while (true) {
+        client.parametersSetup(CLI);
+        while (client.running) {
             try {
+                boolean finalCLI = CLI;
                 client.executors.submit(() -> {
                     try {
                         client.startConnectionAndListen(client.ip, client.port, client.nickname);
@@ -152,25 +153,27 @@ public class Client {
                         client.getView().displayConnectionError();
                         Client.connected = false;
                         client.getView().displayServerUnreachable();
-                        client.parametersSetup();
+                        client.parametersSetup(finalCLI);
                     }
                 }).get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-            client.parametersSetup();
+            client.parametersSetup(CLI);
         }
     }
 
-    private void parametersSetup() {
+    private void parametersSetup(boolean CLI) {
         Client client = this;
-        try {
-            Client.semaphore.acquire();
-        } catch (InterruptedException h) {
-            h.printStackTrace();
+        if(!CLI) {
+            try {
+                Client.connectionSetupSemaphore.acquire();
+            } catch (InterruptedException h) {
+                h.printStackTrace();
+            }
+            System.out.println("Waiting Semaphore");
         }
-        System.out.println("Waiting Semaphore");
         client.connectionInfo = client.getView().getConnectionInfo();
         client.port = client.connectionInfo.getPort();
         client.ip = client.connectionInfo.getIp();

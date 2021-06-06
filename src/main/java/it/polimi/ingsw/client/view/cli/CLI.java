@@ -47,10 +47,6 @@ public class CLI implements ViewInterface {
         return lightFaithTrail;
     }
 
-    @Override
-    public void setClient(Client client) {
-    }
-
     public ConnectionInfo displayWelcome() {
         utils.printWelcomeMessage();
         ConnectionInfo connectionInfo = new ConnectionInfo();
@@ -160,7 +156,6 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displaySuccess() {
-        out.println("Action executed successfully");
     }
 
     @Override
@@ -405,7 +400,7 @@ public class CLI implements ViewInterface {
         displayResourceMarket();
         int rowcolumn;
         String key;
-        String message;
+        int message;
         out.println("Choose row or column (type r/c):");
         rowcolumn=utils.chooseRowOrColumn();
         /*
@@ -415,8 +410,8 @@ public class CLI implements ViewInterface {
         if (rowcolumn==1) key= "row";
         else key="column";
         out.println("Now type the "+key+" number:");
-        if(rowcolumn==1) message=utils.readNumberWithBoundsToString(1,3);
-        else message=utils.readNumberWithBoundsToString(1,4);
+        if(rowcolumn==1) message=utils.readNumberWithBounds(1,3);
+        else message=utils.readNumberWithBounds(1,4);
         /*
         1 arg: row=1 or col=0
         2 arg: number of row/column

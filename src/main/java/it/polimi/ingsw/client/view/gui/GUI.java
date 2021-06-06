@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.ConnectionInfo;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.client.view.ViewInterface;
+import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
@@ -27,22 +28,26 @@ import java.util.concurrent.*;
 public class GUI extends Application implements ViewInterface {
 
     public static Semaphore semaphoreRequest = new Semaphore(0);
-    private Client client;
-    private Utils utils=new Utils();
+    private static Client client;
+    private static LightFaithTrail lightFaithTrail;
+    private final Utils utils = new Utils();
     public static Stage primaryStage;
     public static FXMLLoader fxmlLoader;
     public static Scene scene;
-    private LightFaithTrail lightFaithTrail;
     private LogInController logInController;
     private static ConnectionInfo connectionInfo;
-   private static int playerNumber;
+    private static int playerNumber;
     public static ArrayList<CardLeader> cardLeaderList;
     public static ArrayList<Resource> resourceList;
+    public ArrayList<String> messages = new ArrayList<>();
 
     public static void setPlayerNumber(int i) {
         playerNumber=i;
     }
 
+    public static void sendMessage(ClientMessage clientMessage) {
+        client.send(clientMessage);
+    }
 
     private Stage Scene(String fxmlPath) {
         setupStage(fxmlPath);
@@ -89,6 +94,7 @@ public class GUI extends Application implements ViewInterface {
         //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
         primaryStage = Scene("/fxml/Logo.fxml");
         primaryStage.showAndWait();
+
         /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
@@ -140,10 +146,10 @@ public class GUI extends Application implements ViewInterface {
         return lightFaithTrail;
     }
 
-    @Override
+
     public void setClient(Client client) {
-        this.client = client;
-        lightFaithTrail = new LightFaithTrail(client);
+        GUI.client = client;
+        GUI.lightFaithTrail = new LightFaithTrail(client);
     }
 
     /*
@@ -301,7 +307,8 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displaySuccess() {
-
+        System.out.println("Action executed successfully");
+        messages.add("Action executed successfully");
     }
 
     @Override
@@ -311,11 +318,11 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
-
         mainScene("/fxml/PlayerBoard.fxml");
-        PlayerBoardController playerBoardController = fxmlLoader.getController();
-        playerBoardController.setModels(getLightModel(), getLightFaithTrail(), gamePhase);
-
+        Platform.runLater(() -> {
+            PlayerBoardController playerBoardController = fxmlLoader.getController();
+            playerBoardController.setModels(getLightModel(), getLightFaithTrail(), gamePhase);
+        });
     }
 
     @Override

@@ -40,7 +40,7 @@ Label playerNumber_label;
                 connectionInfo.setPort(Integer.parseInt(port_field.getText()));
                 connectionInfo.setIP(ip_field.getText());
                 GUI.setConnectionInfo(connectionInfo);
-                Client.semaphore.release();
+                Client.connectionSetupSemaphore.release();
             } catch ( NumberFormatException ex) {
                 status_label.setText("Invalid port number");
             } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException e) {

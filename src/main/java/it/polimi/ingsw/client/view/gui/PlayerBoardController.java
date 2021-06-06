@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
+import it.polimi.ingsw.communication.client.requests.RequestEndTurn;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.CardDevelopmentMarket;
 import javafx.application.Platform;
@@ -13,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlayerBoardController extends StandardScene{
 
@@ -199,7 +201,7 @@ public class PlayerBoardController extends StandardScene{
     }
 
     public void endTurn(ActionEvent actionEvent) {
-        //SEND END TURN
-
+        GUI.sendMessage(new RequestEndTurn());
     }
+
 }

@@ -17,8 +17,6 @@ public interface ViewInterface {
 
     LightFaithTrail getLightFaithTrail();
 
-    void setClient(Client client);
-
     //DISPLAY
 
     /*
