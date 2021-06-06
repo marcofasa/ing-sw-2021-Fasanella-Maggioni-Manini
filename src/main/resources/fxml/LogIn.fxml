@@ -31,6 +31,8 @@
                         <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
                         <Text layoutX="460.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" />
                         <Label fx:id="status_label" layoutX="13.0" layoutY="313.0" prefHeight="23.0" prefWidth="232.0" text="Status: NOT LOGGED" />
+                        <Button layoutX="450.0" layoutY="339.0" mnemonicParsing="false" onAction="#playerNumber_button" prefHeight="19.0" prefWidth="101.0" text="Player Number" />
+                        <Label fx:id="playerNumber_label" layoutX="442.0" layoutY="305.0" prefHeight="17.0" prefWidth="118.0" />
                      </children>
                   </AnchorPane>
             </content>
