@@ -19,8 +19,8 @@ public class ResourceMarketController extends StandardScene {
     private int nRow = 3;
     private int nCol = 4;
 
-    private String key;
-    private int message;
+    private String key = "row";
+    private int message = 2;
     private boolean viewOnly=false;
 
     private ImageView[][] resourceMatrix;
