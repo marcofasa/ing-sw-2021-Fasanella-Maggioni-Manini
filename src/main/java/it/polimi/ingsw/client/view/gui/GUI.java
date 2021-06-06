@@ -539,7 +539,6 @@ public class GUI extends Application implements ViewInterface {
         Platform.runLater(()-> {
             logInController.status_label.setText("STATUS: NickName Unavailable");
         });
-
     }
 
     @Override

@@ -142,15 +142,7 @@ public class Client {
         }
         Client client = new Client(CLI, debug);
         System.out.println("Client has started");
-        try {
-            Client.semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        client.connectionInfo = client.getView().getConnectionInfo();
-        client.port = client.connectionInfo.getPort();
-        client.ip = client.connectionInfo.getIp();
-        client.nickname = client.connectionInfo.getNickname();
+        client.parametersSetup();
         while (true) {
             try {
                 client.executors.submit(() -> {
@@ -160,23 +152,29 @@ public class Client {
                         client.getView().displayConnectionError();
                         Client.connected = false;
                         client.getView().displayServerUnreachable();
-                        try {
-                            Client.semaphore.acquire();
-                        } catch (InterruptedException ex) {
-                            e.printStackTrace();
-                        }
-                        System.out.println("Waiting Semaphore");
-                        client.connectionInfo = client.getView().getConnectionInfo();
-                        client.port = client.connectionInfo.getPort();
-                        client.ip = client.connectionInfo.getIp();
-                        client.nickname = client.connectionInfo.getNickname();
+                        client.parametersSetup();
                     }
                 }).get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
+            client.parametersSetup();
         }
+    }
+
+    private void parametersSetup() {
+        Client client = this;
+        try {
+            Client.semaphore.acquire();
+        } catch (InterruptedException h) {
+            h.printStackTrace();
+        }
+        System.out.println("Waiting Semaphore");
+        client.connectionInfo = client.getView().getConnectionInfo();
+        client.port = client.connectionInfo.getPort();
+        client.ip = client.connectionInfo.getIp();
+        client.nickname = client.connectionInfo.getNickname();
     }
 
     public ViewInterface getView() {
