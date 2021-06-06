@@ -5,6 +5,9 @@ import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class to handle new socket connections
+ */
 public class SocketServer implements Runnable{
 
     private ServerSocket serverSocket;
@@ -13,6 +16,11 @@ public class SocketServer implements Runnable{
     ExecutorService executor;
     private Integer nextClientID;
 
+    /**
+     * Constructor of the class
+     * @param port port of the server
+     * @param server runner of the class
+     */
     public SocketServer(Integer port, Server server) {
         this.port = port;
         this.server = server;
@@ -25,6 +33,9 @@ public class SocketServer implements Runnable{
         }
     }
 
+    /**
+     * Accepts connections of the new clients
+     */
     @Override
     public void run() {
         System.out.println("Server is now open");

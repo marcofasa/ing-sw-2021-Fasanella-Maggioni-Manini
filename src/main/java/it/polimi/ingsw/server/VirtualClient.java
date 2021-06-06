@@ -14,6 +14,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * Class to handler a client server-side
+ */
 public class VirtualClient implements Runnable{
     private final Integer clientID;
     private final Socket clientSocket;
@@ -26,6 +29,12 @@ public class VirtualClient implements Runnable{
     private boolean connected;
     private final ExecutorService executors;
 
+    /**
+     * Constructor of the class
+     * @param socket of this Client
+     * @param server where the client is connected
+     * @param clientID unique ID of this client
+     */
     public VirtualClient(Socket socket, Server server, Integer clientID) {
         this.clientSocket = socket;
         this.server = server;
@@ -36,7 +45,10 @@ public class VirtualClient implements Runnable{
         clientCommandDispatcher = new VirtualClientCommandDispatcher(this);
     }
 
-
+    /**
+     * Send a message to the actual Client
+     * @param serverMessage message to be sent
+     */
     public void send(ServerMessage serverMessage){
         synchronized (this) {
             try {
@@ -65,6 +77,9 @@ public class VirtualClient implements Runnable{
 
     }
 
+    /**
+     * Handles the input stream from the client and the TimeoutHandler
+     */
     public void run() {
         try {
             outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -96,16 +111,9 @@ public class VirtualClient implements Runnable{
         }
     }
 
+
     public Integer getID() {
         return clientID;
-    }
-
-    public void setupConnection(String payload) {
-
-    }
-
-    public void setGame(Game game){
-        this.game = game;
     }
 
     public Server getServer() {
@@ -118,5 +126,13 @@ public class VirtualClient implements Runnable{
 
     public VirtualClientCommandDispatcher getCommandDispatcher() {
         return clientCommandDispatcher;
+    }
+
+    /**
+     * Set instance of Game where this player is playing
+     * @param game instance of Game
+     */
+    public void setGame(Game game){
+        this.game = game;
     }
 }

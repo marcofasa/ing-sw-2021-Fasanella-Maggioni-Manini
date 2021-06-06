@@ -7,28 +7,34 @@ import it.polimi.ingsw.communication.server.ServerMessage;
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
+/**
+ * Class to handle of the pre game phase.
+ */
 public class WaitingLobby {
 
     private final Server server;
-    private final ExecutorService executors;
 
     private volatile boolean empty;
 
     private volatile int lobbyCapacity;
 
-    private final Semaphore semaphore;
-
     private ArrayList<VirtualClient> players;
 
+    /**
+     * Constructor of the class
+     * @param server creator of the lobby
+     */
     public WaitingLobby(Server server){
         this.server = server;
         lobbyCapacity = -1;
         empty = true;
-        semaphore = new Semaphore(0);
         players = new ArrayList<>();
-        executors = Executors.newCachedThreadPool();
     }
 
+    /**
+     * private method to add the first player of the lobby. It's called by addPlayer
+     * @param virtualClient client to add
+     */
     private void addFirstPlayer(VirtualClient virtualClient) {
         try {
             virtualClient.sendAndWait(new RequestRequestPlayersNumber(), -1);
@@ -39,6 +45,11 @@ public class WaitingLobby {
         }
     }
 
+    /**
+     * Add player to this waiting lobby.
+     * Starts the game automatically when maximum capacity is reached
+     * @param virtualClient client to add
+     */
     public void addPlayer(VirtualClient virtualClient) {
         synchronized (this) {
             if (empty)
@@ -52,14 +63,10 @@ public class WaitingLobby {
         }
     }
 
-    public ArrayList<VirtualClient> startGame(){
-        lobbyCapacity = -1;
-        empty = true;
-        ArrayList<VirtualClient> playersTemp = new ArrayList<>(players);
-        players = new ArrayList<>();
-        return playersTemp;
-    }
-
+    /**
+     * set number of player before the lobby is full
+     * @param size number of players
+     */
     public void setLobbyCapacity(int size){
         lobbyCapacity = size;
     }
@@ -68,6 +75,10 @@ public class WaitingLobby {
         return players;
     }
 
+    /**
+     * send message to all clients in this lobby
+     * @param serverMessage to be sent
+     */
     public void sendAll(ServerMessage serverMessage){
         for (VirtualClient player :
                 players) {

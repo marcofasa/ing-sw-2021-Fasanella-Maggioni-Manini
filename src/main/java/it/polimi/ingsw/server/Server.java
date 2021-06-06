@@ -10,6 +10,9 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class to launch a Maestro Del Rinascimento server
+ */
 public class Server {
     private final Boolean debug;
     private SocketServer socketServer;
@@ -23,6 +26,10 @@ public class Server {
     private final ExecutorService executors;
     private final Object lobbyLocked;
 
+    /**
+     * Constructor of the class
+     * @param debug if true, the server wont check for duplicated main moves
+     */
     public Server(Boolean debug){
         this.debug = debug;
         nextGameID = 1;
@@ -47,6 +54,12 @@ public class Server {
         clientsNickname = new HashMap<>();
     }*/
 
+    /**
+     * Registers a new client in this server
+     * @param virtualClient to be registered
+     * @param nickname of the client
+     * @throws NicknameAlreadyInUseException if another client has already taken this name
+     */
     void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
         if(clientsNickname.containsValue(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
@@ -57,6 +70,65 @@ public class Server {
         }
     }
 
+    /**
+     * Set the size of the lobby
+     * @param currentLobbySize size
+     */
+    void setCurrentLobbySize(Integer currentLobbySize) {
+        lobby.setLobbyCapacity(currentLobbySize);
+    }
+
+    Game getGameByPlayerID(Integer playerID){
+        return gameMap.get(virtualClientIDMap.get(playerID));
+    }
+
+    public Integer getIDbyGame(Game game){
+        return gamesID.get(game);
+    }
+
+    /**
+     * Starts the current lobby in a new game and prepares a new empty lobby for players to join
+     */
+    public void startGame() {
+        ArrayList<VirtualClient> players = lobby.getPlayers();
+        ArrayList<String> playersNickname = new ArrayList<>();
+        for (VirtualClient player :
+                players) {
+            playersNickname.add(clientsNickname.get(player));
+        }
+        currentGame.addAllPlayers(players, playersNickname);
+        executors.submit(currentGame);
+        for (VirtualClient player :
+                players) {
+            gameMap.put(player, currentGame);
+        }
+        lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1, playersNickname));
+        currentGame = new Game(debug);
+        gamesID.put(currentGame, nextGameID);
+        nextGameID++;
+        lobby = new WaitingLobby(this);
+    }
+
+    /**
+     * Unregisters a client from this server
+     * @param virtualClient to be unregistered
+     */
+    public void unregisterClientTimeoutExceeded(VirtualClient virtualClient) {
+        System.out.println("Timeout exceeded, unregistering client " + virtualClient);
+        unregisterClient(virtualClient);
+    }
+
+    private void unregisterClient(VirtualClient virtualClient) {
+        ;
+    }
+
+    /**
+     * Handles when a client didn't respond for too much time
+     * @param virtualClient VirtualClient istance
+     */
+    public void requestTimedout(VirtualClient virtualClient) {
+        System.out.println("request Timedout by client: " + virtualClient);
+    }
 
     public static void main(String[] args) {
         boolean debug = false;
@@ -82,48 +154,4 @@ public class Server {
         thread.start();
     }
 
-    void setCurrentLobbySize(VirtualClient virtualClient, Integer currentLobbySize) {
-        lobby.setLobbyCapacity(currentLobbySize);
-    }
-
-    Game getGameByPlayerID(Integer playerID){
-        return gameMap.get(virtualClientIDMap.get(playerID));
-    }
-
-    public Integer getIDbyGame(Game game){
-        return gamesID.get(game);
-    }
-
-    public void startGame() {
-        ArrayList<VirtualClient> players = lobby.getPlayers();
-        ArrayList<String> playersNickname = new ArrayList<>();
-        for (VirtualClient player :
-                players) {
-            playersNickname.add(clientsNickname.get(player));
-        }
-        currentGame.addAllPlayers(players, playersNickname);
-        executors.submit(currentGame);
-        for (VirtualClient player :
-                players) {
-            gameMap.put(player, currentGame);
-        }
-        lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1, playersNickname));
-        currentGame = new Game(debug);
-        gamesID.put(currentGame, nextGameID);
-        nextGameID++;
-        lobby = new WaitingLobby(this);
-    }
-
-    public void unregisterClientTimeoutExceeded(VirtualClient virtualClient) {
-        System.out.println("Timeout exceeded, unregistering client " + virtualClient);
-        unregisterClient(virtualClient);
-    }
-
-    private void unregisterClient(VirtualClient virtualClient) {
-        ;
-    }
-
-    public void requestTimedout(VirtualClient virtualClient) {
-        System.out.println("request Timedout by client: " + virtualClient);
-    }
 }
