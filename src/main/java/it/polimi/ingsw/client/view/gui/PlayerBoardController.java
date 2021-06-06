@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.CardDevelopmentMarket;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +37,10 @@ public class PlayerBoardController extends StandardScene{
             e.printStackTrace();
         }
 
+        Platform.runLater(()->{
+            FaithTrailController faithTrailController=loader.getController();
+            faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(),lightFaithTrail.getPlayersPosition());
+        });
         FaithTrailController faithTrailController=loader.getController();
         faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(),lightFaithTrail.getPlayersPosition());
 

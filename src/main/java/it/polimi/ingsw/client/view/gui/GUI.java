@@ -28,6 +28,7 @@ public class GUI extends Application implements ViewInterface {
 
     public static Semaphore semaphoreRequest = new Semaphore(0);
     private Client client;
+    private Utils utils=new Utils();
     public static Stage primaryStage;
     public static FXMLLoader fxmlLoader;
     public static Scene scene;
@@ -35,6 +36,8 @@ public class GUI extends Application implements ViewInterface {
     private LogInController logInController;
     private static ConnectionInfo connectionInfo;
    private static int playerNumber;
+    public static ArrayList<CardLeader> cardLeaderList;
+    public static ArrayList<Resource> resourceList;
 
     public static void setPlayerNumber(int i) {
         playerNumber=i;
@@ -415,30 +418,35 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         //Remove
-        mainScene("/fxml/InitialSelection.fxml");
-        InitialSelectionController initialSelectionController = fxmlLoader.getController();
-        initialSelectionController.setPlayerNumber(playerNumber);
+        Platform.runLater(()->{
+            InitialSelectionController initialSelectionController = fxmlLoader.getController();
+            initialSelectionController.setPlayerNumber(playerNumber);
+        });
+
         try {
             semaphoreRequest.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        return initialSelectionController.getResourceSelection();
+        utils.fixResourceSelection(resourceList);
+        return resourceList;
     }
 
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         mainScene("/fxml/InitialSelection.fxml");
-        InitialSelectionController initialSelectionController = fxmlLoader.getController();
-        initialSelectionController.setCardLeaderDeck(cardLeaders);
+        Platform.runLater(()->{
+            InitialSelectionController initialSelectionController = fxmlLoader.getController();
+            initialSelectionController.setCardLeaderDeck(cardLeaders);
+        });
+
         try {
             semaphoreRequest.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return initialSelectionController.getCardLeaderSelection();
+        return cardLeaderList ;
 
     }
 

@@ -108,10 +108,10 @@ public class CardLeaderController extends StandardScene{
     Card_Leader_a_b
     (a=type, b=color)
 
-    Discount=0
-    Deposit=1
-    WhiteMarble=2
-    Production=3
+    Discount=1
+    Deposit=2
+    WhiteMarble=3
+    Production=4
 
     shield=2
     coin=0

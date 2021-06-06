@@ -34,10 +34,8 @@ public class InitialSelectionController extends StandardScene{
             cardSelection.clear();
         }else {
             printClick("card leader button");
+            GUI.cardLeaderList=cardSelection;
             GUI.semaphoreRequest.release();
-            final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
         }
     }
 
@@ -93,10 +91,15 @@ public class InitialSelectionController extends StandardScene{
             else resourceSize=2;
             if(resourceSelection.size()==resourceSize){
             printClick("resource selection button");
+            GUI.resourceList=resourceSelection;
+            /*
             final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
+            final Stage stage = (Stage) source.getScene().getWindow()
+            stage.close();
+
+             */
             GUI.semaphoreRequest.release();
-            stage.close();}
+            }
             else{
                 printError("Not enough / Too much resources picked! You have to choose "+resourceSize+" resources.");
                 resourceSelection.clear();
@@ -115,16 +118,16 @@ public class InitialSelectionController extends StandardScene{
             Integer type;
             switch (cardsLeader.get(i).getDescription()){
                 case Deposit:
-                    type =1;
+                    type =2;
                     break;
                 case Discount:
-                    type =0;
+                    type =1;
                     break;
                 case Production:
-                    type =3;
+                    type =4;
                     break;
                 default:
-                    type =2;
+                    type =3;
             }
 
             Integer color;
