@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,28 +14,27 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class InitialSelectionController extends StandardScene{
+public class InitialSelectionController extends StandardScene {
     @FXML
     GridPane initialCardLeader_grid;
 
 
-    private int pNumber =-1;
+    private int pNumber = -1;
     private ImageView[] cardLeaderArray;
-    private int nRow=4;
+    private int nRow = 4;
     private ArrayList<CardLeader> cardSelection;
     private ArrayList<CardLeader> cardsLeader;
     private ArrayList<Resource> resourceSelection;
-    private int resourceSize=-1;
-    
-    
+    private int resourceSize = -1;
+
 
     public void cardLeaderSelection(ActionEvent actionEvent) {
-        if(cardSelection.size()!=2){
+        if (cardSelection.size() != 2) {
             printError("Not enough / Too much cards selected, try again!");
             cardSelection.clear();
-        }else {
+        } else {
             printClick("card leader button");
-            GUI.cardLeaderList=cardSelection;
+            GUI.cardLeaderList = cardSelection;
             GUI.semaphoreRequest.release();
         }
     }
@@ -42,32 +42,32 @@ public class InitialSelectionController extends StandardScene{
 
     public void coinClick(MouseEvent mouseEvent) {
         printClick("coin");
-        if(resourceSelection==null){
-            resourceSelection=new ArrayList<>();
+        if (resourceSelection == null) {
+            resourceSelection = new ArrayList<>();
         }
         resourceSelection.add(Resource.Coins);
     }
 
     public void stoneClick(MouseEvent mouseEvent) {
         printClick("stone");
-        if(resourceSelection==null){
-            resourceSelection=new ArrayList<>();
+        if (resourceSelection == null) {
+            resourceSelection = new ArrayList<>();
         }
         resourceSelection.add(Resource.Stones);
     }
 
     public void servantClick(MouseEvent mouseEvent) {
         printClick("servant");
-        if(resourceSelection==null){
-            resourceSelection=new ArrayList<>();
+        if (resourceSelection == null) {
+            resourceSelection = new ArrayList<>();
         }
         resourceSelection.add(Resource.Servants);
     }
 
     public void shieldClick(MouseEvent mouseEvent) {
         printClick("shield");
-        if(resourceSelection==null){
-            resourceSelection=new ArrayList<>();
+        if (resourceSelection == null) {
+            resourceSelection = new ArrayList<>();
         }
         resourceSelection.add(Resource.Shields);
     }
@@ -78,71 +78,68 @@ public class InitialSelectionController extends StandardScene{
 
     public void resourceSelection(ActionEvent actionEvent) {
         printClick("resource button");
-        if(pNumber<0){
+        if (pNumber < 0) {
             printError("Not right time to choose resources!");
             resourceSelection.clear();
-        }else {
-            if(pNumber==0) {
-                resourceSize=0;
-            }
-            else if(pNumber==1 || pNumber==2){
-                resourceSize=1;
-            }
-            else resourceSize=2;
-            if(resourceSelection.size()==resourceSize){
-            printClick("resource selection button");
-            GUI.resourceList=resourceSelection;
+        } else {
+            if (pNumber == 0) {
+                resourceSize = 0;
+            } else if (pNumber == 1 || pNumber == 2) {
+                resourceSize = 1;
+            } else resourceSize = 2;
+            if (resourceSelection.size() == resourceSize) {
+                printClick("resource selection button");
+                GUI.resourceList = resourceSelection;
             /*
             final Node source = (Node) actionEvent.getSource();
             final Stage stage = (Stage) source.getScene().getWindow()
             stage.close();
 
              */
-            GUI.semaphoreRequest.release();
-            }
-            else{
-                printError("Not enough / Too much resources picked! You have to choose "+resourceSize+" resources.");
+                GUI.semaphoreRequest.release();
+            } else {
+                printError("Not enough / Too much resources picked! You have to choose " + resourceSize + " resources.");
                 resourceSelection.clear();
             }
         }
     }
 
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeader) {
-        this.cardsLeader=cardsLeader;
-        cardSelection=new ArrayList<>();
-        resourceSelection=new ArrayList<>(10);
+        this.cardsLeader = cardsLeader;
+        cardSelection = new ArrayList<>();
+        resourceSelection = new ArrayList<>(10);
         cardLeaderArray = new ImageView[4];
         for (int i = 0; i < nRow; i++) {
-            
-            
+
+
             Integer type;
-            switch (cardsLeader.get(i).getDescription()){
+            switch (cardsLeader.get(i).getDescription()) {
                 case Deposit:
-                    type =2;
+                    type = 2;
                     break;
                 case Discount:
-                    type =1;
+                    type = 1;
                     break;
                 case Production:
-                    type =4;
+                    type = 4;
                     break;
                 default:
-                    type =3;
+                    type = 3;
             }
 
             Integer color;
-            switch (cardsLeader.get(i).getResource()){
+            switch (cardsLeader.get(i).getResource()) {
                 case Coins:
-                    color=0;
+                    color = 0;
                     break;
                 case Servants:
-                    color=1;
+                    color = 1;
                     break;
                 case Shields:
-                    color=2;
+                    color = 2;
                     break;
                 case Stones:
-                    color=3;
+                    color = 3;
                     break;
 
                 default:
@@ -150,13 +147,13 @@ public class InitialSelectionController extends StandardScene{
             }
 
             //REAL PATH
-            String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
+            String path = "/images/CardLeader/Card_Leader_" + type.toString() + "-" + color.toString() + ".jpg";
 
             //TEST PATH
             //String path="/images/CardDevelopment/Card_Development_1-0.jpg";
 
-            Image image=new Image(GUI.class.getResourceAsStream(path));
-            cardLeaderArray[i]=new ImageView(image);
+            Image image = new Image(GUI.class.getResourceAsStream(path));
+            cardLeaderArray[i] = new ImageView(image);
 
             //Fitting Image
             cardLeaderArray[i].setFitWidth(80);
@@ -164,31 +161,35 @@ public class InitialSelectionController extends StandardScene{
 
             //Mouse Click Event
             int finalI = i;
+            ColorAdjust monochrome = new ColorAdjust();
+            monochrome.setSaturation(-1);
 
             cardLeaderArray[i].setOnMouseClicked(mouseEvent -> {
-                setClick(finalI);
+                if (cardSelection.contains(cardsLeader.get(finalI))) {
+                    cardSelection.remove(cardsLeader.get(finalI));
+                    cardLeaderArray[finalI].setEffect(null);
+                } else {
+                    cardSelection.add(cardsLeader.get(finalI));
+                    cardLeaderArray[finalI].setEffect(monochrome);
+                }
             });
 
             //Adding to GridPane
-            initialCardLeader_grid.add(cardLeaderArray[i],i,0);
+            initialCardLeader_grid.add(cardLeaderArray[i], i, 0);
         }
-}
+    }
 
-public void setResources(int playerNumber){
-   // resourceSelection=new ArrayList<>(10);
-    this.pNumber =playerNumber;
-    if(pNumber==0) {
-        resourceSize=0;
-    }
-    else if(pNumber==1 || pNumber==2){
-        resourceSize=1;
-    }
-    else resourceSize=2;
-}
 
-    private void setClick(int finalI) {
-        cardSelection.add(cardsLeader.get(finalI));
+    public void setResources(int playerNumber) {
+        // resourceSelection=new ArrayList<>(10);
+        this.pNumber = playerNumber;
+        if (pNumber == 0) {
+            resourceSize = 0;
+        } else if (pNumber == 1 || pNumber == 2) {
+            resourceSize = 1;
+        } else resourceSize = 2;
     }
+
 
     public ArrayList<CardLeader> getCardLeaderSelection() {
         return cardSelection;
