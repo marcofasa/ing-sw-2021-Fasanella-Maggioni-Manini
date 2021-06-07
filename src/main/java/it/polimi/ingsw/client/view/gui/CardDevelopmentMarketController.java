@@ -130,7 +130,7 @@ public class CardDevelopmentMarketController extends StandardScene{
             printError("Action not admitted. View only mode!");
         }
         else{
-        if(pos<0 || buyCol<0 || buyCol<0){
+        if(pos<0 || buyRow<0 || buyCol<0){
             printError("Position still not selected or Card not Picked");
         }
         else{

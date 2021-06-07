@@ -65,8 +65,6 @@ public class ResourceMarketController extends StandardScene {
             final Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         }
-
-
     }
 
     public void setCol3(ActionEvent actionEvent) {
