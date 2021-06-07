@@ -169,4 +169,9 @@ public class ClientCommandDispatcher {
         }
 
     }
+
+    public void killConnection() {
+        System.out.println("Good bye");
+        client.killConnection();
+    }
 }

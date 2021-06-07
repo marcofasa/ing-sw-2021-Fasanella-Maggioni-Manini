@@ -135,4 +135,13 @@ public class VirtualClient implements Runnable{
     public void setGame(Game game){
         this.game = game;
     }
+
+    public void close() {
+        try {
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

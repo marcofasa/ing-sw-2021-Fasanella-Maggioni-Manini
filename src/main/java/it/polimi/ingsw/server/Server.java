@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.communication.server.KillConnectionMessage;
 import it.polimi.ingsw.communication.server.responses.ResponseClientAccepted;
 import it.polimi.ingsw.communication.server.responses.ResponseGameHasStarted;
 import it.polimi.ingsw.controller.*;
@@ -119,7 +120,10 @@ public class Server {
     }
 
     private void unregisterClient(VirtualClient virtualClient) {
-        ;
+        virtualClient.send(new KillConnectionMessage());
+        virtualClient.close();
+        virtualClientIDMap.remove(virtualClient.getID());
+        clientsNickname.remove(virtualClient);
     }
 
     /**

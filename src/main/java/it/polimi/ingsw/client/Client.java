@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
+import static java.lang.System.exit;
+
 
 public class Client {
 
@@ -37,7 +39,7 @@ public class Client {
     private String nickname = "";
     public static Semaphore connectionSetupSemaphore = new Semaphore(0);
     private String ip;
-    private boolean running;
+    private volatile boolean running;
 
 
     public Client(Boolean cli, Boolean debug) {
@@ -234,6 +236,23 @@ public class Client {
 
     public BriefModel getModelByNickname(String nickname) {
         return modelByNickname.get(nickname);
+    }
+
+    public void killConnection(){
+        running = false;
+        try {
+            clientSocket.close();
+        } catch (IOException ignore) {
+        }
+        try {
+            inputStream.close();
+        } catch (IOException ignore) {
+        }
+        try {
+            outputStream.close();
+        } catch (IOException ignore) {
+        }
+        exit(0);
     }
 
 }

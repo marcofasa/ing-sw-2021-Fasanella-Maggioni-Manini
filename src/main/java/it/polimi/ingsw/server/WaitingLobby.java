@@ -37,7 +37,7 @@ public class WaitingLobby {
      */
     private void addFirstPlayer(VirtualClient virtualClient) {
         try {
-            virtualClient.sendAndWait(new RequestRequestPlayersNumber(), -1);
+            virtualClient.sendAndWait(new RequestRequestPlayersNumber(), 60);
             players.add(virtualClient);
             empty = false;
         } catch (RequestTimeoutException e) {
