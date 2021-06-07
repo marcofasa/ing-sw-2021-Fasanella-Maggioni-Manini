@@ -60,6 +60,23 @@ public class PlayerBoardController extends StandardScene{
 
     public void displayDeposit(ActionEvent actionEvent) {
 
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/Deposit.fxml"));
+        Scene secondScene = null;
+
+        try {
+            secondScene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        DepositController depositController = fxmlLoader.getController();
+        depositController.setDeposit(lightModel.getDeposit());
+
+        Stage newWindow = new Stage();
+        newWindow.setScene(secondScene);
+
+        newWindow.showAndWait();
     }
 
     public void setModels(LightModel lightModel, LightFaithTrail lightFaithTrail, GamePhase gamePhase){
