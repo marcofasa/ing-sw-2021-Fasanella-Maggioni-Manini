@@ -549,21 +549,33 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * Method used to send an instance of ServerMessage in broadcast to all players except one
+     * @param serverMessage Instance of ServerMessage to be sent to all players.
+     * @param virtualClientToExclude player who is excluded from the broadcast
+     */
+    public void sendExcept(ServerMessage serverMessage, VirtualClient virtualClientToExclude){
+        for (VirtualClient player :
+                players) {
+            if(player != virtualClientToExclude)
+                player.send(serverMessage);
+        }
+    }
+
     public void discardCardLeader(VirtualClient virtualClient, Integer cardLeaderIndex) {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 
     public void notifyDisconnectionOfClient(VirtualClient virtualClient) { /* TODO */
         String nickname = getNicknameByClient(virtualClient);
-        // mettere a posto le HASH MAP ?????
-
+        // mettere a posto le HASH MAP
         // notificare controller che virtualClient salta il turno
         controller.getTurnController().setPlayerConnection(
                 clientNicknameMap.get(virtualClient),
                 false
         );
 
-        sendAll(new NotifyDisconnectionOf(nickname));
+        sendExcept(new NotifyDisconnectionOf(nickname), virtualClient);
     }
 
     public void notifyReconnection(String nickname, Game game, VirtualClient virtualClient) {

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.gui;
 
-import com.sun.javafx.tk.TKStage;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ConnectionInfo;
 import it.polimi.ingsw.client.LightFaithTrail;
@@ -14,15 +13,12 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.concurrent.*;
 
 public class GUI extends Application implements ViewInterface {
@@ -40,6 +36,7 @@ public class GUI extends Application implements ViewInterface {
     public static ArrayList<CardLeader> cardLeaderList;
     public static ArrayList<Resource> resourceList;
     public ArrayList<String> messages = new ArrayList<>();
+    public static HashMap<Resource, Integer> discardList;
 
     public static void setPlayerNumber(int i) {
         playerNumber=i;
@@ -48,6 +45,7 @@ public class GUI extends Application implements ViewInterface {
     public static void sendMessage(ClientMessage clientMessage) {
         client.send(clientMessage);
     }
+
 
     private Stage Scene(String fxmlPath) {
         setupStage(fxmlPath);
@@ -76,7 +74,7 @@ public class GUI extends Application implements ViewInterface {
             e.printStackTrace();
             scene = new Scene(new Label("Error during FXML Loading"));
         }
-        ((StandardScene) fxmlLoader.getController()).init();
+        ((StandardStage) fxmlLoader.getController()).init();
     }
 
     public void show(Stage stage) {
@@ -91,48 +89,8 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent loader = FXMLLoader.load(getClass().getResource("/fxml/LogIn.fxml"));
         primaryStage = Scene("/fxml/Logo.fxml");
         primaryStage.showAndWait();
-
-        /*primaryStage.setOnCloseRequest((WindowEvent t) -> {
-            Platform.exit();
-            System.exit(0);
-        });
-
-
-         */
-        //displayWelcome();
-        //showScene();
-        //displayPosition();
-        //displayTurn();
-        //displayDisconnection(); /* TODO */
-        //TESTS
-        /*ArrayList<CardLeader> cardLeaders = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
-            cardLeaders.add(cardleaderWhite);
-        }
-
-        */
-
-        //Card Development Market
-        //displayCardDevelopmentMarket();
-
-        //Resource Market
-        //displayResourceMarket();
-
-        //Initial Selection
-       /*
-        ArrayList<CardLeader> list=askForLeaderCardSelection(cardLeaders);
-         int m=list.size();
-        ArrayList<Resource> resources=askForInitialResourcesSelection(2);
-        int i= resources.size();
-
-        */
-
-        //displayTurn
-        //displayTurn("io",GamePhase.Initial);
 
     }
 
@@ -152,24 +110,6 @@ public class GUI extends Application implements ViewInterface {
         GUI.lightFaithTrail = new LightFaithTrail(client);
     }
 
-    /*
-        public ConnectionInfo displayWelcome() {
-        ConnectionInfo connectionInfo = new ConnectionInfo();
-        boolean invalid = true;
-        while (invalid) {
-            Stage stage = Scene("/fxml/LogIn.fxml");
-            LogInController logInController = fxmlLoader.getController();
-            stage.showAndWait();
-            try {
-                connectionInfo.setNickname(logInController.getUser_field());
-                connectionInfo.setPort(Integer.parseInt(logInController.getPort_field()));
-                connectionInfo.setIP(logInController.getIp_field());
-                invalid = false;
-            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException ignore) {
-            }
-        }
-        return connectionInfo;
-     */
 
     public void displayWelcome() {
         Platform.runLater(() -> {
@@ -234,38 +174,15 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayResourceMarket() {
-        //Test Market
-        ArrayList<ArrayList<MarbleType>> market = new ArrayList<ArrayList<MarbleType>>();
-
-        ArrayList<MarbleType> row0 = new ArrayList<>();
-        row0.add(MarbleType.MarbleWhite);
-        row0.add(MarbleType.MarbleBlue);
-        row0.add(MarbleType.MarbleRed);
-        row0.add(MarbleType.MarblePurple);
-
-        ArrayList<MarbleType> row1 = new ArrayList<>();
-        row1.add(MarbleType.MarbleRed);
-        row1.add(MarbleType.MarbleRed);
-        row1.add(MarbleType.MarblePurple);
-        row1.add(MarbleType.MarbleBlue);
-
-        ArrayList<MarbleType> row2 = new ArrayList<>();
-        row2.add(MarbleType.MarbleBlue);
-        row2.add(MarbleType.MarbleWhite);
-        row2.add(MarbleType.MarblePurple);
-        row2.add(MarbleType.MarbleBlue);
-
-        market.add(row0);
-        market.add(row1);
-        market.add(row2);
-
 
         //Loading Scene
         mainScene("/fxml/ResourceMarket.fxml");
 
+Platform.runLater(()->{
+    ResourceMarketController resourceMarketController = fxmlLoader.getController();
+    resourceMarketController.setResourceMarket(getLightModel().getMarket());
+});
 
-        ResourceMarketController resourceMarketController = fxmlLoader.getController();
-        resourceMarketController.setResourceMarket(market);
 
     }
 
@@ -459,7 +376,25 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
-        return null;
+        Platform.runLater(()->{
+            PlayerBoardController playerBoardController=fxmlLoader.getController();
+            playerBoardController.setDiscardRequest();
+        });
+
+        if (discardList==null){
+            discardList=new HashMap<>();
+        }
+        else {
+            discardList.clear();
+        }
+
+        try {
+            semaphoreRequest.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return discardList;
     }
 
     @Override

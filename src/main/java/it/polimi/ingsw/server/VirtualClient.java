@@ -28,6 +28,7 @@ public class VirtualClient implements Runnable{
     private ObjectOutputStream outputStream;
     private boolean connected;
     private final ExecutorService executors;
+    private ScheduledFuture<?> heartBeatService;
 
     /**
      * Constructor of the class
@@ -84,7 +85,7 @@ public class VirtualClient implements Runnable{
         try {
             clientSocket.setSoTimeout(5000);
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            executor.scheduleAtFixedRate(this::startHeartBeat, 500, 1000, TimeUnit.MILLISECONDS);
+            heartBeatService = executor.scheduleAtFixedRate(this::startHeartBeat, 500, 1000, TimeUnit.MILLISECONDS);
             outputStream = new ObjectOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
             inputStream = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
             ClientMessage inputClass;
@@ -113,6 +114,8 @@ public class VirtualClient implements Runnable{
             connected = false;
             close();
             server.notifyDisconnectionOfClient(this, game, game.getNicknameByClient(this));
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -146,6 +149,7 @@ public class VirtualClient implements Runnable{
     }
 
     public void close() {
+        heartBeatService.cancel(true);
         try {
             outputStream.close();
             inputStream.close();

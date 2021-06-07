@@ -77,7 +77,6 @@ public class Server {
         }
     }
 
-
     /**
      * Set the size of the lobby
      * @param currentLobbySize size
@@ -138,7 +137,7 @@ public class Server {
      * @param virtualClient VirtualClient istance
      */
     public void requestTimedOut(VirtualClient virtualClient) {
-        System.out.println("request Timedout by client: " + virtualClient);
+        System.out.println("request timed out by client: " + virtualClient);
     }
 
     public static void main(String[] args) {
@@ -158,7 +157,7 @@ public class Server {
         }
         if (debug)
             System.out.println("Client is running in debug!");
-        Server server = new Server(true);
+        Server server = new Server(debug);
         Integer port = 51214;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);
@@ -166,14 +165,25 @@ public class Server {
     }
 
     public void notifyDisconnectionOfClient(VirtualClient virtualClient, Game game, String nickname) {
-        System.out.println("Player " + nickname + " disconnected");
-        disconnectedNicknamesGameMap.put(nickname, game);
-        game.notifyDisconnectionOfClient(virtualClient);
+        if (isPlayerWaiting(virtualClient)){
+            System.out.println("Player " + nickname + " disconnected from lobby");
+            unregisterClient(virtualClient);
+            lobby.removePlayer(virtualClient);
+        } else {
+            System.out.println("Player " + nickname + " disconnected");
+            disconnectedNicknamesGameMap.put(nickname, game);
+            game.notifyDisconnectionOfClient(virtualClient);
+        }
     }
 
     private void resumePlayer(String nickname, Game game, VirtualClient virtualClient) {
         System.out.println("Player " + nickname + " reconnected");
         disconnectedNicknamesGameMap.remove(nickname);
         game.notifyReconnection(nickname, game, virtualClient);
+    }
+
+
+    public boolean isPlayerWaiting(VirtualClient virtualClient){
+        return lobby.getPlayers().contains(virtualClient);
     }
 }

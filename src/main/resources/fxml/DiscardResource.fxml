@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.DiscardResourceController">
+    <children>
+        <ImageView fitHeight="400.0" fitWidth="622.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/brown_light_background.jpg" />
+            </image>
+        </ImageView>
+        <GridPane layoutX="65.0" layoutY="44.0" prefHeight="248.0" prefWidth="357.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <ImageView fitHeight="110.0" fitWidth="110.0" onMouseClicked="#coin_click" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/Resources/coin.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="111.0" fitWidth="110.0" onMouseClicked="#servant_click" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                    <image>
+                        <Image url="@../images/Resources/servant.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="120.0" fitWidth="122.0" layoutX="10.0" layoutY="9.0" onMouseClicked="#stone_click" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <image>
+                        <Image url="@../images/Resources/stone.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="126.0" fitWidth="149.0" layoutX="10.0" layoutY="9.0" onMouseClicked="#shield_click" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                    <image>
+                        <Image url="@../images/Resources/shield.png" />
+                    </image>
+                </ImageView>
+            <Label fx:id="coin_label" prefHeight="25.0" prefWidth="46.0" text="x0" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="stone_label" layoutX="143.0" layoutY="60.0" prefHeight="25.0" prefWidth="46.0" text="x0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="servant_label" layoutX="10.0" layoutY="60.0" prefHeight="25.0" prefWidth="46.0" text="x0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="shield_label" layoutX="10.0" layoutY="60.0" prefHeight="25.0" prefWidth="46.0" text="x0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+
+            </children>
+        </GridPane>
+      <Button layoutX="487.0" layoutY="277.0" mnemonicParsing="false" onAction="#discard_button" text="Discard">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>

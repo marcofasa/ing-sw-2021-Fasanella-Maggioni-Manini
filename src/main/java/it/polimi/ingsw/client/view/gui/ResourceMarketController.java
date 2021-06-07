@@ -4,23 +4,20 @@ import it.polimi.ingsw.communication.client.requests.RequestMarketUse;
 import it.polimi.ingsw.model.MarbleType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 
-public class ResourceMarketController extends StandardScene {
+public class ResourceMarketController extends StandardStage {
 
 
     private int nRow = 3;
     private int nCol = 4;
 
     private String key = "row";
-    private int message = 2;
+    private Integer message = 2;
     private boolean viewOnly=false;
 
     private ImageView[][] resourceMatrix;
@@ -53,18 +50,12 @@ public class ResourceMarketController extends StandardScene {
     }
 
     public void ResourceMarketPurchase(ActionEvent actionEvent) {
-        if(viewOnly){
-            final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
-        }
-        else {
-            printClick("Purchase button");
+        if (!viewOnly) {
+            String s="Resources purchased at "+key+" "+message.toString();
+            PlayerBoardController.messages= setDialogPane(s,PlayerBoardController.dialog,PlayerBoardController.messages);
             GUI.sendMessage(new RequestMarketUse(message, key));
-            final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
         }
+        closeStage(actionEvent);
     }
 
     public void setCol3(ActionEvent actionEvent) {
@@ -106,14 +97,7 @@ public class ResourceMarketController extends StandardScene {
 
                 String path = "/images/Marbles/Marble_" + color + ".png";
 
-
-                Image image = new Image(GUI.class.getResourceAsStream(path));
-                resourceMatrix[i][j] = new ImageView(image);
-
-                //Fitting Image
-                resourceMatrix[i][j].setFitWidth(50);
-                resourceMatrix[i][j].setFitHeight(50);
-
+                setImageToMatrix(i,j,resourceMatrix,path,50,50);
 
                 //Adding to GridPane
                 ResourceMarket_grid.add(resourceMatrix[i][j], j, i);

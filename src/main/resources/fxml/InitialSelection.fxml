@@ -28,7 +28,7 @@
         </rowConstraints>
       </GridPane>
       <Label layoutX="47.0" layoutY="75.0" prefHeight="17.0" prefWidth="143.0" text="Choose two Card Leader" textAlignment="CENTER" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="410.0" AnchorPane.topAnchor="75.0" />
-      <Label layoutX="454.0" layoutY="75.0" prefHeight="17.0" prefWidth="100.0" text="Choose resources" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="454.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="75.0" />
+      <Label fx:id="resources_label" layoutX="454.0" layoutY="75.0" prefHeight="17.0" prefWidth="100.0" text="Choose resources" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="454.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="75.0" />
       <Button layoutX="97.0" layoutY="298.0" mnemonicParsing="false" onAction="#cardLeaderSelection" prefHeight="23.0" prefWidth="143.0" text="Select Cards" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="360.0" AnchorPane.topAnchor="298.0" />
       <Button layoutX="452.0" layoutY="298.0" mnemonicParsing="false" onAction="#resourceSelection" prefHeight="23.0" prefWidth="124.0" text="Select Resources" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="452.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="298.0" />
       <GridPane layoutX="452.0" layoutY="138.0" prefHeight="90.0" prefWidth="124.0">

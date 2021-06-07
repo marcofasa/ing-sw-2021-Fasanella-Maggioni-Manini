@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LogInController extends StandardScene{
+public class LogInController extends StandardStage {
 @FXML
     Label status_label;
 @FXML
@@ -32,24 +32,6 @@ Label playerNumber_label;
     private boolean playerNumberRequest=false;
 
 
-    public void loginAction(ActionEvent actionEvent) {
-        if(!playerNumberRequest){
-            connectionInfo = new ConnectionInfo();
-            try {
-                connectionInfo.setNickname(user_field.getText());
-                connectionInfo.setPort(Integer.parseInt(port_field.getText()));
-                connectionInfo.setIP(ip_field.getText());
-                GUI.setConnectionInfo(connectionInfo);
-                Client.connectionSetupSemaphore.release();
-            } catch ( NumberFormatException ex) {
-                status_label.setText("Invalid port number");
-            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException e) {
-                status_label.setText(e.getMessage());
-            }
-        }
-        else printError("You have to choose the lobby size");
-    }
-
 
     @Override
     public void init() {
@@ -59,6 +41,8 @@ Label playerNumber_label;
     public void singlePlayerAction(ActionEvent actionEvent) {
 
     }
+
+    //SETTERS
 
     public ConnectionInfo getConnectionInfo() {
         return connectionInfo;
@@ -84,6 +68,8 @@ Label playerNumber_label;
     }
 
 
+    //BUTTONS
+
     public void playerNumber_button(ActionEvent actionEvent) {
         if (playerNumberRequest){
         FXMLLoader loader = new FXMLLoader();
@@ -98,10 +84,6 @@ Label playerNumber_label;
         // New window (Selection)
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
         PlayerNumberController playerNumberController = loader.getController();
         newWindow.showAndWait();
         playerNumber_label.setText("Player Number set");
@@ -109,5 +91,24 @@ Label playerNumber_label;
         playerNumberRequest=false;
         }
         else printError("This button is not available!");
+    }
+
+
+    public void loginAction(ActionEvent actionEvent) {
+        if(!playerNumberRequest){
+            connectionInfo = new ConnectionInfo();
+            try {
+                connectionInfo.setNickname(user_field.getText());
+                connectionInfo.setPort(Integer.parseInt(port_field.getText()));
+                connectionInfo.setIP(ip_field.getText());
+                GUI.setConnectionInfo(connectionInfo);
+                Client.connectionSetupSemaphore.release();
+            } catch ( NumberFormatException ex) {
+                status_label.setText("Invalid port number");
+            } catch (IllegalNicknameException | IllegalAddressException | IllegalPortException e) {
+                status_label.setText(e.getMessage());
+            }
+        }
+        else printError("You have to choose the lobby size");
     }
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -74,7 +75,7 @@
                                   <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                               </GridPane>
-                              <GridPane fx:id="cardDevelop_grid" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="130.0" prefWidth="473.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <GridPane fx:id="cardDevelop_grid" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="130.0" prefWidth="477.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="114.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="120.0" />
@@ -123,7 +124,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#displayCardLeader" prefHeight="23.0" prefWidth="187.0" text="Card Leader" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                              <Button layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#discardResources" prefHeight="23.0" prefWidth="187.0" text="Discard Resources" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -138,7 +139,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="294.0" layoutY="84.0" mnemonicParsing="false" onAction="#activateCardLeader" prefHeight="23.0" prefWidth="187.0" text="Activate Card Leader" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                              <Button layoutX="294.0" layoutY="84.0" mnemonicParsing="false" onAction="#displayCardLeader" prefHeight="23.0" prefWidth="187.0" text="Card Leader" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -157,13 +158,16 @@
                         </GridPane>
                      </children>
                   </GridPane>
-                  <DialogPane headerText="Messages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="103.0" prefWidth="202.0">
+                  <DialogPane fx:id="dialogPane" blendMode="COLOR_BURN" headerText="                           Messages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" opacity="0.88" pickOnBounds="false" prefHeight="489.0" prefWidth="184.0" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
                       <expandableContent>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
                       </expandableContent>
-                     <buttonTypes>
-                        <ButtonType fx:constant="OK" />
-                     </buttonTypes>
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
                   </DialogPane>
                </children>
             </GridPane>

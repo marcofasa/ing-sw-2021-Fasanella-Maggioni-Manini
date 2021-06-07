@@ -69,7 +69,7 @@
             </Label>
          </children>
       </GridPane>
-      <Button layoutX="507.0" layoutY="263.0" mnemonicParsing="false" onAction="#close" text="Close">
+      <Button layoutX="507.0" layoutY="263.0" mnemonicParsing="false" onAction="#closeStage" text="Close">
          <font>
             <Font size="18.0" />
          </font>
