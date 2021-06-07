@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.GameTable;
 import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.PlayerState;
 
+import java.util.LinkedHashMap;
+
 
 /**
  * This class handles the turn logic in the game, advancing the active player when an End Turn action has been
@@ -16,6 +18,7 @@ public class TurnController {
     private PlayerBoard activePlayer;
     private boolean isLorenzoActive;
     private Integer turnCounter;
+    private LinkedHashMap<String, Boolean> connectionStatuses;
 
     /**
      * Basic constructor to set internal GameTable reference.
@@ -27,6 +30,14 @@ public class TurnController {
         activePlayer = gameTable.getActivePlayer();
         isLorenzoActive = false;
         turnCounter = 0;
+
+        connectionStatuses = new LinkedHashMap<>();
+        for(PlayerBoard board : gameTable.getPlayerBoards()) {
+            connectionStatuses.put(
+                    board.getNickname(),
+                    true
+            );
+        }
     }
 
     /**
@@ -58,6 +69,8 @@ public class TurnController {
     }
 
     /**
+     * This class lives for this method
+     *
      * Method to be called whenever an EndTurn request is received by the active player : this method is to be called
      * from the Game class, after having checked that the request was received by the active player.
      */
@@ -67,6 +80,10 @@ public class TurnController {
 
             PlayerBoard oldActivePlayer = activePlayer;
             PlayerBoard newActivePlayer = gameTable.getNextPlayer(activePlayer);
+
+            while (!isPlayerConnected(newActivePlayer)) {
+                newActivePlayer = gameTable.getNextPlayer(newActivePlayer);
+            }
 
             oldActivePlayer.setPlayerState(PlayerState.IDLE);
             setActivePlayer(newActivePlayer);
@@ -102,6 +119,22 @@ public class TurnController {
 
         if (activePlayer == null) return false;
         return getActivePlayer().equals(_player);
+    }
+
+    boolean isPlayerConnected(PlayerBoard _board) {
+        return connectionStatuses.get(_board.getNickname());
+    }
+
+    boolean isPlayerConnected(String _nickname) {
+        return connectionStatuses.get(_nickname);
+    }
+
+    void setPlayerConnection(PlayerBoard _board, Boolean _newStatus) {
+        connectionStatuses.put(_board.getNickname(), _newStatus);
+    }
+
+    void setPlayerConnection(String _nickname, Boolean _newStatus) {
+        connectionStatuses.put(_nickname, _newStatus);
     }
 
 }

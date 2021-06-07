@@ -555,8 +555,14 @@ public class Game implements Runnable {
 
     public void notifyDisconnectionOfClient(VirtualClient virtualClient) { /* TODO */
         String nickname = getNicknameByClient(virtualClient);
-        // mettere a posto le HASH MAP
+        // mettere a posto le HASH MAP ?????
+
         // notificare controller che virtualClient salta il turno
+        controller.getTurnController().setPlayerConnection(
+                clientNicknameMap.get(virtualClient),
+                false
+        );
+
         sendAll(new NotifyDisconnectionOf(nickname));
     }
 
