@@ -161,4 +161,8 @@ public interface ViewInterface {
     void gameHasStarted();
 
     void displayClientAccepted();
+
+    void notifyDisconnectionOf(String nickname);
+
+    void notifyReconnection(String nickname);
 }

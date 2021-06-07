@@ -3,6 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.view.cli.CLI;
 import it.polimi.ingsw.client.view.gui.GUI;
 import it.polimi.ingsw.client.view.ViewInterface;
+import it.polimi.ingsw.communication.client.ClientKeepAlive;
+import it.polimi.ingsw.communication.server.ServerKeepAlive;
 import it.polimi.ingsw.communication.timeout_handler.ClientTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.SetupConnection;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.concurrent.*;
 
 import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
+import static java.time.LocalTime.now;
 
 
 public class Client {
@@ -62,16 +66,20 @@ public class Client {
 
     public void startConnectionAndListen(String ip, int port, String nickname) throws IOException {
         clientSocket = new Socket(ip, port);
+        clientSocket.setSoTimeout(5000);
         connected = true;
-        outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-        inputStream = new ObjectInputStream(clientSocket.getInputStream());
+        outputStream = new ObjectOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
+        inputStream = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
         send(new SetupConnection(nickname));
         ServerMessage inputClass;
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(this::startHeartBeat, 500, 3000, TimeUnit.MILLISECONDS);
         while (connected) {
             try {
                 inputClass = (ServerMessage) inputStream.readObject();
                 ServerMessage finalInputClass = inputClass;
-                System.out.println(finalInputClass.toString());
+                if(!(inputClass instanceof ServerKeepAlive))
+                    System.out.println(finalInputClass.toString());
                 if (inputClass instanceof ServerResponse) {
                     executors.submit(() -> {
                         try {
@@ -90,6 +98,11 @@ public class Client {
         clientSocket.close();
     }
 
+    private void startHeartBeat() {
+        send(new ClientKeepAlive());
+    }
+
+
     private void handleResponse(ServerMessage finalInputClass) throws RequestTimeoutException, ExecutionException, InterruptedException {
         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
         finalInputClass.read(clientCommandDispatcher);
@@ -97,7 +110,12 @@ public class Client {
     }
 
     public void send(ClientMessage clientMessage) {
-        System.out.println(clientMessage.toString());
+        executors.submit(() -> sendExecutor(clientMessage));
+    }
+
+    private synchronized void sendExecutor(ClientMessage clientMessage) {
+        if(!(clientMessage instanceof ClientKeepAlive))
+            System.out.println(clientMessage.toString());
         try {
             outputStream.reset();
             outputStream.writeObject(clientMessage);

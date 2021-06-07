@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.communication.server.ServerKeepAlive;
 import it.polimi.ingsw.communication.timeout_handler.ServerTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.ClientResponse;
@@ -9,10 +10,9 @@ import it.polimi.ingsw.controller.Game;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Class to handler a client server-side
@@ -82,8 +82,11 @@ public class VirtualClient implements Runnable{
      */
     public void run() {
         try {
-            outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-            inputStream = new ObjectInputStream(clientSocket.getInputStream());
+            clientSocket.setSoTimeout(5000);
+            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+            executor.scheduleAtFixedRate(this::startHeartBeat, 500, 1000, TimeUnit.MILLISECONDS);
+            outputStream = new ObjectOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
+            inputStream = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
             ClientMessage inputClass;
             while (connected) {
    //           System.out.println("Client" + this +" is waiting...");
@@ -99,7 +102,7 @@ public class VirtualClient implements Runnable{
                         executors.submit(() -> finalInputClass.read(this));
                     }
                 } catch (RequestTimeoutException e) {
-                    server.requestTimedout(this);
+                    server.requestTimedOut(this);
                     e.printStackTrace();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
@@ -107,8 +110,14 @@ public class VirtualClient implements Runnable{
             }
             clientSocket.close();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            connected = false;
+            close();
+            server.notifyDisconnectionOfClient(this, game, game.getNicknameByClient(this));
         }
+    }
+
+    private void startHeartBeat() {
+        send(new ServerKeepAlive());
     }
 
 

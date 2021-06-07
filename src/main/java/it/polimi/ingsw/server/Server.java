@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     private final Boolean debug;
+    private final HashMap<String, Game> disconnectedNicknamesGameMap;
     private SocketServer socketServer;
     private final HashMap<Integer, VirtualClient> virtualClientIDMap;
     private final HashMap<VirtualClient, Game> gameMap;
@@ -44,6 +45,7 @@ public class Server {
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
         lobbyLocked = new Object();
+        disconnectedNicknamesGameMap = new HashMap<String, Game>();
     }
 
     /*
@@ -62,6 +64,10 @@ public class Server {
      * @throws NicknameAlreadyInUseException if another client has already taken this name
      */
     void registerClient(VirtualClient virtualClient, String nickname) throws NicknameAlreadyInUseException {
+        if(disconnectedNicknamesGameMap.containsKey(nickname)){
+            resumePlayer(nickname, disconnectedNicknamesGameMap.get(nickname), virtualClient);
+            return;
+        }
         if(clientsNickname.containsValue(nickname)) throw new NicknameAlreadyInUseException();
         virtualClientIDMap.put(virtualClient.getID(), virtualClient);
         clientsNickname.put(virtualClient, nickname);
@@ -70,6 +76,7 @@ public class Server {
             lobby.addPlayer(virtualClient);
         }
     }
+
 
     /**
      * Set the size of the lobby
@@ -130,7 +137,7 @@ public class Server {
      * Handles when a client didn't respond for too much time
      * @param virtualClient VirtualClient istance
      */
-    public void requestTimedout(VirtualClient virtualClient) {
+    public void requestTimedOut(VirtualClient virtualClient) {
         System.out.println("request Timedout by client: " + virtualClient);
     }
 
@@ -158,4 +165,15 @@ public class Server {
         thread.start();
     }
 
+    public void notifyDisconnectionOfClient(VirtualClient virtualClient, Game game, String nickname) {
+        System.out.println("Player " + nickname + " disconnected");
+        disconnectedNicknamesGameMap.put(nickname, game);
+        game.notifyDisconnectionOfClient(virtualClient);
+    }
+
+    private void resumePlayer(String nickname, Game game, VirtualClient virtualClient) {
+        System.out.println("Player " + nickname + " reconnected");
+        disconnectedNicknamesGameMap.remove(nickname);
+        game.notifyReconnection(nickname, game, virtualClient);
+    }
 }

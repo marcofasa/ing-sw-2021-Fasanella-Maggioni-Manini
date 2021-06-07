@@ -31,9 +31,9 @@ import java.util.LinkedHashMap;
 public class Game implements Runnable {
 
     private final Boolean debug;
-    private ArrayList<VirtualClient> players;
     private GameTable gameTable;
     private Controller controller;
+    private ArrayList<VirtualClient> players;
     private final LinkedHashMap<String, VirtualClient> nicknameClientMap;
     private final LinkedHashMap<VirtualClient, String> clientNicknameMap;
     private final LinkedHashMap<Integer, VirtualClient> idPlayerClientMap;
@@ -553,4 +553,15 @@ public class Game implements Runnable {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 
+    public void notifyDisconnectionOfClient(VirtualClient virtualClient) { /* TODO */
+        String nickname = getNicknameByClient(virtualClient);
+        // mettere a posto le HASH MAP
+        // notificare controller che virtualClient salta il turno
+        sendAll(new NotifyDisconnectionOf(nickname));
+    }
+
+    public void notifyReconnection(String nickname, Game game, VirtualClient virtualClient) {
+        //fare cose
+        sendAll(new NotifyReconnectionOf(nickname));
+    }
 }

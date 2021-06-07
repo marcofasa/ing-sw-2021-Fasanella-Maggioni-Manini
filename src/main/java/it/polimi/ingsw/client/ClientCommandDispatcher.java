@@ -174,4 +174,14 @@ public class ClientCommandDispatcher {
         System.out.println("Good bye");
         client.killConnection();
     }
+
+    public void notifyDisconnectionOf(String nickname) {
+        System.out.println("Client " + nickname + "disconnected, from now on his turns are skipped");
+        client.getView().notifyDisconnectionOf(nickname);
+    }
+
+    public void notifyReconnectionOf(String nickname) {
+        System.out.println("Client " + nickname + "reconnected, from now on he's back playing");
+        client.getView().notifyReconnection(nickname);
+    }
 }

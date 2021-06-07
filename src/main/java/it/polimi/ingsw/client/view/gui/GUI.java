@@ -581,6 +581,16 @@ public class GUI extends Application implements ViewInterface {
         });
     }
 
+    @Override
+    public void notifyDisconnectionOf(String nickname) {
+
+    }
+
+    @Override
+    public void notifyReconnection(String nickname) {
+
+    }
+
 
     public static void setConnectionInfo(ConnectionInfo connectionInfo) {
         System.out.println("setto " + connectionInfo);
