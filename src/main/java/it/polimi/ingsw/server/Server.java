@@ -138,7 +138,7 @@ public class Server {
      * @param virtualClient VirtualClient istance
      */
     public void requestTimedOut(VirtualClient virtualClient) {
-        System.out.println("request Timedout by client: " + virtualClient);
+        System.out.println("request timed out by client: " + virtualClient);
     }
 
     public static void main(String[] args) {
@@ -158,7 +158,7 @@ public class Server {
         }
         if (debug)
             System.out.println("Client is running in debug!");
-        Server server = new Server(true);
+        Server server = new Server(debug);
         Integer port = 51214;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);
@@ -175,5 +175,9 @@ public class Server {
         System.out.println("Player " + nickname + " reconnected");
         disconnectedNicknamesGameMap.remove(nickname);
         game.notifyReconnection(nickname, game, virtualClient);
+    }
+
+    public boolean isVirtualClientConnected(String nickname) {
+        return disconnectedNicknamesGameMap.get(nickname) != null;
     }
 }

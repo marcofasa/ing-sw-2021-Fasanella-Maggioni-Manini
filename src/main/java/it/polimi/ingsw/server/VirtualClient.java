@@ -56,6 +56,8 @@ public class VirtualClient implements Runnable{
                 outputStream.writeObject(serverMessage);
                 outputStream.flush();
             } catch (IOException e) {
+                // if(!server.isVirtualClientConnected(game.getNicknameByClient(this)))
+                //    return;
                 e.printStackTrace();
             }
         }
@@ -117,7 +119,8 @@ public class VirtualClient implements Runnable{
     }
 
     private void startHeartBeat() {
-        send(new ServerKeepAlive());
+        if(server.isVirtualClientConnected(game.getNicknameByClient(this)))
+            send(new ServerKeepAlive());
     }
 
 
