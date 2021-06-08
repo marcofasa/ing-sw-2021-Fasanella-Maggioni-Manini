@@ -45,6 +45,7 @@ public class Client {
     public static Semaphore connectionSetupSemaphore = new Semaphore(0);
     private String ip;
     private volatile boolean running;
+    private ScheduledFuture<?> heartBeatExecutor;
 
 
     public Client(Boolean cli, Boolean debug) {
@@ -75,7 +76,7 @@ public class Client {
         send(new SetupConnection(nickname));
         ServerMessage inputClass;
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.scheduleAtFixedRate(this::startHeartBeat, 500, 2500, TimeUnit.MILLISECONDS);
+        heartBeatExecutor = executor.scheduleAtFixedRate(this::startHeartBeat, 500, 2500, TimeUnit.MILLISECONDS);
         while (connected) {
             try {
                 inputClass = (ServerMessage) inputStream.readObject();
@@ -211,6 +212,9 @@ public class Client {
     }
 
     public void setConnected(boolean connected) {
+        if(!connected){
+            heartBeatExecutor.cancel(true);
+        }
         Client.connected = connected;
     }
 

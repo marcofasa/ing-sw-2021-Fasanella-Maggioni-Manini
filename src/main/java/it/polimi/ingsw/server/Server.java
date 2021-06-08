@@ -77,7 +77,6 @@ public class Server {
         }
     }
 
-
     /**
      * Set the size of the lobby
      * @param currentLobbySize size
@@ -166,9 +165,15 @@ public class Server {
     }
 
     public void notifyDisconnectionOfClient(VirtualClient virtualClient, Game game, String nickname) {
-        System.out.println("Player " + nickname + " disconnected");
-        disconnectedNicknamesGameMap.put(nickname, game);
-        game.notifyDisconnectionOfClient(virtualClient);
+        if (isPlayerWaiting(virtualClient)){
+            System.out.println("Player " + nickname + " disconnected from lobby");
+            unregisterClient(virtualClient);
+            lobby.removePlayer(virtualClient);
+        } else {
+            System.out.println("Player " + nickname + " disconnected");
+            disconnectedNicknamesGameMap.put(nickname, game);
+            game.notifyDisconnectionOfClient(virtualClient);
+        }
     }
 
     private void resumePlayer(String nickname, Game game, VirtualClient virtualClient) {
@@ -177,7 +182,8 @@ public class Server {
         game.notifyReconnection(nickname, game, virtualClient);
     }
 
-    public boolean isVirtualClientConnected(String nickname) {
-        return disconnectedNicknamesGameMap.get(nickname) != null;
+
+    public boolean isPlayerWaiting(VirtualClient virtualClient){
+        return lobby.getPlayers().contains(virtualClient);
     }
 }
