@@ -12,6 +12,22 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class CardDevelopmentSelection extends StandardScene{
+
+
+    /*
+    IMAGE FORMAT
+    This is a generic path for Card Development Cards
+               Card_Development_a-b
+
+            (a=victory points, b=color)
+
+    green=0
+    purple=1
+    blue=2
+    yellow=3
+     */
+
+
     @FXML
     GridPane cardDevelopSel_grid;
 
@@ -20,24 +36,21 @@ public class CardDevelopmentSelection extends StandardScene{
     private int pos=-1;
 
 
+    /**
+     * Selection confirmed and window closing button
+     * @param actionEvent
+     */
     public void cardDevelopSelected(ActionEvent actionEvent) {
-        /*
-        if(pos<0){
-            printError("Position still not selected");
-        }
-        else{
-            printClick("Position Selected button");
-            final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
-        }*/
-        // DEBUG:
         printClick("Position Selected button");
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Sets given Card Developments on GridPane
+     * @param cardsDevelopment of current player
+     */
     public void setCardDevelopmentSelection(ArrayList<CardDevelopment> cardsDevelopment) {
         cardDevelopmentArray = new ImageView[3];
         for (int i = 0; i < nRow; i++) {
@@ -59,10 +72,11 @@ public class CardDevelopmentSelection extends StandardScene{
                 }
 
 
-                //REAL PATH
+                //image final path
                 String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
 
 
+                //loading image and associate a click action
                 Image image = new Image(GUI.class.getResourceAsStream(path));
                 cardDevelopmentArray[i] = new ImageView(image);
 
@@ -79,6 +93,7 @@ public class CardDevelopmentSelection extends StandardScene{
 
 
             } else {
+                // if there's no card on the deck (printing default image)
                 String path = "/images/CardDevelopment/Card_Development_Empty.png" ;
                 Image image = new Image(GUI.class.getResourceAsStream(path));
                 cardDevelopmentArray[i] = new ImageView(image);
@@ -102,24 +117,18 @@ public class CardDevelopmentSelection extends StandardScene{
         }
     }
 
+    /**
+     * Sets the column of the position
+     * @param finalI column of Card Development Deck
+     */
     private void setClick(int finalI) {
         printClick("Card Selection at position "+finalI);
         pos=finalI;
     }
 
+
     public int getPos(){
         return pos;
     }
-/*
-    Card_Development_a-b
-
-            (a=victory points, b=color)
-
-    green=0
-    purple=1
-    blue=2
-    yellow=3
-
- */
 
 }

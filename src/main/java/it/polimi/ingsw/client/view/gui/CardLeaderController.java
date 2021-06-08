@@ -11,6 +11,28 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 
 public class CardLeaderController extends StandardScene{
+
+
+    /*
+    IMAGE FORMAT
+             Card_Leader_a_b
+
+             (a=type, b=color)
+
+    Discount=1
+    Deposit=2
+    WhiteMarble=3
+    Production=4
+
+    shield=2
+    coin=0
+    stone=3
+    servant=1
+     */
+
+
+
+
     @FXML
     GridPane cardleader_grid;
 
@@ -33,7 +55,7 @@ public class CardLeaderController extends StandardScene{
         cardLeaderArray = new ImageView[3];
         for (int i = 0; i < nRow; i++) {
 
-
+        if(cardsLeader.get(i)!=null){
             Integer type;
             switch (cardsLeader.get(i).getDescription()){
                 case Deposit:
@@ -90,34 +112,31 @@ public class CardLeaderController extends StandardScene{
             //Adding to GridPane
             cardleader_grid.add(cardLeaderArray[i],0,i);
         }
+        else {
+            String path="/images/CardDevelopment/Card_Development_Empty.png";
+            Image image=new Image(GUI.class.getResourceAsStream(path));
+            cardLeaderArray[i]=new ImageView(image);
+
+            //Fitting Image
+            cardLeaderArray[i].setFitWidth(80);
+            cardLeaderArray[i].setFitHeight(120);
+
+            //Mouse Click Event
+            int finalI = i;
+
+            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> {
+                setClick(finalI);
+            });
+
+            //Adding to GridPane
+            cardleader_grid.add(cardLeaderArray[i],0,i);
+        }
+        }
+
         }
 
     private void setClick(int finalI) {
     }
-
-
-
-
-
-
-
-
-
-    /*
-    IMAGE FORMAT
-    Card_Leader_a_b
-    (a=type, b=color)
-
-    Discount=1
-    Deposit=2
-    WhiteMarble=3
-    Production=4
-
-    shield=2
-    coin=0
-    stone=3
-    servant=1
-     */
 
 
 

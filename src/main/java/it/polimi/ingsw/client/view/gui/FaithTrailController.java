@@ -17,7 +17,6 @@ public class FaithTrailController extends StandardScene{
         ImageView[][] faithtrailMatrix=new ImageView[3][19];
         //Set Position into the corresponding cell in the grid.
 
-        //String path = "/images/Marbles/Marble_" + color + ".png";
 
 /*
         Image image = new Image(GUI.class.getResourceAsStream(path));

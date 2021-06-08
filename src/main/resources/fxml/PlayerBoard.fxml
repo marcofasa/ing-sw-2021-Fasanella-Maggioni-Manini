@@ -123,7 +123,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#displayCardLeader" prefHeight="23.0" prefWidth="187.0" text="Card Leader" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                              <Button layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#discardResources" prefHeight="23.0" prefWidth="187.0" text="Discard Resources" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

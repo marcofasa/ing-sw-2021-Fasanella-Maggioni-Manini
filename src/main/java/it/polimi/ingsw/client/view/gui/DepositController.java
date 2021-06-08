@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 
 public class DepositController extends StandardScene{
+
     @FXML
     Label stone_label;
     @FXML

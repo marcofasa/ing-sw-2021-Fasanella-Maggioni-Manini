@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image ;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,18 +16,14 @@ import java.util.ArrayList;
 
 
 public class CardDevelopmentMarketController extends StandardScene{
-
-
-
-
-    //TODO place to put card
     
 
     /*
     IMAGE FORMAT
-    Card_Development_a-b
+    This is a generic path for Card Development Cards
+               Card_Development_a-b
 
-    (a=victory points, b=color)
+            (a=victory points, b=color)
 
     green=0
     purple=1
@@ -44,11 +39,12 @@ public class CardDevelopmentMarketController extends StandardScene{
     private ImageView[][] cardDevelopmentMatrix;
     private int pos;
     private boolean viewOnly=false;
+    private ArrayList<CardDevelopment> cardDevelopments;
 
     @FXML
     GridPane cardDevelop_grid;
 
-    private ArrayList<CardDevelopment> cardDevelopments;
+
 
     @Override
     public void init() {
@@ -83,11 +79,9 @@ public class CardDevelopmentMarketController extends StandardScene{
                         throw new IllegalStateException("Unexpected value: " + cardDevelopmentMarket.get(i).get(j).getCardType());
                 }
 
-                //REAL PATH
+                //Image Path
                 String path="/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
 
-                //TEST PATH
-                //String path="/images/CardDevelopment/Card_Development_1-0.jpg";
 
 
                 Image image=new Image(GUI.class.getResourceAsStream(path));
@@ -112,6 +106,11 @@ public class CardDevelopmentMarketController extends StandardScene{
     }
 
 
+    /**
+     * Sets the coordinates of the card
+     * @param row of market (0<=col<=2)
+     * @param col of market (0<=col<=3)
+     */
     public void setBuyClick(int row,int col){
         buyCol=col;
         buyRow=row;
@@ -142,8 +141,14 @@ public class CardDevelopmentMarketController extends StandardScene{
         }}
     }
 
-    public void selectionPositionCardDevelop(ActionEvent actionEvent) {
 
+    /**
+     * Opens a new window with player Card Development Cards and lets choose the place position of the card
+     * that will be purchased.
+     * @param actionEvent button clicked
+     */
+    public void selectionPositionCardDevelop(ActionEvent actionEvent) {
+        //loading secondary scene
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/CardDevelopmentSelection.fxml"));
         Scene secondScene = null;
@@ -153,9 +158,9 @@ public class CardDevelopmentMarketController extends StandardScene{
             e.printStackTrace();
         }
 
+
         CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardDevelopments);
-        // New window (Selection)
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
 
@@ -167,6 +172,9 @@ public class CardDevelopmentMarketController extends StandardScene{
         pos=cardDevelopmentSelection.getPos();
     }
 
+    /**
+     * Sets the market to View Only Mode: player will not be able to buy cards (clicking button)
+     */
     public void setViewOnly() {
         viewOnly=true;
     }

@@ -99,9 +99,7 @@ Label playerNumber_label;
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
 
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
+
         PlayerNumberController playerNumberController = loader.getController();
         newWindow.showAndWait();
         playerNumber_label.setText("Player Number set");

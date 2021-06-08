@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.RequestEndTurn;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
-import it.polimi.ingsw.model.CardDevelopmentMarket;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PlayerBoardController extends StandardScene{
 
@@ -28,6 +26,8 @@ public class PlayerBoardController extends StandardScene{
     private LightFaithTrail lightFaithTrail;
     private LightModel lightModel;
     private GamePhase gamePhase;
+    private boolean endPhase=false;
+    private boolean discardRequest=false;
 
     public void displayFaithTrail(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader();
@@ -51,9 +51,6 @@ public class PlayerBoardController extends StandardScene{
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
 
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
 
         newWindow.showAndWait();
     }
@@ -83,6 +80,14 @@ public class PlayerBoardController extends StandardScene{
         this.lightFaithTrail=lightFaithTrail;
         this.lightModel=lightModel;
         this.gamePhase=gamePhase;
+        if(gamePhase==GamePhase.Final){
+            setEndPhase();
+        }
+        else endPhase=false;
+    }
+
+    private void setEndPhase() {
+        endPhase=true;
     }
 
     public void displayCardMarket(ActionEvent actionEvent) {
@@ -102,38 +107,10 @@ public class PlayerBoardController extends StandardScene{
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
 
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
 
         newWindow.showAndWait();
     }
 
-    public void displayCardLeader(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/CardLeader.fxml"));
-        Scene secondScene = null;
-        try {
-            secondScene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        CardLeaderController cardLeaderController=loader.getController();
-
-        cardLeaderController.setCardLeaderDeck(lightModel.getCardsLeader());
-
-
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
-
-        newWindow.showAndWait();
-    }
 
     public void displayResourceMarket(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader();
@@ -154,14 +131,17 @@ public class PlayerBoardController extends StandardScene{
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
 
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
-
         newWindow.showAndWait();
     }
 
     public void buyCard(ActionEvent actionEvent) {
+        if(endPhase ){
+            printError("action not allowed, primary action already taken");
+        }
+        else if(discardRequest){
+            printError("you have to discard resources");
+        }
+        else{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/CardDevelopmentMarket.fxml"));
         Scene secondScene = null;
@@ -177,14 +157,18 @@ public class PlayerBoardController extends StandardScene{
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
 
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
 
-        newWindow.showAndWait();
+        newWindow.showAndWait();}
     }
 
     public void buyResource(ActionEvent actionEvent) {
+        if(endPhase){
+            printError("action not allowed, primary action already taken");
+        }
+        else if(discardRequest){
+            printError("you have to discard resources");
+        }
+        else{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/ResourceMarket.fxml"));
             Scene secondScene = null;
@@ -202,23 +186,71 @@ public class PlayerBoardController extends StandardScene{
             Stage newWindow = new Stage();
             newWindow.setScene(secondScene);
 
-            // Set position of second window, related to primary window.
-            //newWindow.setX(primaryStage.getX() + 200);
-            //newWindow.setY(primaryStage.getY() + 100);
-
-            newWindow.showAndWait();
+            newWindow.showAndWait();}
     }
 
-    public void activateCardLeader(ActionEvent actionEvent) {
-        //NOT USEFUL
-    }
 
     public void production(ActionEvent actionEvent) {
+        if(discardRequest){
+            printError("you have to discard resources");
+        }
+        else {
 
+        }
     }
 
     public void endTurn(ActionEvent actionEvent) {
-        GUI.sendMessage(new RequestEndTurn());
+        if(!discardRequest){
+            GUI.sendMessage(new RequestEndTurn());
+        }
+        else printError("you have to discard resources");
     }
 
+    public void setDiscardRequest() {
+        discardRequest=true;
+    }
+
+    public void discardResources(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fxml/DiscardResource.fxml"));
+        Scene secondScene = null;
+        try {
+            secondScene = new Scene(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // New window (Selection)
+        Stage newWindow = new Stage();
+        newWindow.setScene(secondScene);
+        newWindow.showAndWait();
+    }
+
+    public void activateCardLeader(ActionEvent actionEvent) {
+        if(endPhase ){
+            printError("action not allowed, primary action already taken");
+        }
+        else if(discardRequest){
+            printError("you have to discard resources");
+        }
+        else{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fxml/CardLeader.fxml"));
+        Scene secondScene = null;
+        try {
+            secondScene = new Scene(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CardLeaderController cardLeaderController=loader.getController();
+
+        cardLeaderController.setCardLeaderDeck(lightModel.getCardsLeader());
+
+
+        // New window (Selection)
+        Stage newWindow = new Stage();
+        newWindow.setScene(secondScene);
+        newWindow.showAndWait();}
+    }
 }

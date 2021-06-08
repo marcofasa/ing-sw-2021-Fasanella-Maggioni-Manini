@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class InitialSelectionController extends StandardScene {
+
+
     @FXML
     GridPane initialCardLeader_grid;
 
@@ -90,12 +92,6 @@ public class InitialSelectionController extends StandardScene {
             if (resourceSelection.size() == resourceSize) {
                 printClick("resource selection button");
                 GUI.resourceList = resourceSelection;
-            /*
-            final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow()
-            stage.close();
-
-             */
                 GUI.semaphoreRequest.release();
             } else {
                 printError("Not enough / Too much resources picked! You have to choose " + resourceSize + " resources.");
@@ -149,8 +145,6 @@ public class InitialSelectionController extends StandardScene {
             //REAL PATH
             String path = "/images/CardLeader/Card_Leader_" + type.toString() + "-" + color.toString() + ".jpg";
 
-            //TEST PATH
-            //String path="/images/CardDevelopment/Card_Development_1-0.jpg";
 
             Image image = new Image(GUI.class.getResourceAsStream(path));
             cardLeaderArray[i] = new ImageView(image);
