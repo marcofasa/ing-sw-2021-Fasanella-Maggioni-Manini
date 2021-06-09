@@ -51,11 +51,18 @@ public class CardLeaderController extends StandardScene{
 
     }
 
+    /**
+     * Sets the card Leader images into the Grid
+     * @param cardsLeader arraylist of current player
+     */
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeader) {
         cardLeaderArray = new ImageView[3];
         for (int i = 0; i < nRow; i++) {
 
+
         if(cardsLeader.get(i)!=null){
+
+            //Generation of image path
             Integer type;
             switch (cardsLeader.get(i).getDescription()){
                 case Deposit:
@@ -90,11 +97,10 @@ public class CardLeaderController extends StandardScene{
                     throw new IllegalStateException("Unexpected value: " + cardsLeader.get(i).getResource().toString());
             }
 
-
-            //REAL PATH
             String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
 
 
+            //loading image
             Image image=new Image(GUI.class.getResourceAsStream(path));
             cardLeaderArray[i]=new ImageView(image);
 
@@ -113,6 +119,8 @@ public class CardLeaderController extends StandardScene{
             cardleader_grid.add(cardLeaderArray[i],0,i);
         }
         else {
+            //Standard path for empty slot
+
             String path="/images/CardDevelopment/Card_Development_Empty.png";
             Image image=new Image(GUI.class.getResourceAsStream(path));
             cardLeaderArray[i]=new ImageView(image);

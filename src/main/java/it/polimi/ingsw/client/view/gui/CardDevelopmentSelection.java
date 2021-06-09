@@ -42,6 +42,8 @@ public class CardDevelopmentSelection extends StandardScene{
      */
     public void cardDevelopSelected(ActionEvent actionEvent) {
         printClick("Position Selected button");
+
+        //closing this Stage
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

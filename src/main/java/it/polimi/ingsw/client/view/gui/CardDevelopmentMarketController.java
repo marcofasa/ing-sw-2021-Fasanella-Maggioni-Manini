@@ -44,15 +44,17 @@ public class CardDevelopmentMarketController extends StandardScene{
     @FXML
     GridPane cardDevelop_grid;
 
-
-
     @Override
     public void init() {
         super.init();
     }
 
 
-
+    /**
+     * Sets the market images and let the player choose where to place the purchased card
+     * @param cardDevelopmentMarket arraylist of the market
+     * @param cardDevelopments arraylist of current player cards (to select where to place the purchased card)
+     */
     public void setDevelopmentMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket,ArrayList<CardDevelopment> cardDevelopments){
         this.cardDevelopments=cardDevelopments;
          cardDevelopmentMatrix =new ImageView[3][4];
@@ -158,16 +160,13 @@ public class CardDevelopmentMarketController extends StandardScene{
             e.printStackTrace();
         }
 
-
+        //loading Stage
         CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardDevelopments);
         Stage newWindow = new Stage();
+
+        //closing Stage
         newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
-
         newWindow.showAndWait();
         pos=cardDevelopmentSelection.getPos();
     }

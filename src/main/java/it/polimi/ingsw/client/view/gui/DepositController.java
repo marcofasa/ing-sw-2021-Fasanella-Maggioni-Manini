@@ -19,7 +19,10 @@ public class DepositController extends StandardScene{
     @FXML
     Label servant_label;
 
-
+    /**
+     * Sets current Player deposit
+     * @param deposit hashmap of resources
+     */
     public void setDeposit(HashMap<Resource, Integer> deposit){
         for(Resource resource: deposit.keySet()){
             switch (resource){
@@ -39,6 +42,10 @@ public class DepositController extends StandardScene{
         }
     }
 
+    /**
+     * Closing this Stage
+     * @param actionEvent button
+     */
     public void close(ActionEvent actionEvent) {
         printClick("Close button");
         final Node source = (Node) actionEvent.getSource();

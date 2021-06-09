@@ -41,10 +41,10 @@ public class PlayerBoardController extends StandardScene{
 
         Platform.runLater(()->{
             FaithTrailController faithTrailController=loader.getController();
-            faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(),lightFaithTrail.getPlayersPosition());
+            faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(),lightFaithTrail.getPlayersPosition(),lightModel.getNickname());
         });
-        FaithTrailController faithTrailController=loader.getController();
-        faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(),lightFaithTrail.getPlayersPosition());
+       // FaithTrailController faithTrailController=loader.getController();
+      //  faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(),lightFaithTrail.getPlayersPosition(),lightModel.getNickname());
 
 
         // New window (Selection)
