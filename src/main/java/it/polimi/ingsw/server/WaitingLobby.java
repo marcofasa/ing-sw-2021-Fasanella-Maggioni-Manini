@@ -26,6 +26,10 @@ public class WaitingLobby {
      */
     public WaitingLobby(Server server){
         this.server = server;
+        setupLobby();
+    }
+
+    private void setupLobby() {
         lobbyCapacity = -1;
         empty = true;
         players = new ArrayList<>();
@@ -83,6 +87,18 @@ public class WaitingLobby {
         for (VirtualClient player :
                 players) {
             player.send(serverMessage);
+        }
+    }
+
+    /**
+     * removes this player from the lobby, resets the lobby in case it's empty
+     * @param virtualClient player to remove
+     */
+    public synchronized void removePlayer(VirtualClient virtualClient) {
+        players.remove(virtualClient);
+        if (players.size() == 0) {
+            empty = true;
+            lobbyCapacity = -1;
         }
     }
 }
