@@ -3,15 +3,12 @@ package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.model.CardDevelopment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class CardDevelopmentSelection extends StandardScene{
+public class CardDevelopmentSelection extends StandardStage {
 
 
     /*
@@ -42,11 +39,7 @@ public class CardDevelopmentSelection extends StandardScene{
      */
     public void cardDevelopSelected(ActionEvent actionEvent) {
         printClick("Position Selected button");
-
-        //closing this Stage
-        final Node source = (Node) actionEvent.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        closeStage(actionEvent);
     }
 
     /**
@@ -77,14 +70,7 @@ public class CardDevelopmentSelection extends StandardScene{
                 //image final path
                 String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
 
-
-                //loading image and associate a click action
-                Image image = new Image(GUI.class.getResourceAsStream(path));
-                cardDevelopmentArray[i] = new ImageView(image);
-
-                //Fitting Image
-                cardDevelopmentArray[i].setFitWidth(80);
-                cardDevelopmentArray[i].setFitHeight(120);
+                setImageToArray(i,path,cardDevelopmentArray,80,120);
 
                 //Mouse Click Event
                 int finalI = i;
@@ -97,12 +83,7 @@ public class CardDevelopmentSelection extends StandardScene{
             } else {
                 // if there's no card on the deck (printing default image)
                 String path = "/images/CardDevelopment/Card_Development_Empty.png" ;
-                Image image = new Image(GUI.class.getResourceAsStream(path));
-                cardDevelopmentArray[i] = new ImageView(image);
-
-                //Fitting Image
-                cardDevelopmentArray[i].setFitWidth(80);
-                cardDevelopmentArray[i].setFitHeight(120);
+                setImageToArray(i,path,cardDevelopmentArray,80,120);
 
                 //Mouse Click Event
                 int finalI = i;

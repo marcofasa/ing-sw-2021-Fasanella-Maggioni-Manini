@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -157,13 +158,16 @@
                         </GridPane>
                      </children>
                   </GridPane>
-                  <DialogPane headerText="Messages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="103.0" prefWidth="202.0">
+                  <DialogPane fx:id="dialogPane" blendMode="COLOR_BURN" headerText="                           Messages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" opacity="0.88" pickOnBounds="false" prefHeight="489.0" prefWidth="184.0" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
                       <expandableContent>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
                       </expandableContent>
-                     <buttonTypes>
-                        <ButtonType fx:constant="OK" />
-                     </buttonTypes>
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
                   </DialogPane>
                </children>
             </GridPane>

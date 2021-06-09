@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LogInController extends StandardScene{
+public class LogInController extends StandardStage {
 @FXML
     Label status_label;
 @FXML
@@ -98,8 +98,6 @@ Label playerNumber_label;
         // New window (Selection)
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
-
-
         PlayerNumberController playerNumberController = loader.getController();
         newWindow.showAndWait();
         playerNumber_label.setText("Player Number set");

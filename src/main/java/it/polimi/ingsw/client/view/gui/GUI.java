@@ -74,7 +74,7 @@ public class GUI extends Application implements ViewInterface {
             e.printStackTrace();
             scene = new Scene(new Label("Error during FXML Loading"));
         }
-        ((StandardScene) fxmlLoader.getController()).init();
+        ((StandardStage) fxmlLoader.getController()).init();
     }
 
     public void show(Stage stage) {

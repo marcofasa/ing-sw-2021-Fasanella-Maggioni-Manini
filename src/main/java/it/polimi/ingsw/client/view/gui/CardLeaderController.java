@@ -4,13 +4,12 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.CardLeader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class CardLeaderController extends StandardScene{
+public class CardLeaderController extends StandardStage {
 
 
     /*
@@ -47,7 +46,7 @@ public class CardLeaderController extends StandardScene{
     }
 
     public void activateCardLeader(ActionEvent actionEvent) {
-        printClick("Activate button");
+        PlayerBoardController.messages= setDialogPane("Card Leader activated",PlayerBoardController.dialog,PlayerBoardController.messages);
 
     }
 
@@ -100,13 +99,7 @@ public class CardLeaderController extends StandardScene{
             String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
 
 
-            //loading image
-            Image image=new Image(GUI.class.getResourceAsStream(path));
-            cardLeaderArray[i]=new ImageView(image);
-
-            //Fitting Image
-            cardLeaderArray[i].setFitWidth(80);
-            cardLeaderArray[i].setFitHeight(120);
+           setImageToArray(i,path,cardLeaderArray,80,120);
 
             //Mouse Click Event
             int finalI = i;
@@ -122,12 +115,7 @@ public class CardLeaderController extends StandardScene{
             //Standard path for empty slot
 
             String path="/images/CardDevelopment/Card_Development_Empty.png";
-            Image image=new Image(GUI.class.getResourceAsStream(path));
-            cardLeaderArray[i]=new ImageView(image);
-
-            //Fitting Image
-            cardLeaderArray[i].setFitWidth(80);
-            cardLeaderArray[i].setFitHeight(120);
+            setImageToArray(i,path,cardLeaderArray,80,120);
 
             //Mouse Click Event
             int finalI = i;

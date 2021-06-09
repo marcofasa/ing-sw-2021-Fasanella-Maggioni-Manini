@@ -11,11 +11,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image ;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class CardDevelopmentMarketController extends StandardScene{
+public class CardDevelopmentMarketController extends StandardStage {
     
 
     /*
@@ -81,17 +80,12 @@ public class CardDevelopmentMarketController extends StandardScene{
                         throw new IllegalStateException("Unexpected value: " + cardDevelopmentMarket.get(i).get(j).getCardType());
                 }
 
+
                 //Image Path
                 String path="/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
 
 
-
-                Image image=new Image(GUI.class.getResourceAsStream(path));
-                cardDevelopmentMatrix[i][j]=new ImageView(image);
-
-                //Fitting Image
-                cardDevelopmentMatrix[i][j].setFitWidth(80);
-                cardDevelopmentMatrix[i][j].setFitHeight(120);
+               setImageToMatrix(i,j,cardDevelopmentMatrix,path,80,120);
 
                 //Mouse Click Event
                 int finalI = i;
@@ -128,18 +122,16 @@ public class CardDevelopmentMarketController extends StandardScene{
      */
     public void buyCardDevelopment(ActionEvent actionEvent) {
         if(viewOnly){
-            printError("Action not admitted. View only mode!");
+            PlayerBoardController.messages=setDialogPane("Action not admitted. View only mode!",PlayerBoardController.dialog,PlayerBoardController.messages);
         }
         else{
         if(pos<0 || buyRow<0 || buyCol<0){
-            printError("Position still not selected or Card not Picked");
+            PlayerBoardController.messages=setDialogPane("Position still not selected or Card not Picked",PlayerBoardController.dialog,PlayerBoardController.messages);
         }
         else{
-            printClick("Purchase button");
+            PlayerBoardController.messages=setDialogPane("Card Development purchased",PlayerBoardController.dialog,PlayerBoardController.messages);
             //send al client
-            final Node source = (Node) actionEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            closeStage(actionEvent);
         }}
     }
 
@@ -150,22 +142,14 @@ public class CardDevelopmentMarketController extends StandardScene{
      * @param actionEvent button clicked
      */
     public void selectionPositionCardDevelop(ActionEvent actionEvent) {
-        //loading secondary scene
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/CardDevelopmentSelection.fxml"));
-        Scene secondScene = null;
-        try {
-            secondScene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FXMLLoader loader=load("/fxml/CardDevelopmentSelection.fxml");
+        Scene secondScene=setScene(loader);
 
         //loading Stage
         CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardDevelopments);
         Stage newWindow = new Stage();
 
-        //closing Stage
         newWindow.setScene(secondScene);
         newWindow.showAndWait();
         pos=cardDevelopmentSelection.getPos();

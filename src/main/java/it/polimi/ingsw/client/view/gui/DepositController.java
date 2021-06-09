@@ -3,12 +3,10 @@ package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import java.util.HashMap;
 
-public class DepositController extends StandardScene{
+public class DepositController extends StandardStage {
 
     @FXML
     Label stone_label;
@@ -47,9 +45,6 @@ public class DepositController extends StandardScene{
      * @param actionEvent button
      */
     public void close(ActionEvent actionEvent) {
-        printClick("Close button");
-        final Node source = (Node) actionEvent.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        closeStage(actionEvent);
     }
 }

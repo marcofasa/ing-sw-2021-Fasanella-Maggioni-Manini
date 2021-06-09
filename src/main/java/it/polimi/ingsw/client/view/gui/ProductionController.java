@@ -6,15 +6,13 @@ import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class ProductionController extends StandardScene{
+public class ProductionController extends StandardStage {
 
     public ProductionSelection productionSelection;
     private ArrayList<CardDevelopment> cardsDevelopment;
@@ -26,27 +24,13 @@ public class ProductionController extends StandardScene{
         productionSelection.setBasicProdInfo(resources);
     }
 
-    public void cardDevelopProduction(ActionEvent actionEvent) { 
-
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/CardDevelopmentSelection.fxml"));
-        Scene secondScene = null;
-        try {
-            secondScene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void cardDevelopProduction(ActionEvent actionEvent) {
+        FXMLLoader loader = load("/fxml/CardDevelopmentSelection.fxml");
+        Scene secondScene = setScene(loader);
         CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardsDevelopment);
-        // New window (Selection)
         Stage newWindow = new Stage();
         newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
 
         newWindow.showAndWait();
         int pos=cardDevelopmentSelection.getPos();
@@ -58,31 +42,7 @@ public class ProductionController extends StandardScene{
 
     public void cardLeaderProduction(ActionEvent actionEvent) {
         //TODO
-        /*
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/CardLeader.fxml"));
-        Scene secondScene = null;
-        try {
-            secondScene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        CardLeaderController cardLeaderController=loader.getController();
-        cardLeaderController.setCardLeaderDeck(cardsLeader);
-
-
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
-
-        newWindow.showAndWait();
-
-         */
 
     }
 
@@ -90,9 +50,7 @@ public class ProductionController extends StandardScene{
         productionSelection.setCardDevelopmentSlotActive(cardDevelopArray);
 
         printClick("Production button");
-        final Node source = (Node) actionEvent.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        closeStage(actionEvent);
     }
 
     public void setProduction(ArrayList<CardDevelopment> cardsDevelopment, ArrayList<CardLeader> cardsLeader){

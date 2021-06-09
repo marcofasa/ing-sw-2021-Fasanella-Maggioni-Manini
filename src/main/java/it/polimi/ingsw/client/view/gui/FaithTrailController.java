@@ -2,14 +2,13 @@ package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.model.FaithTileStatus;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FaithTrailController extends StandardScene{
+public class FaithTrailController extends StandardStage {
     private String pathPlayer="/images/Resources/redcross.png";
     private String pathEnemy = "/images/punchboard/croce.png";
     private String tileDiscarded="/images/punchboard/quadrato rosso.png";
@@ -19,22 +18,22 @@ public class FaithTrailController extends StandardScene{
     GridPane faithtrail_grid;
 
     public void setFaithTrail(ArrayList<FaithTileStatus> tileStatuses, HashMap<String, Integer> playersPosition,String nickName) {
-        ImageView[][] faithtrailMatrix = new ImageView[3][19];
+        ImageView[][] faithTrailMatrix = new ImageView[3][19];
         //Set Position into the corresponding cell in the grid.
         for (String string : playersPosition.keySet()) {
             boolean player=false;
             if (string.equals(nickName)) {
               player=true;
             }
-            setPlayerPosition(playersPosition.get(string), faithtrailMatrix, player);
+            setPlayerPosition(playersPosition.get(string), faithTrailMatrix, player);
         }
 
         for(int i=0; i<3; i++){
-            setTiles(tileStatuses.get(i),faithtrailMatrix,i);
+            setTiles(tileStatuses.get(i), faithTrailMatrix,i);
         }
     }
 
-    private void setTiles(FaithTileStatus faithTileStatus, ImageView[][] faithtrailMatrix,int section) {
+    private void setTiles(FaithTileStatus faithTileStatus, ImageView[][] faithTrailMatrix, int section) {
         int row;
         int col;
         if(section==0){
@@ -52,44 +51,19 @@ col=15;
 
 
         if(faithTileStatus==FaithTileStatus.Discarded){
-            Image image = new Image(GUI.class.getResourceAsStream(tileDiscarded));
+            setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded,50,50);
 
-            faithtrailMatrix[row][col] = new ImageView(image);
-
-            //Fitting Image
-            faithtrailMatrix[row][col].setFitWidth(50);
-            faithtrailMatrix[row][col].setFitHeight(50);
-
-
-            //Adding to GridPane
-            faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
         }
         else if(faithTileStatus==FaithTileStatus.Not_Reached){
-            Image image = new Image(GUI.class.getResourceAsStream(tileNotReached));
+            setImageToMatrix(row,col, faithTrailMatrix,tileNotReached,50,50);
 
-            faithtrailMatrix[row][col] = new ImageView(image);
-
-            //Fitting Image
-            faithtrailMatrix[row][col].setFitWidth(50);
-            faithtrailMatrix[row][col].setFitHeight(50);
-
-
-            //Adding to GridPane
-            faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
         }
         else{
-            Image image = new Image(GUI.class.getResourceAsStream(tileReached));
+            setImageToMatrix(row,col, faithTrailMatrix,tileReached,50,50);
 
-            faithtrailMatrix[row][col] = new ImageView(image);
-
-            //Fitting Image
-            faithtrailMatrix[row][col].setFitWidth(50);
-            faithtrailMatrix[row][col].setFitHeight(50);
-
-
-            //Adding to GridPane
-            faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
         }
+        //Adding to GridPane
+        faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
     }
 
     private void setPlayerPosition(int position,ImageView[][] faithtrailMatrix,boolean player){
@@ -128,32 +102,15 @@ col=15;
                 throw new IllegalStateException("Unexpected value: " + position);
         }
        if(player){
-           Image image = new Image(GUI.class.getResourceAsStream(pathPlayer));
+           setImageToMatrix(row,col,faithtrailMatrix,pathPlayer,10,10);
 
-           faithtrailMatrix[row][col] = new ImageView(image);
-
-           //Fitting Image
-           faithtrailMatrix[row][col].setFitWidth(10);
-           faithtrailMatrix[row][col].setFitHeight(10);
-
-
-           //Adding to GridPane
-           faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
        }
        else {
-           Image image = new Image(GUI.class.getResourceAsStream(pathEnemy));
+           setImageToMatrix(row,col,faithtrailMatrix,pathEnemy,10,10);
 
-           faithtrailMatrix[row][col] = new ImageView(image);
-
-           //Fitting Image
-           faithtrailMatrix[row][col].setFitWidth(10);
-           faithtrailMatrix[row][col].setFitHeight(10);
-
-
-           //Adding to GridPane
-           faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
 
        }
+        faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
 
     }
 }

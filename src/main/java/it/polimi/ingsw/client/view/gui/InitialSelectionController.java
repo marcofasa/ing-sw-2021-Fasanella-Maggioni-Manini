@@ -4,17 +4,14 @@ import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class InitialSelectionController extends StandardScene {
+public class InitialSelectionController extends StandardStage {
 
 
     @FXML
@@ -145,13 +142,7 @@ public class InitialSelectionController extends StandardScene {
             //REAL PATH
             String path = "/images/CardLeader/Card_Leader_" + type.toString() + "-" + color.toString() + ".jpg";
 
-
-            Image image = new Image(GUI.class.getResourceAsStream(path));
-            cardLeaderArray[i] = new ImageView(image);
-
-            //Fitting Image
-            cardLeaderArray[i].setFitWidth(80);
-            cardLeaderArray[i].setFitHeight(120);
+      setImageToArray(i,path,cardLeaderArray,80,120);
 
             //Mouse Click Event
             int finalI = i;
