@@ -75,7 +75,7 @@
                                   <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                               </GridPane>
-                              <GridPane fx:id="cardDevelop_grid" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="130.0" prefWidth="473.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <GridPane fx:id="cardDevelop_grid" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="130.0" prefWidth="477.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="114.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="120.0" />
@@ -124,7 +124,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#discardResources" prefHeight="23.0" prefWidth="187.0" text="Discard Resources" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                              <Button layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#discardResources" prefHeight="23.0" prefWidth="187.0" text="Discard Resources" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -139,7 +139,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="294.0" layoutY="84.0" mnemonicParsing="false" onAction="#activateCardLeader" prefHeight="23.0" prefWidth="187.0" text="Activate Card Leader" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                              <Button layoutX="294.0" layoutY="84.0" mnemonicParsing="false" onAction="#displayCardLeader" prefHeight="23.0" prefWidth="187.0" text="Card Leader" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

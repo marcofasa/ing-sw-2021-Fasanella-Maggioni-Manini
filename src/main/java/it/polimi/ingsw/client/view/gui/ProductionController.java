@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
+import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.ProductionSelection;
@@ -19,6 +20,30 @@ public class ProductionController extends StandardStage {
     private ArrayList<CardLeader> cardsLeader;
     private Resource[] resources=new Resource[3];
     private Boolean[] cardDevelopArray =new Boolean[3];
+
+
+    /**
+     * Sets card for Production selection
+     * @param cardsDevelopment of player
+     * @param cardsLeader of player
+     */
+    public void setProduction(ArrayList<CardDevelopment> cardsDevelopment, ArrayList<CardLeader> cardsLeader){
+        productionSelection=new ProductionSelection();
+        this.cardsDevelopment=cardsDevelopment;
+        this.cardsLeader=cardsLeader;
+        cardDevelopArray[0]=false;
+        cardDevelopArray[1]=false;
+        cardDevelopArray[2]=false;
+    }
+
+
+    public ProductionSelection getProductionSelection(){
+        return productionSelection;
+    }
+
+
+
+    //PRODUCTION BUTTONS
 
     public void basicProduction(ActionEvent actionEvent) {
         productionSelection.setBasicProdInfo(resources);
@@ -41,30 +66,31 @@ public class ProductionController extends StandardStage {
     }
 
     public void cardLeaderProduction(ActionEvent actionEvent) {
-        //TODO
+        FXMLLoader loader = load("/fxml/CardLeader.fxml");
+        Scene secondScene = setScene(loader);
 
+        CardLeaderController cardLeaderController=loader.getController();
+
+        cardLeaderController.setCardLeaderDeck(cardsLeader);
+
+
+        // New window (Selection)
+        Stage newWindow = new Stage();
+        newWindow.setScene(secondScene);
+        newWindow.showAndWait();
+        productionSelection.setCardLeadersToActivate(cardLeaderController.getCardLeaders());
 
     }
 
     public void production(ActionEvent actionEvent) {
         productionSelection.setCardDevelopmentSlotActive(cardDevelopArray);
-
-        printClick("Production button");
+        GUI.sendMessage(new RequestActivateProduction(productionSelection));
+        PlayerBoardController.messages=setDialogPane("Production activated!",PlayerBoardController.dialog,PlayerBoardController.messages);
         closeStage(actionEvent);
     }
 
-    public void setProduction(ArrayList<CardDevelopment> cardsDevelopment, ArrayList<CardLeader> cardsLeader){
-        productionSelection=new ProductionSelection();
-        this.cardsDevelopment=cardsDevelopment;
-        this.cardsLeader=cardsLeader;
-        cardDevelopArray[0]=false;
-        cardDevelopArray[1]=false;
-        cardDevelopArray[2]=false;
-    }
 
-    public ProductionSelection getProductionSelection(){
-        return productionSelection;
-    }
+    //BASIC PRODUCTION BUTTONS
 
     public void stone_input(MouseEvent mouseEvent) {
         if(resources[0]==null){

@@ -103,12 +103,9 @@ col=15;
         }
        if(player){
            setImageToMatrix(row,col,faithtrailMatrix,pathPlayer,10,10);
-
        }
        else {
            setImageToMatrix(row,col,faithtrailMatrix,pathEnemy,10,10);
-
-
        }
         faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
 

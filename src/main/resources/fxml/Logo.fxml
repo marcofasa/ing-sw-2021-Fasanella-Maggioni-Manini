@@ -12,6 +12,6 @@
             <Image url="@../images/Masters of Renaissance_Logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="272.0" layoutY="263.0" mnemonicParsing="false" onAction="#okButton" text="OK" />
+      <Button layoutX="276.0" layoutY="267.0" mnemonicParsing="false" onAction="#okButton" text="Start" />
    </children>
 </AnchorPane>

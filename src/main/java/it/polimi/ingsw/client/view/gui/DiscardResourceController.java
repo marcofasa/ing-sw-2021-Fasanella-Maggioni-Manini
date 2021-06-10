@@ -28,6 +28,9 @@ public class DiscardResourceController extends StandardStage {
     private int nServant=0;
     private int nCoin=0;
 
+
+    //BUTTONS
+
     public void discard_button(ActionEvent actionEvent) {
         if(nStone==0 && nCoin==0 && nServant==0 & nShield==0){
             PlayerBoardController.messages=setDialogPane("Select at least one resource!",PlayerBoardController.dialog,PlayerBoardController.messages);
@@ -54,6 +57,7 @@ public class DiscardResourceController extends StandardStage {
             closeStage(actionEvent);
         }
     }
+
 
     public void coin_click(MouseEvent mouseEvent) {
        nCoin++;
