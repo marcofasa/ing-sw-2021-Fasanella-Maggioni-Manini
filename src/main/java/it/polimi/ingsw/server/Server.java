@@ -36,7 +36,7 @@ public class Server {
         this.debug = debug;
         nextGameID = 1;
         gamesID = new HashMap<>();
-        currentGame = new Game(debug);
+        currentGame = new Game(debug, this);
         lobby = new WaitingLobby(this);
         clientsNickname = new HashMap<>();
         gameMap = new HashMap<>();
@@ -110,7 +110,7 @@ public class Server {
             gameMap.put(player, currentGame);
         }
         lobby.sendAll(new ResponseGameHasStarted(nextGameID - 1, playersNickname));
-        currentGame = new Game(debug);
+        currentGame = new Game(debug, this);
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
         lobby = new WaitingLobby(this);
@@ -185,5 +185,9 @@ public class Server {
 
     public boolean isPlayerWaiting(VirtualClient virtualClient){
         return lobby.getPlayers().contains(virtualClient);
+    }
+
+    public boolean isConnected(String nickname) {
+        return disconnectedNicknamesGameMap.get(nickname) == null;
     }
 }

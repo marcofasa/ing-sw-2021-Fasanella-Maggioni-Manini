@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.GameTable;
 import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ class InitialSelectionControllerTest {
             gameTable.addPlayer(nickname);
         }
 
-        Controller controller = new Controller(new Game(false), gameTable);
+        Controller controller = new Controller(new Game(false, new Server(false)), gameTable);
         InitialSelectionController initSelController = controller.getInitialSelectionController();
         TurnController turnController = controller.getTurnController();
 

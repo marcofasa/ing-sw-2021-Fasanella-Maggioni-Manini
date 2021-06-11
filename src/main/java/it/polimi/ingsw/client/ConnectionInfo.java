@@ -25,8 +25,9 @@ public class ConnectionInfo {
     }
 
     public void setIP(String ip) throws IllegalAddressException {
-        Pattern pattern = Pattern.compile("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-        if (pattern.matcher(ip).matches())
+        Pattern linkRegex = Pattern.compile("[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
+        Pattern ipRegex = Pattern.compile("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+        if (linkRegex.matcher(ip).matches() || ipRegex.matcher(ip).matches())
             this.ip = ip;
         else
             throw new IllegalAddressException();
