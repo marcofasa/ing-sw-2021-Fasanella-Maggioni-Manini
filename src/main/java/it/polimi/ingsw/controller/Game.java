@@ -583,6 +583,8 @@ public class Game implements Runnable {
                 false
         );
 
+        controller.getTurnController().forceAdvanceTurn(nickname);
+
         sendExcept(new NotifyDisconnectionOf(nickname), virtualClient);
     }
 
