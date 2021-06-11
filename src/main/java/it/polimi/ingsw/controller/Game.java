@@ -610,6 +610,7 @@ public class Game implements Runnable {
     }
 
     private void addVirtualClient(VirtualClient virtualClient, String nickname) {
+
         players.add(virtualClient);
 
         idPlayerClientMap.put(virtualClient.getID(), virtualClient);
