@@ -2,6 +2,6 @@ package it.polimi.ingsw.client;
 
 public class IllegalPortException extends Exception{
     public IllegalPortException(){
-        super("Port must be between 49152 and 65535");
+        super("Port must be between 1024 and 65535");
     }
 }

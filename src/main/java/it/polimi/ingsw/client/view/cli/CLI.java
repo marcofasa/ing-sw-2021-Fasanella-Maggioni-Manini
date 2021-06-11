@@ -82,7 +82,7 @@ public class CLI implements ViewInterface {
 
     private int askPortNumber() {
         out.println("Port Number (default 51214):");
-        return utils.readNumberWithBounds(49152, 65535);
+        return utils.readNumberWithBounds(1024, 65535);
     }
 
     private String askIP() {

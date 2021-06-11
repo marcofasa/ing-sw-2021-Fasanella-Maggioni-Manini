@@ -18,7 +18,7 @@ public class ConnectionInfo {
     }
 
     public void setPort(int port) throws IllegalPortException {
-        if ( port > 49152 && port < 65535)
+        if ( port > 1024 && port < 65535)
             this.port = port;
         else
             throw new IllegalPortException();
