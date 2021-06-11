@@ -585,6 +585,7 @@ public class Game implements Runnable {
 
         if (controller.getTurnController().forceAdvanceTurn(nickname)) {
 
+            setMainMoveMade(false);
             sendAll(new RequestSignalActivePlayer(
                     controller.getTurnController().getActivePlayer().getNickname(),
                     GamePhase.Initial
