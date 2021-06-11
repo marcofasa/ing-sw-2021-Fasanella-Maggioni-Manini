@@ -114,11 +114,14 @@ public class TurnController {
      * Method to force a turn advance when the active player gets disconnected
      * @param _nickname the nickname of the disconnected player. Must be activePlayer's nickname to trigger advanceTurn()
      */
-    public void forceAdvanceTurn(String _nickname) {
+    public boolean forceAdvanceTurn(String _nickname) {
 
         if (_nickname.equals(activePlayer.getNickname())) {
             advanceTurn();
+            return true;
         }
+
+        return false;
 
     }
 
