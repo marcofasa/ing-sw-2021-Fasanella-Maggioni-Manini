@@ -179,7 +179,7 @@ public class Server {
     private void resumePlayer(String nickname, Game game, VirtualClient virtualClient) {
         System.out.println("Player " + nickname + " reconnected");
         disconnectedNicknamesGameMap.remove(nickname);
-        game.notifyReconnection(nickname, game, virtualClient);
+        game.notifyReconnection(nickname, virtualClient);
     }
 
 

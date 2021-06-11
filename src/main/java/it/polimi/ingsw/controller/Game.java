@@ -586,11 +586,13 @@ public class Game implements Runnable {
         sendExcept(new NotifyDisconnectionOf(nickname), virtualClient);
     }
 
-    public void notifyReconnection(String nickname, Game game, VirtualClient virtualClient) {
+    public void notifyReconnection(String nickname, VirtualClient virtualClient) {
 
         addVirtualClient(virtualClient, nickname);
 
-        game.controller.getTurnController().setPlayerConnection(
+        virtualClient.setGame(this);
+
+        controller.getTurnController().setPlayerConnection(
                 nickname,
                 true
         );
@@ -604,9 +606,9 @@ public class Game implements Runnable {
         Integer id = virtualClient.getID();
         players.remove(virtualClient);
 
-        nicknameClientMap.remove(nickname);
-        clientNicknameMap.remove(virtualClient);
-        idPlayerClientMap.remove(id);
+        // nicknameClientMap.remove(nickname);
+        // clientNicknameMap.remove(virtualClient);
+        // idPlayerClientMap.remove(id);
     }
 
     private void addVirtualClient(VirtualClient virtualClient, String nickname) {
