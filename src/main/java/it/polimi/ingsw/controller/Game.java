@@ -572,10 +572,11 @@ public class Game implements Runnable {
 
     public void notifyDisconnectionOfClient(VirtualClient virtualClient) { /* TODO */
 
-        players.remove(virtualClient);
-
         String nickname = getNicknameByClient(virtualClient);
+
         // mettere a posto le HASH MAP
+        removeVirtualClient(virtualClient);
+
         // notificare controller che virtualClient salta il turno
         controller.getTurnController().setPlayerConnection(
                 clientNicknameMap.get(virtualClient),
@@ -587,7 +588,7 @@ public class Game implements Runnable {
 
     public void notifyReconnection(String nickname, Game game, VirtualClient virtualClient) {
 
-        players.add(virtualClient);
+        addVirtualClient(virtualClient, nickname);
 
         game.controller.getTurnController().setPlayerConnection(
                 nickname,
@@ -595,5 +596,24 @@ public class Game implements Runnable {
         );
 
         sendAll(new NotifyReconnectionOf(nickname));
+    }
+
+    private void removeVirtualClient(VirtualClient virtualClient) {
+
+        String nickname = clientNicknameMap.get(virtualClient);
+        Integer id = virtualClient.getID();
+        players.remove(virtualClient);
+
+        nicknameClientMap.remove(nickname);
+        clientNicknameMap.remove(virtualClient);
+        idPlayerClientMap.remove(id);
+    }
+
+    private void addVirtualClient(VirtualClient virtualClient, String nickname) {
+        players.add(virtualClient);
+
+        idPlayerClientMap.put(virtualClient.getID(), virtualClient);
+        nicknameClientMap.put(nickname, virtualClient);
+        clientNicknameMap.put(virtualClient, nickname);
     }
 }
