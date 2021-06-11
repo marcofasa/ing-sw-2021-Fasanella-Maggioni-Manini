@@ -281,28 +281,6 @@ Platform.runLater(()->{
             e.printStackTrace();
         }
 
-
-        /*
-        FXMLLoader loader = new FXMLLoader();
-
-        loader.setLocation(getClass().getResource("/fxml/PlayerNumber.fxml"));
-        Scene secondScene = null;
-        try {
-            secondScene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        //newWindow.setX(primaryStage.getX() + 200);
-        //newWindow.setY(primaryStage.getY() + 100);
-   GenericRequestController genericRequestController=loader.getController();
-        newWindow.showAndWait();
-
-         */
       return   playerNumber;
     }
 
@@ -322,7 +300,6 @@ Platform.runLater(()->{
         ProductionController productionController = fxmlLoader.getController();
         productionController.setProduction(getLightModel().getCardsDevelopment(), getLightModel().getCardsLeader());
         stage.showAndWait();
-
 
         //Sends Request to Client
         client.send(new RequestActivateProduction(productionController.getProductionSelection()));
@@ -409,35 +386,6 @@ Platform.runLater(()->{
 
     @Override
     public void displayCardDevelopmentMarket() {
-
-        //cardDevelop Market Array
-        ArrayList<ArrayList<CardDevelopment>> cardDevelopments = new ArrayList<ArrayList<CardDevelopment>>();
-        for (int i = 0; i < 3; i++) {
-            cardDevelopments.add(new ArrayList<CardDevelopment>());
-            for (int j = 0; j < 4; j++) {
-                cardDevelopments.get(i).add(new CardDevelopment(i, j, 1));
-            }
-        }
-
-        //Personal Card test
-        ArrayList<CardDevelopment> card = new ArrayList<CardDevelopment>();
-        for (int i = 0; i < 3; i++) {
-            card.add(null);
-        }
-
-
-        mainScene("/fxml/CardDevelopmentMarket.fxml");
-
-
-        CardDevelopmentMarketController cardDevelopmentMarketController = fxmlLoader.getController();
-
-        //REAL LINE
-        //cardDevelopmentMarketController.setDevelopmentMarket(client.getLightModel().getCardDevelopmentMarket());
-
-        //TEST LINE
-        cardDevelopmentMarketController.setDevelopmentMarket(cardDevelopments, card);
-
-
     }
 
     @Override

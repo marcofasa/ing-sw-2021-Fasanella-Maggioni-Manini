@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.RequestEndTurn;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
+import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+
+import java.util.HashMap;
 
 
 public class PlayerBoardController extends StandardStage {
@@ -28,6 +30,8 @@ public class PlayerBoardController extends StandardStage {
 
     private ImageView[] cardDevelopmentArray;
     private ImageView[][] resourceMatrix ;
+    private HashMap<Resource,Integer> strongbox;
+    private Boolean[] strongboxLevel;
     public static DialogPane dialog;
     private LightFaithTrail lightFaithTrail;
     private LightModel lightModel;
@@ -35,6 +39,7 @@ public class PlayerBoardController extends StandardStage {
     private boolean endPhase = false;
     private boolean discardRequest = false;
     public static String messages;
+    private Utils utils=new Utils();
 
 
     //SETTERS
@@ -56,11 +61,11 @@ public class PlayerBoardController extends StandardStage {
         messages = "";
         dialog = dialogPane;
 
-        //setting card development
+
+        //Loading card development
         cardDevelopmentArray = new ImageView[3];
         for(int i=1;i<4;i++){
            if( lightModel.getCardsDevelopment().get(i-1)!=null){
-
 
             Integer color;
             switch (lightModel.getCardsDevelopment().get(i-1).getCardType()) {
@@ -76,26 +81,63 @@ public class PlayerBoardController extends StandardStage {
                 default:
                     color = 3;
             }
-
-
             //image final path
             String path = "/images/CardDevelopment/Card_Development_" + lightModel.getCardsDevelopment().get(i-1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
-
             setImageToArray(i-1,path,cardDevelopmentArray,80,120);
-
         } else {
             // if there's no card on the deck (printing default image)
             String path = "/images/CardDevelopment/Card_Development_Empty.png" ;
             setImageToArray(i-1,path,cardDevelopmentArray,80,120);
         }
-
         //Adding to GridPane
         cardDevelop_grid.add(cardDevelopmentArray[i-1], i, 0);
     }
 
-        resourceMatrix=new ImageView[3][4];
-        //TODO
 
+        //Loading Strongbox
+        resourceMatrix=new ImageView[3][5];
+        strongbox= lightModel.getDeposit();
+        strongboxLevel=utils.setStrongboxLevel(strongboxLevel);
+        for(Resource resource: strongbox.keySet()){
+            if(strongbox.get(resource)==3){
+                  loadStrongboxLevel(resource,resourceMatrix,2,1,3,resources_grid);
+                   strongboxLevel[2]=true;
+            }
+            else if(strongbox.get(resource)==2){
+                 if(!strongboxLevel[1]){
+                     loadStrongboxLevel(resource,resourceMatrix,1,1,2,resources_grid);
+                     strongboxLevel[1]=true;
+                 }
+                 else {
+                     loadStrongboxLevel(resource,resourceMatrix,2,1,2,resources_grid);
+                     strongboxLevel[2]=true;
+                 }
+            }
+            else if (strongbox.get(resource)==1){
+               if(!strongboxLevel[0]){
+                   loadStrongboxLevel(resource,resourceMatrix,0,2,1,resources_grid);
+strongboxLevel[0]=true;
+               }
+               else if(!strongboxLevel[1]){
+                   loadStrongboxLevel(resource,resourceMatrix,1,1,1,resources_grid);
+                   strongboxLevel[1]=true;
+               }
+               else {
+                   loadStrongboxLevel(resource,resourceMatrix,2,1,1,resources_grid);
+                   strongboxLevel[2]=true;
+               }
+            }
+        }
+
+    }
+
+    private void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources,GridPane gridPane) {
+        String path= utils.getResourcePath(resource);
+        while(nResources>0) {
+            setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20,gridPane);
+            startingColumn++;
+            nResources--;
+        }
     }
 
     private void setEndPhase() {
@@ -118,24 +160,21 @@ public class PlayerBoardController extends StandardStage {
 
         messages = setDialogPane("Faith Trail displayed", dialogPane, messages);
         // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-        newWindow.showAndWait();
+        showStage(secondScene);
     }
 
-    public void displayDeposit(ActionEvent actionEvent) {
+    public void displayStrongBox(ActionEvent actionEvent) {
 
-        FXMLLoader fxmlLoader = load("/fxml/Deposit.fxml");
+        FXMLLoader fxmlLoader = load("/fxml/StrongBox.fxml");
         Scene secondScene = setScene(fxmlLoader);
 
-        DepositController depositController = fxmlLoader.getController();
-        depositController.setDeposit(lightModel.getDeposit());
+        StrongBoxController strongBoxController = fxmlLoader.getController();
+        strongBoxController.setStrongBox(lightModel.getStrongbox());
 
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
+        showStage(secondScene);
         messages = setDialogPane("Deposit displayed", dialogPane, messages);
 
-        newWindow.showAndWait();
+
     }
 
     public void displayResourceMarket(ActionEvent actionEvent) {
@@ -147,13 +186,9 @@ public class PlayerBoardController extends StandardStage {
         resourceMarketController.setViewOnly();
 
 
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
+        showStage(secondScene);
         messages = setDialogPane("Resource Market displayed", dialogPane, messages);
 
-
-        newWindow.showAndWait();
     }
 
     public void displayCardMarket(ActionEvent actionEvent) {
@@ -163,12 +198,9 @@ public class PlayerBoardController extends StandardStage {
         CardDevelopmentMarketController cardDevelopmentMarketController = loader.getController();
         cardDevelopmentMarketController.setViewOnly();
         cardDevelopmentMarketController.setDevelopmentMarket(lightModel.getCardDevelopmentMarket(), lightModel.getCardsDevelopment());
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
+        showStage(secondScene);
         messages = setDialogPane("Card Market displayed", dialogPane, messages);
 
-        newWindow.showAndWait();
     }
 
 
@@ -185,12 +217,7 @@ public class PlayerBoardController extends StandardStage {
 
             CardDevelopmentMarketController cardDevelopmentMarketController = loader.getController();
             cardDevelopmentMarketController.setDevelopmentMarket(lightModel.getCardDevelopmentMarket(), lightModel.getCardsDevelopment());
-            // New window (Selection)
-            Stage newWindow = new Stage();
-            newWindow.setScene(secondScene);
-
-
-            newWindow.showAndWait();
+            showStage(secondScene);
         }
     }
 
@@ -206,12 +233,7 @@ public class PlayerBoardController extends StandardStage {
             ResourceMarketController resourceMarketController = loader.getController();
             resourceMarketController.setResourceMarket(lightModel.getMarket());
 
-
-            // New window (Selection)
-            Stage newWindow = new Stage();
-            newWindow.setScene(secondScene);
-
-            newWindow.showAndWait();
+            showStage(secondScene);
         }
 
 
@@ -229,45 +251,30 @@ public class PlayerBoardController extends StandardStage {
 
             ProductionController productionController = loader.getController();
             productionController.setProduction(lightModel.getCardsDevelopment(), lightModel.getCardsLeader());
-
-            // New window (Production)
-            Stage newWindow = new Stage();
-            newWindow.setScene(secondScene);
-            newWindow.showAndWait();
+            showStage(secondScene);
         }
     }
 
     public void endTurn(ActionEvent actionEvent) {
         if (!discardRequest) {
             GUI.sendMessage(new RequestEndTurn());
+            messages = setDialogPane("Turn finished!", PlayerBoardController.dialog, PlayerBoardController.messages);
         } else
             messages = setDialogPane("You have to discard resources!", PlayerBoardController.dialog, PlayerBoardController.messages);
-
     }
 
     public void discardResources(ActionEvent actionEvent) {
         FXMLLoader loader = load("/fxml/DiscardResource.fxml");
         Scene secondScene = setScene(loader);
-
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-        newWindow.showAndWait();
+        showStage(secondScene);
     }
 
     public void displayCardLeader(ActionEvent actionEvent) {
-
         FXMLLoader loader = load("/fxml/CardLeader.fxml");
         Scene secondScene = setScene(loader);
-
         CardLeaderController cardLeaderController = loader.getController();
-
         cardLeaderController.setCardLeaderDeck(lightModel.getCardsLeader());
+        showStage(secondScene);
 
-
-        // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-        newWindow.showAndWait();
     }
 }

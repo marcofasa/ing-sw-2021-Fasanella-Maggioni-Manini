@@ -61,7 +61,7 @@
                             <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="130.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <GridPane fx:id="resources_grid" prefHeight="150.0" prefWidth="92.0" GridPane.columnIndex="1">
+                              <GridPane fx:id="resources_grid" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="127.0" prefWidth="94.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -70,9 +70,9 @@
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                               </GridPane>
                               <GridPane fx:id="cardDevelop_grid" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="130.0" prefWidth="477.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -109,7 +109,7 @@
                               </Button>
                               <Label contentDisplay="CENTER" text="Display" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" />
                               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="23.0" text="Actions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                              <Button layoutX="59.0" layoutY="50.0" mnemonicParsing="false" onAction="#displayDeposit" prefHeight="23.0" prefWidth="187.0" text="Deposit" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                              <Button layoutX="59.0" layoutY="50.0" mnemonicParsing="false" onAction="#displayStrongBox" prefHeight="23.0" prefWidth="187.0" text="StrongBox" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

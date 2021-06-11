@@ -52,10 +52,14 @@ public class ResourceMarketController extends StandardStage {
     public void ResourceMarketPurchase(ActionEvent actionEvent) {
         if (!viewOnly) {
             String s="Resources purchased at "+key+" "+message.toString();
-            PlayerBoardController.messages= setDialogPane(s,PlayerBoardController.dialog,PlayerBoardController.messages);
             GUI.sendMessage(new RequestMarketUse(message, key));
+            PlayerBoardController.messages= setDialogPane(s,PlayerBoardController.dialog,PlayerBoardController.messages);
+            closeStage(actionEvent);
         }
-        closeStage(actionEvent);
+        else {
+            PlayerBoardController.messages= setDialogPane("You cant buy resources, you are in view only mode",PlayerBoardController.dialog,PlayerBoardController.messages);
+            closeStage(actionEvent);
+        }
     }
 
     public void setCol3(ActionEvent actionEvent) {

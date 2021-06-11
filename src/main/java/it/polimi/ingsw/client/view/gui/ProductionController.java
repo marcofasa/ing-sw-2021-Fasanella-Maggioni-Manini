@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -54,10 +53,7 @@ public class ProductionController extends StandardStage {
         Scene secondScene = setScene(loader);
         CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardsDevelopment);
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-
-        newWindow.showAndWait();
+        showStage(secondScene);
         int pos=cardDevelopmentSelection.getPos();
 
         cardDevelopArray[pos]=true;
@@ -73,16 +69,12 @@ public class ProductionController extends StandardStage {
         CardLeaderController cardLeaderController=loader.getController();
 
         cardLeaderController.setCardLeaderDeck(cardsLeader);
-
+        cardLeaderController.setProduction(true);
 
         // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-        newWindow.showAndWait();
+        showStage(secondScene);
         productionSelection.setCardLeadersToActivate(cardLeaderController.getCardLeaders());
         productionSelection.setCardLeaderProdOutputs(cardLeaderController.getResources());
-        //TODO
-        //Choose card leader production output
 
 
     }

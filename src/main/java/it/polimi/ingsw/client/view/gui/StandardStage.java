@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class StandardStage {
         dialogPane.setContentText(messages);
         return messages;
     }
+
     public void printDialog(String s,DialogPane dialogPane){
         dialogPane.setContentText(s);
     }
@@ -97,6 +99,38 @@ public class StandardStage {
         //Fitting Image
         matrix[row][column].setFitWidth(width);
         matrix[row][column].setFitHeight(height);
+    }
+
+
+    /**
+     * Loads and fits a given image to ImageView Matrix with ImageGrid included
+     * @param row of matrix
+     * @param column of matrix
+     * @param matrix of ImageView
+     * @param path image
+     * @param width to fit
+     * @param height to fit
+     * @param gridPane to fill
+     */
+    public void setImageToMatrix(int row, int column, ImageView[][] matrix, String path, int width, int height, GridPane gridPane){
+        Image image = new Image(GUI.class.getResourceAsStream(path));
+        matrix[row][column] = new ImageView(image);
+
+        //Fitting Image
+        matrix[row][column].setFitWidth(width);
+        matrix[row][column].setFitHeight(height);
+        gridPane.add(matrix[row][column],column,row);
+    }
+
+    /**
+     * Showing and Waiting a given Scene
+     * @param scene of new window
+     */
+    public void showStage(Scene scene){
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.setResizable(false);
+        newWindow.showAndWait();
     }
 
     /**

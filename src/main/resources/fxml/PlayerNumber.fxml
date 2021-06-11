@@ -12,8 +12,9 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Button layoutX="47.0" layoutY="75.0" mnemonicParsing="false" onAction="#two" prefHeight="28.0" prefWidth="35.0" text="2" />
-      <Button layoutX="119.0" layoutY="75.0" mnemonicParsing="false" onAction="#three" prefHeight="28.0" prefWidth="35.0" text="3" />
-      <Button layoutX="185.0" layoutY="75.0" mnemonicParsing="false" onAction="#four" prefHeight="28.0" prefWidth="35.0" text="4" />
+      <Button layoutX="86.0" layoutY="75.0" mnemonicParsing="false" onAction="#two" prefHeight="28.0" prefWidth="35.0" text="2" />
+      <Button layoutX="145.0" layoutY="75.0" mnemonicParsing="false" onAction="#three" prefHeight="28.0" prefWidth="35.0" text="3" />
+      <Button layoutX="206.0" layoutY="75.0" mnemonicParsing="false" onAction="#four" prefHeight="28.0" prefWidth="35.0" text="4" />
+      <Button layoutX="23.0" layoutY="75.0" mnemonicParsing="false" onAction="#one" prefHeight="28.0" prefWidth="35.0" text="1" />
    </children>
 </Pane>

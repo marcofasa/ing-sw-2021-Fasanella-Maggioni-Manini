@@ -82,10 +82,7 @@ Label playerNumber_label;
             e.printStackTrace();
         }
         // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-        PlayerNumberController playerNumberController = loader.getController();
-        newWindow.showAndWait();
+            showStage(secondScene);
         playerNumber_label.setText("Player Number set");
             status_label.setText("STATUS: Waiting for others player to start");
         playerNumberRequest=false;

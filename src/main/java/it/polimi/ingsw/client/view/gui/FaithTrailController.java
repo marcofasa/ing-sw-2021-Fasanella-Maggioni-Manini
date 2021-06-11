@@ -22,7 +22,9 @@ public class FaithTrailController extends StandardStage {
         ImageView[][] faithTrailMatrix = new ImageView[3][19];
         HashMap<String,Integer> playersPosition=faithTrail.getPlayersPosition();
         ArrayList<FaithTileStatus> tileStatuses=faithTrail.getTileStatuses();
+
         //Set Position into the corresponding cell in the grid.
+
         for (String string : playersPosition.keySet()) {
             boolean player=false;
             if (string.equals(nickName)) {

@@ -1,4 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
+import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
+import it.polimi.ingsw.communication.client.requests.RequestDiscardCardLeader;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
@@ -38,6 +40,8 @@ public class CardLeaderController extends StandardStage {
     private ImageView[] cardLeaderArray;
     private Resource[] resources;
     private int nRow=3;
+    private int lastClick;
+    private boolean production=false;
 
 
     /**
@@ -103,6 +107,7 @@ public class CardLeaderController extends StandardStage {
         }
 
     private void setClick(int finalI) {
+        lastClick=finalI;
         if (cardLeaders==null){
             cardLeaders=new CardLeader[2];
         }
@@ -111,6 +116,11 @@ public class CardLeaderController extends StandardStage {
         }
         else cardLeaders[1]=cardsLeaderArray.get(finalI);
     }
+
+    public void setProduction(boolean production) {
+        this.production = production;
+    }
+
 
     //GETTERS
 
@@ -130,18 +140,22 @@ public class CardLeaderController extends StandardStage {
     //CLOSING BUTTONS
 
     public void discardCardLeader(ActionEvent actionEvent) {
+        if(lastClick>0){
+        GUI.sendMessage(new RequestDiscardCardLeader(lastClick));
         PlayerBoardController.messages= setDialogPane("Card Leader discarded",PlayerBoardController.dialog,PlayerBoardController.messages);
-        closeStage(actionEvent);
+        closeStage(actionEvent);}
+        else {
+            PlayerBoardController.messages= setDialogPane("Card Leader not picked!",PlayerBoardController.dialog,PlayerBoardController.messages);
+        }
     }
 
     public void activateCardLeader(ActionEvent actionEvent) {
+        if(production){
         FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
         Scene secondScene = setScene(loader);
         ActivateCardLeaderOutput activateCardLeaderOutput=loader.getController();
         // New window (Selection)
-        Stage newWindow = new Stage();
-        newWindow.setScene(secondScene);
-        newWindow.showAndWait();
+            showStage(secondScene);
         if (resources==null){
             resources=new Resource[2];
         }
@@ -150,10 +164,13 @@ public class CardLeaderController extends StandardStage {
         }
         else resources[1]=activateCardLeaderOutput.getResource();
 
-
         PlayerBoardController.messages= setDialogPane("Card Leader activated",PlayerBoardController.dialog,PlayerBoardController.messages);
 
+        setProduction(false);
+        closeStage(actionEvent);}
+        else{
+            PlayerBoardController.messages= setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog,PlayerBoardController.messages);
 
-        closeStage(actionEvent);
+        }
     }
 }

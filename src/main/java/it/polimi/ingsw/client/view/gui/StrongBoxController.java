@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import java.util.HashMap;
 
-public class DepositController extends StandardStage {
+public class StrongBoxController extends StandardStage {
 
     @FXML
     Label stone_label;
@@ -21,7 +21,7 @@ public class DepositController extends StandardStage {
      * Sets current Player deposit
      * @param deposit hashmap of resources
      */
-    public void setDeposit(HashMap<Resource, Integer> deposit){
+    public void setStrongBox(HashMap<Resource, Integer> deposit){
         for(Resource resource: deposit.keySet()){
             switch (resource){
                 case Coins:

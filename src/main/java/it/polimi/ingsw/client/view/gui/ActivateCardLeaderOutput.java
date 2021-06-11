@@ -9,13 +9,14 @@ public class ActivateCardLeaderOutput extends StandardStage{
     private Resource resource;
 
 
+    //BUTTONS
+
     public void coin_click(MouseEvent mouseEvent) {
         resource=Resource.Coins;
     }
 
     public void shield_click(MouseEvent mouseEvent) {
        resource= Resource.Shields;
-
     }
 
     public void stone_click(MouseEvent mouseEvent) {
@@ -24,7 +25,6 @@ public class ActivateCardLeaderOutput extends StandardStage{
 
     public void servant_click(MouseEvent mouseEvent) {
         resource=Resource.Servants;
-
     }
 
     public Resource getResource() {

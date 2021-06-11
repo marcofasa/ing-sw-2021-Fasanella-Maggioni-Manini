@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
+import it.polimi.ingsw.communication.client.requests.RequestBuyDevelopmentCard;
 import it.polimi.ingsw.model.CardDevelopment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -128,7 +129,7 @@ public class CardDevelopmentMarketController extends StandardStage {
         }
         else{
             PlayerBoardController.messages=setDialogPane("Card Development purchased",PlayerBoardController.dialog,PlayerBoardController.messages);
-            //send al client
+            GUI.sendMessage(new RequestBuyDevelopmentCard(buyRow,buyCol,pos));
             closeStage(actionEvent);
         }}
     }
@@ -146,10 +147,7 @@ public class CardDevelopmentMarketController extends StandardStage {
         //loading Stage
         CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardDevelopments);
-        Stage newWindow = new Stage();
-
-        newWindow.setScene(secondScene);
-        newWindow.showAndWait();
+        showStage(secondScene);
         pos=cardDevelopmentSelection.getPos();
     }
 

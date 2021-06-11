@@ -8,6 +8,16 @@ public class PlayerNumberController extends StandardStage {
     //BUTTONS
 
     /**
+     * One player button
+     * @param actionEvent
+     */
+    public void one(ActionEvent actionEvent) {
+        GUI.setPlayerNumber(1);
+        GUI.semaphoreRequest.release();
+        closeStage(actionEvent);
+    }
+
+    /**
      * Two players button
      * @param actionEvent
      */
@@ -36,4 +46,6 @@ public class PlayerNumberController extends StandardStage {
         GUI.semaphoreRequest.release();
         closeStage(actionEvent);
     }
+
+
 }
