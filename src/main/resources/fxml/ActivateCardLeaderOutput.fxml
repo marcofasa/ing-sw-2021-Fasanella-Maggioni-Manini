@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="321.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.ActivateCardLeaderOutput">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/brown_light_background.jpg" />
+         </image>
+      </ImageView>
+      <GridPane layoutY="-1.0" prefHeight="324.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="122.0" fitWidth="138.0" nodeOrientation="INHERIT" onMouseClicked="#coin_click" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../images/Resources/coin.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="140.0" fitWidth="112.0" onMouseClicked="#shield_click" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../images/Resources/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="123.0" fitWidth="127.0" onMouseClicked="#stone_click" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/Resources/stone.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="136.0" fitWidth="147.0" onMouseClicked="#servant_click" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/Resources/servant.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <Button alignment="BOTTOM_RIGHT" layoutX="520.0" layoutY="280.0" mnemonicParsing="false" onAction="#choose" prefHeight="24.0" prefWidth="66.0" text="Choose" />
+   </children>
+</AnchorPane>

@@ -25,7 +25,9 @@ public class PlayerBoardController extends StandardStage {
     @FXML
     DialogPane dialogPane;
 
+
     private ImageView[] cardDevelopmentArray;
+    private ImageView[][] resourceMatrix ;
     public static DialogPane dialog;
     private LightFaithTrail lightFaithTrail;
     private LightModel lightModel;
@@ -89,9 +91,12 @@ public class PlayerBoardController extends StandardStage {
 
         //Adding to GridPane
         cardDevelop_grid.add(cardDevelopmentArray[i-1], i, 0);
-    }}
+    }
 
+        resourceMatrix=new ImageView[3][4];
+        //TODO
 
+    }
 
     private void setEndPhase() {
         endPhase = true;
@@ -109,7 +114,7 @@ public class PlayerBoardController extends StandardStage {
         Scene secondScene = setScene(loader);
 
         FaithTrailController faithTrailController = loader.getController();
-        faithTrailController.setFaithTrail(lightFaithTrail.getTileStatuses(), lightFaithTrail.getPlayersPosition(), lightModel.getNickname());
+        faithTrailController.setFaithTrail(lightFaithTrail.getFaithTrail(), lightModel.getNickname());
 
         messages = setDialogPane("Faith Trail displayed", dialogPane, messages);
         // New window (Selection)
@@ -208,6 +213,8 @@ public class PlayerBoardController extends StandardStage {
 
             newWindow.showAndWait();
         }
+
+
     }
 
 

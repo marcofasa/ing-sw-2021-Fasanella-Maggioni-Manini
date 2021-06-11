@@ -78,4 +78,5 @@ public class DiscardResourceController extends StandardStage {
         nShield++;
         shield_label.setText("x"+nShield);
     }
+
 }

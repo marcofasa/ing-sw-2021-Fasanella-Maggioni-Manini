@@ -66,6 +66,7 @@ public class ProductionController extends StandardStage {
     }
 
     public void cardLeaderProduction(ActionEvent actionEvent) {
+
         FXMLLoader loader = load("/fxml/CardLeader.fxml");
         Scene secondScene = setScene(loader);
 
@@ -79,6 +80,10 @@ public class ProductionController extends StandardStage {
         newWindow.setScene(secondScene);
         newWindow.showAndWait();
         productionSelection.setCardLeadersToActivate(cardLeaderController.getCardLeaders());
+        productionSelection.setCardLeaderProdOutputs(cardLeaderController.getResources());
+        //TODO
+        //Choose card leader production output
+
 
     }
 

@@ -1,9 +1,13 @@
 package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,7 @@ public class CardLeaderController extends StandardStage {
     private CardLeader[] cardLeaders;
     private ArrayList<CardLeader> cardsLeaderArray;
     private ImageView[] cardLeaderArray;
+    private Resource[] resources;
     private int nRow=3;
 
 
@@ -45,58 +50,8 @@ public class CardLeaderController extends StandardStage {
         for (int i = 0; i < nRow; i++) {
 
 
-        if(cardsLeaderArray.get(i)!=null){
+        if((cardsLeaderArray.size()==2 &&  i==2) || cardsLeaderArray.get(i)==null){
 
-            //Generation of image path
-            Integer type;
-            switch (cardsLeaderArray.get(i).getDescription()){
-                case Deposit:
-                    type =1;
-                    break;
-                case Discount:
-                    type =0;
-                    break;
-                case Production:
-                    type =3;
-                    break;
-                default:
-                    type =2;
-            }
-
-            Integer color;
-            switch (cardsLeaderArray.get(i).getResource()){
-                case Coins:
-                    color=0;
-                    break;
-                case Servants:
-                    color=1;
-                    break;
-                case Shields:
-                    color=2;
-                    break;
-                case Stones:
-                    color=3;
-                    break;
-
-                default:
-                    throw new IllegalStateException("Unexpected value: " + cardsLeaderArray.get(i).getResource().toString());
-            }
-
-            String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
-
-
-           setImageToArray(i,path,cardLeaderArray,80,120);
-
-            //Mouse Click Event
-            int finalI = i;
-
-            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> {
-                setClick(finalI);
-            });
-
-            //Adding to GridPane
-        }
-        else {
             //Standard path for empty slot
 
             String path="/images/CardDevelopment/Card_Development_Empty.png";
@@ -111,7 +66,38 @@ public class CardLeaderController extends StandardStage {
 
             //Adding to GridPane
         }
-            cardleader_grid.add(cardLeaderArray[i],0,i);
+        else {
+
+            //Generation of image path
+            Integer type = switch (cardsLeaderArray.get(i).getDescription()) {
+                case Deposit -> 2;
+                case Discount -> 1;
+                case Production -> 4;
+                case WhiteMarble -> 3;
+            };
+
+            Integer color = switch (cardsLeaderArray.get(i).getResource()) {
+                case Coins -> 0;
+                case Servants -> 1;
+                case Shields -> 2;
+                case Stones -> 3;
+            };
+
+            String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
+
+
+            setImageToArray(i,path,cardLeaderArray,80,120);
+
+            //Mouse Click Event
+            int finalI = i;
+
+            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> {
+                setClick(finalI);
+            });
+
+            //Adding to GridPane
+        }
+            cardleader_grid.add(cardLeaderArray[i],i,0);
         }
 
         }
@@ -132,7 +118,14 @@ public class CardLeaderController extends StandardStage {
         return cardLeaders;
     }
 
-
+    public Resource[] getResources() {
+        if (resources==null){
+            resources=new Resource[2];
+            resources[0]=null;
+            resources[1]=null;
+        }
+        return resources;
+    }
 
     //CLOSING BUTTONS
 
@@ -142,7 +135,25 @@ public class CardLeaderController extends StandardStage {
     }
 
     public void activateCardLeader(ActionEvent actionEvent) {
+        FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
+        Scene secondScene = setScene(loader);
+        ActivateCardLeaderOutput activateCardLeaderOutput=loader.getController();
+        // New window (Selection)
+        Stage newWindow = new Stage();
+        newWindow.setScene(secondScene);
+        newWindow.showAndWait();
+        if (resources==null){
+            resources=new Resource[2];
+        }
+        if (resources[0]==null){
+            resources[0]=activateCardLeaderOutput.getResource();
+        }
+        else resources[1]=activateCardLeaderOutput.getResource();
+
+
         PlayerBoardController.messages= setDialogPane("Card Leader activated",PlayerBoardController.dialog,PlayerBoardController.messages);
+
+
         closeStage(actionEvent);
     }
 }

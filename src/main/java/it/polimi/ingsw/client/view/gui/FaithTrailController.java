@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
+import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.model.FaithTileStatus;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -17,8 +18,10 @@ public class FaithTrailController extends StandardStage {
     @FXML
     GridPane faithtrail_grid;
 
-    public void setFaithTrail(ArrayList<FaithTileStatus> tileStatuses, HashMap<String, Integer> playersPosition,String nickName) {
+    public void setFaithTrail(LightFaithTrail faithTrail,String nickName) {
         ImageView[][] faithTrailMatrix = new ImageView[3][19];
+        HashMap<String,Integer> playersPosition=faithTrail.getPlayersPosition();
+        ArrayList<FaithTileStatus> tileStatuses=faithTrail.getTileStatuses();
         //Set Position into the corresponding cell in the grid.
         for (String string : playersPosition.keySet()) {
             boolean player=false;
@@ -37,7 +40,7 @@ public class FaithTrailController extends StandardStage {
         int row;
         int col;
         if(section==0){
-         row=1;
+         row=2;
          col=4;
         }
         else if (section==1){
@@ -45,21 +48,21 @@ row=0;
 col=9;
         }
         else {
-row=1;
+row=2;
 col=15;
         }
 
 
         if(faithTileStatus==FaithTileStatus.Discarded){
-            setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded,50,50);
+            setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded,80,80);
 
         }
         else if(faithTileStatus==FaithTileStatus.Not_Reached){
-            setImageToMatrix(row,col, faithTrailMatrix,tileNotReached,50,50);
+            setImageToMatrix(row,col, faithTrailMatrix,tileNotReached,80,80);
 
         }
         else{
-            setImageToMatrix(row,col, faithTrailMatrix,tileReached,50,50);
+            setImageToMatrix(row,col, faithTrailMatrix,tileReached,80,80);
 
         }
         //Adding to GridPane
@@ -102,12 +105,13 @@ col=15;
                 throw new IllegalStateException("Unexpected value: " + position);
         }
        if(player){
-           setImageToMatrix(row,col,faithtrailMatrix,pathPlayer,10,10);
+           setImageToMatrix(row,col,faithtrailMatrix,pathPlayer,35,35);
        }
        else {
-           setImageToMatrix(row,col,faithtrailMatrix,pathEnemy,10,10);
+           setImageToMatrix(row,col,faithtrailMatrix,pathEnemy,35,35);
        }
         faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
 
     }
+
 }
