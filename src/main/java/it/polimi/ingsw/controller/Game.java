@@ -11,6 +11,7 @@ import it.polimi.ingsw.communication.server.responses.ResponseSuccess;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.VirtualClient;
 
 
@@ -31,6 +32,7 @@ import java.util.LinkedHashMap;
 public class Game implements Runnable {
 
     private final Boolean debug;
+    private final Server server;
     private GameTable gameTable;
     private Controller controller;
     private ArrayList<VirtualClient> players;
@@ -43,8 +45,9 @@ public class Game implements Runnable {
     /**
      * Basic constructor which instantiates the private LinkedHashMaps
      */
-    public Game(Boolean debug) {
+    public Game(Boolean debug, Server server) {
         this.debug = debug;
+        this.server = server;
         nicknameClientMap = new LinkedHashMap<>();
         clientNicknameMap = new LinkedHashMap<>();
         idPlayerClientMap = new LinkedHashMap<>();
@@ -545,7 +548,8 @@ public class Game implements Runnable {
     public void sendAll(ServerMessage serverMessage) {
         for (VirtualClient player :
                 players) {
-            player.send(serverMessage);
+            if(server.isConnected(getNicknameByClient(player)))
+                player.send(serverMessage);
         }
     }
 
