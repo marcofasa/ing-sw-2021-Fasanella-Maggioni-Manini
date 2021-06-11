@@ -519,7 +519,13 @@ public class Utils {
 
     public Integer printAndGetCardLeaderIndex(ArrayList<CardLeader> cardLeaders) {
         //Print Card Leader Deck
-        printCardLeaderDeck(cardLeaders);
+        if (cardLeaders.size() > 0) {
+            printCardLeaderDeck(cardLeaders);
+        }
+        else {
+            out.println("You have no leader cards!");
+            return -1;
+        }
 
         //Selection
         out.println("Type the corresponding number in the list");
@@ -533,6 +539,9 @@ public class Utils {
      */
     public void printCardLeaderDeck(ArrayList<CardLeader> cardLeaders) {
         int index = 1;
+
+        out.println("Choose a card leader to discard:");
+
         for (int i = 0; i < cardLeaders.size(); i++) {
             out.printf(index + " ");
             printCardLeader(cardLeaders.get(i));

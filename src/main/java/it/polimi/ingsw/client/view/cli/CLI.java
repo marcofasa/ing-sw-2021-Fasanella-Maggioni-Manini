@@ -82,7 +82,8 @@ public class CLI implements ViewInterface {
 
     private int askPortNumber() {
         out.println("Port Number (default 51214):");
-        return utils.readNumberWithBounds(49152, 65535);
+        //return utils.readNumberWithBounds(49152, 65535);
+        return utils.readNumberWithBounds(0, 65535);
     }
 
     private String askIP() {
@@ -308,9 +309,11 @@ public class CLI implements ViewInterface {
 
     @Override
     public void askCardLeaderDiscard() {
-        out.println("Choose a card leader to discard:");
+
         try{
-            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeaderIndex(getLightModel().getCardsLeader())),-1);
+
+            int selectionIndex = utils.printAndGetCardLeaderIndex(getLightModel().getCardsLeader());
+            if (selectionIndex != -1) client.sendAndWait(new RequestDiscardCardLeader(selectionIndex),-1);
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();

@@ -579,7 +579,12 @@ public class Game implements Runnable {
     }
 
     public void notifyReconnection(String nickname, Game game, VirtualClient virtualClient) {
-        //fare cose
+
+        game.controller.getTurnController().setPlayerConnection(
+                nickname,
+                true
+        );
+
         sendAll(new NotifyReconnectionOf(nickname));
     }
 }

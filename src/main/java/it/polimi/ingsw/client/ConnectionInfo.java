@@ -18,18 +18,22 @@ public class ConnectionInfo {
     }
 
     public void setPort(int port) throws IllegalPortException {
-        if ( port > 49152 && port < 65535)
+        /*if ( port > 0 && port < 65535)
             this.port = port;
         else
-            throw new IllegalPortException();
+            throw new IllegalPortException();*/
+        this.port = port;
+
     }
 
     public void setIP(String ip) throws IllegalAddressException {
-        Pattern pattern = Pattern.compile("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+        /*Pattern pattern = Pattern.compile("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
         if (pattern.matcher(ip).matches())
             this.ip = ip;
         else
-            throw new IllegalAddressException();
+            throw new IllegalAddressException()
+            */;
+        this.ip = ip;
     }
 
     public void setNickname(String nickname) throws IllegalNicknameException {
