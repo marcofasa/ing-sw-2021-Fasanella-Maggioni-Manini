@@ -571,6 +571,9 @@ public class Game implements Runnable {
     }
 
     public void notifyDisconnectionOfClient(VirtualClient virtualClient) { /* TODO */
+
+        players.remove(virtualClient);
+
         String nickname = getNicknameByClient(virtualClient);
         // mettere a posto le HASH MAP
         // notificare controller che virtualClient salta il turno
@@ -583,6 +586,8 @@ public class Game implements Runnable {
     }
 
     public void notifyReconnection(String nickname, Game game, VirtualClient virtualClient) {
+
+        players.add(virtualClient);
 
         game.controller.getTurnController().setPlayerConnection(
                 nickname,
