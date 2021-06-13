@@ -39,7 +39,7 @@ public class PlayerBoardController extends StandardStage {
     private boolean endPhase = false;
     private boolean discardRequest = false;
     public static String messages;
-    private Utils utils=new Utils();
+    private final Utils utils=new Utils();
 
 
     //SETTERS
@@ -67,21 +67,13 @@ public class PlayerBoardController extends StandardStage {
         for(int i=1;i<4;i++){
            if( lightModel.getCardsDevelopment().get(i-1)!=null){
 
-            Integer color;
-            switch (lightModel.getCardsDevelopment().get(i-1).getCardType()) {
-                case Green:
-                    color = 0;
-                    break;
-                case Blue:
-                    color = 2;
-                    break;
-                case Purple:
-                    color = 1;
-                    break;
-                default:
-                    color = 3;
-            }
-            //image final path
+            Integer color = switch (lightModel.getCardsDevelopment().get(i - 1).getCardType()) {
+                case Green -> 0;
+                case Blue -> 2;
+                case Purple -> 1;
+                default -> 3;
+            };
+               //image final path
             String path = "/images/CardDevelopment/Card_Development_" + lightModel.getCardsDevelopment().get(i-1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
             setImageToArray(i-1,path,cardDevelopmentArray,80,120);
         } else {

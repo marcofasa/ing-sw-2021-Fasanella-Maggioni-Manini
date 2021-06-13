@@ -30,12 +30,10 @@ public class GUI extends Application implements ViewInterface {
     public static Stage primaryStage;
     public static FXMLLoader fxmlLoader;
     public static Scene scene;
-    private LogInController logInController;
     private static ConnectionInfo connectionInfo;
     private static int playerNumber;
     public static ArrayList<CardLeader> cardLeaderList;
     public static ArrayList<Resource> resourceList;
-    public ArrayList<String> messages = new ArrayList<>();
     public static HashMap<Resource, Integer> discardList;
 
     public static void setPlayerNumber(int i) {
@@ -77,10 +75,6 @@ public class GUI extends Application implements ViewInterface {
         ((StandardStage) fxmlLoader.getController()).init();
     }
 
-    public void show(Stage stage) {
-        stage.show();
-    }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -110,47 +104,6 @@ public class GUI extends Application implements ViewInterface {
         GUI.lightFaithTrail = new LightFaithTrail(client);
     }
 
-
-    public void displayWelcome() {
-        Platform.runLater(() -> {
-            mainScene("/fxml/LogIn.fxml");
-        });
-    }
-
-    /**
-     * Runs the specified {@link Runnable} on the
-     * JavaFX application thread and waits for completion.
-     *
-     * @param action the {@link Runnable} to run
-     * @throws NullPointerException if {@code action} is {@code null}
-     */
-    public static void runAndWait(Runnable action) {
-        if (action == null)
-            throw new NullPointerException("action");
-
-        // run synchronously on JavaFX thread
-        if (Platform.isFxApplicationThread()) {
-            action.run();
-            return;
-        }
-
-        // queue on JavaFX thread and wait for completion
-        final CountDownLatch doneLatch = new CountDownLatch(1);
-        Platform.runLater(() -> {
-            try {
-                action.run();
-            } finally {
-                doneLatch.countDown();
-            }
-        });
-
-        try {
-            doneLatch.await();
-        } catch (InterruptedException e) {
-            // ignore exception
-        }
-    }
-
     @Override
     public void displayStartingGame() {
 
@@ -158,14 +111,15 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayMessage(String message) {
-
+        Platform.runLater(()->{
+            StandardStage stage  = fxmlLoader.getController();
+            stage.setDialogPane(message, PlayerBoardController.dialog, PlayerBoardController.messages);
+        });
     }
 
     @Override
     public void displayPosition() {
-        Platform.runLater(() -> {
-            mainScene("/fxml/FaithTrail.fxml");
-        });
+        Platform.runLater(() -> mainScene("/fxml/FaithTrail.fxml"));
     }
 
     @Override
@@ -193,7 +147,8 @@ Platform.runLater(()->{
 
     @Override
     public void displayNotActivePlayerError() {
-
+        displayMessage("Action not executed");
+        displayMessage("Wait your turn to play!");
     }
 
     @Override
@@ -208,29 +163,29 @@ Platform.runLater(()->{
 
     @Override
     public void displayConnection() {
-        this.primaryStage = Scene("/fxml/Logo.fxml");
+        primaryStage = Scene("/fxml/Logo.fxml");
         //primaryStage.showAndWait();
     }
 
     @Override
     public void displayWin() {
-
+        displayMessage("You win the game!");
     }
 
     @Override
     public void displayLost() {
-
+        displayMessage("You lost the game :(");
     }
 
     @Override
     public void displaySuccess() {
         System.out.println("Action executed successfully");
-        messages.add("Action executed successfully");
+        displayMessage("Action executed successfully");
     }
 
     @Override
     public void displayLeaderRequirementsNotMet() {
-
+        displayMessage("You can't activate this card, you don't meet the requirements");
     }
 
     @Override
@@ -425,43 +380,32 @@ Platform.runLater(()->{
 
     @Override
     public ConnectionInfo getConnectionInfo() {
-        System.out.println("leggo " + connectionInfo);
-       // displayWelcome();
-
         return connectionInfo;
     }
 
     @Override
     public void displayNickNameUnavailable() {
         LogInController logInController=fxmlLoader.getController();
-        Platform.runLater(()-> {
-            logInController.status_label.setText("STATUS: NickName Unavailable");
-        });
+        Platform.runLater(()-> logInController.status_label.setText("STATUS: NickName Unavailable"));
     }
 
     @Override
     public void displayServerUnreachable() {
         LogInController logInController=fxmlLoader.getController();
-        Platform.runLater(()-> {
-            logInController.status_label.setText("STATUS: Server Unreachable");
-        });
+        Platform.runLater(()-> logInController.status_label.setText("STATUS: Server Unreachable"));
     }
 
     @Override
     public void gameHasStarted() {
         LogInController logInController=fxmlLoader.getController();
-        Platform.runLater(()-> {
-            logInController.status_label.setText("STATUS: Game Started, hold on...");
-        });
+        Platform.runLater(()-> logInController.status_label.setText("STATUS: Game Started, hold on..."));
     }
 
     @Override
     public void displayClientAccepted() {
         System.out.println("Connected to server");
         LogInController logInController=fxmlLoader.getController();
-        Platform.runLater(()-> {
-            logInController.status_label.setText("STATUS: Server connected, waiting players");
-        });
+        Platform.runLater(()-> logInController.status_label.setText("STATUS: Server connected, waiting players"));
     }
 
     @Override
@@ -476,7 +420,6 @@ Platform.runLater(()->{
 
 
     public static void setConnectionInfo(ConnectionInfo connectionInfo) {
-        System.out.println("setto " + connectionInfo);
         GUI.connectionInfo = connectionInfo;
     }
 }

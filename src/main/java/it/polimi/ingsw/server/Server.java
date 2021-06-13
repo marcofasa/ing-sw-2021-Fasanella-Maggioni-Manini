@@ -156,7 +156,7 @@ public class Server {
             }
         }
         if (debug)
-            System.out.println("Client is running in debug!");
+            System.out.println("Server is running in debug!");
         Server server = new Server(debug);
         Integer port = 51214;
         server.socketServer = new SocketServer(port, server);
