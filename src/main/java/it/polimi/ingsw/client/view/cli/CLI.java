@@ -581,9 +581,13 @@ public class CLI implements ViewInterface {
             out.println("This player have not played yet, his player board is empty");
             return;
         }
+        out.println("Cards development:");
         utils.printCardDevelopmentDeck(briefModel.getCardsDevelopment());
+        out.println("Deposit:");
         utils.printListResource(briefModel.getDeposit());
+        out.println("Strong box:");
         utils.printListResource(briefModel.getStrongBox());
+        out.println("Cards Leader uncovered");
         utils.printCardLeaderDeck(briefModel.getVisibleCardsLeaders());
     }
 
