@@ -5,6 +5,7 @@ import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
+import it.polimi.ingsw.controller.Game;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
@@ -20,6 +21,22 @@ import java.util.HashMap;
 public class VirtualClientCommandDispatcher {
 
     private final VirtualClient virtualClient;
+
+    private Game getGame() {
+        switch (virtualClient.getGameState()) {
+            case Active -> {
+                return virtualClient.getGame();
+            }
+            case Ended -> {
+                send(new KillConnectionMessage());
+            }
+            case EndedWithError -> {
+                send(new KillConnectionMessage(true));
+            }
+        }
+        Thread.currentThread().interrupt();
+        return null;
+    }
 
     /**
      * Constructor of the class
@@ -59,7 +76,7 @@ public class VirtualClientCommandDispatcher {
     public void requestActivateCardLeader(CardLeader cardLeader, int timeoutID) {
         boolean success;
         try {
-            success = virtualClient.getGame().activateLeaderCard(virtualClient, cardLeader);
+            success = getGame().activateLeaderCard(virtualClient, cardLeader);
             if (success) {
                 sendWithTimeoutID(new ResponseSuccess(), timeoutID);
             } else {
@@ -69,6 +86,7 @@ public class VirtualClientCommandDispatcher {
             sendWithTimeoutID(new ResponseNotActivePlayerError(), timeoutID);
         }
     }
+
 
     /**
      * Method called on initial selection message received, resources may or may not be null based on the player's position

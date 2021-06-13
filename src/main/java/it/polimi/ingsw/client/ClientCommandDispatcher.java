@@ -170,7 +170,9 @@ public class ClientCommandDispatcher {
 
     }
 
-    public void killConnection() {
+    public void killConnection(Boolean error) {
+        if(error)
+            System.out.println("Game ended with an error");
         System.out.println("Good bye");
         client.killConnection();
     }

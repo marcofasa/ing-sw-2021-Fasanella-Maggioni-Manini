@@ -11,6 +11,7 @@ import it.polimi.ingsw.communication.server.responses.ResponseSuccess;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.VirtualClient;
 
@@ -610,14 +611,7 @@ public class Game implements Runnable {
     }
 
     private void removeVirtualClient(VirtualClient virtualClient) {
-
-        String nickname = clientNicknameMap.get(virtualClient);
-        Integer id = virtualClient.getID();
         players.remove(virtualClient);
-
-        // nicknameClientMap.remove(nickname);
-        // clientNicknameMap.remove(virtualClient);
-        // idPlayerClientMap.remove(id);
     }
 
     private void addVirtualClient(VirtualClient virtualClient, String nickname) {
@@ -627,5 +621,16 @@ public class Game implements Runnable {
         idPlayerClientMap.put(virtualClient.getID(), virtualClient);
         nicknameClientMap.put(nickname, virtualClient);
         clientNicknameMap.put(virtualClient, nickname);
+    }
+
+    private void closeGame(boolean error){
+        for (VirtualClient player :
+                players) {
+            if (error) {
+                player.setGameState(GameState.EndedWithError);
+            } else {
+                player.setGameState(GameState.Ended);
+            }
+        }
     }
 }

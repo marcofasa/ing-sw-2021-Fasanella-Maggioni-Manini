@@ -29,6 +29,7 @@ public class VirtualClient implements Runnable{
     private boolean connected;
     private final ExecutorService executors;
     private ScheduledFuture<?> heartBeatService;
+    private GameState gameState;
 
     /**
      * Constructor of the class
@@ -44,6 +45,7 @@ public class VirtualClient implements Runnable{
         executors = Executors.newCachedThreadPool();
         timeoutHandler = new ServerTimeoutHandler(this);
         clientCommandDispatcher = new VirtualClientCommandDispatcher(this);
+        gameState = GameState.Active;
     }
 
     /**
@@ -156,5 +158,13 @@ public class VirtualClient implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setGameState(GameState gameState){
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }
