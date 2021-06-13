@@ -626,6 +626,7 @@ public class Game implements Runnable {
     private void closeGame(boolean error){
         for (VirtualClient player :
                 players) {
+            System.out.println("->Virtual Client is being shut down<- " + player);
             if (error) {
                 player.setGameState(GameState.EndedWithError);
             } else {

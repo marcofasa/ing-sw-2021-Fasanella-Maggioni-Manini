@@ -17,7 +17,7 @@ import static java.lang.Thread.sleep;
 /**
  * Class to handler a client server-side
  */
-public class VirtualClient implements Runnable{
+public class VirtualClient implements Runnable {
     private final Integer clientID;
     private final Socket clientSocket;
     private final Server server;
@@ -33,8 +33,9 @@ public class VirtualClient implements Runnable{
 
     /**
      * Constructor of the class
-     * @param socket of this Client
-     * @param server where the client is connected
+     *
+     * @param socket   of this Client
+     * @param server   where the client is connected
      * @param clientID unique ID of this client
      */
     public VirtualClient(Socket socket, Server server, Integer clientID) {
@@ -50,9 +51,10 @@ public class VirtualClient implements Runnable{
 
     /**
      * Send a message to the actual Client
+     *
      * @param serverMessage message to be sent
      */
-    public void send(ServerMessage serverMessage){
+    public void send(ServerMessage serverMessage) {
         synchronized (this) {
             try {
                 outputStream.reset();
@@ -66,7 +68,8 @@ public class VirtualClient implements Runnable{
 
     /**
      * Send Message and waits for answer
-     * @param serverMessage message to be sent
+     *
+     * @param serverMessage    message to be sent
      * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
      * @throws RequestTimeoutException thrown if timeout is exceeded.
      */
@@ -92,12 +95,12 @@ public class VirtualClient implements Runnable{
             inputStream = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
             ClientMessage inputClass;
             while (connected) {
-   //           System.out.println("Client" + this +" is waiting...");
+                //           System.out.println("Client" + this +" is waiting...");
                 inputClass = (ClientMessage) inputStream.readObject();
                 ClientMessage finalInputClass = inputClass;
-   //           System.out.println("Reading" + inputClass);
+                //           System.out.println("Reading" + inputClass);
                 try {
-                    if(finalInputClass instanceof ClientResponse) {
+                    if (finalInputClass instanceof ClientResponse) {
                         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
                         executors.submit(() -> finalInputClass.read(this)).get();
                         timeoutHandler.defuse(finalInputClass.getTimeoutID());
@@ -107,7 +110,10 @@ public class VirtualClient implements Runnable{
                 } catch (RequestTimeoutException e) {
                     server.requestTimedOut(this);
                     e.printStackTrace();
-                } catch (ExecutionException | InterruptedException e) {
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    System.out.println("->Virtual Client is being shut down<- (message received) " + this);
                     e.printStackTrace();
                 }
             }
@@ -144,9 +150,10 @@ public class VirtualClient implements Runnable{
 
     /**
      * Set instance of Game where this player is playing
+     *
      * @param game instance of Game
      */
-    public void setGame(Game game){
+    public void setGame(Game game) {
         this.game = game;
     }
 
@@ -160,7 +167,7 @@ public class VirtualClient implements Runnable{
         }
     }
 
-    public void setGameState(GameState gameState){
+    public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
