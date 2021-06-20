@@ -540,7 +540,7 @@ public class Utils {
     public void printCardLeaderDeck(ArrayList<CardLeader> cardLeaders) {
         int index = 1;
 
-        out.println("Choose a card leader to discard:");
+        //out.println("Choose a card leader to discard:");
 
         for (int i = 0; i < cardLeaders.size(); i++) {
             out.printf(index + " ");

@@ -40,7 +40,6 @@ public class LightModel {
         this.spareMarble = spareMarble;
     }
 
-
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
@@ -78,7 +77,6 @@ public class LightModel {
     }
 
     //Getters
-
 
     public MarbleType getSpareMarble() {
         return spareMarble.getType();

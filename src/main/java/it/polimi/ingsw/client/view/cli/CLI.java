@@ -309,8 +309,14 @@ public class CLI implements ViewInterface {
     @Override
     public void askCardLeaderDiscard() {
         out.println("Choose a card leader to discard:");
-        try{
-            client.sendAndWait(new RequestDiscardCardLeader(utils.printAndGetCardLeaderIndex(getLightModel().getCardsLeader())),-1);
+        try {
+
+            int leaderIndex = utils.printAndGetCardLeaderIndex(getLightModel().getCardsLeader());
+
+            if (leaderIndex >= 0) {
+                client.sendAndWait(new RequestDiscardCardLeader(leaderIndex),-1);
+            }
+
         }
         catch (RequestTimeoutException e){
             e.printStackTrace();
@@ -570,6 +576,12 @@ public class CLI implements ViewInterface {
 
     public void checkoutPlayer() {
         String nickname = null;
+
+        if (client.getLightModel().getNumberOfPlayers() == 1) {
+            out.println("This command is disabled in single player mode");
+            return;
+        }
+
         while (!client.getPlayersNickname().contains(nickname) || client.getNickname().equals(nickname)){
             out.println("Insert the player's nickname");
             nickname = utils.readString();

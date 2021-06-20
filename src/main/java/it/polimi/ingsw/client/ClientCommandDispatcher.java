@@ -42,6 +42,7 @@ public class ClientCommandDispatcher {
         System.out.println("Game Has Started. Game ID: " + gameID);
         client.setPlayersNicknames(playersNickname);
         client.getView().gameHasStarted();
+        client.getLightModel().setNumberOfPlayers(playersNickname.size());
     }
 
     private ArrayList<CardLeader> subRequestLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
