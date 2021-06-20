@@ -6,7 +6,6 @@ import it.polimi.ingsw.communication.timeout_handler.ServerTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.ClientResponse;
 import it.polimi.ingsw.communication.server.ServerMessage;
-import it.polimi.ingsw.controller.Game;
 
 import java.io.*;
 import java.net.Socket;

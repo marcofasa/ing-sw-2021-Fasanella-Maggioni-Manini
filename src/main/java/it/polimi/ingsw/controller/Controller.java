@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.communication.server.LorenzoActivation;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.server.Game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class Controller {
      * @return Instance of PlayerBoard whose internal nickname attribute is equal to _nickname, false if _nickname
      * is not one of the players' nicknames
      */
-    protected PlayerBoard getPlayerBoardByNickname(String _nickname) {
+    public PlayerBoard getPlayerBoardByNickname(String _nickname) {
 
         for (PlayerBoard board : gameTable.getPlayerBoards()) {
             if (_nickname.equals(board.getNickname())) return board;
@@ -110,7 +111,7 @@ public class Controller {
      * @param _nickname the nickname of the player which sent the request.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to end his turn.
      */
-    void advanceTurn(String _nickname) throws NotActivePlayerException {
+    public void advanceTurn(String _nickname) throws NotActivePlayerException {
 
         if (isActivePlayer(_nickname)) {
             turnController.advanceTurn();
@@ -198,7 +199,7 @@ public class Controller {
      *              be an element of the Resource enum.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      */
-    void assignInitialBenefits(
+    public void assignInitialBenefits(
             String _nickname,
             ArrayList<CardLeader> _cardList,
             Resource _res1,
@@ -255,7 +256,7 @@ public class Controller {
      * @throws FullSlotException : thrown if the slot at _placementIndex already holds 3 cards.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      */
-    void buyAndPlaceDevCard(
+    public void buyAndPlaceDevCard(
             String _nickname,
             int _rowIndex,
             int _colIndex,
@@ -286,7 +287,7 @@ public class Controller {
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      * @throws IllegalArgumentException : thrown if an invalid _index was selected by the player.
      */
-    HashMap<Resource, Integer> useMarket(String _nickname, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException {
+    public HashMap<Resource, Integer> useMarket(String _nickname, int _index, String _selection) throws NotActivePlayerException, IllegalArgumentException {
 
         if (isActivePlayer(_nickname)) {
 
@@ -306,7 +307,7 @@ public class Controller {
      *     containing the previously obtained resources if the selection did not allow for the remaining resources to be added to the deposit.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      */
-    HashMap<Resource, Integer> discardResources(String _nickname, HashMap<Resource, Integer> _discardSelection) throws NotActivePlayerException {
+    public HashMap<Resource, Integer> discardResources(String _nickname, HashMap<Resource, Integer> _discardSelection) throws NotActivePlayerException {
 
         if (isActivePlayer(_nickname)) {
 
@@ -327,7 +328,7 @@ public class Controller {
      * @throws InvalidSlotIndexException : thrown if an invalid index for a CardDevelopmentSlot was selected in _selection
      * @throws NotEnoughResourcesException : thrown if the player does not hold enough resources to activate all of the selected production powers.
      */
-    void activateProductionPowers(String _nickname, ProductionSelection _selection)
+    public void activateProductionPowers(String _nickname, ProductionSelection _selection)
             throws NotActivePlayerException, InvalidSlotIndexException, NotEnoughResourcesException, CardLeaderRequirementsNotMetException {
 
         if (isActivePlayer(_nickname)) {
@@ -347,7 +348,7 @@ public class Controller {
      * @return true if the CardLeader was activated, false otherwise.
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      */
-    boolean activateLeaderCard(String _nickname, CardLeader _cardToBeActivated) throws NotActivePlayerException {
+    public boolean activateLeaderCard(String _nickname, CardLeader _cardToBeActivated) throws NotActivePlayerException {
 
         if (isActivePlayer(_nickname)) {
 
@@ -364,7 +365,7 @@ public class Controller {
      * Method to be called when gamePhase == 3.
      * @return An instance of HashMap<String, Integer>, mapping the player nicknames to their total victory points.
      */
-    HashMap<String, Integer> calculateScores() {
+    public HashMap<String, Integer> calculateScores() {
 
         HashMap<String, Integer> scores = new HashMap<>();
 

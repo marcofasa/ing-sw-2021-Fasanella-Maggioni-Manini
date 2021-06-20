@@ -54,7 +54,7 @@ public class TurnController {
      *
      * @return activePlayer
      */
-    PlayerBoard getActivePlayer() {
+    public PlayerBoard getActivePlayer() {
         return activePlayer;
     }
 
@@ -149,7 +149,7 @@ public class TurnController {
         connectionStatuses.put(_board.getNickname(), _newStatus);
     }
 
-    void setPlayerConnection(String _nickname, Boolean _newStatus) {
+    public void setPlayerConnection(String _nickname, Boolean _newStatus) {
         connectionStatuses.put(_nickname, _newStatus);
     }
 

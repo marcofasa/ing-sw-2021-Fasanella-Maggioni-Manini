@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.server;
 
 import com.sun.javafx.image.IntPixelGetter;
 import it.polimi.ingsw.client.RequestTimeoutException;
@@ -8,6 +8,7 @@ import it.polimi.ingsw.communication.server.requests.RequestInitialSelection;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
 import it.polimi.ingsw.communication.server.responses.ResponseNotActivePlayerError;
 import it.polimi.ingsw.communication.server.responses.ResponseSuccess;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;

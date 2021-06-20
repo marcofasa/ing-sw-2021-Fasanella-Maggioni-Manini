@@ -210,8 +210,9 @@ public class PlayerBoardTest {
         assertThrows(InvalidSlotIndexException.class, () -> playerBoard.placeCardDevelopmentCardOnBoard(cardDevelopment3, 3));
         playerBoard.placeCardDevelopmentCardOnBoard(cardDevelopment3, 1);
         assertThrows(IllegalArgumentException.class, () -> cardLeader.activate(playerBoard));
-        playerBoard.activateLeaderProduction(cardLeader, Resource.Coins);
-        resourceIntegerHashMap.put(Resource.Coins, 11);
+        playerBoard.activateLeaderProduction(cardLeader, Resource.Stones);
+        resourceIntegerHashMap.put(Resource.Coins, 9);
+        resourceIntegerHashMap.put(Resource.Stones, 11);
         assertTrue(playerBoard.hasResources(resourceIntegerHashMap));
         resourceIntegerHashMap.put(Resource.Coins, 12);
         assertFalse(playerBoard.hasResources(resourceIntegerHashMap));

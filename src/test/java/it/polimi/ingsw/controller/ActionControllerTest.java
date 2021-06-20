@@ -130,23 +130,4 @@ class ActionControllerTest {
 
         System.out.println("debug");
     }
-
-    @Test
-    void activateProductionPowers() {
-
-        /*
-        This test is based on internal randomness : to test this method, it's sufficient
-        to test the tryActivateProductions method in PlayerBoard class
-         */
-    }
-
-    @Test
-    void activateLeaderCard() {
-
-        /*
-        This test is based on internal randomness : to test this method, it's sufficient
-        to test the leader card activation process!
-         */
-
-    }
 }
