@@ -10,6 +10,9 @@ import java.util.LinkedHashMap;
 /**
  * This class handles the turn logic in the game, advancing the active player when an End Turn action has been
  * received by the active client.
+ *
+ * Note that this class also keeps track of the connection statuses of all players: this is because the game
+ * skips a player's turn when the player's client is disconnected from the server.
  */
 
 public class TurnController {
@@ -137,18 +140,38 @@ public class TurnController {
         return getActivePlayer().equals(_player);
     }
 
+    /**
+     * Getter for a specified PlayerBoard's connection status.
+     * @param _board PlayerBoard whose status is of interest.
+     * @return true if the corresponding client is connected, false otherwise.
+     */
     boolean isPlayerConnected(PlayerBoard _board) {
         return connectionStatuses.get(_board.getNickname());
     }
 
+    /**
+     * Getter for a specified player's connection status.
+     * @param _nickname Player's nickname whose status is of interest.
+     * @return true if the corresponding client is connected, false otherwise.
+     */
     boolean isPlayerConnected(String _nickname) {
         return connectionStatuses.get(_nickname);
     }
 
+    /**
+     * Setter for a specified PlayerBoard's connection status.
+     * @param _board PlayerBoard whose status is to be set.
+     * @param _newStatus New connection status, either true or false.
+     */
     void setPlayerConnection(PlayerBoard _board, Boolean _newStatus) {
         connectionStatuses.put(_board.getNickname(), _newStatus);
     }
 
+    /**
+     * Setter for a specified player's connection status.
+     * @param _nickname Player's nickname whose status is to be set.
+     * @param _newStatus New connection status, either true or false.
+     */
     public void setPlayerConnection(String _nickname, Boolean _newStatus) {
         connectionStatuses.put(_nickname, _newStatus);
     }

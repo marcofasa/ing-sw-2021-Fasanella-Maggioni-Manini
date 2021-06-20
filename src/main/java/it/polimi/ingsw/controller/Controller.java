@@ -376,6 +376,11 @@ public class Controller {
         return scores;
     }
 
+    /**
+     * Proxy method to call actionController.discardCardLeader.
+     * @param nickname the nickname of the player that wishes to discard one of his leader cards.
+     * @param cardLeaderIndex index of the card to be discarded, within the cardLeader ArrayList.
+     */
     public void discardCardLeader(String nickname, Integer cardLeaderIndex) {
         getActionController().discardCardLeader(getPlayerBoardByNickname(nickname), cardLeaderIndex);
     }
