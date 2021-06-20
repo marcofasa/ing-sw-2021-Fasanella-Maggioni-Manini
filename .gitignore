@@ -5,7 +5,7 @@
 # default su macOS e Linux. Dovete quindi usare la riga di comando per
 # modificarlo.
 
-!deliverables/
+!deliverables/*
 
 ## https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
 
