@@ -156,9 +156,9 @@ public class PlayerBoardTest {
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(resources3.get(res), new Integer(0));
+                assertEquals(resources3.get(res), 0);
             } else {
-                assertEquals(resources3.get(res), new Integer(2));
+                assertEquals(resources3.get(res), 2);
             }
         }
         assertEquals(gametable.getFaithTrailInstance().getPosition(gametable.getPlayerByIndex(1)), 0);

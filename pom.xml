@@ -8,9 +8,10 @@
     <!-- Change the artifactId depending on your group number
          (example: group 99 will have artifactId PSP99 -->
     <artifactId>PSP08</artifactId>
-    
+
     <version>1.0-SNAPSHOT</version>
     <name>MastersOfRenaissance</name>
+    <url>https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,11 +52,10 @@
             <version>13</version>
         </dependency>
 
-
     </dependencies>
 
     <build>
-        <plugins>            
+        <plugins>
             
             <!-- Java version -->
             <plugin>
@@ -64,12 +64,67 @@
                 <version>3.8.1</version>
                 <configuration>
                     <!-- Version of the Java language to use -->
-                    <source>14</source>
+                    <source>15</source>
                     <!-- Minimum JRE version the JAR will be compatible with -->
-                    <target>14</target>
+                    <target>15</target>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-site-renderer</artifactId>
+                        <version>1.9.2</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>Client</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>deliverables/jar/${project.artifactId}-Client.jar</outputFile>
+                            <transformers>
+                                <transformer implementation=
+                                                     "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>it.polimi.ingsw.client.Client</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Server</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>deliverables/jar/${project.artifactId}-Server.jar</outputFile>
+                            <transformers>
+                                <transformer implementation=
+                                                     "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>it.polimi.ingsw.server.Server</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
         </plugins>
     </build>
 </project>
