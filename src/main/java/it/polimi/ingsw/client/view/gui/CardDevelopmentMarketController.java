@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -121,14 +120,14 @@ public class CardDevelopmentMarketController extends StandardStage {
      */
     public void buyCardDevelopment(ActionEvent actionEvent) {
         if(viewOnly){
-            PlayerBoardController.messages=setDialogPane("Action not admitted. View only mode!",PlayerBoardController.dialog,PlayerBoardController.messages);
+            setDialogPane("Action not admitted. View only mode!",PlayerBoardController.dialog);
         }
         else{
         if(pos<0 || buyRow<0 || buyCol<0){
-            PlayerBoardController.messages=setDialogPane("Position still not selected or Card not Picked",PlayerBoardController.dialog,PlayerBoardController.messages);
+            setDialogPane("Position still not selected or Card not Picked",PlayerBoardController.dialog);
         }
         else{
-            PlayerBoardController.messages=setDialogPane("Card Development purchased",PlayerBoardController.dialog,PlayerBoardController.messages);
+            setDialogPane("Card Development purchased",PlayerBoardController.dialog);
             GUI.sendMessage(new RequestBuyDevelopmentCard(buyRow,buyCol,pos));
             closeStage(actionEvent);
         }}

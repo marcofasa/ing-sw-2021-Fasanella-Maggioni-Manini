@@ -1,5 +1,4 @@
 package it.polimi.ingsw.client.view.gui;
-import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.communication.client.requests.RequestDiscardCardLeader;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
@@ -9,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -142,10 +140,10 @@ public class CardLeaderController extends StandardStage {
     public void discardCardLeader(ActionEvent actionEvent) {
         if(lastClick>0){
         GUI.sendMessage(new RequestDiscardCardLeader(lastClick));
-        PlayerBoardController.messages= setDialogPane("Card Leader discarded",PlayerBoardController.dialog,PlayerBoardController.messages);
+        setDialogPane("Card Leader discarded",PlayerBoardController.dialog);
         closeStage(actionEvent);}
         else {
-            PlayerBoardController.messages= setDialogPane("Card Leader not picked!",PlayerBoardController.dialog,PlayerBoardController.messages);
+            setDialogPane("Card Leader not picked!",PlayerBoardController.dialog);
         }
     }
 
@@ -164,13 +162,12 @@ public class CardLeaderController extends StandardStage {
         }
         else resources[1]=activateCardLeaderOutput.getResource();
 
-        PlayerBoardController.messages= setDialogPane("Card Leader activated",PlayerBoardController.dialog,PlayerBoardController.messages);
+        setDialogPane("Card Leader activated",PlayerBoardController.dialog);
 
         setProduction(false);
         closeStage(actionEvent);}
         else{
-            PlayerBoardController.messages= setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog,PlayerBoardController.messages);
-
+            setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog);
         }
     }
 }

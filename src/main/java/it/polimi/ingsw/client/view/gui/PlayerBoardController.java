@@ -132,7 +132,7 @@ strongboxLevel[0]=true;
         }
     }
 
-    private void setEndPhase() {
+    void setEndPhase() {
         endPhase = true;
     }
 
@@ -150,7 +150,7 @@ strongboxLevel[0]=true;
         FaithTrailController faithTrailController = loader.getController();
         faithTrailController.setFaithTrail(lightFaithTrail.getFaithTrail(), lightModel.getNickname());
 
-        messages = setDialogPane("Faith Trail displayed", dialogPane, messages);
+        setDialogPane("Faith Trail displayed", dialogPane);
         // New window (Selection)
         showStage(secondScene);
     }
@@ -164,7 +164,7 @@ strongboxLevel[0]=true;
         strongBoxController.setStrongBox(lightModel.getStrongbox());
 
         showStage(secondScene);
-        messages = setDialogPane("Deposit displayed", dialogPane, messages);
+        setDialogPane("Deposit displayed", dialogPane);
 
 
     }
@@ -179,7 +179,7 @@ strongboxLevel[0]=true;
 
 
         showStage(secondScene);
-        messages = setDialogPane("Resource Market displayed", dialogPane, messages);
+        setDialogPane("Resource Market displayed", dialogPane);
 
     }
 
@@ -191,7 +191,7 @@ strongboxLevel[0]=true;
         cardDevelopmentMarketController.setViewOnly();
         cardDevelopmentMarketController.setDevelopmentMarket(lightModel.getCardDevelopmentMarket(), lightModel.getCardsDevelopment());
         showStage(secondScene);
-        messages = setDialogPane("Card Market displayed", dialogPane, messages);
+        setDialogPane("Card Market displayed", dialogPane);
 
     }
 
@@ -200,9 +200,9 @@ strongboxLevel[0]=true;
 
     public void buyCard(ActionEvent actionEvent) {
         if (endPhase) {
-            messages = setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog);
         } else if (discardRequest) {
-            messages = setDialogPane("You have to discard resources!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("You have to discard resources!", PlayerBoardController.dialog);
         } else {
             FXMLLoader loader = load("/fxml/CardDevelopmentMarket.fxml");
             Scene secondScene = setScene(loader);
@@ -215,9 +215,9 @@ strongboxLevel[0]=true;
 
     public void buyResource(ActionEvent actionEvent) {
         if (endPhase) {
-            messages = setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog);
         } else if (discardRequest) {
-            messages = setDialogPane("You have to discard resources!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("You have to discard resources!", PlayerBoardController.dialog);
         } else {
             FXMLLoader loader = load("/fxml/ResourceMarket.fxml");
             Scene secondScene = setScene(loader);
@@ -234,9 +234,9 @@ strongboxLevel[0]=true;
 
     public void production(ActionEvent actionEvent) {
         if (endPhase) {
-            messages = setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog);
         } else if (discardRequest) {
-            messages = setDialogPane("You have to discard resources!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("You have to discard resources!", PlayerBoardController.dialog);
         } else {
             FXMLLoader loader = load("/fxml/Production.fxml");
             Scene secondScene = setScene(loader);
@@ -250,9 +250,9 @@ strongboxLevel[0]=true;
     public void endTurn(ActionEvent actionEvent) {
         if (!discardRequest) {
             GUI.sendMessage(new RequestEndTurn());
-            messages = setDialogPane("Turn finished!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("Turn finished!", PlayerBoardController.dialog);
         } else
-            messages = setDialogPane("You have to discard resources!", PlayerBoardController.dialog, PlayerBoardController.messages);
+            setDialogPane("You have to discard resources!", PlayerBoardController.dialog);
     }
 
     public void discardResources(ActionEvent actionEvent) {

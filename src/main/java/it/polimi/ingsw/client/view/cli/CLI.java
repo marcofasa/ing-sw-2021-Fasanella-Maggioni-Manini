@@ -228,7 +228,6 @@ public class CLI implements ViewInterface {
         String input;
         out.println("NickName:");
         input = utils.readString();
-        getLightModel().setNickname(input);
         client.setNickname(input);
         return input;
     }
