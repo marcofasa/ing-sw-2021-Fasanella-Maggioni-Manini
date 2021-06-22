@@ -106,10 +106,10 @@ public class CardLeaderController extends StandardStage {
 
     private void setClick(int finalI) {
         lastClick=finalI;
-        if (cardLeaders==null){
+        if (cardLeaders == null){
             cardLeaders=new CardLeader[2];
         }
-        if(cardLeaders[0]!=null){
+        if (cardLeaders[0] == null){
             cardLeaders[0]=cardsLeaderArray.get(finalI);
         }
         else cardLeaders[1]=cardsLeaderArray.get(finalI);

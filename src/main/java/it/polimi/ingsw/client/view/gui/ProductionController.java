@@ -59,7 +59,6 @@ public class ProductionController extends StandardStage {
 
         cardDevelopArray[pos]=true;
 
-
     }
 
     public void cardLeaderProduction(ActionEvent actionEvent) {
@@ -73,7 +72,9 @@ public class ProductionController extends StandardStage {
         cardLeaderController.setProduction(true);
 
         // New window (Selection)
+
         showStage(secondScene);
+
         productionSelection.setCardLeadersToActivate(cardLeaderController.getCardLeaders());
         productionSelection.setCardLeaderProdOutputs(cardLeaderController.getResources());
 
