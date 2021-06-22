@@ -45,6 +45,7 @@ public class ProductionController extends StandardStage {
     //PRODUCTION BUTTONS
 
     public void basicProduction(ActionEvent actionEvent) {
+        productionSelection.setBasicProduction(true);
         productionSelection.setBasicProdInfo(resources);
     }
 

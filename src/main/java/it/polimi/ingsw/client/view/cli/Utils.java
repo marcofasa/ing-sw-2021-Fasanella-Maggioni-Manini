@@ -786,14 +786,14 @@ public class Utils {
     private void printCardDevelopmentForMarket(CardDevelopment cardDevelopment, int i, int j) {
 
         if (cardDevelopment != null) {
-            out.printf("(" + i + j + ") Card type " + cardDevelopment.getCardType().toString() +
-                    " of level " + cardDevelopment.getCardLevel().toString() +
-                    ": " + cardDevelopment.getVictoryPoints() + " victory points");
-            printCardResourceCost(cardDevelopment.getCardCosts());
-        } else {
-            out.printf("(" + i + j + ") Stack is empty! The cards that were here have been bought by the players");
-        }
 
+            out.printf("(" + i + j + ")");
+            printCardDevelopment(cardDevelopment);
+            printCardResourceCost(cardDevelopment.getCardCosts());
+
+        } else {
+            out.printf("(" + i + j + ") Stack is empty! The cards that were here have all been bought by the players!");
+        }
         out.println();
     }
 
@@ -813,7 +813,7 @@ public class Utils {
      * @param cardCosts HashMap of resources cost
      */
     private void printCardResourceCost(HashMap<Resource, Integer> cardCosts) {
-        out.printf("; at a cost of:");
+        out.printf("\tat a cost of:");
         for (Resource resource : cardCosts.keySet()) {
             String key = resource.toString();
             String value = cardCosts.get(resource).toString();
