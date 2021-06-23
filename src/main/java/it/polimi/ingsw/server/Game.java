@@ -331,6 +331,7 @@ public class Game implements Runnable {
 
         } catch (NotActivePlayerException ex) {
             send(nickname, new ResponseNotActivePlayerError());
+            return;
         }
 
         // Multi player logic
