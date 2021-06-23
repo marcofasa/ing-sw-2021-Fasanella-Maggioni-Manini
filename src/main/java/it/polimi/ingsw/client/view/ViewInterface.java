@@ -165,4 +165,6 @@ public interface ViewInterface {
     void notifyDisconnectionOf(String nickname);
 
     void notifyReconnection(String nickname);
+
+    void displayMainMoveNotMade();
 }

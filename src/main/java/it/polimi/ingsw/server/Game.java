@@ -6,6 +6,7 @@ import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestInitialSelection;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
+import it.polimi.ingsw.communication.server.responses.ResponseMainMoveNotMade;
 import it.polimi.ingsw.communication.server.responses.ResponseNotActivePlayerError;
 import it.polimi.ingsw.communication.server.responses.ResponseSuccess;
 import it.polimi.ingsw.controller.Controller;
@@ -317,6 +318,11 @@ public class Game implements Runnable {
         PlayerBoard previousPlayer = controller.getTurnController().getActivePlayer();
 
         try {
+
+            if (!mainMoveMade) {
+                send(nickname, new ResponseMainMoveNotMade());
+            }
+
             controller.advanceTurn(nickname);
             setMainMoveMade(false);
             send(nickname, new ResponseSuccess());
