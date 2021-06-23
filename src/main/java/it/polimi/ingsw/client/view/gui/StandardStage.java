@@ -34,8 +34,39 @@ public class StandardStage {
 
     public void setDialogPane(String text, DialogPane dialogPane){
         messages = messages + "\n" + text;
+        messages = messagePolisher(messages);
         if(dialogPane != null) {
             dialogPane.setContentText(messages);
+        }
+    }
+
+    private String messagePolisher(String messages) {
+        String[] messagesList = messages.split("\\r?\\n");
+        StringBuilder polishedMessage = new StringBuilder();
+        for (String message:
+             messagesList) {
+            if(!message.strip().trim().equals("")){
+                if(!(polishedMessage.toString().equals("")))
+                    polishedMessage.append("\n");
+                polishedMessage.append(message);
+            }
+        }
+        polishedMessage = checkLimit(polishedMessage);
+        return polishedMessage.toString();
+    }
+
+    private StringBuilder checkLimit(StringBuilder polishedMessage) {
+        String[] messagesList = polishedMessage.toString().split("\\r?\\n");
+        StringBuilder cutMessage = new StringBuilder();
+        if(messagesList.length > 15){
+            for (int i = 0; i < 15; i++) {
+                if(!cutMessage.isEmpty())
+                    cutMessage.insert(0, "\n");
+                cutMessage.insert(0,messagesList[messagesList.length - i - 1]);
+            }
+            return cutMessage;
+        } else {
+            return polishedMessage;
         }
     }
 

@@ -87,7 +87,8 @@ public class VirtualClient implements Runnable {
      */
     public void run() {
         try {
-            clientSocket.setSoTimeout(5000);
+            if(!server.debug)
+                clientSocket.setSoTimeout(5000);
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
             heartBeatService = executor.scheduleAtFixedRate(this::startHeartBeat, 500, 1000, TimeUnit.MILLISECONDS);
             outputStream = new ObjectOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));

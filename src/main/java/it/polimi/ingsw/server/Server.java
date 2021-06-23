@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
  * Class to launch a Maestro Del Rinascimento server
  */
 public class Server {
-    private final Boolean debug;
+    final Boolean debug;
     private final HashMap<String, Game> disconnectedNicknamesGameMap;
     private SocketServer socketServer;
     private final HashMap<Integer, VirtualClient> virtualClientIDMap;
