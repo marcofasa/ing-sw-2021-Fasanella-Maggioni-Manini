@@ -321,6 +321,7 @@ public class Game implements Runnable {
 
             if (!mainMoveMade) {
                 send(nickname, new ResponseMainMoveNotMade());
+                return;
             }
 
             controller.advanceTurn(nickname);

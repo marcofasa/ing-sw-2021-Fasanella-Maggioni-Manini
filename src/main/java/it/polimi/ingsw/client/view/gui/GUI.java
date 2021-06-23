@@ -437,4 +437,9 @@ Platform.runLater(()->{
 
     }
 
+    @Override
+    public void displayMainMoveNotMade() {
+
+    }
+
 }

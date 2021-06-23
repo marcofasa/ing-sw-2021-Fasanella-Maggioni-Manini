@@ -406,6 +406,11 @@ public class CLI implements ViewInterface {
     }
 
     @Override
+    public void displayMainMoveNotMade() {
+        out.println("You have not made a main move in this turn! You can't pass the turn yet.");
+    }
+
+    @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
         out.println("A " + actionCardType + "Action Card has been used by Lorenzo!");
     }
