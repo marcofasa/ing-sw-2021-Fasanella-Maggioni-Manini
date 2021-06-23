@@ -13,13 +13,10 @@ import java.util.HashMap;
 
 public class OpponentBoardController extends StandardStage {
 
-
     @FXML
-    GridPane opponent_StrongBox_grid;
-
+    GridPane opponent_Strongbox_grid;
     @FXML
     GridPane opponent_Deposit_grid;
-
     @FXML
     GridPane opponent_cardDevelop_grid;
 
@@ -32,12 +29,10 @@ public class OpponentBoardController extends StandardStage {
     @FXML
     Label shield_label;
 
-
     private ImageView[] cardDevelopmentArray;
     private ImageView[][] resourceMatrix;
     private Boolean[] depositLevel;
     private final Utils utils = new Utils();
-
 
     public void setBriefModel(BriefModel briefModel) {
         ArrayList<CardDevelopment> cardsDevelopment = briefModel.getCardsDevelopment();
@@ -72,25 +67,25 @@ public class OpponentBoardController extends StandardStage {
         depositLevel = utils.setStrongboxLevel(depositLevel);
         for (Resource resource : deposit.keySet()) {
             if (deposit.get(resource) == 3) {
-                loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, opponent_StrongBox_grid);
+                loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, opponent_Strongbox_grid);
                 depositLevel[2] = true;
             } else if (deposit.get(resource) == 2) {
                 if (!depositLevel[1]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, opponent_StrongBox_grid);
+                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, opponent_Strongbox_grid);
                     depositLevel[1] = true;
                 } else {
-                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, opponent_StrongBox_grid);
+                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, opponent_Strongbox_grid);
                     depositLevel[2] = true;
                 }
             } else if (deposit.get(resource) == 1) {
                 if (!depositLevel[0]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, opponent_StrongBox_grid);
+                    loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, opponent_Strongbox_grid);
                     depositLevel[0] = true;
                 } else if (!depositLevel[1]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, opponent_StrongBox_grid);
+                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, opponent_Strongbox_grid);
                     depositLevel[1] = true;
                 } else {
-                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, opponent_StrongBox_grid);
+                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, opponent_Strongbox_grid);
                     depositLevel[2] = true;
                 }
             }
