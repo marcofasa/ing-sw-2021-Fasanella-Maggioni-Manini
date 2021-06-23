@@ -21,6 +21,9 @@ public class InitialSelectionController extends StandardStage {
     @FXML
     Label resources_label;
 
+    @FXML
+    Label wait_label;
+
 
     private int pNumber = -1;
     private ImageView[] cardLeaderArray;
@@ -155,6 +158,7 @@ public class InitialSelectionController extends StandardStage {
             if (resourceSelection.size() == resourceSize) {
                 printClick("resource selection button");
                 GUI.resourceList = resourceSelection;
+                wait_label.setText("Wait for other players selection...");
                 GUI.semaphoreRequest.release();
             } else {
                 printError("Not enough / Too much resources picked! You have to choose " + resourceSize + " resources.");

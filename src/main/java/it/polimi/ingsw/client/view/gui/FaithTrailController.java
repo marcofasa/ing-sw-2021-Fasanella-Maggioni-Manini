@@ -12,9 +12,12 @@ import java.util.HashMap;
 public class FaithTrailController extends StandardStage {
     private final String pathPlayer="/images/Resources/redcross.png";
     private final String pathEnemy = "/images/punchboard/croce.png";
-    private final String tileDiscarded="/images/punchboard/quadrato rosso.png";
-    private final String tileNotReached="/images/punchboard/quadrato arancione.png";
-    private final String tileReached="/images/punchboard/quadrato giallo.png";
+    private final String tileDiscarded3= "/images/punchboard/tileDiscarded3.png";
+    private final String tileDiscarded2= "/images/punchboard/tileDiscarded2.png";
+    private final String tileDiscarded1= "/images/punchboard/tileDiscarded1.png";
+    private final String tileReached3= "/images/punchboard/tileReached3.png";
+    private final String tileReached2= "/images/punchboard/tileReached2.png";
+    private final String tileReached1= "/images/punchboard/tileReached1.png";
     @FXML
     GridPane faithtrail_grid;
 
@@ -56,19 +59,40 @@ col=15;
 
 
         if(faithTileStatus==FaithTileStatus.Discarded){
-            setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded,80,80);
+            switch (section){
+                case 0:
+                    setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded1,80,80);
+break;
+                case 1:
+                    setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded2,80,80);
+                    break;
+                case 2:
+                    setImageToMatrix(row,col, faithTrailMatrix,tileDiscarded3,80,80);
+                    break;
 
+            }
+//Adding to GridPane
+            faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
         }
         else if(faithTileStatus==FaithTileStatus.Not_Reached){
-            setImageToMatrix(row,col, faithTrailMatrix,tileNotReached,80,80);
-
+           //Void
         }
         else{
-            setImageToMatrix(row,col, faithTrailMatrix,tileReached,80,80);
+            switch (section){
+                case 0:
+                    setImageToMatrix(row,col, faithTrailMatrix,tileReached1,80,80);
+                    break;
+                case 1:
+                    setImageToMatrix(row,col, faithTrailMatrix,tileReached2,80,80);
+                    break;
+                case 2:
+                    setImageToMatrix(row,col, faithTrailMatrix,tileReached3,80,80);
+                    break;
 
+            }
+            //Adding to GridPane
+            faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
         }
-        //Adding to GridPane
-        faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
     }
 
     private void setPlayerPosition(int position,ImageView[][] faithtrailMatrix,boolean player){
