@@ -60,7 +60,7 @@ public class VirtualClient implements Runnable {
                 outputStream.writeObject(serverMessage);
                 outputStream.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Couldn't send " + serverMessage + "to " + game.getNicknameByClient(this));
             }
         }
     }
