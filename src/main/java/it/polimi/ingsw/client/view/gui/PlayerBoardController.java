@@ -250,7 +250,7 @@ strongboxLevel[0]=true;
     public void endTurn(ActionEvent actionEvent) {
         if (!discardRequest) {
             GUI.sendMessage(new RequestEndTurn());
-            setDialogPane("Turn finished!", PlayerBoardController.dialog);
+            setDialogPane("Passing turn... wait for confirmation!", PlayerBoardController.dialog);
         } else
             setDialogPane("You have to discard resources!", PlayerBoardController.dialog);
     }
