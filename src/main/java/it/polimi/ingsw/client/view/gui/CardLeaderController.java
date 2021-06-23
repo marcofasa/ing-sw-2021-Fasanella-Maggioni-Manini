@@ -37,7 +37,7 @@ public class CardLeaderController extends StandardStage {
     private ArrayList<CardLeader> cardsLeaderArray;
     private ImageView[] cardLeaderArray;
     private Resource[] resources;
-    private final int nRow=3;
+    private final int nRow=2;
     private int lastClick;
     private boolean production=false;
 
@@ -48,11 +48,11 @@ public class CardLeaderController extends StandardStage {
      */
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeaderArray) {
         this.cardsLeaderArray= cardsLeaderArray;
-        cardLeaderArray = new ImageView[3];
+        cardLeaderArray = new ImageView[2];
         for (int i = 0; i < nRow; i++) {
 
 
-        if((cardsLeaderArray.size()==2 &&  i==2) || cardsLeaderArray.get(i)==null){
+        if((cardsLeaderArray.size()==1 &&  i==1) || cardsLeaderArray.size()==0 || cardsLeaderArray.get(i)==null){
 
             //Standard path for empty slot
 
@@ -138,10 +138,12 @@ public class CardLeaderController extends StandardStage {
     //CLOSING BUTTONS
 
     public void discardCardLeader(ActionEvent actionEvent) {
-        if(lastClick>0){
-        GUI.sendMessage(new RequestDiscardCardLeader(lastClick));
+        if(lastClick>=0){
+        GUI.sendMessage(new RequestDiscardCardLeader(lastClick+1));
         setDialogPane("Card Leader discarded",PlayerBoardController.dialog);
-        closeStage(actionEvent);}
+        closeStage(actionEvent);
+
+        }
         else {
             setDialogPane("Card Leader not picked!",PlayerBoardController.dialog);
         }

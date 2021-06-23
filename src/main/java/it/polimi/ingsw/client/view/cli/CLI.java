@@ -258,25 +258,25 @@ public class CLI implements ViewInterface {
         out.println();
         out.println("Here's a list of available resources to discard:");
         utils.printListResource(choice);
-            do {
-                Resource resource = utils.readResource(false);
-                if (temp.get(resource)>0) {
-                    int i = temp.get(resource);
-                    if(!selection.containsKey(resource)){
-                        selection.put(resource,1);
-                    }
-                    else {
-                        int r=selection.get(resource);
-                        selection.replace(resource, r + 1);
-                    }
-                    temp.replace(resource,i-1);
-                    if(utils.checkEmptyResourceMap(temp)){
-                        break;
-                    }
-                    out.println("Discard another resource?");
-                    loop=utils.readYesOrNo(false);
+        do {
+            Resource resource = utils.readResource(false);
+            if (temp.get(resource)>0) {
+                int i = temp.get(resource);
+                if(!selection.containsKey(resource)){
+                    selection.put(resource,1);
                 }
-                else{
+                else {
+                    int r=selection.get(resource);
+                    selection.replace(resource, r + 1);
+                }
+                temp.replace(resource,i-1);
+                if(utils.checkEmptyResourceMap(temp)){
+                    break;
+                }
+                out.println("Discard another resource?");
+                loop=utils.readYesOrNo(false);
+            }
+            else{
                     /*
                     if(firstCall) {
                         firstCall=false;
@@ -284,11 +284,11 @@ public class CLI implements ViewInterface {
                     }
 
                      */
-                    out.println("You can't discard this resource, try with another.");
-                    out.println("Here's a list of available resources to discard:");
-                    utils.printListResource(temp);
-                }
-            } while (loop);
+                out.println("You can't discard this resource, try with another.");
+                out.println("Here's a list of available resources to discard:");
+                utils.printListResource(temp);
+            }
+        } while (loop);
 
         return selection;
     }
@@ -335,15 +335,15 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
-       int maxPoints=utils.checkWinner(showScoreBoard);
-       String nickName=getLightModel().getNickname();
-       if(showScoreBoard.get(nickName)==maxPoints){
-           displayWin();
-       }
-       else {
-           displayLost();
-       }
-       utils.printScoreBoard(showScoreBoard,nickName);
+        int maxPoints=utils.checkWinner(showScoreBoard);
+        String nickName=getLightModel().getNickname();
+        if(showScoreBoard.get(nickName)==maxPoints){
+            displayWin();
+        }
+        else {
+            displayLost();
+        }
+        utils.printScoreBoard(showScoreBoard,nickName);
     }
 
     @Override

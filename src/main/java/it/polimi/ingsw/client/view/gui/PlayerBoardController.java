@@ -40,14 +40,14 @@ public class PlayerBoardController extends StandardStage {
     private boolean discardRequest = false;
     public static String messages;
     private final Utils utils=new Utils();
+    private HashMap<Resource, Integer> discardChoice;
 
 
     //SETTERS
 
     /**
      * Sets the Player Board
-     *
-     * @param lightModel      of player
+     *  @param lightModel      of player
      * @param lightFaithTrail of the game
      * @param gamePhase       of current turn
      */
@@ -55,12 +55,13 @@ public class PlayerBoardController extends StandardStage {
         this.lightFaithTrail = lightFaithTrail;
         this.lightModel = lightModel;
         this.gamePhase = gamePhase;
+        this.discardChoice=new HashMap<>();
         if (gamePhase == GamePhase.Final) {
             setEndPhase();
-        } else endPhase = false;
-        messages = "";
+        } else {
+            endPhase = false;
+        }
         dialog = dialogPane;
-
 
         //Loading card development
         cardDevelopmentArray = new ImageView[3];
@@ -136,7 +137,11 @@ strongboxLevel[0]=true;
         endPhase = true;
     }
 
-    public void setDiscardRequest() {
+    public void setDiscardRequest(HashMap<Resource, Integer> choice) {
+        if (discardChoice==null){
+            discardChoice=new HashMap<Resource, Integer>();
+        }
+        discardChoice=choice;
         discardRequest = true;
     }
 
@@ -258,6 +263,9 @@ strongboxLevel[0]=true;
     public void discardResources(ActionEvent actionEvent) {
         FXMLLoader loader = load("/fxml/DiscardResource.fxml");
         Scene secondScene = setScene(loader);
+        DiscardResourceController discardResourceController=loader.getController();
+        if(discardChoice!=null){
+        discardResourceController.setDiscardSelection(discardChoice);}
         showStage(secondScene);
     }
 
@@ -267,6 +275,7 @@ strongboxLevel[0]=true;
         CardLeaderController cardLeaderController = loader.getController();
         cardLeaderController.setCardLeaderDeck(lightModel.getCardsLeader());
         showStage(secondScene);
+
 
     }
 }

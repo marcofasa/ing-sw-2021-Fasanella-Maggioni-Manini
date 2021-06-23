@@ -13,7 +13,7 @@ public class ParsingCommand {
     private final PrintWriter out ;
     private final Scanner in;
     private boolean haveMove=false;
-    
+
     /**
      * Constructor of Parsing Command
      * @param utils
@@ -39,6 +39,9 @@ public class ParsingCommand {
         while(readPlayerCommand(gamePhase));
     }
 
+    /**
+     * Prints the current player Menu
+     */
     private void printMenu() {
         out.println("Is your Turn!");
         out.println("Choose a move:");
@@ -145,6 +148,7 @@ public class ParsingCommand {
     public void WaitingMenu() {
         while(readWaitingCommand());
     }
+
 
     private boolean readWaitingCommand() {
         String command = utils.readString();

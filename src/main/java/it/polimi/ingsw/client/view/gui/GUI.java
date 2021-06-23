@@ -44,6 +44,14 @@ public class GUI extends Application implements ViewInterface {
         client.send(clientMessage);
     }
 
+    public void setClient(Client client) {
+        GUI.client = client;
+        GUI.lightFaithTrail = new LightFaithTrail(client);
+    }
+
+    public static void setConnectionInfo(ConnectionInfo connectionInfo) {
+        GUI.connectionInfo = connectionInfo;
+    }
 
     private Stage Scene(String fxmlPath) {
         setupStage(fxmlPath);
@@ -63,6 +71,10 @@ public class GUI extends Application implements ViewInterface {
         });
     }
 
+    /**
+     * Sets up the Stage
+     * @param fxmlPath of FXML
+     */
     private void setupStage(String fxmlPath) {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(fxmlPath));
@@ -99,10 +111,7 @@ public class GUI extends Application implements ViewInterface {
     }
 
 
-    public void setClient(Client client) {
-        GUI.client = client;
-        GUI.lightFaithTrail = new LightFaithTrail(client);
-    }
+
 
     @Override
     public void displayStartingGame() {
@@ -164,7 +173,6 @@ Platform.runLater(()->{
     @Override
     public void displayConnection() {
         primaryStage = Scene("/fxml/Logo.fxml");
-        //primaryStage.showAndWait();
     }
 
     @Override
@@ -271,7 +279,6 @@ Platform.runLater(()->{
 
         //Sends Request to Client
         client.send(new RequestActivateProduction(productionController.getProductionSelection()));
-        //
     }
 
     @Override
@@ -286,7 +293,6 @@ Platform.runLater(()->{
 
     @Override
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
-        //Remove
         Platform.runLater(()->{
             InitialSelectionController initialSelectionController = fxmlLoader.getController();
             initialSelectionController.setPlayerNumber(playerNumber);
@@ -323,7 +329,7 @@ Platform.runLater(()->{
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         Platform.runLater(()->{
             PlayerBoardController playerBoardController=fxmlLoader.getController();
-            playerBoardController.setDiscardRequest();
+            playerBoardController.setDiscardRequest(choice);
         });
 
         if (discardList==null){
@@ -431,8 +437,4 @@ Platform.runLater(()->{
 
     }
 
-
-    public static void setConnectionInfo(ConnectionInfo connectionInfo) {
-        GUI.connectionInfo = connectionInfo;
-    }
 }

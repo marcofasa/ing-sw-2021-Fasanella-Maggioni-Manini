@@ -10,23 +10,35 @@ import java.util.HashMap;
 
 public class DiscardResourceController extends StandardStage {
 
+    //FOR SELECTION
     @FXML
     Label stone_label;
-
     @FXML
     Label coin_label;
-
     @FXML
     Label servant_label;
-
     @FXML
     Label shield_label;
+
+    //FOR VIEW ONLY
+    @FXML
+    Label stone;
+    @FXML
+    Label coin;
+    @FXML
+    Label servant;
+    @FXML
+    Label shield;
 
     private HashMap<Resource, Integer> discardList;
     private int nStone=0;
     private int nShield=0;
     private int nServant=0;
     private int nCoin=0;
+    private Label getStone_label;
+    private Label getShield_label;
+    private Label getCoin_label;
+    private Label getServant_label;
 
 
     //BUTTONS
@@ -79,4 +91,22 @@ public class DiscardResourceController extends StandardStage {
         shield_label.setText("x"+nShield);
     }
 
-}
+    public void setDiscardSelection(HashMap<Resource, Integer> discardChoice) {
+        for(Resource resource: discardChoice.keySet()){
+                switch (resource) {
+                    case Coins :
+                        coin.setText("x" + discardChoice.get(resource));
+                         break;
+                    case Servants :
+                        servant.setText("x" + discardChoice.get(resource));
+                         break;
+                    case Shields :
+                        shield.setText("x" + discardChoice.get(resource));
+                        break;
+                    case Stones :
+                        stone.setText("x" + discardChoice.get(resource));
+                        break;
+                    }
+                }
+        }
+    }

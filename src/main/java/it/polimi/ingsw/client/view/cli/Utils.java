@@ -270,6 +270,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Prints tile statuses
+     *
+     * @param tileStatuses
+     */
     private void printTile(FaithTileStatus tileStatuses) {
         if (tileStatuses == FaithTileStatus.Reached) out.printf("reached;");
         if (tileStatuses == FaithTileStatus.Discarded) out.printf("discarded;");
@@ -517,12 +522,17 @@ public class Utils {
         return cardLeaders.get(readNumberWithBounds(1, cardLeaders.size()) - 1);
     }
 
+    /**
+     * Prints and gets a selection of cards leader
+     *
+     * @param cardLeaders arraylist of cards
+     * @return an integer corresponding to chosen card
+     */
     public Integer printAndGetCardLeaderIndex(ArrayList<CardLeader> cardLeaders) {
         //Print Card Leader Deck
         if (cardLeaders.size() > 0) {
             printCardLeaderDeck(cardLeaders);
-        }
-        else {
+        } else {
             out.println("You have no leader cards!");
             return -1;
         }
@@ -596,6 +606,11 @@ public class Utils {
         out.println();
     }
 
+    /**
+     * Prints card leader types
+     *
+     * @param description
+     */
     private void printCardLeaderType(CardLeaderType description) {
         String s = description.toString();
         switch (description) {
@@ -634,6 +649,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Prints Colors
+     *
+     * @param key
+     */
     private void printCardColor(String key) {
         switch (key) {
             case "Yellow":
@@ -797,6 +817,11 @@ public class Utils {
         out.println();
     }
 
+    /**
+     * Prints a given card development
+     *
+     * @param cardDevelopment
+     */
     private void printCardDevelopment(CardDevelopment cardDevelopment) {
         out.println(
                 "\n\tCard Development type " + cardDevelopment.getCardType().toString() +
@@ -951,8 +976,7 @@ public class Utils {
                     if (readYesOrNo(false)) cardLeaders[i] = cardsLeader.get(i);
                     else cardLeaders[i] = null;
                 }
-            }
-            else cardLeaders[i] = null;
+            } else cardLeaders[i] = null;
         }
         return cardLeaders;
     }
@@ -1054,6 +1078,9 @@ public class Utils {
         }
     }
 
+    /**
+     * Sets CLI to colored depending on OS
+     */
     public void setColoredCLI() {
         try {
             final String os = System.getProperty("os.name");
@@ -1096,6 +1123,12 @@ public class Utils {
         else out.println("Done!");
     }
 
+    /**
+     * Check what's the highest score
+     *
+     * @param showScoreBoard
+     * @return the maximum points (of winner)
+     */
     public Integer checkWinner(HashMap<String, Integer> showScoreBoard) {
         Integer maxValue = 0;
         for (String name : showScoreBoard.keySet()) {
@@ -1104,6 +1137,12 @@ public class Utils {
         return maxValue;
     }
 
+    /**
+     * Prints the score board at end game
+     *
+     * @param showScoreBoard hashmaps of players with their corresponding points
+     * @param nickName       of current player (to decide if winner or not)
+     */
     public void printScoreBoard(HashMap<String, Integer> showScoreBoard, String nickName) {
         if (coloredCLI) {
             out.println(GREEN + "You have scored " + showScoreBoard.get(nickName) + " points!!!" + RESET);
@@ -1173,6 +1212,12 @@ public class Utils {
         else out.println("Waiting for your turn... it will start soon!");
     }
 
+    /**
+     * Prints the content of Deposit Leader Respurces
+     *
+     * @param depositLeaderResources
+     * @param depositLeaderContent
+     */
     public void printLeaderDeposit(ArrayList<Resource> depositLeaderResources, HashMap<Resource, Integer> depositLeaderContent) {
 
         for (Resource resource : depositLeaderResources) {
