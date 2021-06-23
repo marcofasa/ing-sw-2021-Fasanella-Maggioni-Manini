@@ -81,6 +81,7 @@ public class Game implements Runnable {
         try {
             controller.assignInitialBenefits(nickname, _cardLeader, _resource1, _resource2);
             send(_vClient, new ResponseSuccess());
+            sendAll(new NotifyBriefModel(gameTable.getPlayerByNickname(nickname)));
         } catch (NotActivePlayerException ex) {
             send(_vClient, new ResponseNotActivePlayerError());
         }
