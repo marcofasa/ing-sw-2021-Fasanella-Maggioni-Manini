@@ -370,7 +370,7 @@ public class Game implements Runnable {
 
         try {
 
-            if (!mainMoveMade) {
+            if (!mainMoveMade && isVirtualClientActivePlayer(_vClient)) {
                 send(nickname, new ResponseMainMoveNotMade());
                 return;
             }
@@ -719,5 +719,9 @@ public class Game implements Runnable {
                 player.setGameState(GameState.Ended);
             }
         }
+    }
+
+    private boolean isVirtualClientActivePlayer(VirtualClient _vClient) {
+        return controller.getTurnController().getActivePlayer().getNickname().equals(clientNicknameMap.get(_vClient));
     }
 }
