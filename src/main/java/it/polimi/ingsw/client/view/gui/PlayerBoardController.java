@@ -35,7 +35,7 @@ public class PlayerBoardController extends StandardStage {
     private boolean endPhase = false;
     private boolean discardRequest = false;
     public static String messages;
-    private final Utils utils=new Utils();
+    private final Utils utils = new Utils();
     private HashMap<Resource, Integer> discardChoice;
 
 
@@ -43,14 +43,15 @@ public class PlayerBoardController extends StandardStage {
 
     /**
      * Sets the Player Board
-     *  @param lightModel      of player
+     *
+     * @param lightModel      of player
      * @param lightFaithTrail of the game
      * @param gamePhase       of current turn
      */
     public void setModels(LightModel lightModel, LightFaithTrail lightFaithTrail, GamePhase gamePhase) {
         this.lightFaithTrail = lightFaithTrail;
         this.lightModel = lightModel;
-        this.discardChoice=new HashMap<>();
+        this.discardChoice = new HashMap<>();
         if (gamePhase == GamePhase.Final) {
             setEndPhase();
         } else {
@@ -60,69 +61,64 @@ public class PlayerBoardController extends StandardStage {
 
         //Loading card development
         ImageView[] cardDevelopmentArray = new ImageView[3];
-        for(int i=1;i<4;i++){
-           if( lightModel.getCardsDevelopment().get(i-1)!=null){
+        for (int i = 1; i < 4; i++) {
+            if (lightModel.getCardsDevelopment().get(i - 1) != null) {
 
-            Integer color = switch (lightModel.getCardsDevelopment().get(i - 1).getCardType()) {
-                case Green -> 0;
-                case Blue -> 2;
-                case Purple -> 1;
-                default -> 3;
-            };
-               //image final path
-            String path = "/images/CardDevelopment/Card_Development_" + lightModel.getCardsDevelopment().get(i-1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
-            setImageToArray(i-1,path, cardDevelopmentArray,80,120);
-        } else {
-            // if there's no card on the deck (printing default image)
-            String path = "/images/CardDevelopment/Card_Development_Empty.png" ;
-            setImageToArray(i-1,path, cardDevelopmentArray,80,120);
+                Integer color = switch (lightModel.getCardsDevelopment().get(i - 1).getCardType()) {
+                    case Green -> 0;
+                    case Blue -> 2;
+                    case Purple -> 1;
+                    default -> 3;
+                };
+                //image final path
+                String path = "/images/CardDevelopment/Card_Development_" + lightModel.getCardsDevelopment().get(i - 1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
+                setImageToArray(i - 1, path, cardDevelopmentArray, 80, 120);
+            } else {
+                // if there's no card on the deck (printing default image)
+                String path = "/images/CardDevelopment/Card_Development_Empty.png";
+                setImageToArray(i - 1, path, cardDevelopmentArray, 80, 120);
+            }
+            //Adding to GridPane
+            cardDevelop_grid.add(cardDevelopmentArray[i - 1], i, 0);
         }
-        //Adding to GridPane
-        cardDevelop_grid.add(cardDevelopmentArray[i-1], i, 0);
-    }
 
 
         //Loading Strongbox
         ImageView[][] resourceMatrix = new ImageView[3][5];
         HashMap<Resource, Integer> strongbox = lightModel.getDeposit();
-        strongboxLevel=utils.setStrongboxLevel(strongboxLevel);
-        for(Resource resource: strongbox.keySet()){
-            if(strongbox.get(resource)==3){
-                  loadStrongboxLevel(resource, resourceMatrix,2,1,3,resources_grid);
-                   strongboxLevel[2]=true;
-            }
-            else if(strongbox.get(resource)==2){
-                 if(!strongboxLevel[1]){
-                     loadStrongboxLevel(resource, resourceMatrix,1,1,2,resources_grid);
-                     strongboxLevel[1]=true;
-                 }
-                 else {
-                     loadStrongboxLevel(resource, resourceMatrix,2,1,2,resources_grid);
-                     strongboxLevel[2]=true;
-                 }
-            }
-            else if (strongbox.get(resource)==1){
-               if(!strongboxLevel[0]){
-                   loadStrongboxLevel(resource, resourceMatrix,0,2,1,resources_grid);
-strongboxLevel[0]=true;
-               }
-               else if(!strongboxLevel[1]){
-                   loadStrongboxLevel(resource, resourceMatrix,1,1,1,resources_grid);
-                   strongboxLevel[1]=true;
-               }
-               else {
-                   loadStrongboxLevel(resource, resourceMatrix,2,1,1,resources_grid);
-                   strongboxLevel[2]=true;
-               }
+        strongboxLevel = utils.setStrongboxLevel(strongboxLevel);
+        for (Resource resource : strongbox.keySet()) {
+            if (strongbox.get(resource) == 3) {
+                loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, resources_grid);
+                strongboxLevel[2] = true;
+            } else if (strongbox.get(resource) == 2) {
+                if (!strongboxLevel[1]) {
+                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, resources_grid);
+                    strongboxLevel[1] = true;
+                } else {
+                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, resources_grid);
+                    strongboxLevel[2] = true;
+                }
+            } else if (strongbox.get(resource) == 1) {
+                if (!strongboxLevel[0]) {
+                    loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, resources_grid);
+                    strongboxLevel[0] = true;
+                } else if (!strongboxLevel[1]) {
+                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, resources_grid);
+                    strongboxLevel[1] = true;
+                } else {
+                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, resources_grid);
+                    strongboxLevel[2] = true;
+                }
             }
         }
 
     }
 
-    private void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources,GridPane gridPane) {
-        String path= utils.getResourcePath(resource);
-        while(nResources>0) {
-            setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20,gridPane);
+    private void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
+        String path = utils.getResourcePath(resource);
+        while (nResources > 0) {
+            setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20, gridPane);
             startingColumn++;
             nResources--;
         }
@@ -133,10 +129,10 @@ strongboxLevel[0]=true;
     }
 
     public void setDiscardRequest(HashMap<Resource, Integer> choice) {
-        if (discardChoice==null){
-            discardChoice=new HashMap<Resource, Integer>();
+        if (discardChoice == null) {
+            discardChoice = new HashMap<Resource, Integer>();
         }
-        discardChoice=choice;
+        discardChoice = choice;
         discardRequest = true;
     }
 
@@ -258,9 +254,10 @@ strongboxLevel[0]=true;
     public void discardResources(ActionEvent actionEvent) {
         FXMLLoader loader = load("/fxml/DiscardResource.fxml");
         Scene secondScene = setScene(loader);
-        DiscardResourceController discardResourceController=loader.getController();
-        if(discardChoice!=null){
-        discardResourceController.setDiscardSelection(discardChoice);}
+        DiscardResourceController discardResourceController = loader.getController();
+        if (discardChoice != null) {
+            discardResourceController.setDiscardSelection(discardChoice);
+        }
         showStage(secondScene);
     }
 

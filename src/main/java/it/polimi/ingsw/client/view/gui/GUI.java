@@ -370,7 +370,18 @@ Platform.runLater(()->{
 
     @Override
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
+        int maxPoints=utils.checkWinner(showScoreBoard);
+        String nickName=getLightModel().getNickname();
+        if(showScoreBoard.get(nickName)==maxPoints){
+            displayWin();
+        }
+        else {
+            displayLost();
+        }
 
+        for (String nickname : showScoreBoard.keySet()) {
+            displayMessage(nickname + " has made a total of " + showScoreBoard.get(nickname) + " points!");
+        }
     }
 
     @Override

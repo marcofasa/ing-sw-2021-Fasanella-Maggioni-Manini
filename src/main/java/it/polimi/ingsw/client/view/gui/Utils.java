@@ -42,4 +42,12 @@ public class Utils {
             case Stones -> stone;
         };
     }
+
+    public int checkWinner(HashMap<String, Integer> showScoreBoard) {
+        Integer maxValue = 0;
+        for (String name : showScoreBoard.keySet()) {
+            if (showScoreBoard.get(name) > maxValue) maxValue = showScoreBoard.get(name);
+        }
+        return maxValue;
+    }
 }
