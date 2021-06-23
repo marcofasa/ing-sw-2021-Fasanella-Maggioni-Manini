@@ -113,7 +113,7 @@ public class GUI extends Application implements ViewInterface {
     public void displayMessage(String message) {
         Platform.runLater(()->{
             StandardStage stage  = fxmlLoader.getController();
-            stage.setDialogPane(message, PlayerBoardController.dialog, PlayerBoardController.messages);
+            stage.setDialogPane(message, PlayerBoardController.dialog);
         });
     }
 

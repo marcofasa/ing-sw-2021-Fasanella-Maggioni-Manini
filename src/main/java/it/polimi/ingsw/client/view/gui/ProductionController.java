@@ -82,7 +82,7 @@ public class ProductionController extends StandardStage {
     public void production(ActionEvent actionEvent) {
         productionSelection.setCardDevelopmentSlotActive(cardDevelopArray);
         GUI.sendMessage(new RequestActivateProduction(productionSelection));
-        PlayerBoardController.messages=setDialogPane("Production activated!",PlayerBoardController.dialog,PlayerBoardController.messages);
+        setDialogPane("Production activated!",PlayerBoardController.dialog);
         closeStage(actionEvent);
     }
 

@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class StandardStage {
 
+    String messages = "";
+
     public void init(){
     }
 
@@ -26,10 +28,11 @@ public class StandardStage {
         System.out.println("Error! "+ errorType);
     }
 
-    public String setDialogPane(String text,DialogPane dialogPane, String messages){
-        messages=messages+"\n"+text;
-        dialogPane.setContentText(messages);
-        return messages;
+    public void setDialogPane(String text, DialogPane dialogPane){
+        messages = messages + "\n" + text;
+        if(dialogPane != null) {
+            dialogPane.setContentText(messages);
+        }
     }
 
     public void printDialog(String s,DialogPane dialogPane){
