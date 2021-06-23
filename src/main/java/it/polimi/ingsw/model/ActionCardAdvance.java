@@ -4,7 +4,7 @@ package it.polimi.ingsw.model;
  * Concrete ActionCard
  */
 public class ActionCardAdvance extends ActionCard{
-    private Lorenzo lorenzo;
+    private final Lorenzo lorenzo;
 
     /**
      * Constructor of the class

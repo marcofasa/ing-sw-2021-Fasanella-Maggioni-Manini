@@ -29,7 +29,7 @@ public class CardDevelopmentSelection extends StandardStage {
     GridPane cardDevelopSel_grid;
 
     private ImageView[] cardDevelopmentArray;
-    private int nRow=3;
+    private final int nRow=3;
     private int pos=-1;
 
 

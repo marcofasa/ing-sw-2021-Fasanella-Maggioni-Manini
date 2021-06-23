@@ -17,8 +17,8 @@ public class ProductionController extends StandardStage {
     public ProductionSelection productionSelection;
     private ArrayList<CardDevelopment> cardsDevelopment;
     private ArrayList<CardLeader> cardsLeader;
-    private Resource[] resources=new Resource[3];
-    private Boolean[] cardDevelopArray =new Boolean[3];
+    private final Resource[] resources=new Resource[3];
+    private final Boolean[] cardDevelopArray =new Boolean[3];
 
 
     /**

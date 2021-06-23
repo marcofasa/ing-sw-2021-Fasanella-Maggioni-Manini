@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class LightModel {
     private String nickname;
-    private Client client;
+    private final Client client;
     private int numberOfPlayers;
     private ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket;
     private ArrayList<CardDevelopment> cardsDevelopment;

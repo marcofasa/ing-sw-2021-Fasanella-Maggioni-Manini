@@ -39,7 +39,7 @@ public class CardLeaderController extends StandardStage {
     private ArrayList<CardLeader> cardsLeaderArray;
     private ImageView[] cardLeaderArray;
     private Resource[] resources;
-    private int nRow=3;
+    private final int nRow=3;
     private int lastClick;
     private boolean production=false;
 

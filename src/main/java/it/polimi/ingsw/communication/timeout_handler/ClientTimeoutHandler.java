@@ -7,7 +7,7 @@ import it.polimi.ingsw.communication.client.ClientMessage;
 import java.util.concurrent.TimeoutException;
 
 public class ClientTimeoutHandler {
-    TimeoutHandler timeoutHandler;
+    final TimeoutHandler timeoutHandler;
 
     public ClientTimeoutHandler(Client client){
         timeoutHandler = new TimeoutHandler(client);

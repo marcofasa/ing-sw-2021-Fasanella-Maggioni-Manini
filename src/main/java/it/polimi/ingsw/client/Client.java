@@ -42,7 +42,7 @@ public class Client {
     private final ArrayList<BriefModel> players;
     private final HashMap<String, BriefModel> modelByNickname;
     private String nickname = "";
-    public static Semaphore connectionSetupSemaphore = new Semaphore(0);
+    public static final Semaphore connectionSetupSemaphore = new Semaphore(0);
     private String ip;
     private volatile boolean running;
     private ScheduledFuture<?> heartBeatExecutor;
@@ -279,4 +279,7 @@ public class Client {
         exit(0);
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
 }

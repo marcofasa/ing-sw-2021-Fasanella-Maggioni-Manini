@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 public class Utils {
 
-    private String coin="/images/Resources/coin.png";
-    private String servant="/images/Resources/servant.png";
-    private String shield="/images/Resources/shield.png";
-    private String stone="/images/Resources/stone.png";
+    private final String coin="/images/Resources/coin.png";
+    private final String servant="/images/Resources/servant.png";
+    private final String shield="/images/Resources/shield.png";
+    private final String stone="/images/Resources/stone.png";
 
 
     /**

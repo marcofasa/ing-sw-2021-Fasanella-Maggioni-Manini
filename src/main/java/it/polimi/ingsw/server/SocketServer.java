@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 public class SocketServer implements Runnable{
 
     private ServerSocket serverSocket;
-    private Integer port;
-    private Server server;
+    private final Integer port;
+    private final Server server;
     ExecutorService executor;
     private Integer nextClientID;
 

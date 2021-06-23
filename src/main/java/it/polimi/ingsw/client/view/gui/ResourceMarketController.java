@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class ResourceMarketController extends StandardStage {
 
 
-    private int nRow = 3;
-    private int nCol = 4;
+    private final int nRow = 3;
+    private final int nCol = 4;
 
     private String key = "row";
     private Integer message = 2;

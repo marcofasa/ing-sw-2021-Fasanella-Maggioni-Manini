@@ -21,7 +21,7 @@ public class TurnController {
     private PlayerBoard activePlayer;
     private boolean isLorenzoActive;
     private Integer turnCounter;
-    private LinkedHashMap<String, Boolean> connectionStatuses;
+    private final LinkedHashMap<String, Boolean> connectionStatuses;
 
     /**
      * Basic constructor to set internal GameTable reference.

@@ -8,8 +8,8 @@ public class ParsingCommand {
 
 
     private final Boolean debug;
-    private Utils utils;
-    private CLI cli;
+    private final Utils utils;
+    private final CLI cli;
     private final PrintWriter out ;
     private final Scanner in;
     private boolean haveMove=false;

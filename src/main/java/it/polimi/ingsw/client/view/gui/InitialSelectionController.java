@@ -24,7 +24,7 @@ public class InitialSelectionController extends StandardStage {
 
     private int pNumber = -1;
     private ImageView[] cardLeaderArray;
-    private int nRow = 4;
+    private final int nRow = 4;
     private ArrayList<CardLeader> cardSelection;
     private ArrayList<CardLeader> cardsLeader;
     private ArrayList<Resource> resourceSelection;

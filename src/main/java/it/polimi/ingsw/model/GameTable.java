@@ -9,10 +9,10 @@ import java.util.ListIterator;
 
 public class GameTable implements Serializable {
 
-    private ArrayList<PlayerBoard> players;
+    private final ArrayList<PlayerBoard> players;
     private Lorenzo lorenzo;
     private FaithTrail faithTrail;
-    private CardLeaderDeck cardLeaderDeck;
+    private final CardLeaderDeck cardLeaderDeck;
     private Market market;
     private CardDevelopmentMarket cardDevelopmentMarket;
     private int numberOfPlayers;

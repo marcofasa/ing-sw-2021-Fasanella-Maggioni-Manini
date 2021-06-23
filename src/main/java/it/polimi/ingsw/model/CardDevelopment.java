@@ -7,15 +7,15 @@ public class CardDevelopment implements Serializable {
 
     // Development card state
 
-    private CardDevelopmentType cardType;
-    private CardDevelopmentLevel cardLevel;
-    private Integer victoryPoints;
+    private final CardDevelopmentType cardType;
+    private final CardDevelopmentLevel cardLevel;
+    private final Integer victoryPoints;
 
-    private HashMap<Resource, Integer> cardCosts;
-    private HashMap<Resource, Integer> productionInput;
-    private HashMap<Resource, Integer> productionOutput;
+    private final HashMap<Resource, Integer> cardCosts;
+    private final HashMap<Resource, Integer> productionInput;
+    private final HashMap<Resource, Integer> productionOutput;
 
-    private Integer numberOfRedResourceProduced;
+    private final Integer numberOfRedResourceProduced;
 
     /* Constructor(s) */
 
@@ -533,13 +533,13 @@ public class CardDevelopment implements Serializable {
                 CardDevelopmentInfo.toHashMap("SHIELD:3,COIN:1"),
                 0);
 
-        CardDevelopmentType cardType;
-        CardDevelopmentLevel cardLevel;
-        Integer victoryPoints;
-        HashMap<Resource, Integer> cardCosts;
-        HashMap<Resource, Integer> productionInput;
-        HashMap<Resource, Integer> productionOutput;
-        Integer numberOfRedResourceProduced;
+        final CardDevelopmentType cardType;
+        final CardDevelopmentLevel cardLevel;
+        final Integer victoryPoints;
+        final HashMap<Resource, Integer> cardCosts;
+        final HashMap<Resource, Integer> productionInput;
+        final HashMap<Resource, Integer> productionOutput;
+        final Integer numberOfRedResourceProduced;
 
         CardDevelopmentInfo(CardDevelopmentType _cardType,
                 CardDevelopmentLevel _cardLevel,

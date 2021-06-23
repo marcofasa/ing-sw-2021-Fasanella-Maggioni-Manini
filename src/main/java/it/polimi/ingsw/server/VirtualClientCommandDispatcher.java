@@ -26,12 +26,8 @@ public class VirtualClientCommandDispatcher {
             case Active -> {
                 return virtualClient.getGame();
             }
-            case Ended -> {
-                send(new KillConnectionMessage());
-            }
-            case EndedWithError -> {
-                send(new KillConnectionMessage(true));
-            }
+            case Ended -> send(new KillConnectionMessage());
+            case EndedWithError -> send(new KillConnectionMessage(true));
         }
         Thread.currentThread().interrupt();
         return null;

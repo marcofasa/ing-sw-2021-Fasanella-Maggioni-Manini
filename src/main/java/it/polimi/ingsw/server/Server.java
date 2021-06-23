@@ -46,8 +46,7 @@ public class Server {
         disconnectedNicknamesGameMap = new HashMap<String, Game>();
     }
 
-    /*
-    //Single Player Server
+    /* Single Player Server
     public Server(boolean SinglePlayer){
         currentGame = new Game();
         lobby = new WaitingLobby(this);

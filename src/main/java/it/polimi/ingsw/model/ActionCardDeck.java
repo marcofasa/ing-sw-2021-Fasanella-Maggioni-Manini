@@ -6,7 +6,7 @@ import java.util.*;
 public class ActionCardDeck {
 
     private Stack<ActionCard> usedStack;
-    private Stack<ActionCard> availableStack;
+    private final Stack<ActionCard> availableStack;
 
     /**
      * Constructor, generates a new shuffled deck

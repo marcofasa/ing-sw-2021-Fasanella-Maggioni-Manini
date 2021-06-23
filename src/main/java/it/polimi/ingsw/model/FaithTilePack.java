@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 
 public class FaithTilePack {
-    private HashMap<FaithSection,FaithTileStatus> tiles;
+    private final HashMap<FaithSection,FaithTileStatus> tiles;
 
     /**
      * @param section of FaithTrail

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class ResponseDiscardResourceSelection extends ServerResponse {
 
-    private HashMap<Resource,Integer> resources;
+    private final HashMap<Resource,Integer> resources;
 
     public ResponseDiscardResourceSelection(HashMap<Resource,Integer> resources) {
         super(null, null);

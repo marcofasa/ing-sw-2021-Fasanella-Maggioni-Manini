@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
 public class ActionCardDiscard extends ActionCard{
-    private CardDevelopmentType cardDevelopmentType;
-    private GameTable gameTable;
+    private final CardDevelopmentType cardDevelopmentType;
+    private final GameTable gameTable;
 
     /**
      * Constructor of the class,

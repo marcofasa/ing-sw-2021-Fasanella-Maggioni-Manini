@@ -6,10 +6,10 @@ import java.util.HashMap;
 
 public class FaithTrail implements Serializable {
     final private int length = 25;
-    private ArrayList<FaithCell> cells;
-    private HashMap<PlayerBoard, Integer> playerPosition;
-    private HashMap<PlayerBoard, FaithTilePack> playerTiles;
-    private GameTable gameTable;
+    private final ArrayList<FaithCell> cells;
+    private final HashMap<PlayerBoard, Integer> playerPosition;
+    private final HashMap<PlayerBoard, FaithTilePack> playerTiles;
+    private final GameTable gameTable;
     private Lorenzo lorenzo;
     private int lorenzoPosition;
 

@@ -9,7 +9,7 @@ public class ScoreBoardMessage extends ServerMessage {
         super(null,null);
         showScoreBoard=stringIntegerHashMap;
     }
-    private HashMap<String,Integer> showScoreBoard;
+    private final HashMap<String,Integer> showScoreBoard;
 
     public HashMap<String, Integer> getShowScoreBoard() {
         return showScoreBoard;

@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FaithTrailController extends StandardStage {
-    private String pathPlayer="/images/Resources/redcross.png";
-    private String pathEnemy = "/images/punchboard/croce.png";
-    private String tileDiscarded="/images/punchboard/quadrato rosso.png";
-    private String tileNotReached="/images/punchboard/quadrato arancione.png";
-    private String tileReached="/images/punchboard/quadrato giallo.png";
+    private final String pathPlayer="/images/Resources/redcross.png";
+    private final String pathEnemy = "/images/punchboard/croce.png";
+    private final String tileDiscarded="/images/punchboard/quadrato rosso.png";
+    private final String tileNotReached="/images/punchboard/quadrato arancione.png";
+    private final String tileReached="/images/punchboard/quadrato giallo.png";
     @FXML
     GridPane faithtrail_grid;
 
