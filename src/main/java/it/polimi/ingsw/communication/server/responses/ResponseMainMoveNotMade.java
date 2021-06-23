@@ -13,3 +13,4 @@ public class ResponseMainMoveNotMade extends ServerResponse {
     public void read(ClientCommandDispatcher commandDispatcher) {
         commandDispatcher.mainMoveNotMade();
     }
+}
