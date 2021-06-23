@@ -429,12 +429,12 @@ Platform.runLater(()->{
 
     @Override
     public void notifyDisconnectionOf(String nickname) {
-
+        displayMessage("Client " + nickname + "disconnected, from now on his turns are skipped");
     }
 
     @Override
     public void notifyReconnection(String nickname) {
-
+        displayMessage("Client " + nickname + " reconnected, from now on he's back playing");
     }
 
     @Override
