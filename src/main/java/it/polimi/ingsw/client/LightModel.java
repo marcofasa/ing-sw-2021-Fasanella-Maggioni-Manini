@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LightModel {
-    private String nickname;
     private final Client client;
     private int numberOfPlayers;
     private ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket;
@@ -31,10 +30,6 @@ public class LightModel {
     }
 
     //Setters (used as Update methods)
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     public void setSpareMarble(Marble spareMarble) {
         this.spareMarble = spareMarble;
@@ -83,7 +78,7 @@ public class LightModel {
     }
 
     public String getNickname() {
-        return nickname;
+        return client.getNickname();
     }
 
     public int getNumberOfPlayers() {

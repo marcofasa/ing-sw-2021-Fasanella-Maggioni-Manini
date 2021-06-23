@@ -132,7 +132,7 @@ strongboxLevel[0]=true;
         }
     }
 
-    private void setEndPhase() {
+    void setEndPhase() {
         endPhase = true;
     }
 

@@ -190,10 +190,23 @@ Platform.runLater(()->{
 
     @Override
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
+        StandardStage stage = fxmlLoader.getController();
+        String messages = stage.getDialogPane();
         mainScene("/fxml/PlayerBoard.fxml");
         Platform.runLater(() -> {
             PlayerBoardController playerBoardController = fxmlLoader.getController();
             playerBoardController.setModels(getLightModel(), getLightFaithTrail(), gamePhase);
+            displayMessage(messages);
+            if(currentPlayer.equals(getLightModel().getNickname())){
+                if(gamePhase == GamePhase.Final){
+                    playerBoardController.setEndPhase();
+                    displayMessage("Make your final action or press End Turn");
+                } else {
+                    displayMessage("It's your turn to play!");
+                }
+            } else{
+                displayMessage("It's " + currentPlayer + "'s turn!");
+            }
         });
     }
 

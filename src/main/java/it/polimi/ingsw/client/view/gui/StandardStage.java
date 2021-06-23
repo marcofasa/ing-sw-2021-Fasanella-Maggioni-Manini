@@ -28,6 +28,10 @@ public class StandardStage {
         System.out.println("Error! "+ errorType);
     }
 
+    public String getDialogPane(){
+        return messages;
+    }
+
     public void setDialogPane(String text, DialogPane dialogPane){
         messages = messages + "\n" + text;
         if(dialogPane != null) {
