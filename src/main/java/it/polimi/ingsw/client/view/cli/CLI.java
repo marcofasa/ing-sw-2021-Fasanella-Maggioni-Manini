@@ -410,10 +410,6 @@ public class CLI implements ViewInterface {
         out.println("You have not made a main move in this turn! You can't pass the turn yet.");
     }
 
-    @Override
-    public void displayMainMoveNotMade() {
-
-    }
 
     @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
