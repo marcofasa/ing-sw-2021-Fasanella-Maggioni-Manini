@@ -408,6 +408,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayMainMoveNotMade() {
         out.println("You have not made a main move in this turn! You can't pass the turn yet.");
+        displayTurn(client.getNickname(), GamePhase.Final);
     }
 
 
