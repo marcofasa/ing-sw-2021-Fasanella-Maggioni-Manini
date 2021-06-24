@@ -28,7 +28,7 @@ public class PlayerBoardController extends StandardStage {
     DialogPane dialogPane;
 
 
-    private Boolean[] strongboxLevel;
+    private Boolean[] depositLevel;
     public static DialogPane dialog;
     private LightFaithTrail lightFaithTrail;
     private LightModel lightModel;
@@ -85,43 +85,9 @@ public class PlayerBoardController extends StandardStage {
 
         //Loading Strongbox
         ImageView[][] resourceMatrix = new ImageView[3][5];
-        HashMap<Resource, Integer> strongbox = lightModel.getDeposit();
-        strongboxLevel = utils.setStrongboxLevel(strongboxLevel);
-        for (Resource resource : strongbox.keySet()) {
-            if (strongbox.get(resource) == 3) {
-                loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, resources_grid);
-                strongboxLevel[2] = true;
-            } else if (strongbox.get(resource) == 2) {
-                if (!strongboxLevel[1]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, resources_grid);
-                    strongboxLevel[1] = true;
-                } else {
-                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, resources_grid);
-                    strongboxLevel[2] = true;
-                }
-            } else if (strongbox.get(resource) == 1) {
-                if (!strongboxLevel[0]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, resources_grid);
-                    strongboxLevel[0] = true;
-                } else if (!strongboxLevel[1]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, resources_grid);
-                    strongboxLevel[1] = true;
-                } else {
-                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, resources_grid);
-                    strongboxLevel[2] = true;
-                }
-            }
-        }
-
-    }
-
-    private void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
-        String path = utils.getResourcePath(resource);
-        while (nResources > 0) {
-            setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20, gridPane);
-            startingColumn++;
-            nResources--;
-        }
+        HashMap<Resource, Integer> deposit = lightModel.getDeposit();
+        depositLevel = utils.initializeDepositLevel(depositLevel);
+        loadDepositLevels(depositLevel,deposit,resources_grid,resourceMatrix);
     }
 
     void setEndPhase() {

@@ -91,6 +91,6 @@ public class DiscardResourceController extends StandardStage {
     }
 
     public void setDiscardSelection(HashMap<Resource, Integer> discardChoice) {
-        ResourceHandler(discardChoice, coin, servant, shield, stone);
+        resourceHandler(discardChoice, coin, servant, shield, stone);
     }
 }

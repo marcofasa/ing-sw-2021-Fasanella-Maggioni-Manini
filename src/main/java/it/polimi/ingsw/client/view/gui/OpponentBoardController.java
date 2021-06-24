@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.model.BriefModel;
 import it.polimi.ingsw.model.CardDevelopment;
+import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,11 +15,14 @@ import java.util.HashMap;
 public class OpponentBoardController extends StandardStage {
 
     @FXML
-    GridPane opponent_Strongbox_grid;
+    Label nickName_label;
+
     @FXML
     GridPane opponent_Deposit_grid;
     @FXML
     GridPane opponent_cardDevelop_grid;
+    @FXML
+    GridPane cardLeader_array;
 
     @FXML
     Label stone_label;
@@ -33,12 +37,16 @@ public class OpponentBoardController extends StandardStage {
     private ImageView[][] resourceMatrix;
     private Boolean[] depositLevel;
     private final Utils utils = new Utils();
+    private ImageView[] cardLeaderArray;
 
-    public void setBriefModel(BriefModel briefModel) {
+    public void setBriefModel(BriefModel briefModel,String nickName) {
         ArrayList<CardDevelopment> cardsDevelopment = briefModel.getCardsDevelopment();
         HashMap<Resource, Integer> deposit = briefModel.getDeposit();
         HashMap<Resource, Integer> strongbox = briefModel.getStrongBox();
-        //Loading card development
+        ArrayList<CardLeader> cardLeaders= briefModel.getVisibleCardsLeaders();
+        nickName_label.setText(nickName);
+
+        //Loading Card development and Card Leader
         cardDevelopmentArray = new ImageView[3];
         for (int i = 1; i < 4; i++) {
             if (cardsDevelopment.size() >= i && cardsDevelopment.get(i - 1) != null) {
@@ -50,56 +58,25 @@ public class OpponentBoardController extends StandardStage {
                 };
                 //image final path
                 String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i - 1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
-                setImageToArray(i - 1, path, cardDevelopmentArray, 80, 120);
+                setImageToArray(i - 1, path, cardDevelopmentArray, 45, 60);
             } else {
                 // if there's no card on the deck (printing default image)
                 String path = "/images/CardDevelopment/Card_Development_Empty.png";
-                setImageToArray(i - 1, path, cardDevelopmentArray, 80, 120);
+                setImageToArray(i - 1, path, cardDevelopmentArray, 45, 60);
             }
             //Adding to GridPane
             opponent_cardDevelop_grid.add(cardDevelopmentArray[i - 1], i, 0);
         }
 
+        setCardLeaderDeck(cardLeaders,cardLeaderArray,cardLeader_array);
 
-        //Loading Strongbox
+
+        //Loading Strongbox and Deposit
         resourceMatrix = new ImageView[3][5];
+        depositLevel= utils.initializeDepositLevel(depositLevel);
+        loadDepositLevels(depositLevel,deposit,opponent_Deposit_grid,resourceMatrix);
+        resourceHandler(strongbox,coin_label,servant_label,shield_label,stone_label);
 
-        depositLevel = utils.setStrongboxLevel(depositLevel);
-        for (Resource resource : deposit.keySet()) {
-            if (deposit.get(resource) == 3) {
-                loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, opponent_Strongbox_grid);
-                depositLevel[2] = true;
-            } else if (deposit.get(resource) == 2) {
-                if (!depositLevel[1]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, opponent_Strongbox_grid);
-                    depositLevel[1] = true;
-                } else {
-                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, opponent_Strongbox_grid);
-                    depositLevel[2] = true;
-                }
-            } else if (deposit.get(resource) == 1) {
-                if (!depositLevel[0]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, opponent_Strongbox_grid);
-                    depositLevel[0] = true;
-                } else if (!depositLevel[1]) {
-                    loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, opponent_Strongbox_grid);
-                    depositLevel[1] = true;
-                } else {
-                    loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, opponent_Strongbox_grid);
-                    depositLevel[2] = true;
-                }
-            }
-        }
-        ResourceHandler(strongbox, coin_label, servant_label, shield_label, stone_label);
-    }
-
-    private void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
-        String path = utils.getResourcePath(resource);
-        while (nResources > 0) {
-            setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20, gridPane);
-            startingColumn++;
-            nResources--;
-        }
     }
 }
 

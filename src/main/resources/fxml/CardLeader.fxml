@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,32 +9,86 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="313.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.CardLeaderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.CardLeaderController">
    <children>
-      <ImageView fitHeight="338.0" fitWidth="608.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="342.0" fitWidth="617.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/brown_light_background.jpg" />
          </image>
       </ImageView>
-      <GridPane fx:id="cardleader_grid" layoutX="34.0" layoutY="46.0" prefHeight="238.0" prefWidth="376.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="46.0">
+      <GridPane fx:id="cardleader_grid" layoutX="34.0" layoutY="46.0" prefHeight="238.0" prefWidth="355.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="46.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="116.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="133.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="132.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="161.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button layoutX="446.0" layoutY="165.0" mnemonicParsing="false" onAction="#activateCardLeader" prefHeight="23.0" prefWidth="105.0" text="Activate" AnchorPane.bottomAnchor="136.0" AnchorPane.leftAnchor="446.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="165.0">
+      <Button layoutX="442.0" layoutY="183.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateCardLeader" text="Activate" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="442.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="183.0">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="459.0" layoutY="214.0" mnemonicParsing="false" onAction="#discardCardLeader" text="Discard">
+      <Button layoutX="458.0" layoutY="237.0" mnemonicParsing="false" onAction="#discardCardLeader" text="Discard">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
+      <GridPane layoutX="398.0" layoutY="40.0" prefHeight="118.0" prefWidth="200.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Resources/shield.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="53.0" layoutX="10.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/Resources/servant.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="58.0" fitWidth="46.0" layoutX="10.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../images/Resources/coin.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="44.0" layoutX="10.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/Resources/stone.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="shield_label" text="x0" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="servant_label" layoutX="10.0" layoutY="29.0" text="x0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="coin_label" layoutX="10.0" layoutY="29.0" text="x0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="stone_label" layoutX="10.0" layoutY="29.0" text="x0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Text layoutX="462.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Deposit" />
    </children>
 </AnchorPane>

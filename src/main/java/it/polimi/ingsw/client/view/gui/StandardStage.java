@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 
+import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +15,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StandardStage {
 
+    private final static Utils utils = new Utils();
     String messages = "";
 
     public void init(){
@@ -153,7 +156,7 @@ public class StandardStage {
      * @param height to fit
      * @param gridPane to fill
      */
-    public void setImageToMatrix(int row, int column, ImageView[][] matrix, String path, int width, int height, GridPane gridPane){
+    public static void setImageToMatrix(int row, int column, ImageView[][] matrix, String path, int width, int height, GridPane gridPane){
         Image image = new Image(GUI.class.getResourceAsStream(path));
         matrix[row][column] = new ImageView(image);
 
@@ -188,7 +191,7 @@ public class StandardStage {
         stage.close();
     }
 
-    static void ResourceHandler(HashMap<Resource, Integer> deposit, Label coin_label, Label servant_label, Label shield_label, Label stone_label) {
+    static void resourceHandler(HashMap<Resource, Integer> deposit, Label coin_label, Label servant_label, Label shield_label, Label stone_label) {
         for(Resource resource: deposit.keySet()){
             switch (resource) {
                 case Coins -> coin_label.setText("x" + deposit.get(resource));
@@ -197,6 +200,89 @@ public class StandardStage {
                 case Stones -> stone_label.setText("x" + deposit.get(resource));
             }
         }
+    }
+
+   static void loadDepositLevels(Boolean[] depositLevel, HashMap<Resource,Integer> deposit, GridPane deposit_grid, ImageView[][] resourceMatrix ) {
+       for (Resource resource : deposit.keySet()) {
+           if (deposit.get(resource) == 3) {
+               loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, deposit_grid);
+               depositLevel[2] = true;
+           } else if (deposit.get(resource) == 2) {
+               if (!depositLevel[1]) {
+                   loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, deposit_grid);
+                   depositLevel[1] = true;
+               } else {
+                   loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, deposit_grid);
+                   depositLevel[2] = true;
+               }
+           } else if (deposit.get(resource) == 1) {
+               if (!depositLevel[0]) {
+                   loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, deposit_grid);
+                   depositLevel[0] = true;
+               } else if (!depositLevel[1]) {
+                   loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, deposit_grid);
+                   depositLevel[1] = true;
+               } else {
+                   loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, deposit_grid);
+                   depositLevel[2] = true;
+               }
+           }
+       }
+   }
+
+    private static void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
+        String path = utils.getResourcePath(resource);
+        while (nResources > 0) {
+            setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20, gridPane);
+            startingColumn++;
+            nResources--;
+        }
+    }
+
+
+    public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeaderArray,ImageView[] cardLeaderArray,GridPane cardleader_grid) {
+        cardLeaderArray = new ImageView[2];
+        for (int i = 0; i < 2; i++) {
+            if((cardsLeaderArray.size()==1 &&  i==1) || cardsLeaderArray.size()==0 || cardsLeaderArray.get(i)==null){
+
+                //Standard path for empty slot
+                String path="/images/CardDevelopment/Card_Development_Empty.png";
+                setImageToArray(i,path, cardLeaderArray,50,70);
+
+            }
+            else {
+
+                //Generation of image path
+                Integer type = getCardLeaderType(cardsLeaderArray.get(i));
+
+                Integer color = getCardLeaderColor(cardsLeaderArray.get(i));
+
+                String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
+
+                setImageToArray(i,path, cardLeaderArray,50,70);
+                //Adding to GridPane
+            }
+            cardleader_grid.add(cardLeaderArray[i],i,0);
+        }
+
+    }
+
+    static Integer getCardLeaderType(CardLeader cardLeader){
+        return switch (cardLeader.getDescription()) {
+            case Deposit -> 2;
+            case Discount -> 1;
+            case Production -> 4;
+            case WhiteMarble -> 3;
+        };
+    }
+
+    static Integer getCardLeaderColor(CardLeader cardLeader){
+        return  switch (cardLeader.getResource()) {
+            case Coins -> 0;
+            case Servants -> 1;
+            case Shields -> 2;
+            case Stones -> 3;
+        };
     }
 
 }

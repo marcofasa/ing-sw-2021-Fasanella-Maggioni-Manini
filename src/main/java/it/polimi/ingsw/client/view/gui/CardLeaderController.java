@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -33,6 +34,15 @@ public class CardLeaderController extends StandardStage {
     @FXML
     GridPane cardleader_grid;
 
+    @FXML
+    Label stone_label;
+    @FXML
+    Label coin_label;
+    @FXML
+    Label shield_label;
+    @FXML
+    Label servant_label;
+
     private CardLeader[] cardLeaders;
     private ArrayList<CardLeader> cardsLeaderArray;
     private Resource[] resources;
@@ -56,7 +66,7 @@ public class CardLeaderController extends StandardStage {
             //Standard path for empty slot
 
             String path="/images/CardDevelopment/Card_Development_Empty.png";
-            setImageToArray(i,path, cardLeaderArray,80,120);
+            setImageToArray(i,path, cardLeaderArray,120,220);
 
             //Mouse Click Event
             int finalI = i;
@@ -70,24 +80,10 @@ public class CardLeaderController extends StandardStage {
         else {
 
             //Generation of image path
-            Integer type = switch (cardsLeaderArray.get(i).getDescription()) {
-                case Deposit -> 2;
-                case Discount -> 1;
-                case Production -> 4;
-                case WhiteMarble -> 3;
-            };
-
-            Integer color = switch (cardsLeaderArray.get(i).getResource()) {
-                case Coins -> 0;
-                case Servants -> 1;
-                case Shields -> 2;
-                case Stones -> 3;
-            };
-
+            Integer type = getCardLeaderType(cardsLeaderArray.get(i));
+            Integer color = getCardLeaderColor(cardsLeaderArray.get(i));
             String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
-
-
-            setImageToArray(i,path, cardLeaderArray,80,120);
+            setImageToArray(i,path, cardLeaderArray,120,220);
 
             //Mouse Click Event
             int finalI = i;
@@ -100,6 +96,8 @@ public class CardLeaderController extends StandardStage {
         }
             cardleader_grid.add(cardLeaderArray[i],i,0);
         }
+
+        resourceHandler(GUI.getClient().getLightModel().getDepositLeaderContent(),coin_label,servant_label,shield_label,stone_label);
 
         }
 

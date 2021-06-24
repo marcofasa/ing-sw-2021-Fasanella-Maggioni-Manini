@@ -22,7 +22,7 @@ public class StrongBoxController extends StandardStage {
      * @param deposit hashmap of resources
      */
     public void setStrongBox(HashMap<Resource, Integer> deposit){
-        ResourceHandler(deposit, coin_label, servant_label, shield_label, stone_label);
+        resourceHandler(deposit, coin_label, servant_label, shield_label, stone_label);
     }
 
     /**

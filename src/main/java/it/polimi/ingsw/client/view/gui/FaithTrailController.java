@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,7 +18,8 @@ import java.util.HashMap;
 public class FaithTrailController extends StandardStage {
     @FXML
     GridPane faithtrail_grid;
-
+    @FXML
+    Label players_label;
     @FXML
     TextField checkout_text;
 
@@ -26,6 +28,7 @@ public class FaithTrailController extends StandardStage {
         HashMap<String, Integer> playersPosition = faithTrail.getPlayersPosition();
         ArrayList<FaithTileStatus> tileStatuses = faithTrail.getTileStatuses();
 
+        printPlayers(faithTrail.getPlayersPosition(),nickName);
         //Set Position into the corresponding cell in the grid.
 
         for (String string : playersPosition.keySet()) {
@@ -36,6 +39,16 @@ public class FaithTrailController extends StandardStage {
         for (int i = 0; i < 3; i++) {
             setTiles(tileStatuses.get(i), faithTrailMatrix, i);
         }
+    }
+
+    private void printPlayers(HashMap<String, Integer> playersPosition, String nickName) {
+        String s="";
+        for (String players: playersPosition.keySet()){
+            if(!players.equals(nickName)){
+                s=s+players+" ("+playersPosition.get(players)+")  ";
+            }
+        }
+        players_label.setText(s);
     }
 
     private void setTiles(FaithTileStatus faithTileStatus, ImageView[][] faithTrailMatrix, int section) {
@@ -102,7 +115,7 @@ public class FaithTrailController extends StandardStage {
             }
             case 11, 12, 13, 14, 15, 16 -> {
                 row = 2;
-                col = position - 5;
+                col = position - 4;
             }
             case 17 -> {
                 row = 1;
@@ -115,10 +128,10 @@ public class FaithTrailController extends StandardStage {
             default -> throw new IllegalStateException("Unexpected value: " + position);
         }
         if (player) {
-            String pathPlayer = "/images/Resources/redcross.png";
+            String pathPlayer = "/images/punchboard/croce.png";
             setImageToMatrix(row, col, faithtrailMatrix, pathPlayer, 35, 35);
         } else {
-            String pathEnemy = "/images/punchboard/croce.png";
+            String pathEnemy = "/images/Resources/redcross.png";
             setImageToMatrix(row, col, faithtrailMatrix, pathEnemy, 35, 35);
         }
         faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
@@ -132,7 +145,7 @@ public class FaithTrailController extends StandardStage {
             FXMLLoader fxmlLoader = load("/fxml/OpponentBoard.fxml");
             Scene secondScene = setScene(fxmlLoader);
             OpponentBoardController opponentBoardController = fxmlLoader.getController();
-            opponentBoardController.setBriefModel(briefModel);
+            opponentBoardController.setBriefModel(briefModel,nickName);
             showStage(secondScene);
         }
     }

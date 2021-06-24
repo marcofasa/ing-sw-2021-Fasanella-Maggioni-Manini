@@ -22,12 +22,12 @@ public class Utils {
     }
 
 
-    public Boolean[] setStrongboxLevel(Boolean[] strongboxLevel) {
-        strongboxLevel=new Boolean[3];
-        strongboxLevel[0]=false;
-        strongboxLevel[1]=false;
-        strongboxLevel[2]=false;
-        return strongboxLevel;
+    public Boolean[] initializeDepositLevel(Boolean[] depositLevel) {
+        depositLevel =new Boolean[3];
+        depositLevel[0]=false;
+        depositLevel[1]=false;
+        depositLevel[2]=false;
+        return depositLevel;
     }
 
     public String getResourcePath(Resource resource) {
