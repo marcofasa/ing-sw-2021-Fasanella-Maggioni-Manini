@@ -110,8 +110,9 @@ public class GUI extends Application implements ViewInterface {
         return lightFaithTrail;
     }
 
-
-
+    public static Client getClient() {
+        return client;
+    }
 
     @Override
     public void displayStartingGame() {

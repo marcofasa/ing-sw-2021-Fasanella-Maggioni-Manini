@@ -102,7 +102,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#displayFaithTrail" prefHeight="23.0" prefWidth="187.0" text="Faith Trail" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <Button mnemonicParsing="false" onAction="#displayFaithTrail" prefHeight="23.0" prefWidth="187.0" text="Faith Trail &amp; Checkout" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

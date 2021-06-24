@@ -169,7 +169,7 @@ strongboxLevel[0]=true;
         strongBoxController.setStrongBox(lightModel.getStrongbox());
 
         showStage(secondScene);
-        setDialogPane("Deposit displayed", dialogPane);
+        setDialogPane("Strongbox displayed", dialogPane);
 
 
     }

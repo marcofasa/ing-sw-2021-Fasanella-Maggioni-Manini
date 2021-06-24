@@ -160,6 +160,10 @@ public class StandardStage {
         gridPane.add(matrix[row][column],column,row);
     }
 
+
+
+
+
     /**
      * Showing and Waiting a given Scene
      * @param scene of new window
@@ -180,4 +184,6 @@ public class StandardStage {
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
+
+
 }
