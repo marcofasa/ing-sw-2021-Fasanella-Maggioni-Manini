@@ -10,7 +10,6 @@ public class Utils {
 
     /**
      * Fixes the Resource selection for being elaborated from controller
-     * @param resourceList
      */
     public void fixResourceSelection(ArrayList<Resource> resourceList){
        if(resourceList.size()==0){
@@ -36,16 +35,11 @@ public class Utils {
         String shield = "/images/Resources/shield.png";
         String servant = "/images/Resources/servant.png";
         String coin = "/images/Resources/coin.png";
-        switch (resource){
-            case Servants:
-                return servant;
-            case Coins:
-                return coin;
-            case Shields:
-                return shield;
-            case Stones:
-                return stone;
-        }
-        return null;
+        return switch (resource) {
+            case Servants -> servant;
+            case Coins -> coin;
+            case Shields -> shield;
+            case Stones -> stone;
+        };
     }
 }

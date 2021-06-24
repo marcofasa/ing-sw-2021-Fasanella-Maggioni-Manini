@@ -1,17 +1,20 @@
 package it.polimi.ingsw.client.view.gui;
 
 
+import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class StandardStage {
 
@@ -185,5 +188,15 @@ public class StandardStage {
         stage.close();
     }
 
+    static void ResourceHandler(HashMap<Resource, Integer> deposit, Label coin_label, Label servant_label, Label shield_label, Label stone_label) {
+        for(Resource resource: deposit.keySet()){
+            switch (resource) {
+                case Coins -> coin_label.setText("x" + deposit.get(resource));
+                case Servants -> servant_label.setText("x" + deposit.get(resource));
+                case Shields -> shield_label.setText("x" + deposit.get(resource));
+                case Stones -> stone_label.setText("x" + deposit.get(resource));
+            }
+        }
+    }
 
 }

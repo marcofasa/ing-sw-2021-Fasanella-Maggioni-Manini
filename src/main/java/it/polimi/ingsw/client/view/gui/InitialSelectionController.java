@@ -51,39 +51,19 @@ public class InitialSelectionController extends StandardStage {
         for (int i = 0; i < nRow; i++) {
 
 
-            Integer type;
-            switch (cardsLeader.get(i).getDescription()) {
-                case Deposit:
-                    type = 2;
-                    break;
-                case Discount:
-                    type = 1;
-                    break;
-                case Production:
-                    type = 4;
-                    break;
-                default:
-                    type = 3;
-            }
+            Integer type = switch (cardsLeader.get(i).getDescription()) {
+                case Deposit -> 2;
+                case Discount -> 1;
+                case Production -> 4;
+                default -> 3;
+            };
 
-            Integer color;
-            switch (cardsLeader.get(i).getResource()) {
-                case Coins:
-                    color = 0;
-                    break;
-                case Servants:
-                    color = 1;
-                    break;
-                case Shields:
-                    color = 2;
-                    break;
-                case Stones:
-                    color = 3;
-                    break;
-
-                default:
-                    throw new IllegalStateException("Unexpected value: " + cardsLeader.get(i).getResource().toString());
-            }
+            Integer color = switch (cardsLeader.get(i).getResource()) {
+                case Coins -> 0;
+                case Servants -> 1;
+                case Shields -> 2;
+                case Stones -> 3;
+            };
 
             String path = "/images/CardLeader/Card_Leader_" + type.toString() + "-" + color.toString() + ".jpg";
             setImageToArray(i,path,cardLeaderArray,80,120);
@@ -115,6 +95,10 @@ public class InitialSelectionController extends StandardStage {
      */
     public void setResources(int playerNumber) {
         this.pNumber = playerNumber;
+        setResourcesSlave();
+    }
+
+    private void setResourcesSlave() {
         if (pNumber == 0) {
             resourceSize = 0;
             resources_label.setText("You haven't resources to choose");
@@ -125,7 +109,6 @@ public class InitialSelectionController extends StandardStage {
             resourceSize = 2;
             resources_label.setText("You have 2 resources to choose");
         }
-
     }
 
 
@@ -133,7 +116,6 @@ public class InitialSelectionController extends StandardStage {
 
     /**
      * Resource initial selection button
-     * @param actionEvent
      */
     public void resourceSelection(ActionEvent actionEvent) {
         printClick("resource button");
@@ -141,18 +123,7 @@ public class InitialSelectionController extends StandardStage {
             printError("Not right time to choose resources!");
             resourceSelection.clear();
         } else {
-            if (pNumber == 0) {
-                resourceSize = 0;
-                resources_label.setText("You haven't resources to choose");
-
-            } else if (pNumber == 1 || pNumber == 2) {
-                resourceSize = 1;
-                resources_label.setText("You have 1 resource to choose");
-
-            } else {
-                resourceSize = 2;
-                resources_label.setText("You have 2 resources to choose");
-            }
+            setResourcesSlave();
             if (resourceSelection.size() == resourceSize) {
                 printClick("resource selection button");
                 GUI.resourceList = resourceSelection;
@@ -167,7 +138,6 @@ public class InitialSelectionController extends StandardStage {
 
     /**
      * Card Leader Selection button
-     * @param actionEvent
      */
     public void cardLeaderSelection(ActionEvent actionEvent) {
         if (cardSelection.size() != 2) {

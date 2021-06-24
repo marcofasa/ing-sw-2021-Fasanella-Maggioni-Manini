@@ -21,78 +21,74 @@ public class FaithTrailController extends StandardStage {
     @FXML
     TextField checkout_text;
 
-    public void setFaithTrail(LightFaithTrail faithTrail,String nickName) {
+    public void setFaithTrail(LightFaithTrail faithTrail, String nickName) {
         ImageView[][] faithTrailMatrix = new ImageView[3][19];
-        HashMap<String,Integer> playersPosition=faithTrail.getPlayersPosition();
-        ArrayList<FaithTileStatus> tileStatuses=faithTrail.getTileStatuses();
+        HashMap<String, Integer> playersPosition = faithTrail.getPlayersPosition();
+        ArrayList<FaithTileStatus> tileStatuses = faithTrail.getTileStatuses();
 
         //Set Position into the corresponding cell in the grid.
 
         for (String string : playersPosition.keySet()) {
-            boolean player=false;
+            boolean player = false;
             if (string.equals(nickName)) {
-              player=true;
+                player = true;
             }
             setPlayerPosition(playersPosition.get(string), faithTrailMatrix, player);
         }
 
-        for(int i=0; i<3; i++){
-            setTiles(tileStatuses.get(i), faithTrailMatrix,i);
+        for (int i = 0; i < 3; i++) {
+            setTiles(tileStatuses.get(i), faithTrailMatrix, i);
         }
     }
 
     private void setTiles(FaithTileStatus faithTileStatus, ImageView[][] faithTrailMatrix, int section) {
         int row;
         int col;
-        if(section==0){
-         row=2;
-         col=4;
-        }
-        else if (section==1){
-row=0;
-col=9;
-        }
-        else {
-row=2;
-col=15;
+        if (section == 0) {
+            row = 2;
+            col = 4;
+        } else if (section == 1) {
+            row = 0;
+            col = 9;
+        } else {
+            row = 2;
+            col = 15;
         }
 
 
-        if(faithTileStatus==FaithTileStatus.Discarded){
+        if (faithTileStatus == FaithTileStatus.Discarded) {
             String tileDiscarded1 = "/images/punchboard/tileDiscarded1.png";
             String tileDiscarded2 = "/images/punchboard/tileDiscarded2.png";
             String tileDiscarded3 = "/images/punchboard/tileDiscarded3.png";
-            switch (section){
+            switch (section) {
                 case 0:
-                    setImageToMatrix(row,col, faithTrailMatrix, tileDiscarded1,80,80);
-break;
+                    setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded1, 80, 80);
+                    break;
                 case 1:
-                    setImageToMatrix(row,col, faithTrailMatrix, tileDiscarded2,80,80);
+                    setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded2, 80, 80);
                     break;
                 case 2:
-                    setImageToMatrix(row,col, faithTrailMatrix, tileDiscarded3,80,80);
+                    setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded3, 80, 80);
                     break;
 
             }
 //Adding to GridPane
             faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
-        }
-        else if(faithTileStatus==FaithTileStatus.Not_Reached){
-           //Void
-        }
-        else{
+        } else if (faithTileStatus == FaithTileStatus.Not_Reached) {
+            //Void
+        } else {
             String tileReached1 = "/images/punchboard/tileReached1.png";
             String tileReached2 = "/images/punchboard/tileReached2.png";
             String tileReached3 = "/images/punchboard/tileReached3.png";
-            switch (section){
+            switch (section) {
                 case 0:
-                    setImageToMatrix(row,col, faithTrailMatrix, tileReached1,80,80);
+                    setImageToMatrix(row, col, faithTrailMatrix, tileReached1, 80, 80);
                     break;
                 case 1:
-                    setImageToMatrix(row,col, faithTrailMatrix, tileReached2,80,80);
+                    setImageToMatrix(row, col, faithTrailMatrix, tileReached2, 80, 80);
                     break;
                 case 2:
-                    setImageToMatrix(row,col, faithTrailMatrix, tileReached3,80,80);
+                    setImageToMatrix(row, col, faithTrailMatrix, tileReached3, 80, 80);
                     break;
 
             }
@@ -101,63 +97,60 @@ break;
         }
     }
 
-    private void setPlayerPosition(int position,ImageView[][] faithtrailMatrix,boolean player){
+    private void setPlayerPosition(int position, ImageView[][] faithtrailMatrix, boolean player) {
         int col;
         int row;
-        switch (position){
-            case 0,1,2:
-                row=2;
-                col=position;
+        switch (position) {
+            case 0, 1, 2:
+                row = 2;
+                col = position;
                 break;
             case 3:
-                row=1;
-                col=2;
+                row = 1;
+                col = 2;
                 break;
-            case 4,5,6,7,8,9:
-                row=0;
-                col=position-2;
+            case 4, 5, 6, 7, 8, 9:
+                row = 0;
+                col = position - 2;
                 break;
             case 10:
-                row=1;
-                col=7;
+                row = 1;
+                col = 7;
                 break;
-            case 11,12,13,14,15,16:
-                row=2;
-                col=position-5;
+            case 11, 12, 13, 14, 15, 16:
+                row = 2;
+                col = position - 5;
                 break;
             case 17:
-                row=1;
-                col=12;
+                row = 1;
+                col = 12;
                 break;
-            case 18,19,20,21,22,23,24:
-                row=0;
-                col=position-6;
+            case 18, 19, 20, 21, 22, 23, 24:
+                row = 0;
+                col = position - 6;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + position);
         }
-       if(player){
-           String pathPlayer = "/images/Resources/redcross.png";
-           setImageToMatrix(row,col,faithtrailMatrix, pathPlayer,35,35);
-       }
-       else {
-           String pathEnemy = "/images/punchboard/croce.png";
-           setImageToMatrix(row,col,faithtrailMatrix, pathEnemy,35,35);
-       }
+        if (player) {
+            String pathPlayer = "/images/Resources/redcross.png";
+            setImageToMatrix(row, col, faithtrailMatrix, pathPlayer, 35, 35);
+        } else {
+            String pathEnemy = "/images/punchboard/croce.png";
+            setImageToMatrix(row, col, faithtrailMatrix, pathEnemy, 35, 35);
+        }
         faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
 
     }
 
     public void checkout(ActionEvent actionEvent) {
-       String nickName= checkout_text.getText();
+        String nickName = checkout_text.getText();
         BriefModel briefModel = GUI.getClient().getModelByNickname(nickName);
         FXMLLoader fxmlLoader = load("/fxml/OpponentBoard.fxml");
         Scene secondScene = setScene(fxmlLoader);
-
-OpponentBoardController opponentBoardController=fxmlLoader.getController();
-opponentBoardController.setModels(briefModel.getCardsDevelopment(), briefModel.getDeposit(), briefModel.getStrongBox());
+        OpponentBoardController opponentBoardController = fxmlLoader.getController();
+        opponentBoardController.setBriefModel(briefModel);
         showStage(secondScene);
-
 
 
     }
