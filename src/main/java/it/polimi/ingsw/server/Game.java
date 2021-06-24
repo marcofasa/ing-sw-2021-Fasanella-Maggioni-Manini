@@ -172,6 +172,11 @@ public class Game implements Runnable {
 
     // Public getter methods to be invoked when a ClientRequest is received
 
+    /**
+     * Getter for deposit's content.
+     * @param _vClient VirtualClient whose deposit's content is of interest.
+     * @return HashMap of Resource -> Integer of the player's deposit content.
+     */
     public HashMap<Resource, Integer> getDepositClone(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
@@ -180,6 +185,11 @@ public class Game implements Runnable {
         return board.getDepositInstance().getContent();
     }
 
+    /**
+     * Getter for strongbox's content.
+     * @param _vClient VirtualClient whose strongbox's content is of interest.
+     * @return HashMap of Resource -> Integer of the player's strongbox content.
+     */
     public HashMap<Resource, Integer> getStrongboxClone(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
@@ -188,6 +198,10 @@ public class Game implements Runnable {
         return board.getStrongboxInstance().getContent();
     }
 
+    /**
+     * Getter for resource market's marble arrangement.
+     * @return Matrix of MarbleType that describes the market's structure at the current moment.
+     */
     public ArrayList<ArrayList<MarbleType>> getMarketClone() {
 
         ArrayList<ArrayList<MarbleType>> marketClone = new ArrayList<>();
@@ -206,6 +220,10 @@ public class Game implements Runnable {
         return marketClone;
     }
 
+    /**
+     * Getter for card development market's top cards.
+     * @return Matrix of CardDevelopment that describes the buyable cards in the market at the current moment.
+     */
     public ArrayList<ArrayList<CardDevelopment>> getCardDevMarketClone() {
 
         ArrayList<ArrayList<CardDevelopment>> output = new ArrayList<>();
@@ -228,6 +246,11 @@ public class Game implements Runnable {
         return output;
     }
 
+    /**
+     * Getter for a player's faith trail tile statuses.
+     * @param _vClient VirtualClient whose tile statuses are of interest.
+     * @return ArrayList of the player's FaithTileStatuses.
+     */
     public ArrayList<FaithTileStatus> getTileStatuses(VirtualClient _vClient) {
 
         ArrayList<FaithTileStatus> output = new ArrayList<>();
@@ -244,6 +267,10 @@ public class Game implements Runnable {
         return output;
     }
 
+    /**
+     * Getter for all faith trail player positions.
+     * @return HashMap String -> Integer of all player faith trail positions.
+     */
     public HashMap<String, Integer> getPlayerPositions() {
 
         HashMap<String, Integer> output = new HashMap<>();
@@ -265,12 +292,22 @@ public class Game implements Runnable {
         return output;
     }
 
+    /**
+     * Getter for a player's leader cards.
+     * @param _vClient VirtualClient whose leader cards are of interest.
+     * @return ArrayList of CardLeader that contains the player's leader cards.
+     */
     public ArrayList<CardLeader> getLeaderCards(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
         return gameTable.getPlayerByNickname(nickname).getCardsLeader();
     }
 
+    /**
+     * Getter for a playerboard's visible development cards.
+     * @param _vClient VirtualClient whose development cards are of interest.
+     * @return ArrayList of CardDevelopment that contains the top cards on a player's personal board.
+     */
     public ArrayList<CardDevelopment> getTopDevelopmentCards(VirtualClient _vClient) {
 
         String nickname = clientNicknameMap.get(_vClient);
@@ -279,10 +316,19 @@ public class Game implements Runnable {
         return board.getTopDevelopmentCards();
     }
 
+    /**
+     * Getter for the resource market's spare marble.
+     * @return Spare Marble instance.
+     */
     public Marble getSpareMarble() {
         return gameTable.getMarketInstance().getSpareMarble();
     }
 
+    /**
+     * Getter for the resources that CardLeaderDeposit may hold.
+     * @param _virtualClient VirtualClient whose leader deposit's resources are of interest.
+     * @return ArrayList of Resources that can be held by the player's CardLeaderDeposit.
+     */
     public ArrayList<Resource> getLeaderResourcesClone(VirtualClient _virtualClient) {
 
         String nickname = clientNicknameMap.get(_virtualClient);
@@ -291,6 +337,11 @@ public class Game implements Runnable {
         return board.getDepositLeaderCardInstance().getResourceTypes();
     }
 
+    /**
+     * Getter for CardLeaderDeposit's content.
+     * @param _virtualClient VirtualClient whose leader deposit is of interest.
+     * @return ArrayList of Resources that are contained the player's CardLeaderDeposit.
+     */
     public HashMap<Resource, Integer> getLeaderContentClone(VirtualClient _virtualClient) {
 
         String nickname = clientNicknameMap.get(_virtualClient);
@@ -576,10 +627,26 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * Proxy method for Controller.discardCardLeader.
+     * @param virtualClient VirtualClient that wishes to discard a leader card.
+     * @param cardLeaderIndex The index within the player's cardsLeader array of the card to be discarded,
+     *                        must be > 0 and < cardsLeader.length()
+     */
     public void discardCardLeader(VirtualClient virtualClient, Integer cardLeaderIndex) {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 
+    /**
+     * Method to be called when the server notices that a client has disconnected.
+     * It first removes the player from the internal HashMaps, then it sets the player's connection status within
+     * the TurnController to false.
+     * Thus, if the disconnected player was the one whose turn it was to play, it forces the turn to advance
+     * to the next available player.
+     * Finally, it broadcasts to all connected players that {@param virtualClient} has disconnected.
+     *
+     * @param virtualClient VirtualClient associated with the Client that has disconnected.
+     */
     public void notifyDisconnectionOfClient(VirtualClient virtualClient) { /* TODO */
 
         String nickname = getNicknameByClient(virtualClient);
@@ -605,6 +672,16 @@ public class Game implements Runnable {
         sendExcept(new NotifyDisconnectionOf(nickname), virtualClient);
     }
 
+    /**
+     * Method to be called when the server notices that a disconnected client has restablished a connection.
+     * It first inserts the Client's associated {@param virtualClient} and {@param nickname} in the internal HashMaps.
+     * Thus it sets the Game instance associated with {@param virtualClient} to this and sets the
+     * player's connection status within TurnController to true.
+     * Finally, it broadcasts to all players that the player with associated {@param nickname} has reconnected.
+     *
+     * @param nickname Nickname of the player that has reconnected to the server.
+     * @param virtualClient VirtualClient associated with the Client that has reconnected to the server.
+     */
     public void notifyReconnection(String nickname, VirtualClient virtualClient) {
 
         addVirtualClient(virtualClient, nickname);

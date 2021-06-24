@@ -180,12 +180,12 @@ public class ClientCommandDispatcher {
     }
 
     public void notifyDisconnectionOf(String nickname) {
-        System.out.println("Client " + nickname + " disconnected, from now on his turns are skipped");
+        System.out.println("Client " + nickname + "disconnected, from now on his turns are skipped");
         client.getView().notifyDisconnectionOf(nickname);
     }
 
     public void notifyReconnectionOf(String nickname) {
-        System.out.println("Client " + nickname + " reconnected, from now on he's back playing");
+        System.out.println("Client " + nickname + "reconnected, from now on he's back playing");
         client.getView().notifyReconnection(nickname);
     }
 

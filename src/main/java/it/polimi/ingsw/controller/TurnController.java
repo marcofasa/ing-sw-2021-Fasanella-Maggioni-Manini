@@ -112,7 +112,6 @@ public class TurnController {
         }
     }
 
-
     /**
      * Method to force a turn advance when the active player gets disconnected
      * @param _nickname the nickname of the disconnected player. Must be activePlayer's nickname to trigger advanceTurn()

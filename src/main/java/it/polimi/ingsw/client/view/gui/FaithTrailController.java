@@ -1,8 +1,13 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.LightFaithTrail;
+import it.polimi.ingsw.model.BriefModel;
 import it.polimi.ingsw.model.FaithTileStatus;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -12,6 +17,9 @@ import java.util.HashMap;
 public class FaithTrailController extends StandardStage {
     @FXML
     GridPane faithtrail_grid;
+
+    @FXML
+    TextField checkout_text;
 
     public void setFaithTrail(LightFaithTrail faithTrail,String nickName) {
         ImageView[][] faithTrailMatrix = new ImageView[3][19];
@@ -140,4 +148,17 @@ break;
 
     }
 
+    public void checkout(ActionEvent actionEvent) {
+       String nickName= checkout_text.getText();
+        BriefModel briefModel = GUI.getClient().getModelByNickname(nickName);
+        FXMLLoader fxmlLoader = load("/fxml/OpponentBoard.fxml");
+        Scene secondScene = setScene(fxmlLoader);
+
+OpponentBoardController opponentBoardController=fxmlLoader.getController();
+opponentBoardController.setModels(briefModel.getCardsDevelopment(), briefModel.getDeposit(), briefModel.getStrongBox());
+        showStage(secondScene);
+
+
+
+    }
 }

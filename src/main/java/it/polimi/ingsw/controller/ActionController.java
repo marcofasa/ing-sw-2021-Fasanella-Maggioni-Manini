@@ -26,7 +26,6 @@ public class ActionController {
         gameTable = _gameTable;
     }
 
-
     /* *** Standard user actions *** */
 
     /**
