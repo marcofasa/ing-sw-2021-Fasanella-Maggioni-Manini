@@ -127,15 +127,13 @@ public class FaithTrailController extends StandardStage {
 
     public void checkout(ActionEvent actionEvent) {
         String nickName = checkout_text.getText();
-        if(GUI.checkoutValidator(nickName)) {
+        if (GUI.checkoutValidator(nickName)) {
             BriefModel briefModel = GUI.getClient().getModelByNickname(nickName);
             FXMLLoader fxmlLoader = load("/fxml/OpponentBoard.fxml");
             Scene secondScene = setScene(fxmlLoader);
             OpponentBoardController opponentBoardController = fxmlLoader.getController();
             opponentBoardController.setBriefModel(briefModel);
             showStage(secondScene);
-        } else {
-
         }
     }
 }
