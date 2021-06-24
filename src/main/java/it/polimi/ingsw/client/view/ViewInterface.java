@@ -24,11 +24,6 @@ public interface ViewInterface {
      */
     void displayStartingGame();
 
-    /*
-    Display Message
-     */
-    void displayMessage(String message);
-
 
     /*
     Display Position in FaithTrail

@@ -29,10 +29,7 @@ public class FaithTrailController extends StandardStage {
         //Set Position into the corresponding cell in the grid.
 
         for (String string : playersPosition.keySet()) {
-            boolean player = false;
-            if (string.equals(nickName)) {
-                player = true;
-            }
+            boolean player = string.equals(nickName);
             setPlayerPosition(playersPosition.get(string), faithTrailMatrix, player);
         }
 
@@ -61,18 +58,11 @@ public class FaithTrailController extends StandardStage {
             String tileDiscarded2 = "/images/punchboard/tileDiscarded2.png";
             String tileDiscarded3 = "/images/punchboard/tileDiscarded3.png";
             switch (section) {
-                case 0:
-                    setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded1, 80, 80);
-                    break;
-                case 1:
-                    setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded2, 80, 80);
-                    break;
-                case 2:
-                    setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded3, 80, 80);
-                    break;
-
+                case 0 -> setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded1, 80, 80);
+                case 1 -> setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded2, 80, 80);
+                case 2 -> setImageToMatrix(row, col, faithTrailMatrix, tileDiscarded3, 80, 80);
             }
-//Adding to GridPane
+        //Adding to GridPane
             faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
         } else if (faithTileStatus == FaithTileStatus.Not_Reached) {
             //Void
@@ -81,16 +71,9 @@ public class FaithTrailController extends StandardStage {
             String tileReached2 = "/images/punchboard/tileReached2.png";
             String tileReached3 = "/images/punchboard/tileReached3.png";
             switch (section) {
-                case 0:
-                    setImageToMatrix(row, col, faithTrailMatrix, tileReached1, 80, 80);
-                    break;
-                case 1:
-                    setImageToMatrix(row, col, faithTrailMatrix, tileReached2, 80, 80);
-                    break;
-                case 2:
-                    setImageToMatrix(row, col, faithTrailMatrix, tileReached3, 80, 80);
-                    break;
-
+                case 0 -> setImageToMatrix(row, col, faithTrailMatrix, tileReached1, 80, 80);
+                case 1 -> setImageToMatrix(row, col, faithTrailMatrix, tileReached2, 80, 80);
+                case 2 -> setImageToMatrix(row, col, faithTrailMatrix, tileReached3, 80, 80);
             }
             //Adding to GridPane
             faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
@@ -101,36 +84,35 @@ public class FaithTrailController extends StandardStage {
         int col;
         int row;
         switch (position) {
-            case 0, 1, 2:
+            case 0, 1, 2 -> {
                 row = 2;
                 col = position;
-                break;
-            case 3:
+            }
+            case 3 -> {
                 row = 1;
                 col = 2;
-                break;
-            case 4, 5, 6, 7, 8, 9:
+            }
+            case 4, 5, 6, 7, 8, 9 -> {
                 row = 0;
                 col = position - 2;
-                break;
-            case 10:
+            }
+            case 10 -> {
                 row = 1;
                 col = 7;
-                break;
-            case 11, 12, 13, 14, 15, 16:
+            }
+            case 11, 12, 13, 14, 15, 16 -> {
                 row = 2;
                 col = position - 5;
-                break;
-            case 17:
+            }
+            case 17 -> {
                 row = 1;
                 col = 12;
-                break;
-            case 18, 19, 20, 21, 22, 23, 24:
+            }
+            case 18, 19, 20, 21, 22, 23, 24 -> {
                 row = 0;
                 col = position - 6;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + position);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + position);
         }
         if (player) {
             String pathPlayer = "/images/Resources/redcross.png";
@@ -145,13 +127,15 @@ public class FaithTrailController extends StandardStage {
 
     public void checkout(ActionEvent actionEvent) {
         String nickName = checkout_text.getText();
-        BriefModel briefModel = GUI.getClient().getModelByNickname(nickName);
-        FXMLLoader fxmlLoader = load("/fxml/OpponentBoard.fxml");
-        Scene secondScene = setScene(fxmlLoader);
-        OpponentBoardController opponentBoardController = fxmlLoader.getController();
-        opponentBoardController.setBriefModel(briefModel);
-        showStage(secondScene);
+        if(GUI.checkoutValidator(nickName)) {
+            BriefModel briefModel = GUI.getClient().getModelByNickname(nickName);
+            FXMLLoader fxmlLoader = load("/fxml/OpponentBoard.fxml");
+            Scene secondScene = setScene(fxmlLoader);
+            OpponentBoardController opponentBoardController = fxmlLoader.getController();
+            opponentBoardController.setBriefModel(briefModel);
+            showStage(secondScene);
+        } else {
 
-
+        }
     }
 }

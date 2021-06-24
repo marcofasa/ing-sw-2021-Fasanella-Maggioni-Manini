@@ -44,6 +44,22 @@ public class GUI extends Application implements ViewInterface {
         client.send(clientMessage);
     }
 
+    public static boolean checkoutValidator(String nickName) {
+        if (client.getLightModel().getNumberOfPlayers() == 1) {
+            displayMessage("This command is disabled in single player mode");
+            return false;
+        }
+        if(client.getNickname().equals(nickName)) {
+            displayMessage("You can't checkout yourself!");
+            return false;
+        }
+        if (!client.getPlayersNickname().contains(nickName)){
+            displayMessage("Nickname Invalid");
+            return false;
+        }
+        return true;
+    }
+
     public void setClient(Client client) {
         GUI.client = client;
         GUI.lightFaithTrail = new LightFaithTrail(client);
@@ -119,8 +135,7 @@ public class GUI extends Application implements ViewInterface {
 
     }
 
-    @Override
-    public void displayMessage(String message) {
+    public static void displayMessage(String message) {
         Platform.runLater(()->{
             StandardStage stage  = fxmlLoader.getController();
             stage.setDialogPane(message, PlayerBoardController.dialog);
@@ -390,7 +405,7 @@ Platform.runLater(()->{
 
     @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
-
+        displayMessage("A " + actionCardType + " Action Card has been used by Lorenzo!");
     }
 
     @Override
