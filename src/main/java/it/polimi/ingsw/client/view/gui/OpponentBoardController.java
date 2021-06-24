@@ -95,7 +95,7 @@ public class OpponentBoardController extends StandardStage {
                 }
             }
         }
-        setDeposit(strongbox);
+        ResourceHandler(strongbox, coin_label, servant_label, shield_label, stone_label);
     }
 
     private void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
@@ -105,10 +105,6 @@ public class OpponentBoardController extends StandardStage {
             startingColumn++;
             nResources--;
         }
-    }
-
-    public void setDeposit(HashMap<Resource, Integer> deposit) {
-        ResourceHandler(deposit, coin_label, servant_label, shield_label, stone_label);
     }
 }
 
