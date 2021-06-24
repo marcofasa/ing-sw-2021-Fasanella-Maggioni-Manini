@@ -50,7 +50,6 @@ public class InitialSelectionController extends StandardStage {
         int nRow = 4;
         for (int i = 0; i < nRow; i++) {
 
-
             Integer type = switch (cardsLeader.get(i).getDescription()) {
                 case Deposit -> 2;
                 case Discount -> 1;

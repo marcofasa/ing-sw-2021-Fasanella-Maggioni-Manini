@@ -94,11 +94,6 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void displayMessage(String message) {
-        out.println(message);
-    }
-
-    @Override
     public void displayPosition() {
         String nickname = getLightModel().getNickname();
         utils.printFaithTrail(nickname, lightFaithTrail.getFaithTrail());
@@ -413,7 +408,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
-        out.println("A " + actionCardType + "Action Card has been used by Lorenzo!");
+        out.println("A " + actionCardType + " Action Card has been used by Lorenzo!");
     }
 
     @Override
