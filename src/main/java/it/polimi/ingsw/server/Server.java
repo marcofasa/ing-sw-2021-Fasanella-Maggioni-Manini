@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 public class Server {
     final Boolean debug;
     private final HashMap<String, Game> disconnectedNicknamesGameMap;
+    final Boolean timeoutEnabled;
     private SocketServer socketServer;
     private final HashMap<Integer, VirtualClient> virtualClientIDMap;
     private final HashMap<VirtualClient, Game> gameMap;
@@ -30,8 +31,9 @@ public class Server {
      * Constructor of the class
      * @param debug if true, the server wont check for duplicated main moves
      */
-    public Server(Boolean debug){
+    public Server(Boolean debug, Boolean timeoutEnabled){
         this.debug = debug;
+        this.timeoutEnabled = timeoutEnabled;
         nextGameID = 1;
         gamesID = new HashMap<>();
         currentGame = new Game(debug, this);
@@ -139,6 +141,7 @@ public class Server {
 
     public static void main(String[] args) {
         boolean debug = false;
+        boolean timeoutEnabled = true;
         for (String arg :
                 args) {
             switch (arg) {
@@ -150,11 +153,15 @@ public class Server {
                     System.out.println("debug mode on");
                     debug = true;
                 }
+                case "--no-timeout" -> {
+                    System.out.println("running with timeout disabled");
+                    timeoutEnabled = false;
+                }
             }
         }
         if (debug)
             System.out.println("Server is running in debug!");
-        Server server = new Server(debug);
+        Server server = new Server(debug, timeoutEnabled);
         Integer port = 51214;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);

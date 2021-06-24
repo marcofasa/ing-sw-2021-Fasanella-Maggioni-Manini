@@ -13,14 +13,9 @@ import java.util.ArrayList;
 public class ResourceMarketController extends StandardStage {
 
 
-    private final int nRow = 3;
-    private final int nCol = 4;
-
     private String key = "row";
     private Integer message = 2;
     private boolean viewOnly=false;
-
-    private ImageView[][] resourceMatrix;
 
     @FXML
     GridPane ResourceMarket_grid;
@@ -85,8 +80,10 @@ public class ResourceMarketController extends StandardStage {
 
 
     public void setResourceMarket(ArrayList<ArrayList<MarbleType>> resourceMarket) {
-        resourceMatrix = new ImageView[3][4];
+        ImageView[][] resourceMatrix = new ImageView[3][4];
+        int nRow = 3;
         for (int i = 0; i < nRow; i++) {
+            int nCol = 4;
             for (int j = 0; j < nCol; j++) {
                 String color = switch (resourceMarket.get(i).get(j)) {
                     case MarbleGrey -> "grey";
@@ -100,7 +97,7 @@ public class ResourceMarketController extends StandardStage {
 
                 String path = "/images/Marbles/Marble_" + color + ".png";
 
-                setImageToMatrix(i,j,resourceMatrix,path,50,50);
+                setImageToMatrix(i,j, resourceMatrix,path,50,50);
 
                 //Adding to GridPane
                 ResourceMarket_grid.add(resourceMatrix[i][j], j, i);

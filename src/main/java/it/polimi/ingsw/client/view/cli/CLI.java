@@ -21,7 +21,6 @@ public class CLI implements ViewInterface {
     private final LightFaithTrail lightFaithTrail;
     private final Utils utils;
     private final ParsingCommand parsingCommand;
-    private final Boolean debug;
     private boolean open = false;
 
     /**
@@ -33,7 +32,6 @@ public class CLI implements ViewInterface {
         this.client=client;
         this.lightFaithTrail = new LightFaithTrail(client);
         this.utils=new Utils(out,in);
-        this.debug = debug;
         this.parsingCommand=new ParsingCommand(utils,this,out,in, debug);
     }
 
@@ -278,6 +276,7 @@ public class CLI implements ViewInterface {
             }
             else{
                     /*
+
                     if(firstCall) {
                         firstCall=false;
                         continue;

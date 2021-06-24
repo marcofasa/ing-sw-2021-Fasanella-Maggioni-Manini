@@ -31,7 +31,7 @@ class InitialSelectionControllerTest {
             gameTable.addPlayer(nickname);
         }
 
-        Controller controller = new Controller(new Game(false, new Server(false)), gameTable);
+        Controller controller = new Controller(new Game(false, new Server(false, true)), gameTable);
         InitialSelectionController initSelController = controller.getInitialSelectionController();
         TurnController turnController = controller.getTurnController();
 

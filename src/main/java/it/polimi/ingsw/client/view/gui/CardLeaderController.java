@@ -35,9 +35,7 @@ public class CardLeaderController extends StandardStage {
 
     private CardLeader[] cardLeaders;
     private ArrayList<CardLeader> cardsLeaderArray;
-    private ImageView[] cardLeaderArray;
     private Resource[] resources;
-    private final int nRow=2;
     private int lastClick;
     private boolean production=false;
 
@@ -48,7 +46,8 @@ public class CardLeaderController extends StandardStage {
      */
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeaderArray) {
         this.cardsLeaderArray= cardsLeaderArray;
-        cardLeaderArray = new ImageView[2];
+        ImageView[] cardLeaderArray = new ImageView[2];
+        int nRow = 2;
         for (int i = 0; i < nRow; i++) {
 
 
@@ -57,7 +56,7 @@ public class CardLeaderController extends StandardStage {
             //Standard path for empty slot
 
             String path="/images/CardDevelopment/Card_Development_Empty.png";
-            setImageToArray(i,path,cardLeaderArray,80,120);
+            setImageToArray(i,path, cardLeaderArray,80,120);
 
             //Mouse Click Event
             int finalI = i;
@@ -88,7 +87,7 @@ public class CardLeaderController extends StandardStage {
             String path="/images/CardLeader/Card_Leader_"+type.toString()+"-"+ color.toString()+".jpg";
 
 
-            setImageToArray(i,path,cardLeaderArray,80,120);
+            setImageToArray(i,path, cardLeaderArray,80,120);
 
             //Mouse Click Event
             int finalI = i;

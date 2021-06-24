@@ -28,8 +28,6 @@ public class CardDevelopmentSelection extends StandardStage {
     @FXML
     GridPane cardDevelopSel_grid;
 
-    private ImageView[] cardDevelopmentArray;
-    private final int nRow=3;
     private int pos=-1;
 
 
@@ -47,7 +45,8 @@ public class CardDevelopmentSelection extends StandardStage {
      * @param cardsDevelopment of current player
      */
     public void setCardDevelopmentSelection(ArrayList<CardDevelopment> cardsDevelopment) {
-        cardDevelopmentArray = new ImageView[3];
+        ImageView[] cardDevelopmentArray = new ImageView[3];
+        int nRow = 3;
         for (int i = 0; i < nRow; i++) {
             if (cardsDevelopment.get(i)!=null) {
 
@@ -70,7 +69,7 @@ public class CardDevelopmentSelection extends StandardStage {
                 //image final path
                 String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
 
-                setImageToArray(i,path,cardDevelopmentArray,80,120);
+                setImageToArray(i,path, cardDevelopmentArray,80,120);
 
                 //Mouse Click Event
                 int finalI = i;
@@ -83,7 +82,7 @@ public class CardDevelopmentSelection extends StandardStage {
             } else {
                 // if there's no card on the deck (printing default image)
                 String path = "/images/CardDevelopment/Card_Development_Empty.png" ;
-                setImageToArray(i,path,cardDevelopmentArray,80,120);
+                setImageToArray(i,path, cardDevelopmentArray,80,120);
 
                 //Mouse Click Event
                 int finalI = i;

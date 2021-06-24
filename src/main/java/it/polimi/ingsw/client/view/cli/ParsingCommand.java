@@ -11,8 +11,6 @@ public class ParsingCommand {
     private final Utils utils;
     private final CLI cli;
     private final PrintWriter out ;
-    private final Scanner in;
-    private boolean haveMove=false;
 
     /**
      * Constructor of Parsing Command
@@ -26,7 +24,6 @@ public class ParsingCommand {
         this.utils=utils;
         this.cli=cli;
         this.out=out;
-        this.in=in;
         this.debug = debug;
     }
 
@@ -34,7 +31,7 @@ public class ParsingCommand {
      * PlayerMenu displayed
      */
     public void PlayerMenu(GamePhase gamePhase){
-        haveMove=true;
+        boolean haveMove = true;
         printMenu();
         while(readPlayerCommand(gamePhase));
     }

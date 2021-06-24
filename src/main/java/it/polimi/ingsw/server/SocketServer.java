@@ -11,7 +11,6 @@ import java.util.concurrent.Executors;
 public class SocketServer implements Runnable{
 
     private ServerSocket serverSocket;
-    private final Integer port;
     private final Server server;
     ExecutorService executor;
     private Integer nextClientID;
@@ -22,7 +21,6 @@ public class SocketServer implements Runnable{
      * @param server runner of the class
      */
     public SocketServer(Integer port, Server server) {
-        this.port = port;
         this.server = server;
         nextClientID = 0;
         executor = Executors.newCachedThreadPool();

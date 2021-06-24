@@ -39,7 +39,6 @@ public class Client {
     private final ExecutorService executors;
     private ArrayList<String> playersNickname;
     private final LightModel lightModel;
-    private final ArrayList<BriefModel> players;
     private final HashMap<String, BriefModel> modelByNickname;
     private String nickname = "";
     public static final Semaphore connectionSetupSemaphore = new Semaphore(0);
@@ -50,7 +49,7 @@ public class Client {
 
     public Client(Boolean cli, Boolean debug) {
         this.debug = debug;
-        players = new ArrayList<>();
+        ArrayList<BriefModel> players = new ArrayList<>();
         this.lightModel = new LightModel(this);
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);

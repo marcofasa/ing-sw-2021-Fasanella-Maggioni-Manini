@@ -26,7 +26,6 @@ public class LogInController extends StandardStage {
 Label playerNumber_label;
 
     private ConnectionInfo connectionInfo;
-    private boolean connected=false;
     private int playerNumber;
     private boolean playerNumberRequest=false;
 
@@ -48,7 +47,7 @@ Label playerNumber_label;
     }
 
     public void setConnected(){
-        connected=true;
+        boolean connected = true;
     }
 
     public void setNickNameUnavailable() {

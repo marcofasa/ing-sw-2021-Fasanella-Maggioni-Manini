@@ -25,7 +25,7 @@ class ControllerTest {
 
         gameTable.addPlayer(nickname);
 
-        Game game = new Game(debug, new Server(debug));
+        Game game = new Game(debug, new Server(debug, true));
         Controller controller = new Controller(game, gameTable);
 
         gameTable.startGame();
@@ -65,7 +65,7 @@ class ControllerTest {
         gameTable.addPlayer(nickname1);
         gameTable.addPlayer(nickname2);
 
-        Game game = new Game(debug, new Server(debug));
+        Game game = new Game(debug, new Server(debug, true));
         Controller controller = new Controller(game, gameTable);
 
         gameTable.startGame();
@@ -118,7 +118,7 @@ class ControllerTest {
         gameTable.addPlayer(nickname3);
         gameTable.addPlayer(nickname4);
 
-        Game game = new Game(debug, new Server(debug));
+        Game game = new Game(debug, new Server(debug, true));
         Controller controller = new Controller(game, gameTable);
 
         gameTable.startGame();

@@ -27,9 +27,7 @@ public class InitialSelectionController extends StandardStage {
 
     private int pNumber = -1;
     private ImageView[] cardLeaderArray;
-    private final int nRow = 4;
     private ArrayList<CardLeader> cardSelection;
-    private ArrayList<CardLeader> cardsLeader;
     private ArrayList<Resource> resourceSelection;
     private int resourceSize = -1;
 
@@ -46,10 +44,10 @@ public class InitialSelectionController extends StandardStage {
      * @param cardsLeader to choose from (size()==4)
      */
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeader) {
-        this.cardsLeader = cardsLeader;
         cardSelection = new ArrayList<>();
         resourceSelection = new ArrayList<>(10);
         cardLeaderArray = new ImageView[4];
+        int nRow = 4;
         for (int i = 0; i < nRow; i++) {
 
 

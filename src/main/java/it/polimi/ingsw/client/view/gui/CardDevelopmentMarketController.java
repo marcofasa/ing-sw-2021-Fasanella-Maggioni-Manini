@@ -28,12 +28,8 @@ public class CardDevelopmentMarketController extends StandardStage {
     yellow=3
      */
 
-    private final int nRow=3;
-    private final int nCol=4;
-
     private int buyRow=-1;
     private int buyCol=-1;
-    private ImageView[][] cardDevelopmentMatrix;
     private int pos;
     private boolean viewOnly=false;
     private ArrayList<CardDevelopment> cardDevelopments;
@@ -54,9 +50,11 @@ public class CardDevelopmentMarketController extends StandardStage {
      */
     public void setDevelopmentMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket,ArrayList<CardDevelopment> cardDevelopments){
         this.cardDevelopments=cardDevelopments;
-         cardDevelopmentMatrix =new ImageView[3][4];
-        for(int i=0;i<nRow;i++){
-            for (int j=0;j<nCol;j++){
+        ImageView[][] cardDevelopmentMatrix = new ImageView[3][4];
+        int nRow = 3;
+        for(int i = 0; i< nRow; i++){
+            int nCol = 4;
+            for (int j = 0; j< nCol; j++){
 
                 Integer victoryPoints=cardDevelopmentMarket.get(i).get(j).getVictoryPoints();
                 Integer color;
@@ -83,7 +81,7 @@ public class CardDevelopmentMarketController extends StandardStage {
                 String path="/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
 
 
-               setImageToMatrix(i,j,cardDevelopmentMatrix,path,80,120);
+               setImageToMatrix(i,j, cardDevelopmentMatrix,path,80,120);
 
                 //Mouse Click Event
                 int finalI = i;

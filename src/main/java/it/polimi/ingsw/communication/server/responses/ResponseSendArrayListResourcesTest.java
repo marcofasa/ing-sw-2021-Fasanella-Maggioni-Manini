@@ -8,11 +8,8 @@ import java.util.ArrayList;
 
 public class ResponseSendArrayListResourcesTest extends ServerResponse {
 
-    private final ArrayList<Resource> resources;
-
     public ResponseSendArrayListResourcesTest(ArrayList<Resource> resources){
         super(null, null);
-        this.resources = resources;
     }
 
     /**

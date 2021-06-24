@@ -7,11 +7,6 @@ import java.util.HashMap;
 
 public class Utils {
 
-    private final String coin="/images/Resources/coin.png";
-    private final String servant="/images/Resources/servant.png";
-    private final String shield="/images/Resources/shield.png";
-    private final String stone="/images/Resources/stone.png";
-
 
     /**
      * Fixes the Resource selection for being elaborated from controller
@@ -37,6 +32,10 @@ public class Utils {
     }
 
     public String getResourcePath(Resource resource) {
+        String stone = "/images/Resources/stone.png";
+        String shield = "/images/Resources/shield.png";
+        String servant = "/images/Resources/servant.png";
+        String coin = "/images/Resources/coin.png";
         switch (resource){
             case Servants:
                 return servant;
