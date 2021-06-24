@@ -55,26 +55,13 @@ public class CardDevelopmentMarketController extends StandardStage {
         for(int i = 0; i< nRow; i++){
             int nCol = 4;
             for (int j = 0; j< nCol; j++){
-
                 Integer victoryPoints=cardDevelopmentMarket.get(i).get(j).getVictoryPoints();
-                Integer color;
-                switch (cardDevelopmentMarket.get(i).get(j).getCardType()){
-                    case Green:
-                        color=0;
-                        break;
-                    case Purple:
-                        color=1;
-                        break;
-                    case Blue:
-                        color=2;
-                        break;
-                    case Yellow:
-                        color=3;
-                        break;
-
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + cardDevelopmentMarket.get(i).get(j).getCardType());
-                }
+                Integer color = switch (cardDevelopmentMarket.get(i).get(j).getCardType()) {
+                    case Green -> 0;
+                    case Purple -> 1;
+                    case Blue -> 2;
+                    case Yellow -> 3;
+                };
 
 
                 //Image Path
