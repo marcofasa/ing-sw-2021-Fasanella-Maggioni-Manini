@@ -5,69 +5,79 @@ Player <- CLI: askMarketChoice()
 Player -> CLI: Row/Column, Number
 CLI -> Client: sendMarketChoice()
 
-Client-> Server: UseMarket()
+Client-> Server: RequestUseMarket()
 
 
 
-alt tryAddMarbles() == true
-            Server-> GameHandler: makeAction()
-             activate GameHandler
+alt tryAddMarbles() == null
+            Server-> Game: useMarket()
+             activate Game
 
-            GameHandler-> Controller: makeAction()
-            activate Controller 
-            activate GameTable
-            Controller-> GameTable: tryAddMarbles()
-            Controller<- GameTable: true
-            deactivate GameTable
-            Controller -> GameHandler: true
-            deactivate Controller
-            
-
-else tryAdd() == false
-        loop until tryAdd() == true
-            Server-> GameHandler: makeAction()
-
+            Game-> Controller: useMarket()
             activate Controller
-            GameHandler-> Controller: makeAction()
-            
+            Controller-> ActionController: useMarket()
+            activate ActionController
+            ActionController-> GameTable: tryAddMarbles()
             activate GameTable
-            Controller-> GameTable: tryAddMarbles()
-            Controller<- GameTable: false
-                       
-      
-            Controller -> GameHandler: false
+            ActionController<- GameTable: HashMap<Resource,Integer>
+            deactivate GameTable
+            ActionController -> Controller: HashMap<Resource,Integer>
+            deactivate ActionController
+            Controller -> Game: HashMap<Resource,Integer>
+            deactivate Controller
 
-            GameHandler->Server: RequestDiscardResourceMarket()
-            Client<- Server: RequestDiscardResourceMarket()
+
+
+else tryAddMarbles() != null
+        loop until tryAddMarbles() == null
+            Server-> Game: useMarket()
+
+            Game-> Controller: useMarket()
+            activate Controller
+            Controller-> ActionController: useMarket()
+            activate ActionController
+            ActionController-> GameTable: tryAddMarbles()
+            activate GameTable
+            ActionController<- GameTable: HashMap<Resource,Integer>
+            deactivate GameTable
+            ActionController -> Controller: HashMap<Resource,Integer>
+            deactivate ActionController
+            Controller -> Game: HashMap<Resource,Integer>
+            deactivate Controller
+
+            Game->Server: ResponseDiscardResourceMarket()
+            deactivate Game
+            Client<- Server: ResponseDiscardResourceMarket()
             CLI<-Client: askResourceToDiscard()
             Player <- CLI: askResourceToDiscard()
             Player -> CLI: Resource
             CLI->Client: sendResourceSelection()
-            
-            
-
-            
-
-            Client-> Server: DiscardResourceMarket()
-
-            Server-> GameHandler: DiscardResource()
+            Client-> Server: RequestAddResourceSelection()
+            activate Game
+            Server-> Game: discardResources()
 
 
-            GameHandler-> Controller: DiscardResource()
-
-
-            Controller-> GameTable: DiscardResourceFromTemporaryDeposit()
+            Game-> Controller: discardResource()
+            activate Controller
+            Controller-> ActionController: discardResource()
+            activate ActionController
+            ActionController-> GameTable: tryAddMarbles()
+            activate GameTable
+            ActionController<- GameTable: HashMap<Resource,Integer>
             deactivate GameTable
+            ActionController -> Controller: HashMap<Resource,Integer>
+            deactivate ActionController
+            Controller -> Game: HashMap<Resource,Integer>
             deactivate Controller
 
 
         end
 end
-Server<-- GameHandler: AnswerUseMarket()
+Server<-- Game: ResponseSuccess()
 
-deactivate GameHandler
+deactivate Game
 
-Client<-- Server: AnswerUseMarket()
+Client<-- Server: ResponseSuccess()
 
 CLI <-- Client: success()
 

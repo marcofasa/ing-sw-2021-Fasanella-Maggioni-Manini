@@ -1,30 +1,25 @@
 @startuml
 
-Client-> Server: Ping()
-
-Client<- Server: Ack()
 Client-> Server: SetupConnection()
-Client<- Server: ClientAccepted()
+Client<- Server: ResponseClientAccepted()
 alt nickname not available
-    Client<- Server: ConnectionError()
+    Client<- Server: ResponseNicknameUnavailable()
 end
 alt first player
 
     Client<- Server: RequestPlayersNumber()
 deactivate Client
 alt timeout is not reached
-    Client-> Server: PlayersNumber()
+    Client-> Server: ResponsePlayersNumber()
 else timed out
-    Client<- Server: ClientUnregistered()
+    Client<- Server: KillConnectionMessage()
 destroy Client
 end
 activate Client
-else subsequent players
-    Client<- Server: CurrentPlayersAndSlotsLeft()
 end
 group lobby full
 
-    Client <- Server: GameIsStarting()
     Client <- Server: GameHasStarted()
 
 end
+@enduml
