@@ -47,13 +47,15 @@ public class FaithTrailController extends StandardStage {
     }
 
     private void printPlayers(HashMap<String, Integer> playersPosition, String nickName) {
-        String s="";
+        StringBuilder s= new StringBuilder();
         for (String players: playersPosition.keySet()){
-            if(!players.equals(nickName)){
+            /*if(!players.equals(nickName)){
                 s=s+players+" ("+playersPosition.get(players)+")  ";
             }
+*/
+            s.append(players).append(" (").append(playersPosition.get(players)).append(") ");
         }
-        players_label.setText(s);
+        players_label.setText(s.toString());
     }
 
     /**
@@ -144,11 +146,11 @@ public class FaithTrailController extends StandardStage {
             }
             default -> throw new IllegalStateException("Unexpected value: " + position);
         }
-        if (itsMe) {
-            String pathPlayer = "/images/punchboard/croce.png";
+        if (itsMe) { //punchboard/croce.png
+            String pathPlayer = "/images/Resources/redcross.png";
             setImageToMatrix(row, col, faithtrailMatrix, pathPlayer, 35, 35);
         } else {
-            String pathEnemy = "/images/Resources/redcross.png";
+            String pathEnemy = "/images/punchboard/croce.png";
             setImageToMatrix(row, col, faithtrailMatrix, pathEnemy, 35, 35);
         }
         faithtrail_grid.add(faithtrailMatrix[row][col], col, row);
