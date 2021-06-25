@@ -5,7 +5,7 @@ Player <- CLI: askMarketChoice()
 Player -> CLI: Row/Column, Number
 CLI -> Client: sendMarketChoice()
 
-Client-> Server: RequestUseMarket()
+Client-> Server: RequestUseMarket
 
 
 
@@ -45,14 +45,14 @@ else tryAddMarbles() != null
             Controller -> Game: HashMap<Resource,Integer>
             deactivate Controller
 
-            Game->Server: ResponseDiscardResourceMarket()
+            Game->Server: HashMap<Resource,Integer>
             deactivate Game
-            Client<- Server: ResponseDiscardResourceMarket()
+            Client<- Server: ResponseDiscardResourceMarket
             CLI<-Client: askResourceToDiscard()
             Player <- CLI: askResourceToDiscard()
             Player -> CLI: Resource
             CLI->Client: sendResourceSelection()
-            Client-> Server: RequestAddResourceSelection()
+            Client-> Server: RequestAddResourceSelection
             activate Game
             Server-> Game: discardResources()
 
@@ -73,11 +73,11 @@ else tryAddMarbles() != null
 
         end
 end
-Server<-- Game: ResponseSuccess()
+Server<-- Game: HashMap<Resource,Integer>
 
 deactivate Game
 
-Client<-- Server: ResponseSuccess()
+Client<-- Server: ResponseSuccess
 
 CLI <-- Client: success()
 

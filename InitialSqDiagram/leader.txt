@@ -1,28 +1,29 @@
 @startuml
 Player-> CLI: "card leader"
 Player<- CLI: displayCardLeader()
-Player<- CLI: askCardLeader()
+Player-> CLI: "activate card leader"
+Player<- CLI: indexRequest()
 Player -> CLI: Index 
-CLI-> Client: sendCardLearderActivation()
-Client-> Server: ActivateCardLeader()
+CLI-> Client: askCardLeaderActivation()
+Client-> Server: RequestActivateCardLeader()
 
-Server-> GameHandler: makeAction()
+Server-> Game: makeAction()
 
-GameHandler-> Controller: makeAction()
+Game-> Controller: makeAction()
 
 Controller-> GameTable: activateCardLeader()
 
 alt move valid
-    GameHandler<-- Controller: AnswerAcivateCardLeader()
-    Server<-- GameHandler: AnswerAcivateCardLeader()
+    Game<-- Controller: AnswerAcivateCardLeader()
+    Server<-- Game: AnswerAcivateCardLeader()
     Client<-- Server: AnswerActivateCardLeader()
     CLI<- Client: success()
     Player<- CLI: displaySuccess()
 
 
 else move invalid
-    GameHandler<-- Controller: GameLogicError()
-    Server<-- GameHandler: GameLogicError()
+    Game<-- Controller: GameLogicError()
+    Server<-- Game: GameLogicError()
     Client<-- Server: GameLogicError()
     CLI <-- Client: printGameError()
     Player <-- CLI: displayGameError()
