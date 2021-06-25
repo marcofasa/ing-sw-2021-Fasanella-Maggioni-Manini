@@ -191,6 +191,14 @@ public class StandardStage {
         stage.close();
     }
 
+    /**
+     * Sets a Standard Matrix of given resource labels
+     * @param deposit HashMap
+     * @param coin_label
+     * @param servant_label
+     * @param shield_label
+     * @param stone_label
+     */
     static void resourceHandler(HashMap<Resource, Integer> deposit, Label coin_label, Label servant_label, Label shield_label, Label stone_label) {
         for(Resource resource: deposit.keySet()){
             switch (resource) {
@@ -202,35 +210,52 @@ public class StandardStage {
         }
     }
 
+
+    /**
+     * Loads and sets Deposit Level and calls loadDepositMatric
+     * @param depositLevel
+     * @param deposit
+     * @param deposit_grid
+     * @param resourceMatrix
+     */
    static void loadDepositLevels(Boolean[] depositLevel, HashMap<Resource,Integer> deposit, GridPane deposit_grid, ImageView[][] resourceMatrix ) {
        for (Resource resource : deposit.keySet()) {
            if (deposit.get(resource) == 3) {
-               loadStrongboxLevel(resource, resourceMatrix, 2, 1, 3, deposit_grid);
+               loadDepositMatrix(resource, resourceMatrix, 2, 1, 3, deposit_grid);
                depositLevel[2] = true;
            } else if (deposit.get(resource) == 2) {
                if (!depositLevel[1]) {
-                   loadStrongboxLevel(resource, resourceMatrix, 1, 1, 2, deposit_grid);
+                   loadDepositMatrix(resource, resourceMatrix, 1, 1, 2, deposit_grid);
                    depositLevel[1] = true;
                } else {
-                   loadStrongboxLevel(resource, resourceMatrix, 2, 1, 2, deposit_grid);
+                   loadDepositMatrix(resource, resourceMatrix, 2, 1, 2, deposit_grid);
                    depositLevel[2] = true;
                }
            } else if (deposit.get(resource) == 1) {
                if (!depositLevel[0]) {
-                   loadStrongboxLevel(resource, resourceMatrix, 0, 2, 1, deposit_grid);
+                   loadDepositMatrix(resource, resourceMatrix, 0, 2, 1, deposit_grid);
                    depositLevel[0] = true;
                } else if (!depositLevel[1]) {
-                   loadStrongboxLevel(resource, resourceMatrix, 1, 1, 1, deposit_grid);
+                   loadDepositMatrix(resource, resourceMatrix, 1, 1, 1, deposit_grid);
                    depositLevel[1] = true;
                } else {
-                   loadStrongboxLevel(resource, resourceMatrix, 2, 1, 1, deposit_grid);
+                   loadDepositMatrix(resource, resourceMatrix, 2, 1, 1, deposit_grid);
                    depositLevel[2] = true;
                }
            }
        }
    }
 
-    private static void loadStrongboxLevel(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
+    /**
+     * Loads resources to Deposit GridPane
+     * @param resource
+     * @param resourceMatrix
+     * @param row
+     * @param startingColumn
+     * @param nResources
+     * @param gridPane
+     */
+    private static void loadDepositMatrix(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
         String path = utils.getResourcePath(resource);
         while (nResources > 0) {
             setImageToMatrix(row, startingColumn, resourceMatrix, path, 20, 20, gridPane);
@@ -240,6 +265,12 @@ public class StandardStage {
     }
 
 
+    /**
+     * Sets a Standard Card Leader Array
+     * @param cardsLeaderArray arraylist of card leader
+     * @param cardLeaderArray ImageView array
+     * @param cardleader_grid GridPane
+     */
     public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeaderArray,ImageView[] cardLeaderArray,GridPane cardleader_grid) {
         cardLeaderArray = new ImageView[2];
         for (int i = 0; i < 2; i++) {
@@ -267,6 +298,11 @@ public class StandardStage {
 
     }
 
+    /**
+     * Gets corresponding number depending on Card Leader Type
+     * @param cardLeader
+     * @return
+     */
     static Integer getCardLeaderType(CardLeader cardLeader){
         return switch (cardLeader.getDescription()) {
             case Deposit -> 2;
@@ -276,6 +312,12 @@ public class StandardStage {
         };
     }
 
+
+    /**
+     * Gets corresponding number depending on Card Leader Color
+     * @param cardLeader
+     * @return
+     */
     static Integer getCardLeaderColor(CardLeader cardLeader){
         return  switch (cardLeader.getResource()) {
             case Coins -> 0;

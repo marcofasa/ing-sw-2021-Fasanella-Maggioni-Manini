@@ -79,6 +79,10 @@ public class ResourceMarketController extends StandardStage {
     }
 
 
+    /**
+     * Sets the Resource Market to GridPane
+     * @param resourceMarket
+     */
     public void setResourceMarket(ArrayList<ArrayList<MarbleType>> resourceMarket) {
         ImageView[][] resourceMatrix = new ImageView[3][4];
         int nRow = 3;

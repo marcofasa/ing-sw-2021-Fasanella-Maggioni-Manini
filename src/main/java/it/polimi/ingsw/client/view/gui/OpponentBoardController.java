@@ -16,14 +16,12 @@ public class OpponentBoardController extends StandardStage {
 
     @FXML
     Label nickName_label;
-
     @FXML
     GridPane opponent_Deposit_grid;
     @FXML
     GridPane opponent_cardDevelop_grid;
     @FXML
     GridPane cardLeader_array;
-
     @FXML
     Label stone_label;
     @FXML
@@ -39,6 +37,11 @@ public class OpponentBoardController extends StandardStage {
     private final Utils utils = new Utils();
     private ImageView[] cardLeaderArray;
 
+    /**
+     * Sets all components of Player (checkout)
+     * @param briefModel
+     * @param nickName of player to checkout
+     */
     public void setBriefModel(BriefModel briefModel,String nickName) {
         ArrayList<CardDevelopment> cardsDevelopment = briefModel.getCardsDevelopment();
         HashMap<Resource, Integer> deposit = briefModel.getDeposit();

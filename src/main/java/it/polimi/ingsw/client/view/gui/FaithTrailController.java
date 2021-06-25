@@ -23,6 +23,11 @@ public class FaithTrailController extends StandardStage {
     @FXML
     TextField checkout_text;
 
+    /**
+     * Sets all players to Faith Trail
+     * @param faithTrail of game
+     * @param nickName of current Player
+     */
     public void setFaithTrail(LightFaithTrail faithTrail, String nickName) {
         ImageView[][] faithTrailMatrix = new ImageView[3][19];
         HashMap<String, Integer> playersPosition = faithTrail.getPlayersPosition();
@@ -51,6 +56,12 @@ public class FaithTrailController extends StandardStage {
         players_label.setText(s);
     }
 
+    /**
+     * Sets Faith Trail Tiles of current Player
+     * @param faithTileStatus
+     * @param faithTrailMatrix
+     * @param section
+     */
     private void setTiles(FaithTileStatus faithTileStatus, ImageView[][] faithTrailMatrix, int section) {
         int row;
         int col;
@@ -93,7 +104,13 @@ public class FaithTrailController extends StandardStage {
         }
     }
 
-    private void setPlayerPosition(int position, ImageView[][] faithtrailMatrix, boolean player) {
+    /**
+     * Sets itsMe Position to to ImageView Matrix
+     * @param position
+     * @param faithtrailMatrix
+     * @param itsMe
+     */
+    private void setPlayerPosition(int position, ImageView[][] faithtrailMatrix, boolean itsMe) {
         int col;
         int row;
         switch (position) {
@@ -127,7 +144,7 @@ public class FaithTrailController extends StandardStage {
             }
             default -> throw new IllegalStateException("Unexpected value: " + position);
         }
-        if (player) {
+        if (itsMe) {
             String pathPlayer = "/images/punchboard/croce.png";
             setImageToMatrix(row, col, faithtrailMatrix, pathPlayer, 35, 35);
         } else {
@@ -138,6 +155,11 @@ public class FaithTrailController extends StandardStage {
 
     }
 
+
+    /**
+     * Checkout Button to see other players board
+     * @param actionEvent
+     */
     public void checkout(ActionEvent actionEvent) {
         String nickName = checkout_text.getText();
         if (GUI.checkoutValidator(nickName)) {
