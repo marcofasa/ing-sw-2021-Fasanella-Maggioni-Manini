@@ -6,8 +6,11 @@ import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.ProductionSelection;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
@@ -19,6 +22,27 @@ public class ProductionController extends StandardStage {
     private ArrayList<CardLeader> cardsLeader;
     private final Resource[] resources=new Resource[3];
     private final Boolean[] cardDevelopArray =new Boolean[3];
+    private ColorAdjust monochrome = new ColorAdjust();
+
+    @FXML
+    ImageView shield_in;
+    @FXML
+    ImageView coin_in;
+    @FXML
+    ImageView stone_in;
+    @FXML
+    ImageView servant_in;
+    @FXML
+    ImageView shield_out;
+    @FXML
+    ImageView coin_out;
+    @FXML
+    ImageView stone_out;
+    @FXML
+    ImageView servant_out;
+
+
+
 
 
     /**
@@ -33,6 +57,7 @@ public class ProductionController extends StandardStage {
         cardDevelopArray[0]=false;
         cardDevelopArray[1]=false;
         cardDevelopArray[2]=false;
+        monochrome.setSaturation(-0.5);
     }
 
 
@@ -96,6 +121,7 @@ public class ProductionController extends StandardStage {
             resources[0]=Resource.Stones;
         }
         else resources[1]=Resource.Stones;
+        stone_in.setEffect(monochrome);
     }
 
     public void coin_input(MouseEvent mouseEvent) {
@@ -103,6 +129,7 @@ public class ProductionController extends StandardStage {
             resources[0]=Resource.Coins;
         }
         else resources[1]=Resource.Coins;
+        coin_in.setEffect(monochrome);
     }
 
     public void servant_input(MouseEvent mouseEvent) {
@@ -110,6 +137,7 @@ public class ProductionController extends StandardStage {
             resources[0]=Resource.Servants;
         }
         else resources[1]=Resource.Servants;
+        servant_in.setEffect(monochrome);
     }
 
     public void shield_input(MouseEvent mouseEvent) {
@@ -117,22 +145,27 @@ public class ProductionController extends StandardStage {
             resources[0]=Resource.Shields;
         }
         else resources[1]=Resource.Shields;
+        shield_in.setEffect(monochrome);
     }
 
     public void stone_output(MouseEvent mouseEvent) {
         resources[2]=Resource.Stones;
+        stone_out.setEffect(monochrome);
     }
 
     public void coin_output(MouseEvent mouseEvent) {
         resources[2]=Resource.Coins;
+        coin_out.setEffect(monochrome);
     }
 
     public void shield_output(MouseEvent mouseEvent) {
         resources[2]=Resource.Shields;
+        shield_out.setEffect(monochrome);
     }
 
     public void servant_output(MouseEvent mouseEvent) {
         resources[2]=Resource.Servants;
+        servant_out.setEffect(monochrome);
     }
 
 
