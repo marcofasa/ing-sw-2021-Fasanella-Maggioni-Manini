@@ -51,22 +51,27 @@ public class CardDevelopmentMarketController extends StandardStage {
     public void setDevelopmentMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket,ArrayList<CardDevelopment> cardDevelopments){
         this.cardDevelopments=cardDevelopments;
         ImageView[][] cardDevelopmentMatrix = new ImageView[3][4];
+        String path;
         int nRow = 3;
         for(int i = 0; i< nRow; i++){
             int nCol = 4;
             for (int j = 0; j< nCol; j++){
-                Integer victoryPoints=cardDevelopmentMarket.get(i).get(j).getVictoryPoints();
-                Integer color = switch (cardDevelopmentMarket.get(i).get(j).getCardType()) {
-                    case Green -> 0;
-                    case Purple -> 1;
-                    case Blue -> 2;
-                    case Yellow -> 3;
-                };
+
+                if (cardDevelopmentMarket.get(i).get(j) != null) {
+
+                    Integer victoryPoints=cardDevelopmentMarket.get(i).get(j).getVictoryPoints();
+                    Integer color = switch (cardDevelopmentMarket.get(i).get(j).getCardType()) {
+                        case Green -> 0;
+                        case Purple -> 1;
+                        case Blue -> 2;
+                        case Yellow -> 3;
+                    };
 
 
-                //Image Path
-                String path="/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
+                    //Image Path
+                    path = "/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
 
+                } else path = "/images/CardDevelopment/Card_Development_Empty.png";
 
                setImageToMatrix(i,j, cardDevelopmentMatrix,path,80,120);
 
@@ -79,7 +84,6 @@ public class CardDevelopmentMarketController extends StandardStage {
 
                 //Adding to GridPane
                 cardDevelop_grid.add(cardDevelopmentMatrix[i][j],j,i);
-
             }
         }
     }

@@ -101,7 +101,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayTimeOut() {
-        out.println("Timeout error! Your connection to server may have been lost");
+        out.println("Timeout error! Your connection to server may has been lost");
     }
 
     @Override
@@ -149,6 +149,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displaySuccess() {
+        out.println("Action executed successfully! ");
     }
 
     @Override
@@ -509,8 +510,6 @@ public class CLI implements ViewInterface {
         //Sending request to Server
         client.send(new RequestActivateProduction(productionSelection));
     }
-
-
 
     @Override
     public void askCardLeaderActivation() {

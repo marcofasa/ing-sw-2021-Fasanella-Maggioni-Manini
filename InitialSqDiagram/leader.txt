@@ -1,4 +1,6 @@
 @startuml
+actor Player as Player
+
 Player-> CLI: "card leader"
 Player<- CLI: displayCardLeader()
 Player-> CLI: "activate card leader"
