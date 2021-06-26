@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.client.requests.RequestEndTurn;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
+import it.polimi.ingsw.model.CardDevelopment;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -59,19 +61,21 @@ public class PlayerBoardController extends StandardStage {
         }
         dialog = dialogPane;
 
+        ArrayList<CardDevelopment> topDevCards = lightModel.getCardsDevelopment();
+
         //Loading card development
         ImageView[] cardDevelopmentArray = new ImageView[3];
         for (int i = 1; i < 4; i++) {
-            if (lightModel.getCardsDevelopment().get(i - 1) != null) {
+            if (topDevCards.get(i - 1) != null) {
 
-                Integer color = switch (lightModel.getCardsDevelopment().get(i - 1).getCardType()) {
+                Integer color = switch (topDevCards.get(i - 1).getCardType()) {
                     case Green -> 0;
                     case Blue -> 2;
                     case Purple -> 1;
                     default -> 3;
                 };
                 //image final path
-                String path = "/images/CardDevelopment/Card_Development_" + lightModel.getCardsDevelopment().get(i - 1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
+                String path = "/images/CardDevelopment/Card_Development_" + topDevCards.get(i - 1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
                 setImageToArray(i - 1, path, cardDevelopmentArray, 80, 120);
             } else {
                 // if there's no card on the deck (printing default image)
