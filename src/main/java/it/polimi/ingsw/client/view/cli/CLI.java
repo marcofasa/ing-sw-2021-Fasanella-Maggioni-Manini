@@ -404,6 +404,11 @@ public class CLI implements ViewInterface {
         displayTurn(client.getNickname(), GamePhase.Final);
     }
 
+    @Override
+    public void unexpectedMove() {
+        System.out.println("A game logic error was encountered, the move has been reverted.");
+    }
+
 
     @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {

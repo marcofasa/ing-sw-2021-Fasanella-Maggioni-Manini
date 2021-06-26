@@ -99,7 +99,7 @@ public class ClientCommandDispatcher {
     }
 
     public void unexpectedMove() {
-        System.out.println("A game logic error was encountered, the move has been reverted.");
+        client.getView().unexpectedMove();
     }
 
     public void setDeposit(HashMap<Resource, Integer> depositClone, ArrayList<Resource> leaderRes, HashMap<Resource, Integer> leaderContent) {

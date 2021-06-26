@@ -160,4 +160,6 @@ public interface ViewInterface {
     void notifyReconnection(String nickname);
 
     void displayMainMoveNotMade();
+
+    void unexpectedMove();
 }

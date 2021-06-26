@@ -22,7 +22,9 @@ public class ProductionController extends StandardStage {
     private ArrayList<CardLeader> cardsLeader;
     private final Resource[] resources=new Resource[3];
     private final Boolean[] cardDevelopArray =new Boolean[3];
-    private ColorAdjust monochrome = new ColorAdjust();
+    private final ColorAdjust monochrome = new ColorAdjust();
+    private final ColorAdjust brightness = new ColorAdjust();
+
 
     @FXML
     ImageView shield_in;
@@ -42,9 +44,6 @@ public class ProductionController extends StandardStage {
     ImageView servant_out;
 
 
-
-
-
     /**
      * Sets card for Production selection
      * @param cardsDevelopment of player
@@ -58,6 +57,7 @@ public class ProductionController extends StandardStage {
         cardDevelopArray[1]=false;
         cardDevelopArray[2]=false;
         monochrome.setSaturation(-0.5);
+        brightness.setBrightness(0.1);
     }
 
 
@@ -122,7 +122,7 @@ public class ProductionController extends StandardStage {
             resources[0]=Resource.Stones;
         }
         else resources[1]=Resource.Stones;
-        stone_in.setEffect(monochrome);
+        stone_in.setEffect(brightness);
     }
 
     public void coin_input(MouseEvent mouseEvent) {
@@ -151,7 +151,7 @@ public class ProductionController extends StandardStage {
 
     public void stone_output(MouseEvent mouseEvent) {
         resources[2]=Resource.Stones;
-        stone_out.setEffect(monochrome);
+        stone_out.setEffect(brightness);
     }
 
     public void coin_output(MouseEvent mouseEvent) {

@@ -462,4 +462,9 @@ public class GUI extends Application implements ViewInterface {
         displayMessage("You need to make a primary move!");
     }
 
+    @Override
+    public void unexpectedMove() {
+        displayMessage("A game logic error was encountered, the move has been reverted.");
+    }
+
 }
