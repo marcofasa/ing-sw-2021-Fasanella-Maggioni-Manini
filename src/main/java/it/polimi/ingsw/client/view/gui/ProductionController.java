@@ -57,7 +57,7 @@ public class ProductionController extends StandardStage {
         cardDevelopArray[1]=false;
         cardDevelopArray[2]=false;
         monochrome.setSaturation(-0.5);
-        brightness.setBrightness(0.1);
+        brightness.setBrightness(1);
     }
 
 
