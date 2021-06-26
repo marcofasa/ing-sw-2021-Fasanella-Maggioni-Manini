@@ -77,13 +77,14 @@ public class ProductionController extends StandardStage {
     public void cardDevelopProduction(ActionEvent actionEvent) {
         FXMLLoader loader = load("/fxml/CardDevelopmentSelection.fxml");
         Scene secondScene = setScene(loader);
-        CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
+        CardDevelopmentSelection cardDevelopmentSelection = loader.getController();
+        cardDevelopmentSelection.setProdEnvironment(true);
         cardDevelopmentSelection.setCardDevelopmentSelection(cardsDevelopment);
         showStage(secondScene);
-        int pos=cardDevelopmentSelection.getPos();
 
-        cardDevelopArray[pos]=true;
-
+        for (int i = 0; i < cardDevelopArray.length; i++) {
+            cardDevelopArray[i] = cardDevelopmentSelection.getPosArray()[i];
+        }
     }
 
     public void cardLeaderProduction(ActionEvent actionEvent) {

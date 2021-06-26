@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.model.CardDevelopment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -29,6 +30,8 @@ public class CardDevelopmentSelection extends StandardStage {
     GridPane cardDevelopSel_grid;
 
     private int pos=-1;
+    private boolean environmentProduction = false;
+    private final boolean[] posArray = {false, false, false};
 
 
     /**
@@ -71,11 +74,32 @@ public class CardDevelopmentSelection extends StandardStage {
 
                 setImageToArray(i,path, cardDevelopmentArray,80,120);
 
+                ColorAdjust monochrome = new ColorAdjust();
+                monochrome.setSaturation(-1);
+
                 //Mouse Click Event
                 int finalI = i;
 
                 cardDevelopmentArray[i].setOnMouseClicked(mouseEvent -> {
                     setClick(finalI);
+
+                    if (environmentProduction) {
+
+                        if (posArray[finalI]) {
+                            cardDevelopmentArray[finalI].setEffect(null);
+                        } else {
+                            cardDevelopmentArray[finalI].setEffect(monochrome);
+                        }
+
+                    } else {
+
+                        for (ImageView image : cardDevelopmentArray) {
+                            image.setEffect(null);
+                        }
+                        cardDevelopmentArray[finalI].setEffect(monochrome);
+
+                    }
+
                 });
 
 
@@ -85,13 +109,11 @@ public class CardDevelopmentSelection extends StandardStage {
                 setImageToArray(i,path, cardDevelopmentArray,80,120);
 
                 //Mouse Click Event
-                int finalI = i;
+                /*int finalI = i;
 
                 cardDevelopmentArray[i].setOnMouseClicked(mouseEvent -> {
                     setClick(finalI);
-                });
-
-
+                });*/
             }
 
             //Adding to GridPane
@@ -105,7 +127,10 @@ public class CardDevelopmentSelection extends StandardStage {
      */
     private void setClick(int finalI) {
         printClick("Card Selection at position "+finalI);
-        pos=finalI;
+        if (!environmentProduction) pos=finalI;
+        else {
+            posArray[finalI] = !posArray[finalI];
+        }
     }
 
 
@@ -113,4 +138,11 @@ public class CardDevelopmentSelection extends StandardStage {
         return pos;
     }
 
+    public boolean[] getPosArray() {
+        return posArray;
+    }
+
+    public void setProdEnvironment(boolean b) {
+        this.environmentProduction = b;
+    }
 }
