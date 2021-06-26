@@ -1,5 +1,7 @@
 @startuml
-Player -> CLI: "market"
+actor Player as Player
+
+Player -> CLI: "buy resource"
 Player <- CLI: printMarket()
 Player <- CLI: askMarketChoice()
 Player -> CLI: Row/Column, Number
@@ -8,17 +10,18 @@ CLI -> Client: sendMarketChoice()
 Client-> Server: RequestUseMarket
 
 
+    Server-> Game: useMarket()
+    activate Game
+    Game-> Controller: useMarket()
+    activate Controller
+    Controller-> ActionController: useMarket()
+    activate ActionController
+    ActionController-> GameTable: tryAddMarbles()
+    activate GameTable
+
 
 alt tryAddMarbles() == null
-            Server-> Game: useMarket()
-             activate Game
 
-            Game-> Controller: useMarket()
-            activate Controller
-            Controller-> ActionController: useMarket()
-            activate ActionController
-            ActionController-> GameTable: tryAddMarbles()
-            activate GameTable
             ActionController<- GameTable: HashMap<Resource,Integer>
             deactivate GameTable
             ActionController -> Controller: HashMap<Resource,Integer>
@@ -30,14 +33,7 @@ alt tryAddMarbles() == null
 
 else tryAddMarbles() != null
         loop until tryAddMarbles() == null
-            Server-> Game: useMarket()
 
-            Game-> Controller: useMarket()
-            activate Controller
-            Controller-> ActionController: useMarket()
-            activate ActionController
-            ActionController-> GameTable: tryAddMarbles()
-            activate GameTable
             ActionController<- GameTable: HashMap<Resource,Integer>
             deactivate GameTable
             ActionController -> Controller: HashMap<Resource,Integer>

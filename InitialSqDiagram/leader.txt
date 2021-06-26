@@ -7,15 +7,16 @@ Player-> CLI: "activate card leader"
 Player<- CLI: indexRequest()
 Player -> CLI: Index 
 CLI-> Client: askCardLeaderActivation()
-Client-> Server: RequestActivateCardLeader()
+Client-> Server: requestActivateCardLeader()
 
-Server-> Game: makeAction()
+Server-> Game: activateLeaderCard()
+Game-> Controller: activateLeaderCard()
+Controller-> ActionController: activateCardLeader()
+ActionController-> PlayerBoard: activate()
 
-Game-> Controller: makeAction()
-
-Controller-> GameTable: activateCardLeader()
-
-alt move valid
+PlayerBoard--> ActionController: answer
+ActionController--> Controller: answer
+alt move valid : answer == true
     Game<-- Controller: AnswerAcivateCardLeader()
     Server<-- Game: AnswerAcivateCardLeader()
     Client<-- Server: AnswerActivateCardLeader()
@@ -23,7 +24,7 @@ alt move valid
     Player<- CLI: displaySuccess()
 
 
-else move invalid
+else move invalid : answer == false
     Game<-- Controller: GameLogicError()
     Server<-- Game: GameLogicError()
     Client<-- Server: GameLogicError()
