@@ -157,10 +157,10 @@ public class GUI extends Application implements ViewInterface {
         //Loading Scene
         mainScene("/fxml/ResourceMarket.fxml");
 
-Platform.runLater(()->{
+    Platform.runLater(()->{
     ResourceMarketController resourceMarketController = fxmlLoader.getController();
     resourceMarketController.setResourceMarket(getLightModel().getMarket());
-});
+    });
 
 
     }

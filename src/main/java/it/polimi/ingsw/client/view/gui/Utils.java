@@ -22,6 +22,11 @@ public class Utils {
     }
 
 
+    /**
+     * Creates the Deposit level (False)
+     * @param depositLevel
+     * @return array initialized
+     */
     public Boolean[] initializeDepositLevel(Boolean[] depositLevel) {
         depositLevel =new Boolean[3];
         depositLevel[0]=false;
@@ -30,6 +35,11 @@ public class Utils {
         return depositLevel;
     }
 
+    /**
+     * Gets Resource Image Path from given Resource Type
+     * @param resource
+     * @return
+     */
     public String getResourcePath(Resource resource) {
         String stone = "/images/Resources/stone.png";
         String shield = "/images/Resources/shield.png";
@@ -43,6 +53,11 @@ public class Utils {
         };
     }
 
+    /**
+     * Finds the maximum score (of winner)
+     * @param showScoreBoard
+     * @return max score
+     */
     public int checkWinner(HashMap<String, Integer> showScoreBoard) {
         Integer maxValue = 0;
         for (String name : showScoreBoard.keySet()) {

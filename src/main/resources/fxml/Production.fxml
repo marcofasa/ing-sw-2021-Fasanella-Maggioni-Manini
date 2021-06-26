@@ -37,22 +37,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="38.0" fitWidth="44.0" onMouseClicked="#stone_input" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="stone_in" fitHeight="38.0" fitWidth="44.0" onMouseClicked="#stone_input" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Resources/stone.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="41.0" fitWidth="45.0" layoutX="10.0" layoutY="8.0" onMouseClicked="#coin_input" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="coin_in" fitHeight="41.0" fitWidth="45.0" layoutX="10.0" layoutY="8.0" onMouseClicked="#coin_input" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../images/Resources/coin.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="41.0" fitWidth="42.0" layoutX="10.0" layoutY="8.0" onMouseClicked="#servant_input" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="servant_in" fitHeight="41.0" fitWidth="42.0" layoutX="10.0" layoutY="8.0" onMouseClicked="#servant_input" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@../images/Resources/servant.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="49.0" fitWidth="64.0" layoutX="10.0" layoutY="8.0" onMouseClicked="#shield_input" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="shield_in" fitHeight="49.0" fitWidth="64.0" layoutX="10.0" layoutY="8.0" onMouseClicked="#shield_input" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../images/Resources/shield.png" />
                </image>
@@ -69,22 +69,22 @@
             <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="38.0" fitWidth="44.0" onMouseClicked="#stone_output" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="stone_out" fitHeight="38.0" fitWidth="44.0" onMouseClicked="#stone_output" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Resources/stone.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="41.0" fitWidth="45.0" onMouseClicked="#coin_output" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="coin_out" fitHeight="41.0" fitWidth="45.0" onMouseClicked="#coin_output" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../images/Resources/coin.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="49.0" fitWidth="64.0" onMouseClicked="#shield_output" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="shield_out" fitHeight="49.0" fitWidth="64.0" onMouseClicked="#shield_output" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../images/Resources/shield.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="41.0" fitWidth="42.0" onMouseClicked="#servant_output" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="servant_out" fitHeight="41.0" fitWidth="42.0" onMouseClicked="#servant_output" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@../images/Resources/servant.png" />
                </image>
