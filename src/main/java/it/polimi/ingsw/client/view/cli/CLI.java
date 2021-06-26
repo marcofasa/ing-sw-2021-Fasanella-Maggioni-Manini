@@ -213,7 +213,6 @@ public class CLI implements ViewInterface {
         utils.printCardDevelopmentDeck(getLightModel().getCardsDevelopment());
     }
 
-    @Override
     public String askNickName() {
         //utils.setColoredCLI();
         //Welcome Message
@@ -406,6 +405,11 @@ public class CLI implements ViewInterface {
         displayTurn(client.getNickname(), GamePhase.Final);
     }
 
+    @Override
+    public void unexpectedMove() {
+        System.out.println("A game logic error was encountered, the move has been reverted.");
+    }
+
 
     @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
@@ -526,22 +530,22 @@ public class CLI implements ViewInterface {
     public ArrayList<Resource> askForInitialResourcesSelection(int playerNumber) {
         ArrayList<Resource> resources = new ArrayList<>();
         switch (playerNumber) {
-            case 0:
+            case 0 -> {
                 out.println("You have no resources to choose because you're the first player!");
                 out.println();
                 resources.add(null);
                 resources.add(null);
-                break;
-            case 1: case 2:
+            }
+            case 1, 2 -> {
                 out.println("Choose one resource : ");
                 resources.add(utils.readResource(true));
                 resources.add(null);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 out.println("Choose two resources : ");
                 resources.add(utils.readResource(true));
                 resources.add(utils.readResource(false));
-                break;
+            }
         }
 
         return resources;

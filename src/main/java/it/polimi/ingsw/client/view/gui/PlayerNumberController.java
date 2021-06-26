@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 
 
 public class PlayerNumberController extends StandardStage {
-
     //BUTTONS
 
     /**

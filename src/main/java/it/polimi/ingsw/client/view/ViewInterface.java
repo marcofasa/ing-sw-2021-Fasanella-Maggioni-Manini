@@ -105,8 +105,6 @@ public interface ViewInterface {
 
     //REQUEST
 
-    String askNickName();
-
     int askPlayerNumber();
 
     void askMarketChoice();
@@ -162,4 +160,6 @@ public interface ViewInterface {
     void notifyReconnection(String nickname);
 
     void displayMainMoveNotMade();
+
+    void unexpectedMove();
 }
