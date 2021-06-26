@@ -74,32 +74,12 @@ public class CardDevelopmentSelection extends StandardStage {
 
                 setImageToArray(i,path, cardDevelopmentArray,80,120);
 
-                ColorAdjust monochrome = new ColorAdjust();
-                monochrome.setSaturation(-1);
-
                 //Mouse Click Event
                 int finalI = i;
 
                 cardDevelopmentArray[i].setOnMouseClicked(mouseEvent -> {
                     setClick(finalI);
-
-                    if (environmentProduction) {
-
-                        if (posArray[finalI]) {
-                            cardDevelopmentArray[finalI].setEffect(null);
-                        } else {
-                            cardDevelopmentArray[finalI].setEffect(monochrome);
-                        }
-
-                    } else {
-
-                        for (ImageView image : cardDevelopmentArray) {
-                            image.setEffect(null);
-                        }
-                        cardDevelopmentArray[finalI].setEffect(monochrome);
-
-                    }
-
+                    drawCards(cardDevelopmentArray, finalI);
                 });
 
 
@@ -109,11 +89,12 @@ public class CardDevelopmentSelection extends StandardStage {
                 setImageToArray(i,path, cardDevelopmentArray,80,120);
 
                 //Mouse Click Event
-                /*int finalI = i;
+                int finalI = i;
 
                 cardDevelopmentArray[i].setOnMouseClicked(mouseEvent -> {
                     setClick(finalI);
-                });*/
+                    drawCards(cardDevelopmentArray, finalI);
+                });
             }
 
             //Adding to GridPane
@@ -144,5 +125,29 @@ public class CardDevelopmentSelection extends StandardStage {
 
     public void setProdEnvironment(boolean b) {
         this.environmentProduction = b;
+    }
+
+    private void drawCards(ImageView[] cardDevelopmentArray, int finalI) {
+
+        ColorAdjust monochrome = new ColorAdjust();
+        monochrome.setSaturation(-1);
+
+        if (environmentProduction) {
+
+            if (posArray[finalI]) {
+                cardDevelopmentArray[finalI].setEffect(null);
+            } else {
+                cardDevelopmentArray[finalI].setEffect(monochrome);
+            }
+
+        } else {
+
+            for (ImageView image : cardDevelopmentArray) {
+                image.setEffect(null);
+            }
+            cardDevelopmentArray[finalI].setEffect(monochrome);
+
+        }
+
     }
 }
