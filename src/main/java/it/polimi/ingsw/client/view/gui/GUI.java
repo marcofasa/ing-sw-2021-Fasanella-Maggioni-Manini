@@ -132,7 +132,6 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayStartingGame() {
-
     }
 
     public static void displayMessage(String message) {
@@ -149,6 +148,7 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayTimeOut() {
+        displayMessage("Timeout error! Your connection with the server has been lost");
     }
 
     @Override
@@ -178,7 +178,7 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayNotEnoughResource() {
-
+        displayMessage("Not enough resources to perform this action!");
     }
 
     @Override
@@ -252,11 +252,6 @@ public class GUI extends Application implements ViewInterface {
     @Override
     public void displayCardDevelopment() {
 
-    }
-
-    @Override
-    public String askNickName() {
-        return null;
     }
 
     @Override
@@ -365,9 +360,7 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public void displayWaiting(int timeoutInSeconds) {
-
-    }
+    public void displayWaiting(int timeoutInSeconds) {}
 
     @Override
     public void askCardLeaderDiscard() {
@@ -379,8 +372,8 @@ public class GUI extends Application implements ViewInterface {
     }
 
     @Override
-    public void displayStartingEndGame(String payload) {
-
+    public void displayStartingEndGame(String nickname) {
+        displayMessage(nickname + " has activated endgame!");
     }
 
     @Override
@@ -421,7 +414,7 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayInvalidPlacementSelection() {
-
+        displayMessage("The placement index you have selected would not allow for a legal card placement!");
     }
 
     @Override

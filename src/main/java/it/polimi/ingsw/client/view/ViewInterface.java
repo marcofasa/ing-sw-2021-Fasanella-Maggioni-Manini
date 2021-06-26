@@ -105,8 +105,6 @@ public interface ViewInterface {
 
     //REQUEST
 
-    String askNickName();
-
     int askPlayerNumber();
 
     void askMarketChoice();

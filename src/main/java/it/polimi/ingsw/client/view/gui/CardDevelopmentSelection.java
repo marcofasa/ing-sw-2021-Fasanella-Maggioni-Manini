@@ -78,8 +78,8 @@ public class CardDevelopmentSelection extends StandardStage {
                 int finalI = i;
 
                 cardDevelopmentArray[i].setOnMouseClicked(mouseEvent -> {
-                    setClick(finalI);
                     drawCards(cardDevelopmentArray, finalI);
+                    setClick(finalI);
                 });
 
 
@@ -92,8 +92,8 @@ public class CardDevelopmentSelection extends StandardStage {
                 int finalI = i;
 
                 cardDevelopmentArray[i].setOnMouseClicked(mouseEvent -> {
-                    setClick(finalI);
                     drawCards(cardDevelopmentArray, finalI);
+                    setClick(finalI);
                 });
             }
 

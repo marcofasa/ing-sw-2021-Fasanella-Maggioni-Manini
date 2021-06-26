@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.System.exit;
+
 /**
  * Class to launch a Maestro Del Rinascimento server
  */
@@ -142,8 +144,9 @@ public class Server {
     public static void main(String[] args) {
         boolean debug = false;
         boolean timeoutEnabled = true;
-        for (String arg :
-                args) {
+        Integer port = 51214;
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
             switch (arg) {
                 case "--h" -> {
                     System.out.println("--d to start in debug");
@@ -157,12 +160,29 @@ public class Server {
                     System.out.println("running with timeout disabled");
                     timeoutEnabled = false;
                 }
+                case "--port" -> {
+                    if(args.length - 1 < i + 1){
+                        System.out.println("you need to input a port when using the tag --port");
+                        exit(1);
+                    }
+                    try {
+                        port = Integer.parseInt( args[i+1] );
+                        if(!(port > 1024 && port < 65535)){
+                            System.out.println("Port must be a number between 1024 and 65535");
+                            exit(1);
+                        }
+                    } catch (NumberFormatException e){
+                        System.out.println("The port given is not valid");
+                        exit(1);
+                    }
+                    System.out.println("selected port " + port);
+                    debug = true;
+                }
             }
         }
         if (debug)
             System.out.println("Server is running in debug!");
         Server server = new Server(debug, timeoutEnabled);
-        Integer port = 51214;
         server.socketServer = new SocketServer(port, server);
         Thread thread = new Thread(server.socketServer);
         thread.start();
