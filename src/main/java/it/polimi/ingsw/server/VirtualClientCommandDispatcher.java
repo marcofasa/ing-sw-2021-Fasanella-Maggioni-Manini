@@ -171,8 +171,7 @@ public class VirtualClientCommandDispatcher {
         } catch (EmptyStackException ex) {
 
             sendWithTimeoutID(new ResponseUnexpectedMove(), _timeoutID);
-            send(
-                    new RequestSignalActivePlayer(
+            send(new RequestSignalActivePlayer(
                             virtualClient.getGame().getNicknameByClient(virtualClient),
                             GamePhase.Initial));
         }

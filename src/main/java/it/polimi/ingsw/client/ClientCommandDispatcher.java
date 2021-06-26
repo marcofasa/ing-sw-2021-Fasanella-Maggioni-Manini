@@ -185,7 +185,7 @@ public class ClientCommandDispatcher {
     }
 
     public void notifyReconnectionOf(String nickname) {
-        System.out.println("Client " + nickname + "reconnected, from now on he's back playing");
+        System.out.println("Client " + nickname + " reconnected, from now on he's back playing");
         client.getView().notifyReconnection(nickname);
     }
 
