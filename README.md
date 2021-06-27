@@ -5,22 +5,27 @@
 - ###   10610008    Elia Maggioni ([@Eliaxie](https://github.com/Eliaxie))<br>elia.maggioni@mail.polimi.it
 - ###   10625965    Lucas Manini ([@lmanini](https://github.com/lmanini))<br>lucasjose.manini@mail.polimi.it
 
-| Functionality | State |
+## Implemented Functionalities
+| Functionality | Status |
 |:-----------------------|:------------------------------------:|
-| Basic rules | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
-| Complete rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| Socket | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| CLI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| Multiple games | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| Persistence | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| Local Single Player | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
-| ----- | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/model) |
+| Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/model) |
+| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/server) |
+| GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/client/gui) |
+| CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/client/cli) |
+| Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/blob/master/src/main/java/it/polimi/ingsw/server/Server.java)|
+| Persistence | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/model/player/gods/advancedgods) |
+|  | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
+|  | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
+
+#### Legend
+[![RED](http://placehold.it/15/f03c15/f03c15)]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;[![YELLOW](http://placehold.it/15/ffdd00/ffdd00)]() Implementing&nbsp;&nbsp;&nbsp;&nbsp;[![GREEN](http://placehold.it/15/44bb44/44bb44)]() Implemented
+
 
 <!--
-[![RED](https://placehold.it/15/f03c15/f03c15)](#)
-[![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#)
-[![GREEN](https://placehold.it/15/44bb44/44bb44)](#)
+[![RED](http://placehold.it/15/f03c15/f03c15)](#)
+[![YELLOW](http://placehold.it/15/ffdd00/ffdd00)](#)
+[![GREEN](http://placehold.it/15/44bb44/44bb44)](#)
 -->
 
 ## Creating the artifacts
@@ -32,12 +37,24 @@ From the command line, setting the current working directory to the directory co
 This will create a server application listening on ports 51214.
 In order to change on which port the socket server will listen for incoming connections, the ```-SOCKET='port number'``` command line argument can be used.
 
--> mettere tag
+| TAG | Effect |
+|:-----------------------|:------------------------------------:|
+| --d | Enable debug mode |
+| --no-timeout | Disable heart-beat verification |
+| --port port| Change port from 51214 |
+
 
 ## Running the client
 In order to run the client application the latest version of Java must be used and the JavaFX 12 libraries must be located somewhere on the computer.
 Open a terminal in the same folder of the client jar and type the command ```java -jar PSP08-Client.jar``` to start the application.
+The default interface is GUI
 
-->tag
+| TAG | Effect |
+|:-----------------------|:------------------------------------:|
+| --d | Enable debug mode |
+| --cli | Start Client in Command Line Interface |
 
-//spiegazione inizio game
+####Lobby
+When a player connects to the server, a checka whether the lobby has been already setup or not is run, in which case the player
+is inserted in the lobby with the other players waiting. If the lobby dimensions are still unset, meaning that he is the first player of a new Game, the client is asked to set them.
+The game starts when the lobby is full, and a new lobby is made available for other players to join.

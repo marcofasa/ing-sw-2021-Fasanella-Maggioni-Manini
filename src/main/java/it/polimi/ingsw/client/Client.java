@@ -278,7 +278,7 @@ public class Client {
 
     public static void main(String[] args) {
         boolean debug = false;
-        boolean CLI = true;
+        boolean CLI = false;
         for (String arg :
                 args) {
             switch (arg) {
@@ -291,7 +291,7 @@ public class Client {
                     System.out.println("debug mode on");
                     debug = true;
                 }
-                case "--g" -> CLI = false;
+                case "--c" -> CLI = true;
             }
         }
         Client client = new Client(CLI, debug);
