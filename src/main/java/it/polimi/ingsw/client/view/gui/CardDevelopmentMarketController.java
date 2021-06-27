@@ -133,7 +133,7 @@ public class CardDevelopmentMarketController extends StandardStage {
         Scene secondScene=setScene(loader);
 
         //loading Stage
-        CardDevelopmentSelection cardDevelopmentSelection=loader.getController();
+        CardDevelopmentSelectionController cardDevelopmentSelection=loader.getController();
         cardDevelopmentSelection.setCardDevelopmentSelection(cardDevelopments);
         showStage(secondScene);
         pos=cardDevelopmentSelection.getPos();

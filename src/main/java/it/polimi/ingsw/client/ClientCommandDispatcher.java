@@ -35,7 +35,7 @@ public class ClientCommandDispatcher {
     }
 
 
-    public void nicknameIsUnavailable(){ /* TODO */
+    public void nicknameIsUnavailable(){
         client.getView().displayNickNameUnavailable();
         //System.out.println("Nickname is unavailable! Please try another one...");
 
@@ -118,7 +118,7 @@ public class ClientCommandDispatcher {
     }
 
     public void setMarketInstance(ArrayList<ArrayList<MarbleType>> marketClone, Marble spareMarble) {
-        client.getView().getLightModel().setMarket(marketClone); /* TODO spare marble */
+        client.getView().getLightModel().setMarket(marketClone);
         client.getView().getLightModel().setSpareMarble(spareMarble);
     }
 

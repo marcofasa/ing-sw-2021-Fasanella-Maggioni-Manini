@@ -666,7 +666,6 @@ public class Utils {
                 out.printf(MAGENTA + "Purple" + RESET);
                 break;
             case "Blue":
-                //TODO Blue color not displayed
                 out.printf(BLUE + " Blue" + RESET);
                 break;
             default:
