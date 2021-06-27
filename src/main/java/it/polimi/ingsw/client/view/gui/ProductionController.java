@@ -77,7 +77,7 @@ public class ProductionController extends StandardStage {
     public void cardDevelopProduction(ActionEvent actionEvent) {
         FXMLLoader loader = load("/fxml/CardDevelopmentSelection.fxml");
         Scene secondScene = setScene(loader);
-        CardDevelopmentSelection cardDevelopmentSelection = loader.getController();
+        CardDevelopmentSelectionController cardDevelopmentSelection = loader.getController();
         cardDevelopmentSelection.setProdEnvironment(true);
         cardDevelopmentSelection.setCardDevelopmentSelection(cardsDevelopment);
         showStage(secondScene);
