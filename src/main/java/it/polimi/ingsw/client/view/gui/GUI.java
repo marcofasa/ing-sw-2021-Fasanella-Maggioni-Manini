@@ -342,7 +342,7 @@ public class GUI extends Application implements ViewInterface {
             PlayerBoardController playerBoardController=fxmlLoader.getController();
             playerBoardController.setDiscardRequest(choice);
         });
-
+        GUI.displayMessage("You have to discard resources!");
         if (discardList==null){
             discardList=new HashMap<>();
         }
