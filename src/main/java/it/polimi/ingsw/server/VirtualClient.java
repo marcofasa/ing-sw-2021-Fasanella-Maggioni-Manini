@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.RequestTimedOutException;
 import it.polimi.ingsw.communication.server.ServerKeepAlive;
 import it.polimi.ingsw.communication.timeout_handler.ServerTimeoutHandler;
 import it.polimi.ingsw.communication.client.ClientMessage;
@@ -70,14 +70,14 @@ public class VirtualClient implements Runnable {
      *
      * @param serverMessage    message to be sent
      * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
-     * @throws RequestTimeoutException thrown if timeout is exceeded.
+     * @throws RequestTimedOutException thrown if timeout is exceeded.
      */
-    public void sendAndWait(ServerMessage serverMessage, int timeoutInSeconds) throws RequestTimeoutException {
+    public void sendAndWait(ServerMessage serverMessage, int timeoutInSeconds) throws RequestTimedOutException {
         try {
             timeoutHandler.sendAndWait(serverMessage, timeoutInSeconds);
         } catch (TimeoutException e) {
             System.out.println("Timeout on message expired.");
-            throw new RequestTimeoutException();
+            throw new RequestTimedOutException();
         }
 
     }
@@ -107,7 +107,7 @@ public class VirtualClient implements Runnable {
                     } else {
                         executors.submit(() -> finalInputClass.read(this));
                     }
-                } catch (RequestTimeoutException e) {
+                } catch (RequestTimedOutException e) {
                     server.requestTimedOut(this);
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -121,7 +121,7 @@ public class VirtualClient implements Runnable {
         } catch (IOException | ClassNotFoundException e) {
             connected = false;
             close();
-            server.notifyDisconnectionOfClient(this, game, game.getNicknameByClient(this));
+            server.disconnectClient(this, game, game.getNicknameByClient(this));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

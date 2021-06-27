@@ -95,7 +95,7 @@ Label playerNumber_label;
             try {
                 connectionInfo.setNickname(user_field.getText());
                 connectionInfo.setPort(Integer.parseInt(port_field.getText()));
-                connectionInfo.setIP(ip_field.getText());
+                connectionInfo.setAddress(ip_field.getText());
                 GUI.setConnectionInfo(connectionInfo);
                 Client.connectionSetupSemaphore.release();
             } catch ( NumberFormatException ex) {

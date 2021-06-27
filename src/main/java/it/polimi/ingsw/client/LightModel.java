@@ -91,7 +91,7 @@ public class LightModel {
         try {
             client.sendAndWait(new RequestMarketInstance(),-1);
         }
-        catch (RequestTimeoutException e){
+        catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 
@@ -106,7 +106,7 @@ public class LightModel {
             client.sendAndWait(new RequestCardDevelopmentMarketInstance(),-1);
 
         }
-        catch (RequestTimeoutException e){
+        catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 
@@ -118,7 +118,7 @@ public class LightModel {
 
         try {
             client.sendAndWait(new RequestDepositInstance(),-1);
-        } catch (RequestTimeoutException e){
+        } catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 
@@ -130,7 +130,7 @@ public class LightModel {
 
         try {
             client.sendAndWait(new RequestCardLeaders(),-1);
-        } catch (RequestTimeoutException e){
+        } catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 
@@ -143,7 +143,7 @@ public class LightModel {
 
         try {
             client.sendAndWait(new RequestTopCardsDevelopment(),-1);
-        } catch (RequestTimeoutException e){
+        } catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 
@@ -156,7 +156,7 @@ public class LightModel {
 
         try {
             client.sendAndWait(new RequestStrongboxInstance(),-1);
-        } catch (RequestTimeoutException e){
+        } catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 

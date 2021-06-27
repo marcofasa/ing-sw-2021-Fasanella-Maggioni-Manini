@@ -1,6 +1,6 @@
 package it.polimi.ingsw.communication.timeout_handler;
 
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.RequestTimedOutException;
 import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.server.VirtualClient;
 
@@ -14,7 +14,7 @@ public class ServerTimeoutHandler {
         timeoutHandler = new TimeoutHandler(virtualClient);
     }
 
-    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException {
+    public void tryDisengage(int messageTimeoutID) throws RequestTimedOutException {
         timeoutHandler.tryDisengage(messageTimeoutID);
     }
 

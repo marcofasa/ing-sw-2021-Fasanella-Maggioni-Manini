@@ -1,11 +1,10 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.RequestTimedOutException;
 import it.polimi.ingsw.communication.server.requests.RequestRequestPlayersNumber;
 import it.polimi.ingsw.communication.server.ServerMessage;
 
 import java.util.ArrayList;
-import java.util.concurrent.*;
 
 /**
  * Class to handle of the pre game phase.
@@ -44,7 +43,7 @@ public class WaitingLobby {
             virtualClient.sendAndWait(new RequestRequestPlayersNumber(), 60);
             players.add(virtualClient);
             empty = false;
-        } catch (RequestTimeoutException e) {
+        } catch (RequestTimedOutException e) {
             server.unregisterClientTimeoutExceeded(virtualClient);
         }
     }

@@ -28,7 +28,6 @@ public class Client {
 
     private volatile static boolean connected = false;
     private final Boolean debug;
-    private ConnectionInfo connectionInfo;
     private int port;
     private final ClientTimeoutHandler timeoutHandler;
     private ObjectInputStream inputStream;
@@ -46,10 +45,13 @@ public class Client {
     private volatile boolean running;
     private ScheduledFuture<?> heartBeatExecutor;
 
-
+    /**
+     * Main client constructor, builds the client maps and starts the UI
+     * @param cli true if CLI interface, false if GUI
+     * @param debug true if debug mode, false otherwise
+     */
     public Client(Boolean cli, Boolean debug) {
         this.debug = debug;
-        ArrayList<BriefModel> players = new ArrayList<>();
         this.lightModel = new LightModel(this);
         executors = Executors.newCachedThreadPool();
         this.clientCommandDispatcher = new ClientCommandDispatcher(this);
@@ -66,6 +68,13 @@ public class Client {
         }
     }
 
+    /**
+     * this method starts the connection to the server and the heartbeat
+     * @param ip of the server
+     * @param port of the server
+     * @param nickname of this client
+     * @throws IOException in case of socket.close() failure
+     */
     public void startConnectionAndListen(String ip, int port, String nickname) throws IOException {
         clientSocket = new Socket(ip, port);
         clientSocket.setSoTimeout(5000);
@@ -86,7 +95,7 @@ public class Client {
                     executors.submit(() -> {
                         try {
                             handleResponse(finalInputClass);
-                        } catch (RequestTimeoutException e) {
+                        } catch (RequestTimedOutException e) {
                             getView().displayTimeoutError();
                         } catch (ExecutionException | InterruptedException ignored) {
                         }
@@ -100,21 +109,38 @@ public class Client {
         clientSocket.close();
     }
 
+    /**
+     * method repeated every 2.5 seconds as heartbeat to the server
+     */
     private void startHeartBeat() {
         send(new ClientKeepAlive());
     }
 
-
-    private void handleResponse(ServerMessage finalInputClass) throws RequestTimeoutException, ExecutionException, InterruptedException {
+    /**
+     * Handles a ServerResponse received from the server
+     * @param finalInputClass message received
+     * @throws RequestTimedOutException thrown if this response is received too late and the timeout has been reached
+     * @throws ExecutionException could be thrown by an executor
+     * @throws InterruptedException could be thrown by an executor
+     */
+    private void handleResponse(ServerMessage finalInputClass) throws RequestTimedOutException, ExecutionException, InterruptedException {
         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
         finalInputClass.read(clientCommandDispatcher);
         timeoutHandler.defuse(finalInputClass.getTimeoutID());
     }
 
+    /**
+     * Send message to the Server
+     * @param clientMessage to be sent
+     */
     public void send(ClientMessage clientMessage) {
         executors.submit(() -> sendExecutor(clientMessage));
     }
 
+    /**
+     * slave method of Client.send
+     * @param clientMessage to be sent
+     */
     private synchronized void sendExecutor(ClientMessage clientMessage) {
         if(!(clientMessage instanceof ClientKeepAlive) && debug)
             System.out.println(clientMessage.toString());
@@ -130,18 +156,124 @@ public class Client {
     /**
      * Send Message and waits for answer
      *
-     * @param clientMessage    message to be sent
+     * @param clientMessage message to be sent
      * @param timeoutInSeconds time before RequestTimedOutException is thrown, -1 to wait indefinitely
-     * @throws RequestTimeoutException thrown if timeout is exceeded.
+     * @throws RequestTimedOutException thrown if timeout is exceeded.
      */
-    public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws RequestTimeoutException {
+    public void sendAndWait(ClientMessage clientMessage, int timeoutInSeconds) throws RequestTimedOutException {
         try {
             timeoutHandler.sendAndWait(clientMessage, timeoutInSeconds);
         } catch (TimeoutException e) {
             System.out.println("Timeout on message expired.");
-            throw new RequestTimeoutException();
+            throw new RequestTimedOutException();
         }
 
+    }
+
+    /**
+     * gets parameters for the connection to the server
+     * @param CLI true if UI is CLI
+     */
+    private void parametersSetup(boolean CLI) {
+        if(!CLI) {
+            try {
+                Client.connectionSetupSemaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        ConnectionInfo connectionInfo = getView().getConnectionInfo();
+        port = connectionInfo.getPort();
+        ip = connectionInfo.getAddress();
+        nickname = connectionInfo.getNickname();
+    }
+
+    public ViewInterface getView() {
+        return view;
+    }
+
+    public ClientTimeoutHandler getTimeoutHandler() {
+        return timeoutHandler;
+    }
+
+    /**
+     * set connected toggle, this stops this client from receiving any more messages
+     * @param connected to be set
+     */
+    public void setConnected(boolean connected) {
+        if(!connected){
+            heartBeatExecutor.cancel(true);
+        }
+        Client.connected = connected;
+    }
+
+    public void closeStream() {
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Initializes an array of nicknames and associates them with empty BriefModels, to be adjourned
+     * every turn from the server.
+     * @param playersNickname
+     */
+    public void setPlayersNicknames(ArrayList<String> playersNickname) {
+        this.playersNickname = playersNickname;
+        for (String nickname :
+                playersNickname) {
+            modelByNickname.put(nickname, new BriefModel());
+        }
+    }
+
+    public LightModel getLightModel() {
+        return lightModel;
+    }
+
+    public void setModelForPlayer(BriefModel briefModel, String nickname) {
+        modelByNickname.put(nickname, briefModel);
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public ArrayList<String> getPlayersNickname() {
+        return playersNickname;
+    }
+
+    public BriefModel getModelByNickname(String nickname) {
+        return modelByNickname.get(nickname);
+    }
+
+    /**
+     * Method to kill the connection to the server and ultimately this client.
+     */
+    public void killConnection(){
+        running = false;
+        try {
+            clientSocket.close();
+        } catch (IOException ignore) {
+        }
+        try {
+            inputStream.close();
+        } catch (IOException ignore) {
+        }
+        try {
+            outputStream.close();
+        } catch (IOException ignore) {
+        }
+        exit(0);
+    }
+
+    public boolean isDebug() {
+        return debug;
     }
 
     public static void main(String[] args) {
@@ -184,101 +316,5 @@ public class Client {
             }
             client.parametersSetup(CLI);
         }
-    }
-
-    private void parametersSetup(boolean CLI) {
-        Client client = this;
-        if(!CLI) {
-            try {
-                Client.connectionSetupSemaphore.acquire();
-            } catch (InterruptedException h) {
-                h.printStackTrace();
-            }
-            System.out.println("Waiting Semaphore");
-        }
-        client.connectionInfo = client.getView().getConnectionInfo();
-        client.port = client.connectionInfo.getPort();
-        client.ip = client.connectionInfo.getIp();
-        client.nickname = client.connectionInfo.getNickname();
-    }
-
-    public ViewInterface getView() {
-        return view;
-    }
-
-    public ClientTimeoutHandler getTimeoutHandler() {
-        return timeoutHandler;
-    }
-
-    public void setConnected(boolean connected) {
-        if(!connected){
-            heartBeatExecutor.cancel(true);
-        }
-        Client.connected = connected;
-    }
-
-    public void closeStream() {
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setPlayersNicknames(ArrayList<String> playersNickname) {
-        this.playersNickname = playersNickname;
-        for (String nickname :
-                playersNickname) {
-            modelByNickname.put(nickname, new BriefModel());
-        }
-    }
-
-    public LightModel getLightModel() {
-        return lightModel;
-    }
-
-    public void setModelForPlayer(BriefModel briefModel, String nickname) {
-        modelByNickname.put(nickname, briefModel);
-    }
-
-    public void printModelByPlayer(String nickname) {
-        System.out.println(modelByNickname.get(nickname).toString());
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public ArrayList<String> getPlayersNickname() {
-        return playersNickname;
-    }
-
-    public BriefModel getModelByNickname(String nickname) {
-        return modelByNickname.get(nickname);
-    }
-
-    public void killConnection(){
-        running = false;
-        try {
-            clientSocket.close();
-        } catch (IOException ignore) {
-        }
-        try {
-            inputStream.close();
-        } catch (IOException ignore) {
-        }
-        try {
-            outputStream.close();
-        } catch (IOException ignore) {
-        }
-        exit(0);
-    }
-
-    public boolean isDebug() {
-        return debug;
     }
 }

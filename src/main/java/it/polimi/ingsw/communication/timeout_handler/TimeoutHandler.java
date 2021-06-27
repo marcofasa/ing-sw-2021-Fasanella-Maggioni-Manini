@@ -1,7 +1,7 @@
 package it.polimi.ingsw.communication.timeout_handler;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.RequestTimedOutException;
 import it.polimi.ingsw.communication.SerializedNetworkMessage;
 import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.server.ServerMessage;
@@ -47,12 +47,12 @@ class TimeoutHandler {
         return newSem;
     }
 
-    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException {
+    public void tryDisengage(int messageTimeoutID) throws RequestTimedOutException {
         if(messageTimeoutID == -1)
             return;
         if(!idIsInTime.get(messageTimeoutID)){
             semaphoreByID.get(messageTimeoutID).release();
-            throw new RequestTimeoutException();
+            throw new RequestTimedOutException();
         } else {
             semaphoreByID.get(messageTimeoutID).release();
         }

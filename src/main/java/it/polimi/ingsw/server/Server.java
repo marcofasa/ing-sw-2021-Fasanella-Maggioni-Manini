@@ -126,6 +126,10 @@ public class Server {
         unregisterClient(virtualClient);
     }
 
+    /**
+     * This private method handles the unregistration of a single client from the Server maps
+     * @param virtualClient to be unregistered
+     */
     private void unregisterClient(VirtualClient virtualClient) {
         virtualClient.send(new KillConnectionMessage());
         virtualClient.close();
@@ -144,7 +148,7 @@ public class Server {
     public static void main(String[] args) {
         boolean debug = false;
         boolean timeoutEnabled = true;
-        Integer port = 51214;
+        int port = 51214;
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             switch (arg) {
@@ -188,7 +192,13 @@ public class Server {
         thread.start();
     }
 
-    public void notifyDisconnectionOfClient(VirtualClient virtualClient, Game game, String nickname) {
+    /**
+     * handles the disconnection of a client from the server
+     * @param virtualClient to be disconnected
+     * @param game virtualClient was playing in
+     * @param nickname of the client
+     */
+    public void disconnectClient(VirtualClient virtualClient, Game game, String nickname) {
         if (isPlayerWaiting(virtualClient)){
             System.out.println("Player " + nickname + " disconnected from lobby");
             unregisterClient(virtualClient);
@@ -200,18 +210,43 @@ public class Server {
         }
     }
 
+    /**
+     * handles the reconnection of a client to the server
+     * @param nickname of the client
+     * @param game the client was playing on
+     * @param virtualClient client reconnected
+     */
     private void resumePlayer(String nickname, Game game, VirtualClient virtualClient) {
         System.out.println("Player " + nickname + " reconnected");
         disconnectedNicknamesGameMap.remove(nickname);
         game.notifyReconnection(nickname, virtualClient);
     }
 
-
+    /**
+     * verifies whether a player is waiting in lobby or not
+     * @param virtualClient the be verified
+     * @return true if virtualClient is waiting, false if he is playing or otherwise
+     */
     public boolean isPlayerWaiting(VirtualClient virtualClient){
         return lobby.getPlayers().contains(virtualClient);
     }
 
-    public boolean isConnected(String nickname) {
+    /**
+     * check if nickname is not disconnected
+     * @param nickname to verify
+     * @return true if he is not in the disconnected list, true otherwise
+     */
+    public boolean isNotDisconnected(String nickname) {
         return disconnectedNicknamesGameMap.get(nickname) == null;
+    }
+
+    /**
+     * unregisters all players from the Server, to be used only in extreme cases or shutdown
+     */
+    public void disconnectAllPlayers() {
+        for (VirtualClient client :
+                clientsNickname.keySet()) {
+            unregisterClient(client);
+        }
     }
 }

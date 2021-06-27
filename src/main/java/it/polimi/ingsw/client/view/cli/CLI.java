@@ -60,7 +60,7 @@ public class CLI implements ViewInterface {
         invalid = true;
         while(invalid) {
             try {
-                connectionInfo.setIP(askIP());
+                connectionInfo.setAddress(askIP());
                 invalid = false;
             } catch (IllegalAddressException e) {
                 out.println(e.getMessage());
@@ -311,7 +311,7 @@ public class CLI implements ViewInterface {
             }
 
         }
-        catch (RequestTimeoutException e){
+        catch (RequestTimedOutException e){
             e.printStackTrace();
         }
     }
@@ -520,7 +520,7 @@ public class CLI implements ViewInterface {
         out.println("Choose which card leader to activate:");
         try {
             client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(getLightModel().getCardsLeader())),-1);
-        } catch (RequestTimeoutException e) {
+        } catch (RequestTimedOutException e) {
             displayTimeOut();
             e.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.client.RequestTimeoutException;
 import it.polimi.ingsw.communication.SerializedNetworkMessage;
 
 public abstract class ServerMessage extends SerializedNetworkMessage {

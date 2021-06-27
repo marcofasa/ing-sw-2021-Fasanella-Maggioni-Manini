@@ -1,8 +1,6 @@
 package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.client.RequestTimeoutException;
-import it.polimi.ingsw.communication.server.ServerMessage;
 import it.polimi.ingsw.communication.server.ServerResponse;
 import it.polimi.ingsw.model.CardDevelopment;
 

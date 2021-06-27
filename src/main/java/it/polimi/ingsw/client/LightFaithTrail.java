@@ -34,7 +34,7 @@ public class LightFaithTrail {
         try {
             client.sendAndWait(new RequestFaithTrail(),-1);
         }
-        catch (RequestTimeoutException e){
+        catch (RequestTimedOutException e){
             e.printStackTrace();
         }
 

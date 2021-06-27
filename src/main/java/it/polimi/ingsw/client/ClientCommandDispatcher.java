@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class handles the Strategy Pattern for the Client-Server communication, Client side.
+ * For every package from the server, a method in this class handles his activation.
+ * It may also notify the View of the package received.
+ */
 public class ClientCommandDispatcher {
 
     private final Client client;

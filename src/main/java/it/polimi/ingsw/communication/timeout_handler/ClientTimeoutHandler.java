@@ -1,7 +1,7 @@
 package it.polimi.ingsw.communication.timeout_handler;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.RequestTimedOutException;
 import it.polimi.ingsw.communication.client.ClientMessage;
 
 import java.util.concurrent.TimeoutException;
@@ -13,7 +13,7 @@ public class ClientTimeoutHandler {
         timeoutHandler = new TimeoutHandler(client);
     }
 
-    public void tryDisengage(int messageTimeoutID) throws RequestTimeoutException {
+    public void tryDisengage(int messageTimeoutID) throws RequestTimedOutException {
         timeoutHandler.tryDisengage(messageTimeoutID);
     }
 

@@ -21,6 +21,10 @@ public class VirtualClientCommandDispatcher {
 
     private final VirtualClient virtualClient;
 
+    /**
+     *
+     * @return
+     */
     private Game getGame() {
         switch (virtualClient.getGameState()) {
             case Active -> {

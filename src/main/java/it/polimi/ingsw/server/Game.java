@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
-import com.sun.javafx.image.IntPixelGetter;
-import it.polimi.ingsw.client.RequestTimeoutException;
+import it.polimi.ingsw.client.RequestTimedOutException;
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestInitialSelection;
@@ -13,9 +12,6 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.server.GameState;
-import it.polimi.ingsw.server.Server;
-import it.polimi.ingsw.server.VirtualClient;
 
 
 import java.util.ArrayList;
@@ -155,7 +151,7 @@ public class Game implements Runnable {
                 ), -1);
 
 
-            } catch (RequestTimeoutException ex) {
+            } catch (RequestTimedOutException ex) {
 
                 System.out.println("Still waiting for "
                         + controller.getPlayerBoardByNickname(clientNicknameMap.get(vClient))
@@ -568,9 +564,9 @@ public class Game implements Runnable {
      * @param serverMessage    Instance of ServerMessage to be sent to target VirtualClient.
      * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
      *                         If timeoutInSeconds == -1, the thread will wait forever.
-     * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
+     * @throws RequestTimedOutException : thrown if the timeout expires and no response has been received.
      */
-    public void sendAndWait(VirtualClient virtualClient, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
+    public void sendAndWait(VirtualClient virtualClient, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimedOutException {
         virtualClient.sendAndWait(serverMessage, timeoutInSeconds);
     }
 
@@ -582,9 +578,9 @@ public class Game implements Runnable {
      * @param serverMessage    Instance of ServerMessage to be sent to target VirtualClient.
      * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
      *                         If timeoutInSeconds == -1, the thread will wait forever.
-     * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
+     * @throws RequestTimedOutException : thrown if the timeout expires and no response has been received.
      */
-    public void sendAndWait(String nickname, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
+    public void sendAndWait(String nickname, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimedOutException {
         nicknameClientMap.get(nickname).sendAndWait(serverMessage, timeoutInSeconds);
     }
 
@@ -596,9 +592,9 @@ public class Game implements Runnable {
      * @param serverMessage    Instance of ServerMessage to be sent to target VirtualClient.
      * @param timeoutInSeconds Amount of seconds the thread will wait for the Client's response.
      *                         If timeoutInSeconds == -1, the thread will wait forever.
-     * @throws RequestTimeoutException : thrown if the timeout expires and no response has been received.
+     * @throws RequestTimedOutException : thrown if the timeout expires and no response has been received.
      */
-    public void sendAndWait(Integer playerID, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimeoutException {
+    public void sendAndWait(Integer playerID, ServerMessage serverMessage, Integer timeoutInSeconds) throws RequestTimedOutException {
         idPlayerClientMap.get(playerID).sendAndWait(serverMessage, timeoutInSeconds);
     }
 
@@ -610,7 +606,7 @@ public class Game implements Runnable {
     public void sendAll(ServerMessage serverMessage) {
         for (VirtualClient player :
                 players) {
-            if(server.isConnected(getNicknameByClient(player)))
+            if(server.isNotDisconnected(getNicknameByClient(player)))
                 player.send(serverMessage);
         }
     }
@@ -697,10 +693,19 @@ public class Game implements Runnable {
         sendAll(new NotifyReconnectionOf(nickname));
     }
 
+    /**
+     * remove VirtualClient from this Game
+     * @param virtualClient to be removed
+     */
     private void removeVirtualClient(VirtualClient virtualClient) {
         players.remove(virtualClient);
     }
 
+    /**
+     * add VirtualClient to this Game
+     * @param virtualClient to be added
+     * @param nickname of the client
+     */
     private void addVirtualClient(VirtualClient virtualClient, String nickname) {
 
         players.add(virtualClient);
@@ -710,6 +715,10 @@ public class Game implements Runnable {
         clientNicknameMap.put(virtualClient, nickname);
     }
 
+    /**
+     * Set this game status to EndedWithError or Ended
+     * @param error true if closing with error
+     */
     private void closeGame(boolean error){
         for (VirtualClient player :
                 players) {
@@ -722,6 +731,11 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * Verifies if client is playing
+     * @param _vClient to be verified
+     * @return true if client is playing, false otherwise
+     */
     private boolean isVirtualClientActivePlayer(VirtualClient _vClient) {
         return controller.getTurnController().getActivePlayer().getNickname().equals(clientNicknameMap.get(_vClient));
     }
