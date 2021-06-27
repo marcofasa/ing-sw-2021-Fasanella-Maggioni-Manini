@@ -90,9 +90,7 @@ public class FaithTrailController extends StandardStage {
             }
         //Adding to GridPane
             faithtrail_grid.add(faithTrailMatrix[row][col], col, row);
-        } else if (faithTileStatus == FaithTileStatus.Not_Reached) {
-            //Void
-        } else {
+        } else if (faithTileStatus != FaithTileStatus.Not_Reached) {
             String tileReached1 = "/images/punchboard/tileReached1.png";
             String tileReached2 = "/images/punchboard/tileReached2.png";
             String tileReached3 = "/images/punchboard/tileReached3.png";

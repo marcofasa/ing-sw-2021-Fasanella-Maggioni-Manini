@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * When a message from a client arrives, the strategy pattern calls one of the methods in this class
@@ -74,7 +75,7 @@ public class VirtualClientCommandDispatcher {
     public void requestActivateCardLeader(CardLeader cardLeader, int timeoutID) {
         boolean success;
         try {
-            success = getGame().activateLeaderCard(virtualClient, cardLeader);
+            success = Objects.requireNonNull(getGame()).activateLeaderCard(virtualClient, cardLeader);
             if (success) {
                 sendWithTimeoutID(new ResponseSuccess(), timeoutID);
             } else {

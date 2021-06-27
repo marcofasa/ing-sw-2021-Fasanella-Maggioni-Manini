@@ -31,8 +31,6 @@ public class OpponentBoardController extends StandardStage {
     @FXML
     Label shield_label;
 
-    private ImageView[] cardDevelopmentArray;
-    private ImageView[][] resourceMatrix;
     private Boolean[] depositLevel;
     private final Utils utils = new Utils();
     private ImageView[] cardLeaderArray;
@@ -50,7 +48,7 @@ public class OpponentBoardController extends StandardStage {
         nickName_label.setText(nickName);
 
         //Loading Card development and Card Leader
-        cardDevelopmentArray = new ImageView[3];
+        ImageView[] cardDevelopmentArray = new ImageView[3];
         for (int i = 1; i < 4; i++) {
             if (cardsDevelopment.size() >= i && cardsDevelopment.get(i - 1) != null) {
                 Integer color = switch (cardsDevelopment.get(i - 1).getCardType()) {
@@ -71,13 +69,13 @@ public class OpponentBoardController extends StandardStage {
             opponent_cardDevelop_grid.add(cardDevelopmentArray[i - 1], i, 0);
         }
 
-        setCardLeaderDeck(cardLeaders,cardLeaderArray,cardLeader_array);
+        setCardLeaderDeck(cardLeaders, cardLeader_array);
 
 
         //Loading Strongbox and Deposit
-        resourceMatrix = new ImageView[3][5];
-        depositLevel= utils.initializeDepositLevel(depositLevel);
-        loadDepositLevels(depositLevel,deposit,opponent_Deposit_grid,resourceMatrix);
+        ImageView[][] resourceMatrix = new ImageView[3][5];
+        depositLevel= utils.initializeDepositLevel();
+        loadDepositLevels(depositLevel,deposit,opponent_Deposit_grid, resourceMatrix);
         resourceHandler(strongbox,coin_label,servant_label,shield_label,stone_label);
 
     }

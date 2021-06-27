@@ -24,11 +24,10 @@ public class Utils {
 
     /**
      * Creates the Deposit level (False)
-     * @param depositLevel
      * @return array initialized
      */
-    public Boolean[] initializeDepositLevel(Boolean[] depositLevel) {
-        depositLevel =new Boolean[3];
+    public Boolean[] initializeDepositLevel() {
+        Boolean[] depositLevel = new Boolean[3];
         depositLevel[0]=false;
         depositLevel[1]=false;
         depositLevel[2]=false;

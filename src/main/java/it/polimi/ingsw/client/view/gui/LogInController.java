@@ -29,10 +29,6 @@ Label playerNumber_label;
     private int playerNumber;
     private boolean playerNumberRequest=false;
 
-    public void singlePlayerAction(ActionEvent actionEvent) {
-
-    }
-
     //SETTERS
 
     public ConnectionInfo getConnectionInfo() {

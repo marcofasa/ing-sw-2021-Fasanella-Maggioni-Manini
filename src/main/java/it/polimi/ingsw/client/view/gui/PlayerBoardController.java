@@ -90,7 +90,7 @@ public class PlayerBoardController extends StandardStage {
         //Loading Strongbox
         ImageView[][] resourceMatrix = new ImageView[3][5];
         HashMap<Resource, Integer> deposit = lightModel.getDeposit();
-        depositLevel = utils.initializeDepositLevel(depositLevel);
+        depositLevel = utils.initializeDepositLevel();
         loadDepositLevels(depositLevel,deposit,resources_grid,resourceMatrix);
     }
 

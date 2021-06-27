@@ -19,7 +19,6 @@ public class MarbleFactory {
             case MarblePurple -> new MarbleNormal(Resource.Servants);
             case MarbleGrey -> new MarbleNormal(Resource.Stones);
             case MarbleYellow -> new MarbleNormal(Resource.Coins);
-            default -> throw new IllegalArgumentException();
         };
     }
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class PlayerBoardTest {
@@ -15,10 +16,6 @@ public class PlayerBoardTest {
         players.add("uno");
         GameTable gametable = new GameTable(players);
         return gametable.getPlayerByIndex(0);
-    }
-
-    @Test
-    public void getNickname() {
     }
 
     @Test
@@ -35,30 +32,30 @@ public class PlayerBoardTest {
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(resource.get(res), new Integer(0));
+                assertEquals(resource.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(resource.get(res), new Integer(3));
+                assertEquals(resource.get(res), Integer.valueOf(3));
             }
         }
         playerBoard.tryAddResources(resource);
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(0));
+                assertEquals(playerBoard.getDepositInstance().content.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(3));
+                assertEquals(playerBoard.getDepositInstance().content.get(res), Integer.valueOf(3));
             }
         }
-        ArrayList<Marble> marbles2 = new ArrayList<>(Arrays.asList(new MarbleNormal(Resource.Coins)));
+        ArrayList<Marble> marbles2 = new ArrayList<>(Collections.singletonList(new MarbleNormal(Resource.Coins)));
         HashMap<Resource, Integer> resource2 = playerBoard.consumeMarbles(marbles2);
         assertTrue(playerBoard.hasResources(resource2));
         var resources3 = playerBoard.tryAddResources(resource2);
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(resources3.get(res), new Integer(0));
+                assertEquals(resources3.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(resources3.get(res), new Integer(1));
+                assertEquals(resources3.get(res), Integer.valueOf(1));
             }
         }
         assertEquals(gametable.getFaithTrailInstance().getPosition(gametable.getPlayerByIndex(1)), 0);
@@ -85,30 +82,30 @@ public class PlayerBoardTest {
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(resource.get(res), new Integer(0));
+                assertEquals(resource.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(resource.get(res), new Integer(3));
+                assertEquals(resource.get(res), Integer.valueOf(3));
             }
         }
         playerBoard.tryAddResources(resource);
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(0));
+                assertEquals(playerBoard.getDepositInstance().content.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(3));
+                assertEquals(playerBoard.getDepositInstance().content.get(res), Integer.valueOf(3));
             }
         }
-        ArrayList<Marble> marbles2 = new ArrayList<>(Arrays.asList(new MarbleNormal(Resource.Coins)));
+        ArrayList<Marble> marbles2 = new ArrayList<>(Collections.singletonList(new MarbleNormal(Resource.Coins)));
         HashMap<Resource, Integer> resource2 = playerBoard.consumeMarbles(marbles2);
         assertTrue(playerBoard.hasResources(resource2));
         var resources3 = playerBoard.tryAddResources(resource2);
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(resources3.get(res), new Integer(0));
+                assertEquals(resources3.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(resources3.get(res), new Integer(1));
+                assertEquals(resources3.get(res), Integer.valueOf(1));
             }
         }
         assertEquals(gametable.getFaithTrailInstance().getPosition(gametable.getPlayerByIndex(1)), 0);
@@ -135,18 +132,18 @@ public class PlayerBoardTest {
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(resource.get(res), new Integer(0));
+                assertEquals(resource.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(resource.get(res), new Integer(3));
+                assertEquals(resource.get(res), Integer.valueOf(3));
             }
         }
         playerBoard.tryAddResources(resource);
         for (Resource res :
                 Resource.values()) {
             if (res != Resource.Coins){
-                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(0));
+                assertEquals(playerBoard.getDepositInstance().content.get(res), Integer.valueOf(0));
             } else {
-                assertEquals(playerBoard.getDepositInstance().content.get(res), new Integer(3));
+                assertEquals(playerBoard.getDepositInstance().content.get(res), Integer.valueOf(3));
             }
         }
         ArrayList<Marble> marbles2 = new ArrayList<>(Arrays.asList(new MarbleNormal(Resource.Coins), new MarbleNormal(Resource.Coins)));
@@ -247,7 +244,7 @@ public class PlayerBoardTest {
     }
 
     @Test
-    public void cardLeaderDeposit() throws InvalidCardDevelopmentPlacementException, InvalidSlotIndexException, FullSlotException {
+    public void cardLeaderDeposit() {
         PlayerBoard playerBoard = newPlayerBoard();
         CardLeader cardLeader = new CardLeaderFactory().produce(CardLeaderType.Deposit, Resource.Coins);
         cardLeader.draw(playerBoard);
@@ -261,7 +258,7 @@ public class PlayerBoardTest {
     }
 
     @Test
-    public void cardLeaderDeposit2() throws InvalidCardDevelopmentPlacementException, InvalidSlotIndexException, FullSlotException {
+    public void cardLeaderDeposit2() {
         PlayerBoard playerBoard = newPlayerBoard();
         CardLeader cardLeader = new CardLeaderFactory().produce(CardLeaderType.Deposit, Resource.Coins);
         cardLeader.draw(playerBoard);
@@ -277,23 +274,4 @@ public class PlayerBoardTest {
         assertEquals(marketRemains, playerBoard.tryAddResources(marketResult));
     }
 
-    @Test
-    public void activateLeaderProduction() {
-    }
-
-    @Test
-    public void getVictoryPoints() {
-    }
-
-    @Test
-    public void buyCardDevelopmentCardFromMarket() {
-    }
-
-    @Test
-    public void placeCardDevelopmentCardOnBoard() {
-    }
-
-    @Test
-    public void tryActivateProductions() {
-    }
 }

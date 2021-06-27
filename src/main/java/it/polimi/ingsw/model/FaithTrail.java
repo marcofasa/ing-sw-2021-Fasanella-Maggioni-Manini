@@ -189,7 +189,6 @@ public class FaithTrail implements Serializable {
     private boolean isReached(PlayerBoard p, FaithSection section) {
         if (section == FaithSection.One && playerPosition.get(p) >= 5) return true;
         else if (section == FaithSection.Two && playerPosition.get(p) >= 12) return true;
-        else if (section == FaithSection.Three && playerPosition.get(p) >= 19) return true;
-        else return false;
+        else return section == FaithSection.Three && playerPosition.get(p) >= 19;
     }
 }

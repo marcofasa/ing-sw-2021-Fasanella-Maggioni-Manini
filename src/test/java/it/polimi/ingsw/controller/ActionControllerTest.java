@@ -66,12 +66,12 @@ class ActionControllerTest {
 
         //assertTrue(actionController.useMarket(player, 2, "row"));
 
-        HashMap<Resource, Integer> temp = new HashMap<>();
+        HashMap<Resource, Integer> temp;
         HashMap<Resource, Integer> discardSelection = new HashMap<>();
 
         for (int i = 0; i < 5; i++) {
 
-            temp = actionController.useMarket(player, 1, "row");
+            actionController.useMarket(player, 1, "row");
             temp = actionController.useMarket(player, 1, "column");
 
             System.out.println(temp);

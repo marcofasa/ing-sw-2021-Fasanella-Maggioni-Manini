@@ -92,11 +92,10 @@ public class Utils {
         out.println("---MARKET---");
         if (coloredCLI) {
             printMarbleColored(spareMarble);
-            out.println(" 1  2  3  4  ");
         } else {
             printMarble(spareMarble);
-            out.println(" 1  2  3  4  ");
         }
+        out.println(" 1  2  3  4  ");
         for (int i = 0; i < market.size(); i++) {
             out.printf(" " + (i + 1) + " ");
             for (int j = 0; j < market.get(i).size(); j++) {
@@ -552,9 +551,9 @@ public class Utils {
 
         //out.println("Choose a card leader to discard:");
 
-        for (int i = 0; i < cardLeaders.size(); i++) {
+        for (CardLeader cardLeader : cardLeaders) {
             out.printf(index + " ");
-            printCardLeader(cardLeaders.get(i));
+            printCardLeader(cardLeader);
             out.println();
             index++;
         }
@@ -572,15 +571,13 @@ public class Utils {
             out.printf("Card Leader of type ");
             printCardLeaderType(cardLeader.getDescription());
             printResourceColored(cardLeader.getResource());
-            out.println();
-            out.printf("(Requirements for activation): ");
         } else {
             out.printf("Card Leader of type ");
             printCardLeaderType(cardLeader.getDescription());
             out.printf(cardLeader.getResource().toString());
-            out.println();
-            out.printf("(Requirements for activation): ");
         }
+        out.println();
+        out.printf("(Requirements for activation): ");
 
         switch (cardLeaderRequirements.getCardLeaderRequirementsType()) {
             case NumberOfDevelopmentCardTypes -> printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());
@@ -614,7 +611,7 @@ public class Utils {
             case Discount -> s = s + " that discounts of one ";
             case WhiteMarble ->s = s + " that has effect for ";
             case Production -> s = s + " using as input ";
-        };
+        }
         out.printf(s);
     }
 
@@ -750,12 +747,12 @@ public class Utils {
      */
     public String readNumberWithBoundsToString(int min, int max) {
         synchronized (in) {
-            Integer number = readNumber();
+            int number = readNumber();
             while (number < min || number > max) {
                 out.println("The number to select must be between " + min + " and " + max + ". Please retry:");
                 number = readNumber();
             }
-            return number.toString();
+            return Integer.toString(number);
         }
     }
 

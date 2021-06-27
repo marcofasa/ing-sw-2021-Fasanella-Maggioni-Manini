@@ -138,7 +138,6 @@ public class CardLeaderRequirementsFinder {
             case Deposit -> 3;
             case WhiteMarble -> 5;
             case Discount -> 2;
-            default -> throw new IllegalArgumentException();
         };
     }
 }

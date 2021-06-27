@@ -109,7 +109,7 @@ public class GUI extends Application implements ViewInterface {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         primaryStage = Scene("/fxml/Logo.fxml");
         primaryStage.showAndWait();
 

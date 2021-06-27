@@ -37,6 +37,7 @@ public class CardLeaderDeckTest {
         assertThrows(CardLeaderRequirementsNotMetException.class, () -> cardleaderWhite.activate(playerBoard));
     }
 
+    @Test
     public void cardLeaderActivationTest(){
         GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);

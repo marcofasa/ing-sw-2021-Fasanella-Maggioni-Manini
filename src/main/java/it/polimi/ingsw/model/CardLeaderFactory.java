@@ -20,7 +20,6 @@ public class CardLeaderFactory {
                     CardLeaderRequirementsFinder.getVictoryPoints(type));
             case Discount -> new CardLeaderDiscount(resource, CardLeaderRequirementsFinder.getRequirements(type, resource),
                     CardLeaderRequirementsFinder.getVictoryPoints(type));
-            default -> throw new IllegalArgumentException();
         };
     }
 }

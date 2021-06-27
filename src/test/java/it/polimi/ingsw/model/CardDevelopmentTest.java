@@ -133,10 +133,10 @@ public class CardDevelopmentTest {
         assertEquals(0, (int) player.getDepositInstance().getContent().get(Resource.Stones));
 
         //Check strongbox consistency
-        assertEquals(new Integer(0), player.getStrongboxInstance().getContent().get(Resource.Coins));
-        assertEquals(new Integer(1), player.getStrongboxInstance().getContent().get(Resource.Servants));
-        assertEquals(new Integer(0), player.getStrongboxInstance().getContent().get(Resource.Shields));
-        assertEquals(new Integer(1), player.getStrongboxInstance().getContent().get(Resource.Stones));
+        assertEquals(0, player.getStrongboxInstance().getContent().get(Resource.Coins));
+        assertEquals(1, player.getStrongboxInstance().getContent().get(Resource.Servants));
+        assertEquals(0, player.getStrongboxInstance().getContent().get(Resource.Shields));
+        assertEquals(1, player.getStrongboxInstance().getContent().get(Resource.Stones));
 
 
         assertEquals(1, table.getFaithTrailInstance().getPosition(player));

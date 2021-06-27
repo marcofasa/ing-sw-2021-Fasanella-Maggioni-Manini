@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class FaithTrailTest {
     @Test
     public void FaithTrailLorenzo(){
         //Single Player Test
-        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("Single Player")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Collections.singletonList("Single Player")));
         FaithTrail f= gameTable.getFaithTrailInstance();
         ArrayList<PlayerBoard> p = gameTable.getPlayerBoards();
         assertEquals(1,p.size());
@@ -69,7 +70,7 @@ public class FaithTrailTest {
 
         //P3 arrives at last Cell TODO ActivateEndgame
         f.movePlayer(p.get(2),24);
-        assertEquals(true,f.checkEndGame(f.getPosition(p.get(2))));
+        assertTrue(f.checkEndGame(f.getPosition(p.get(2))));
         assertEquals(FaithTileStatus.Discarded,f.getTilePack(p.get(0)).getStatus(FaithSection.Two));
         assertEquals(FaithTileStatus.Discarded,f.getTilePack(p.get(1)).getStatus(FaithSection.Two));
         assertEquals(FaithTileStatus.Reached,f.getTilePack(p.get(2)).getStatus(FaithSection.Two));

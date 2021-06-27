@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class StandardStage {
 
@@ -77,9 +78,6 @@ public class StandardStage {
         dialogPane.setContentText(s);
     }
 
-    public void execute(){
-    }
-
     /**
      * Loads a given path to FXMLLoader
      * @param path String
@@ -115,7 +113,7 @@ public class StandardStage {
      * @param height to fit
      */
     public void setImageToArray(int index,String path,ImageView[] array,int width,int height){
-        Image image=new Image(GUI.class.getResourceAsStream(path));
+        Image image=new Image(Objects.requireNonNull(GUI.class.getResourceAsStream(path)));
         array[index]=new ImageView(image);
 
         //Fitting Image
@@ -134,7 +132,7 @@ public class StandardStage {
      * @param height to fit
      */
     public void setImageToMatrix(int row,int column,ImageView[][] matrix, String path,int width,int height){
-        Image image = new Image(GUI.class.getResourceAsStream(path));
+        Image image = new Image(Objects.requireNonNull(GUI.class.getResourceAsStream(path)));
         matrix[row][column] = new ImageView(image);
 
         //Fitting Image
@@ -154,7 +152,7 @@ public class StandardStage {
      * @param gridPane to fill
      */
     public static void setImageToMatrix(int row, int column, ImageView[][] matrix, String path, int width, int height, GridPane gridPane){
-        Image image = new Image(GUI.class.getResourceAsStream(path));
+        Image image = new Image(Objects.requireNonNull(GUI.class.getResourceAsStream(path)));
         matrix[row][column] = new ImageView(image);
 
         //Fitting Image
@@ -265,11 +263,10 @@ public class StandardStage {
     /**
      * Sets a Standard Card Leader Array
      * @param cardsLeaderArray arraylist of card leader
-     * @param cardLeaderArray ImageView array
      * @param cardleader_grid GridPane
      */
-    public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeaderArray,ImageView[] cardLeaderArray,GridPane cardleader_grid) {
-        cardLeaderArray = new ImageView[2];
+    public void setCardLeaderDeck(ArrayList<CardLeader> cardsLeaderArray, GridPane cardleader_grid) {
+        ImageView[] cardLeaderArray = new ImageView[2];
         for (int i = 0; i < 2; i++) {
             if((cardsLeaderArray.size()==1 &&  i==1) || cardsLeaderArray.size()==0 || cardsLeaderArray.get(i)==null){
 

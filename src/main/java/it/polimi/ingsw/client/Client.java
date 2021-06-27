@@ -95,7 +95,6 @@ public class Client {
                             handleResponse(finalInputClass);
                         } catch (RequestTimedOutException e) {
                             getView().displayTimeoutError();
-                        } catch (ExecutionException | InterruptedException ignored) {
                         }
                     });
                 } else {
@@ -118,10 +117,8 @@ public class Client {
      * Handles a ServerResponse received from the server
      * @param finalInputClass message received
      * @throws RequestTimedOutException thrown if this response is received too late and the timeout has been reached
-     * @throws ExecutionException could be thrown by an executor
-     * @throws InterruptedException could be thrown by an executor
      */
-    private void handleResponse(ServerMessage finalInputClass) throws RequestTimedOutException, ExecutionException, InterruptedException {
+    private void handleResponse(ServerMessage finalInputClass) throws RequestTimedOutException {
         timeoutHandler.tryDisengage(finalInputClass.getTimeoutID());
         finalInputClass.read(clientCommandDispatcher);
         timeoutHandler.defuse(finalInputClass.getTimeoutID());

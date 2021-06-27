@@ -66,9 +66,6 @@ public class CardDevelopmentMarket {
 
         // TODO Logic for paying with leaderDeposit is yet to be tested!
 
-        DepositLeaderCard depositLeader = board.getDepositLeaderCardInstance();
-        Strongbox strongbox = board.getStrongboxInstance();
-        Deposit deposit = board.getDepositInstance();
         CardDevelopment desiredCard = market[rowIndex][colIndex].peek();
 
         HashMap<Resource, Integer> cardCost = desiredCard.getCardCosts();
