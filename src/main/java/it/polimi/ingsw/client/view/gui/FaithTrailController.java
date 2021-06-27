@@ -33,7 +33,7 @@ public class FaithTrailController extends StandardStage {
         HashMap<String, Integer> playersPosition = faithTrail.getPlayersPosition();
         ArrayList<FaithTileStatus> tileStatuses = faithTrail.getTileStatuses();
 
-        printPlayers(faithTrail.getPlayersPosition(),nickName);
+        printPlayers(faithTrail.getPlayersPosition());
         //Set Position into the corresponding cell in the grid.
 
         for (String string : playersPosition.keySet()) {
@@ -46,13 +46,9 @@ public class FaithTrailController extends StandardStage {
         }
     }
 
-    private void printPlayers(HashMap<String, Integer> playersPosition, String nickName) {
+    private void printPlayers(HashMap<String, Integer> playersPosition) {
         StringBuilder s= new StringBuilder();
         for (String players: playersPosition.keySet()){
-            /*if(!players.equals(nickName)){
-                s=s+players+" ("+playersPosition.get(players)+")  ";
-            }
-*/
             s.append(players).append(" (").append(playersPosition.get(players)).append(") ");
         }
         players_label.setText(s.toString());
@@ -60,9 +56,9 @@ public class FaithTrailController extends StandardStage {
 
     /**
      * Sets Faith Trail Tiles of current Player
-     * @param faithTileStatus
-     * @param faithTrailMatrix
-     * @param section
+     * @param faithTileStatus FaithTileStatus to which to set the player's tile status.
+     * @param faithTrailMatrix The matrix of ImageView's that makes up the faith trail path.
+     * @param section The section to which apply the {@param faithTileStatus}
      */
     private void setTiles(FaithTileStatus faithTileStatus, ImageView[][] faithTrailMatrix, int section) {
         int row;
@@ -106,9 +102,9 @@ public class FaithTrailController extends StandardStage {
 
     /**
      * Sets itsMe Position to to ImageView Matrix
-     * @param position
-     * @param faithtrailMatrix
-     * @param itsMe
+     * @param position position to which the faith trail mark must be set.
+     * @param faithtrailMatrix matrix of ImageView's that makes up the faith trail path.
+     * @param itsMe true if FaithTrailController is setting a given player's position on his client, false otherwise.
      */
     private void setPlayerPosition(int position, ImageView[][] faithtrailMatrix, boolean itsMe) {
         int col;

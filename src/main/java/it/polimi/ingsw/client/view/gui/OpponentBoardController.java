@@ -37,8 +37,8 @@ public class OpponentBoardController extends StandardStage {
 
     /**
      * Sets all components of Player (checkout)
-     * @param briefModel
-     * @param nickName of player to checkout
+     * @param briefModel BriefModel instance received from Server which holds the checkout information.
+     * @param nickName of player to checkout.
      */
     public void setBriefModel(BriefModel briefModel,String nickName) {
         ArrayList<CardDevelopment> cardsDevelopment = briefModel.getCardsDevelopment();
