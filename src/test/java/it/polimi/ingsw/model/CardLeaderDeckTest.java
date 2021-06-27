@@ -12,7 +12,7 @@ public class CardLeaderDeckTest {
 
     @Test
     public void cardLeaderTest1() {
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
         playerBoard.drawCardLeaderFromDeck();
         playerBoard.drawCardLeaderFromDeck();
@@ -30,7 +30,7 @@ public class CardLeaderDeckTest {
 
     @Test
     public void cardLeaderActivationTest_shouldThrowExceptionCannotActivate(){
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
         CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
         cardleaderWhite.playerName = playerBoard.getNickname();
@@ -38,7 +38,7 @@ public class CardLeaderDeckTest {
     }
 
     public void cardLeaderActivationTest(){
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("1", "2", "3")));
         PlayerBoard playerBoard = new PlayerBoard("1", false, PlayerState.IDLE, gameTable);
         CardLeader cardleaderWhite = new CardLeaderWhiteMarble(Resource.Coins, CardLeaderRequirementsFinder.getRequirements(CardLeaderType.WhiteMarble, Resource.Coins), CardLeaderRequirementsFinder.getVictoryPoints(CardLeaderType.WhiteMarble));
         cardleaderWhite.playerName = playerBoard.getNickname();

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ResponseCardDevelopmentMarketInstance extends ServerResponse {
 
-    ArrayList<ArrayList<CardDevelopment>> cardMarketClone;
+    final ArrayList<ArrayList<CardDevelopment>> cardMarketClone;
 
     public ResponseCardDevelopmentMarketInstance(ArrayList<ArrayList<CardDevelopment>> _cardMarketClone) {
         super(null, null);

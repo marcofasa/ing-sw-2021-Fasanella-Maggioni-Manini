@@ -9,10 +9,10 @@ import java.util.HashMap;
 
 public class ResponseStorageInstance extends ServerResponse {
 
-    boolean isDeposit;
-    HashMap<Resource, Integer> storage;
-    ArrayList<Resource> leaderResources;
-    HashMap<Resource, Integer> leaderContent;
+    final boolean isDeposit;
+    final HashMap<Resource, Integer> storage;
+    final ArrayList<Resource> leaderResources;
+    final HashMap<Resource, Integer> leaderContent;
 
     public ResponseStorageInstance(
             boolean _isDeposit,

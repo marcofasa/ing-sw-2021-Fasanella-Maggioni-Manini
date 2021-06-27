@@ -8,7 +8,7 @@ public class FaithTilePackTest {
 
 
     @Test
-    public void FaithTilePackTest(){
+    public void faithTilePackTest(){
        FaithTilePack pack= new FaithTilePack();
 
         //Victory Points

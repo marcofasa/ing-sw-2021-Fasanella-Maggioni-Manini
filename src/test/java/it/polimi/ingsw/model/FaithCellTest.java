@@ -2,7 +2,6 @@ package it.polimi.ingsw.model;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,7 @@ public class FaithCellTest {
     @Test
     public void FaithCell(){
         //Initializing
-        ArrayList<FaithCell> cells= new ArrayList<FaithCell>();
+        ArrayList<FaithCell> cells= new ArrayList<>();
         int l=25;
         for (int i = 0; i < l; i++) {
             cells.add(new FaithCell(i));

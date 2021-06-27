@@ -71,9 +71,7 @@ public class CardLeaderController extends StandardStage {
             //Mouse Click Event
             int finalI = i;
 
-            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> {
-                setClick(finalI);
-            });
+            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> setClick(finalI));
 
             //Adding to GridPane
         }
@@ -88,9 +86,7 @@ public class CardLeaderController extends StandardStage {
             //Mouse Click Event
             int finalI = i;
 
-            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> {
-                setClick(finalI);
-            });
+            cardLeaderArray[i].setOnMouseClicked(mouseEvent -> setClick(finalI));
 
             //Adding to GridPane
         }

@@ -4,8 +4,8 @@ import it.polimi.ingsw.client.ClientCommandDispatcher;
 
 public class SinglePlayerOutcomeMessage extends ServerMessage {
 
-    boolean hasWon;
-    Integer playerPoints;
+    final boolean hasWon;
+    final Integer playerPoints;
 
     public SinglePlayerOutcomeMessage(boolean b, Integer _playerPoints) {
         super(null, null);

@@ -37,12 +37,6 @@ public class CardDevelopmentMarketController extends StandardStage {
     @FXML
     GridPane cardDevelop_grid;
 
-    @Override
-    public void init() {
-        super.init();
-    }
-
-
     /**
      * Sets the market images and let the player choose where to place the purchased card
      * @param cardDevelopmentMarket arraylist of the market
@@ -69,7 +63,7 @@ public class CardDevelopmentMarketController extends StandardStage {
 
 
                     //Image Path
-                    path = "/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+color.toString()+".jpg";
+                    path = "/images/CardDevelopment/Card_Development_"+victoryPoints.toString()+"-"+ color +".jpg";
 
                 } else path = "/images/CardDevelopment/Card_Development_Empty.png";
 
@@ -78,9 +72,7 @@ public class CardDevelopmentMarketController extends StandardStage {
                 //Mouse Click Event
                 int finalI = i;
                 int finalJ = j;
-                cardDevelopmentMatrix[i][j].setOnMouseClicked(mouseEvent -> {
-                     setBuyClick(finalI, finalJ);
-                });
+                cardDevelopmentMatrix[i][j].setOnMouseClicked(mouseEvent -> setBuyClick(finalI, finalJ));
 
                 //Adding to GridPane
                 cardDevelop_grid.add(cardDevelopmentMatrix[i][j],j,i);

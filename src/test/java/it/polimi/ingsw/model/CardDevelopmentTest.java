@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,7 +51,7 @@ public class CardDevelopmentTest {
         CardDevelopment fourthCard = new CardDevelopment(0, 0, 3);
 
 
-        ArrayList<String> nicknames = new ArrayList<String>();
+        ArrayList<String> nicknames = new ArrayList<>();
         nicknames.add("nickname");
 
         // Setup gameboard with 1 player

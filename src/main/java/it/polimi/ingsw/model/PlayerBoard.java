@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashMap;
@@ -203,7 +202,7 @@ public class PlayerBoard {
         ) {
             marble.activate(this);
         }
-        return new HashMap<Resource, Integer>(tempDeposit);
+        return new HashMap<>(tempDeposit);
     }
 
     /**

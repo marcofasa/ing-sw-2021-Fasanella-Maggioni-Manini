@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.concurrent.*;
 
 import static java.lang.System.exit;
-import static java.lang.Thread.sleep;
-import static java.time.LocalTime.now;
 
 
 public class Client {

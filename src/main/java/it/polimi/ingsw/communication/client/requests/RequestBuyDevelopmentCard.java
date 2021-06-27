@@ -5,7 +5,9 @@ import it.polimi.ingsw.server.VirtualClient;
 
 public class RequestBuyDevelopmentCard extends ClientRequest {
 
-    Integer rowIndex, columnIndex, placementIndex;
+    final Integer rowIndex;
+    final Integer columnIndex;
+    final Integer placementIndex;
 
     /**
      * Buy card development from market

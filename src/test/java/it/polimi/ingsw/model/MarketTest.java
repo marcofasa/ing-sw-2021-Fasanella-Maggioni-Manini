@@ -11,7 +11,7 @@ public class MarketTest {
 
     @Test
     public void getCol() {
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("1", "2", "3")));
         Market market = new Market(gameTable);
         var marketclone = market.getMarket();
         var spareMarbleClone = market.getSpareMarble();
@@ -25,7 +25,7 @@ public class MarketTest {
 
     @Test
     public void getRow() {
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("1", "2", "3")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("1", "2", "3")));
         Market market = new Market(gameTable);
         for (int i = 0; i < 6; i++) {
             var marketclone = market.getMarket();

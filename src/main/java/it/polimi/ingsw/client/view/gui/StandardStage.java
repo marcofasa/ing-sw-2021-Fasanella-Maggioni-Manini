@@ -23,9 +23,6 @@ public class StandardStage {
     private final static Utils utils = new Utils();
     String messages = "";
 
-    public void init(){
-    }
-
     public void printClick(String object){
         System.out.println("Object "+ object+" clicked");
     }

@@ -11,7 +11,7 @@ public class FaithTrailTest {
     @Test
     public void FaithTrailLorenzo(){
         //Single Player Test
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("Single Player")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("Single Player")));
         FaithTrail f= gameTable.getFaithTrailInstance();
         ArrayList<PlayerBoard> p = gameTable.getPlayerBoards();
         assertEquals(1,p.size());
@@ -31,7 +31,7 @@ public class FaithTrailTest {
     @Test
     public void FaithTrail(){
         //Single Player Test
-        GameTable gameTable = new GameTable(new ArrayList<String>(Arrays.asList("P1","P2","P3")));
+        GameTable gameTable = new GameTable(new ArrayList<>(Arrays.asList("P1", "P2", "P3")));
         FaithTrail f= gameTable.getFaithTrailInstance();
         ArrayList<PlayerBoard> p = gameTable.getPlayerBoards();
         assertEquals(0,f.getPosition(p.get(0)));

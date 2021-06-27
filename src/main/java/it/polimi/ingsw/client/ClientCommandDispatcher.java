@@ -8,7 +8,6 @@ import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

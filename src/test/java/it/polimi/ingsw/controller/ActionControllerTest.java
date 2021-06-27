@@ -1,13 +1,11 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,40 +34,15 @@ class ActionControllerTest {
 
         player.getStrongboxInstance().tryAdd(temp);
 
-        assertThrows(InvalidCardDevelopmentPlacementException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.buyAndPlaceDevCard(player, 1, 0, 1);
-            }
-        });
+        assertThrows(InvalidCardDevelopmentPlacementException.class, () -> actionController.buyAndPlaceDevCard(player, 1, 0, 1));
 
-        assertThrows(InvalidSlotIndexException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.buyAndPlaceDevCard(player, 0, 0, 5);
-            }
-        });
+        assertThrows(InvalidSlotIndexException.class, () -> actionController.buyAndPlaceDevCard(player, 0, 0, 5));
 
-        assertThrows(InvalidSlotIndexException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.buyAndPlaceDevCard(player, 0, 0, -1);
-            }
-        });
+        assertThrows(InvalidSlotIndexException.class, () -> actionController.buyAndPlaceDevCard(player, 0, 0, -1));
 
-        assertDoesNotThrow(new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.buyAndPlaceDevCard(player, 0, 0, 0);
-            }
-        });
+        assertDoesNotThrow(() -> actionController.buyAndPlaceDevCard(player, 0, 0, 0));
 
-        assertThrows(NotEnoughResourcesException.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.buyAndPlaceDevCard(player, 1, 1, 0);
-            }
-        });
+        assertThrows(NotEnoughResourcesException.class, () -> actionController.buyAndPlaceDevCard(player, 1, 1, 0));
     }
 
     @Test
@@ -85,23 +58,11 @@ class ActionControllerTest {
 
         PlayerBoard player = gameTable.getActivePlayer();
 
-        assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.useMarket(player, 5, "row");
-            }
-        });
+        assertThrows(Exception.class, () -> actionController.useMarket(player, 5, "row"));
 
-        assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                actionController.useMarket(player, 5, "column");
-            }
-        });
+        assertThrows(Exception.class, () -> actionController.useMarket(player, 5, "column"));
 
-        assertThrows(Exception.class, () -> {
-           actionController.useMarket(player, 1, "invalidArg");
-        });
+        assertThrows(Exception.class, () -> actionController.useMarket(player, 1, "invalidArg"));
 
         //assertTrue(actionController.useMarket(player, 2, "row"));
 

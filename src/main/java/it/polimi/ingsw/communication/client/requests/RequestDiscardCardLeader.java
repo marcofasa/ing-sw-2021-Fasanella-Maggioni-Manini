@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.VirtualClient;
 
 public class RequestDiscardCardLeader extends ClientRequest {
 
-    Integer cardLeaderIndex;
+    final Integer cardLeaderIndex;
 
     public RequestDiscardCardLeader(Integer _cardLeaderIndex) {
         super(null, null);

@@ -9,6 +9,5 @@ public class ClientKeepAlive extends ClientMessage {
 
     @Override
     public void read(VirtualClient virtualClient) {
-        ;
     }
 }

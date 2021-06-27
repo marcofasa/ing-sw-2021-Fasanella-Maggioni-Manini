@@ -23,7 +23,7 @@ import java.util.concurrent.*;
 
 public class GUI extends Application implements ViewInterface {
 
-    public static Semaphore semaphoreRequest = new Semaphore(0);
+    public static final Semaphore semaphoreRequest = new Semaphore(0);
     private static Client client;
     private static LightFaithTrail lightFaithTrail;
     private final Utils utils = new Utils();
@@ -100,7 +100,6 @@ public class GUI extends Application implements ViewInterface {
             e.printStackTrace();
             scene = new Scene(new Label("Error during FXML Loading"));
         }
-        ((StandardStage) fxmlLoader.getController()).init();
     }
 
 

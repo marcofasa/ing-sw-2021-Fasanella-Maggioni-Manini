@@ -60,7 +60,7 @@ public class OpponentBoardController extends StandardStage {
                     case Yellow -> 3;
                 };
                 //image final path
-                String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i - 1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
+                String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i - 1).getVictoryPoints().toString() + "-" + color + ".jpg";
                 setImageToArray(i - 1, path, cardDevelopmentArray, 45, 60);
             } else {
                 // if there's no card on the deck (printing default image)

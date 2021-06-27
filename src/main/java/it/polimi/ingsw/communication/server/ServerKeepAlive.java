@@ -9,6 +9,5 @@ public class ServerKeepAlive extends ServerMessage {
 
     @Override
     public void read(ClientCommandDispatcher commandDispatcher) {
-        ;
     }
 }

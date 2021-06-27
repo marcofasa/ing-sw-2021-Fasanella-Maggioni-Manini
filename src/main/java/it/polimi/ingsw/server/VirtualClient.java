@@ -11,8 +11,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.*;
 
-import static java.lang.Thread.sleep;
-
 /**
  * Class to handler a client server-side
  */

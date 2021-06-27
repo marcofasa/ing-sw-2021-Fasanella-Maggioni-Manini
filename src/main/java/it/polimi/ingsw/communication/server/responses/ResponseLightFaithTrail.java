@@ -9,8 +9,8 @@ import java.util.HashMap;
 
 public class ResponseLightFaithTrail extends ServerResponse {
 
-    ArrayList<FaithTileStatus> tileStatuses;
-    HashMap<String, Integer> playerPositions;
+    final ArrayList<FaithTileStatus> tileStatuses;
+    final HashMap<String, Integer> playerPositions;
 
     public ResponseLightFaithTrail(ArrayList<FaithTileStatus> _tileStatuses, HashMap<String, Integer> _playerPositions) {
         super(null, null);

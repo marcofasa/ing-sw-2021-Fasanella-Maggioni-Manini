@@ -583,13 +583,9 @@ public class Utils {
         }
 
         switch (cardLeaderRequirements.getCardLeaderRequirementsType()) {
-            case NumberOfDevelopmentCardTypes:
-                printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());
-                break;
-            case NumberOfDevelopmentCardLevel:
-                printCardLeaderDevelopmentLevel(cardLeaderRequirements.getNumberOfDevelopmentCardLevel());
-                break;
-            case NumberOfResources:
+            case NumberOfDevelopmentCardTypes -> printCardLeaderDevelopmentNumber(cardLeaderRequirements.getNumberOfDevelopmentCardTypes());
+            case NumberOfDevelopmentCardLevel -> printCardLeaderDevelopmentLevel(cardLeaderRequirements.getNumberOfDevelopmentCardLevel());
+            case NumberOfResources -> {
                 HashMap<Resource, Integer> list = cardLeaderRequirements.getNumberOfResources();
                 for (Resource resource : list.keySet()) {
                     String key = resource.toString();
@@ -600,7 +596,7 @@ public class Utils {
                     } else out.printf(" x" + value + " resource of " + key);
                 }
                 out.printf(",");
-                break;
+            }
         }
         out.printf(" with " + victoryPoints + " victory points;");
         out.println();
@@ -614,20 +610,11 @@ public class Utils {
     private void printCardLeaderType(CardLeaderType description) {
         String s = description.toString();
         switch (description) {
-            case Deposit:
-                s = s + " where you can deposit ";
-                break;
-            case Discount:
-                s = s + " that discounts of one ";
-                break;
-
-            case WhiteMarble:
-                s = s + " that has effect for ";
-                break;
-
-            case Production:
-                s = s + " using as input ";
-        }
+            case Deposit -> s = s + " where you can deposit ";
+            case Discount -> s = s + " that discounts of one ";
+            case WhiteMarble ->s = s + " that has effect for ";
+            case Production -> s = s + " using as input ";
+        };
         out.printf(s);
     }
 
@@ -656,20 +643,11 @@ public class Utils {
      */
     private void printCardColor(String key) {
         switch (key) {
-            case "Yellow":
-                out.printf(YELLOW + "Yellow" + RESET);
-                break;
-            case "Green":
-                out.printf(GREEN + "Green" + RESET);
-                break;
-            case "Purple":
-                out.printf(MAGENTA + "Purple" + RESET);
-                break;
-            case "Blue":
-                out.printf(BLUE + " Blue" + RESET);
-                break;
-            default:
-                printErrorMessage();
+            case "Yellow" -> out.printf(YELLOW + "Yellow" + RESET);
+            case "Green" -> out.printf(GREEN + "Green" + RESET);
+            case "Purple" -> out.printf(MAGENTA + "Purple" + RESET);
+            case "Blue" -> out.printf(BLUE + " Blue" + RESET);
+            default -> printErrorMessage();
         }
     }
 
@@ -889,22 +867,15 @@ public class Utils {
             s = in.nextLine();
         }
         switch (s) {
-            case "coin":
-                resource = Resource.Coins;
-                break;
-            case "stone":
-                resource = Resource.Stones;
-                break;
-            case "servant":
-                resource = Resource.Servants;
-                break;
-            case "shield":
-                resource = Resource.Shields;
-                break;
-            default:
+            case "coin" -> resource = Resource.Coins;
+            case "stone" -> resource = Resource.Stones;
+            case "servant" -> resource = Resource.Servants;
+            case "shield" -> resource = Resource.Shields;
+            default -> {
                 //This should never be reached
                 printResourceError();
                 resource = null;
+            }
         }
         return resource;
     }

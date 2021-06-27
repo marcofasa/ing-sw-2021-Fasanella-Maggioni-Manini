@@ -150,6 +150,7 @@ public class CardDevelopmentMarketTest {
                 else assertEquals(4, market.getMarket()[i][j].getCards().size());
             }
         }
+        var stack = market.popFromStack(1, purple);
     }
 
     @Test

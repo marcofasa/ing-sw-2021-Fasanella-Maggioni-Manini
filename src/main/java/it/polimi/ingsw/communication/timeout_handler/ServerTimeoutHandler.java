@@ -8,7 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 public class ServerTimeoutHandler {
 
-    TimeoutHandler timeoutHandler;
+    final TimeoutHandler timeoutHandler;
 
     public ServerTimeoutHandler(VirtualClient virtualClient){
         timeoutHandler = new TimeoutHandler(virtualClient);

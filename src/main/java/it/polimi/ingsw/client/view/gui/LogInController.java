@@ -29,13 +29,6 @@ Label playerNumber_label;
     private int playerNumber;
     private boolean playerNumberRequest=false;
 
-
-
-    @Override
-    public void init() {
-        super.init();
-    }
-
     public void singlePlayerAction(ActionEvent actionEvent) {
 
     }

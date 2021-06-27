@@ -17,7 +17,7 @@ public class FaithTilePack {
      * Constructor creates a map whith the three FaithSection as Not Reached
      */
     public FaithTilePack(){
-        this.tiles=new HashMap<FaithSection,FaithTileStatus>();
+        this.tiles= new HashMap<>();
         this.tiles.put(FaithSection.One,FaithTileStatus.Not_Reached);
         this.tiles.put(FaithSection.Two,FaithTileStatus.Not_Reached);
         this.tiles.put(FaithSection.Three,FaithTileStatus.Not_Reached);

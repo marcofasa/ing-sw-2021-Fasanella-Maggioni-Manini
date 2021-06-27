@@ -75,7 +75,7 @@ public class PlayerBoardController extends StandardStage {
                     default -> 3;
                 };
                 //image final path
-                String path = "/images/CardDevelopment/Card_Development_" + topDevCards.get(i - 1).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
+                String path = "/images/CardDevelopment/Card_Development_" + topDevCards.get(i - 1).getVictoryPoints().toString() + "-" + color + ".jpg";
                 setImageToArray(i - 1, path, cardDevelopmentArray, 80, 120);
             } else {
                 // if there's no card on the deck (printing default image)
@@ -100,7 +100,7 @@ public class PlayerBoardController extends StandardStage {
 
     public void setDiscardRequest(HashMap<Resource, Integer> choice) {
         if (discardChoice == null) {
-            discardChoice = new HashMap<Resource, Integer>();
+            discardChoice = new HashMap<>();
         }
         discardChoice = choice;
         discardRequest = true;

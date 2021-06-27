@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import jdk.jshell.spi.ExecutionControl;
-
 public class Lorenzo {
     private final ActionCardDeck actionCardDeck;
     private final GameTable gameTable;

@@ -47,7 +47,7 @@ public class Server {
         gamesID.put(currentGame, nextGameID);
         nextGameID++;
         lobbyLocked = new Object();
-        disconnectedNicknamesGameMap = new HashMap<String, Game>();
+        disconnectedNicknamesGameMap = new HashMap<>();
     }
 
     /* Single Player Server

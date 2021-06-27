@@ -42,14 +42,10 @@ class ControllerTest {
                     null)
         );
 
-        assertThrows(NotActivePlayerException.class, () -> {
-            controller.advanceTurn("wrong nickname");
-        });
+        assertThrows(NotActivePlayerException.class, () -> controller.advanceTurn("wrong nickname"));
 
         /*This NullPointer is thrown because the method executes a sendAll()!*/
-        assertThrows(NullPointerException.class, () -> {
-            controller.advanceTurn(nickname);
-        });
+        assertThrows(NullPointerException.class, () -> controller.advanceTurn(nickname));
 
     }
 
@@ -86,13 +82,11 @@ class ControllerTest {
         leaderSelection2.add(gameTable.getActivePlayer().getCardsLeaderBeforeSelecting().get(0));
         leaderSelection2.add(gameTable.getActivePlayer().getCardsLeaderBeforeSelecting().get(1));
 
-        assertThrows(NotActivePlayerException.class, () -> {
-            controller.assignInitialBenefits(
-                    nickname1,
-                    leaderSelection1,
-                    null,
-                    null);
-        });
+        assertThrows(NotActivePlayerException.class, () -> controller.assignInitialBenefits(
+                nickname1,
+                leaderSelection1,
+                null,
+                null));
 
         assertDoesNotThrow(() ->
                 controller.assignInitialBenefits(

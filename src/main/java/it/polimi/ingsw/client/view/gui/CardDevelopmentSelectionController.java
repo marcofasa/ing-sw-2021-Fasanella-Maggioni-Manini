@@ -53,24 +53,16 @@ public class CardDevelopmentSelectionController extends StandardStage {
         for (int i = 0; i < nRow; i++) {
             if (cardsDevelopment.get(i)!=null) {
 
-                Integer color;
-                switch (cardsDevelopment.get(i).getCardType()) {
-                    case Green:
-                        color = 0;
-                        break;
-                    case Blue:
-                        color = 2;
-                        break;
-                    case Purple:
-                        color = 1;
-                        break;
-                    default:
-                        color = 3;
-                }
+                Integer color = switch (cardsDevelopment.get(i).getCardType()) {
+                    case Green -> 0;
+                    case Blue -> 2;
+                    case Purple -> 1;
+                    default -> 3;
+                };
 
 
                 //image final path
-                String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i).getVictoryPoints().toString() + "-" + color.toString() + ".jpg";
+                String path = "/images/CardDevelopment/Card_Development_" + cardsDevelopment.get(i).getVictoryPoints().toString() + "-" + color + ".jpg";
 
                 setImageToArray(i,path, cardDevelopmentArray,80,120);
 

@@ -64,7 +64,7 @@ public class InitialSelectionController extends StandardStage {
                 case Stones -> 3;
             };
 
-            String path = "/images/CardLeader/Card_Leader_" + type.toString() + "-" + color.toString() + ".jpg";
+            String path = "/images/CardLeader/Card_Leader_" + type + "-" + color + ".jpg";
             setImageToArray(i,path,cardLeaderArray,80,120);
 
             //Mouse Click Event

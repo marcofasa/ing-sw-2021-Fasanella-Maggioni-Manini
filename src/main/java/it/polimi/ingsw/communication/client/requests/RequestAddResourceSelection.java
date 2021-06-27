@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class RequestAddResourceSelection extends ClientRequest {
 
-    HashMap<Resource, Integer> resources;
+    final HashMap<Resource, Integer> resources;
 
     public RequestAddResourceSelection(HashMap<Resource, Integer> resources) {
         super(null, null);

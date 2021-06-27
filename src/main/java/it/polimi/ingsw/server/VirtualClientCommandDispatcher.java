@@ -3,7 +3,6 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.communication.server.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.communication.server.requests.RequestSignalActivePlayer;
-import it.polimi.ingsw.communication.server.responses.ResponseDiscardResourceSelection;
 import it.polimi.ingsw.communication.server.responses.*;
 import it.polimi.ingsw.controller.exceptions.MainMoveAlreadyMadeException;
 import it.polimi.ingsw.controller.exceptions.NotActivePlayerException;

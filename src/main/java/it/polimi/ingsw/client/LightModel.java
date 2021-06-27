@@ -40,18 +40,18 @@ public class LightModel {
     }
 
     public void setCardDevelopmentMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket){
-        this.cardDevelopmentMarket= new ArrayList<ArrayList<CardDevelopment>>(cardDevelopmentMarket);
+        this.cardDevelopmentMarket= new ArrayList<>(cardDevelopmentMarket);
     }
     public void setCardsLeader(ArrayList<CardLeader> cardsLeader) {
-        this.cardsLeader = new ArrayList<CardLeader>(cardsLeader);
+        this.cardsLeader = new ArrayList<>(cardsLeader);
     }
 
     public void setCardsDevelopment(ArrayList<CardDevelopment> cardsDevelopment) {
-        this.cardsDevelopment = new ArrayList<CardDevelopment>(cardsDevelopment);
+        this.cardsDevelopment = new ArrayList<>(cardsDevelopment);
     }
 
     public void setMarket(ArrayList<ArrayList<MarbleType>> market) {
-        this.market = new ArrayList<ArrayList<MarbleType>>(market);
+        this.market = new ArrayList<>(market);
     }
 
     public void setStrongbox(HashMap<Resource, Integer> strongbox) {
@@ -86,7 +86,7 @@ public class LightModel {
     }
 
     public ArrayList<ArrayList<MarbleType>> getMarket() {
-        if (market==null) market = new ArrayList<ArrayList<MarbleType>>();
+        if (market==null) market = new ArrayList<>();
 
         try {
             client.sendAndWait(new RequestMarketInstance(),-1);
@@ -114,7 +114,7 @@ public class LightModel {
     }
 
     public HashMap<Resource, Integer> getDeposit(){
-        if (deposit==null) deposit=new HashMap<Resource,Integer>();
+        if (deposit==null) deposit= new HashMap<>();
 
         try {
             client.sendAndWait(new RequestDepositInstance(),-1);
@@ -126,7 +126,7 @@ public class LightModel {
     }
 
     public ArrayList<CardLeader> getCardsLeader() {
-        if(cardsLeader == null) cardsLeader= new ArrayList<CardLeader>();
+        if(cardsLeader == null) cardsLeader= new ArrayList<>();
 
         try {
             client.sendAndWait(new RequestCardLeaders(),-1);
@@ -139,7 +139,7 @@ public class LightModel {
     }
 
     public ArrayList<CardDevelopment> getCardsDevelopment() {
-        if(cardsDevelopment == null) cardsDevelopment = new ArrayList<CardDevelopment>();
+        if(cardsDevelopment == null) cardsDevelopment = new ArrayList<>();
 
         try {
             client.sendAndWait(new RequestTopCardsDevelopment(),-1);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ResponseMarketInstance extends ServerResponse {
 
     private final Marble spareMarble;
-    ArrayList<ArrayList<MarbleType>> marketClone;
+    final ArrayList<ArrayList<MarbleType>> marketClone;
 
     public ResponseMarketInstance(ArrayList<ArrayList<MarbleType>> _marketClone, Marble spareMarble) {
         super(null, null);

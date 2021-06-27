@@ -20,9 +20,9 @@ public class FaithTrail implements Serializable {
      */
     public FaithTrail(GameTable gameTable,ArrayList<PlayerBoard> players,Lorenzo lorenzo){
         this.gameTable = gameTable;
-        this.cells= new ArrayList<FaithCell>();
-        this.playerTiles= new HashMap<PlayerBoard, FaithTilePack>();
-        this.playerPosition= new HashMap<PlayerBoard, Integer>();
+        this.cells= new ArrayList<>();
+        this.playerTiles= new HashMap<>();
+        this.playerPosition= new HashMap<>();
         lorenzoPosition=0;
         for (PlayerBoard p : players
         ) {
@@ -41,9 +41,9 @@ public class FaithTrail implements Serializable {
      */
     public FaithTrail(GameTable gameTable, ArrayList<PlayerBoard> players) {
         this.gameTable = gameTable;
-        this.cells= new ArrayList<FaithCell>();
-        this.playerTiles= new HashMap<PlayerBoard, FaithTilePack>();
-        this.playerPosition= new HashMap<PlayerBoard, Integer>();
+        this.cells= new ArrayList<>();
+        this.playerTiles= new HashMap<>();
+        this.playerPosition= new HashMap<>();
         for (PlayerBoard p : players
         ) {
             this.playerPosition.put(p, 0);

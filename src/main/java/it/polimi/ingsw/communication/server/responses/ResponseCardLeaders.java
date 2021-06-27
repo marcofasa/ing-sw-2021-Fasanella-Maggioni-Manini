@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ResponseCardLeaders extends ServerResponse {
 
-    ArrayList<CardLeader> leaderCards;
+    final ArrayList<CardLeader> leaderCards;
 
     public ResponseCardLeaders(ArrayList<CardLeader> _leaderCards) {
         super(null, null);
