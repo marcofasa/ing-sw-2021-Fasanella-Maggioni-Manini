@@ -3,7 +3,7 @@
 
 - ###   10617541    Marco Fasanela ([@marcofasa](https://github.com/marcofasa))<br>marco.fasanella@mail.polimi.it
 - ###   10610008    Elia Maggioni ([@Eliaxie](https://github.com/Eliaxie))<br>elia.maggioni@mail.polimi.it
-- ###   CPLUCAS    Lucas Manini ([@lmanini](https://github.com/lmanini))<br>MAILLUCAS@mail.polimi.it
+- ###   10625965    Lucas Manini ([@lmanini](https://github.com/lmanini))<br>MAILLUCAS@mail.polimi.it
 
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
