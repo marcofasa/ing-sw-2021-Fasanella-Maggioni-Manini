@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.LogInController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.LogInController">
    <children>
   <AnchorPane prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -20,13 +17,13 @@
             <TextField fx:id="user_field" layoutX="43.0" layoutY="265.0" />
             <TextField fx:id="ip_field" layoutX="220.0" layoutY="265.0" text="127.0.0.1" />
             <Button fx:id="login_button" layoutX="264.0" layoutY="317.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="39.0" prefWidth="73.0" text="Start" />
-            <Text layoutX="94.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NickName" />
+            <Text layoutX="94.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" />
             <TextField fx:id="port_field" layoutX="411.0" layoutY="265.0" text="51214" />
             <Text layoutX="294.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" />
-            <Text layoutX="460.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port [51214]" />
-            <Label fx:id="status_label" layoutX="13.0" layoutY="313.0" prefHeight="23.0" prefWidth="232.0" text="Status: NOT LOGGED" />
-            <Button layoutX="451.0" layoutY="344.0" mnemonicParsing="false" onAction="#playerNumber_button" prefHeight="19.0" prefWidth="101.0" text="Player Number" />
-            <Label fx:id="playerNumber_label" layoutX="443.0" layoutY="316.0" prefHeight="17.0" prefWidth="118.0" />
+            <Text layoutX="432.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port [51214]" />
+            <Label fx:id="status_label" layoutX="13.0" layoutY="313.0" prefHeight="65.0" prefWidth="232.0" text="Status: NOT LOGGED" />
+            <Button layoutX="434.0" layoutY="344.0" mnemonicParsing="false" onAction="#playerNumber_button" prefHeight="26.0" prefWidth="118.0" text="Player Number" />
+            <Label fx:id="playerNumber_label" layoutX="400.0" layoutY="316.0" prefHeight="17.0" prefWidth="184.0" />
          </children>
       </AnchorPane>
    </children>
