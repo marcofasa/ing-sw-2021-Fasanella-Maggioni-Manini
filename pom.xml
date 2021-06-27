@@ -116,7 +116,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>deliverables/jar/${project.artifactId}-Client.jar</outputFile>
+                            <outputFile>deliverables/final/jar/${project.artifactId}-Client.jar</outputFile>
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
@@ -132,7 +132,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>deliverables/jar/${project.artifactId}-Server.jar</outputFile>
+                            <outputFile>deliverables/final/jar/${project.artifactId}-Server.jar</outputFile>
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">

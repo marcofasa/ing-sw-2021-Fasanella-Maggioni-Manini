@@ -1,0 +1,81 @@
+@startuml
+actor Player as Player
+
+Player -> CLI: "buy resource"
+Player <- CLI: printMarket()
+Player <- CLI: askMarketChoice()
+Player -> CLI: Row/Column, Number
+CLI -> Client: sendMarketChoice()
+
+Client-> Server: RequestUseMarket
+
+
+    Server-> Game: useMarket()
+    activate Game
+    Game-> Controller: useMarket()
+    activate Controller
+    Controller-> ActionController: useMarket()
+    activate ActionController
+    ActionController-> GameTable: tryAddMarbles()
+    activate GameTable
+
+
+alt tryAddMarbles() == null
+
+            ActionController<- GameTable: HashMap<Resource,Integer>
+            deactivate GameTable
+            ActionController -> Controller: HashMap<Resource,Integer>
+            deactivate ActionController
+            Controller -> Game: HashMap<Resource,Integer>
+            deactivate Controller
+
+
+
+else tryAddMarbles() != null
+        loop until tryAddMarbles() == null
+
+            ActionController<- GameTable: HashMap<Resource,Integer>
+            deactivate GameTable
+            ActionController -> Controller: HashMap<Resource,Integer>
+            deactivate ActionController
+            Controller -> Game: HashMap<Resource,Integer>
+            deactivate Controller
+
+            Game->Server: HashMap<Resource,Integer>
+            deactivate Game
+            Client<- Server: ResponseDiscardResourceMarket
+            CLI<-Client: askResourceToDiscard()
+            Player <- CLI: askResourceToDiscard()
+            Player -> CLI: Resource
+            CLI->Client: sendResourceSelection()
+            Client-> Server: RequestAddResourceSelection
+            activate Game
+            Server-> Game: discardResources()
+
+
+            Game-> Controller: discardResource()
+            activate Controller
+            Controller-> ActionController: discardResource()
+            activate ActionController
+            ActionController-> GameTable: tryAddMarbles()
+            activate GameTable
+            ActionController<- GameTable: HashMap<Resource,Integer>
+            deactivate GameTable
+            ActionController -> Controller: HashMap<Resource,Integer>
+            deactivate ActionController
+            Controller -> Game: HashMap<Resource,Integer>
+            deactivate Controller
+
+
+        end
+end
+Server<-- Game: HashMap<Resource,Integer>
+
+deactivate Game
+
+Client<-- Server: ResponseSuccess
+
+CLI <-- Client: success()
+
+Player <-- CLI: displaySuccess()
+@enduml

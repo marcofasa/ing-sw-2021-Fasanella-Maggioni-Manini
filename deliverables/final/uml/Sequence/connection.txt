@@ -1,0 +1,25 @@
+@startuml
+
+Client-> Server: SetupConnection
+Client<- Server: ResponseClientAccepted
+alt nickname not available
+    Client<- Server: ResponseNicknameUnavailable
+end
+alt first player
+
+    Client<- Server: RequestPlayersNumber
+deactivate Client
+alt timeout is not reached
+    Client-> Server: ResponsePlayersNumber
+else timed out
+    Client<- Server: KillConnectionMessage
+destroy Client
+end
+activate Client
+end
+group lobby full
+
+    Client <- Server: GameHasStarted
+
+end
+@enduml
