@@ -52,7 +52,7 @@ The default interface is GUI
 | TAG | Effect |
 |:-----------------------|:------------------------------------:|
 | --d | Enable debug mode |
-| --cli | Start Client in Command Line Interface |
+| --c | Start Client in Command Line Interface |
 
 ####Lobby
 When a player connects to the server, a checka whether the lobby has been already setup or not is run, in which case the player
