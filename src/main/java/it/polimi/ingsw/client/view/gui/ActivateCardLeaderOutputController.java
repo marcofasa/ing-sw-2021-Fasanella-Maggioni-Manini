@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public class ActivateCardLeaderOutput extends StandardStage{
+public class ActivateCardLeaderOutputController extends StandardStage{
 
     private Resource resource;
 

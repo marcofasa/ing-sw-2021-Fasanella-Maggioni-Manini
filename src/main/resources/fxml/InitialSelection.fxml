@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.InitialSelectionController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.InitialSelectionController">
    <children>
       <ImageView fitHeight="404.0" fitWidth="755.0" layoutX="-13.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-31.0" AnchorPane.topAnchor="0.0">
          <image>

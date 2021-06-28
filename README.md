@@ -8,15 +8,16 @@
 ## Implemented Functionalities
 | Functionality | Status |
 |:-----------------------|:------------------------------------:|
-| Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/model) |
-| Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/model) |
-| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/server) |
-| GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/client/gui) |
-| CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/client/cli) |
-| Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/blob/master/src/main/java/it/polimi/ingsw/server/Server.java)|
-| Persistence | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/S0NN1/ing-sw-2020-piemonti-pirovano-sonnino/tree/master/src/main/java/it/polimi/ingsw/model/player/gods/advancedgods) |
-|  | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
-|  | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
+| Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model) |
+| Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model) |
+| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/server) |
+| GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/client/gui) |
+| CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/client/cli) |
+| Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/blob/master/src/main/java/it/polimi/ingsw/server/Server.java)|
+| Persistence | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model/player/gods/advancedgods) |
+| Local Games | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
+| Load Games from storage | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
+| Parameters modifier | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
 
 #### Legend
 [![RED](http://placehold.it/15/f03c15/f03c15)]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;[![YELLOW](http://placehold.it/15/ffdd00/ffdd00)]() Implementing&nbsp;&nbsp;&nbsp;&nbsp;[![GREEN](http://placehold.it/15/44bb44/44bb44)]() Implemented
