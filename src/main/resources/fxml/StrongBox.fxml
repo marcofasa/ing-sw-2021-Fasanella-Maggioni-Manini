@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="330.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.StrongBoxController">
+<AnchorPane prefHeight="330.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.StrongBoxController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="622.0" pickOnBounds="true" preserveRatio="true">
          <image>

@@ -146,7 +146,7 @@ public class CardLeaderController extends StandardStage {
         if(production){
         FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
         Scene secondScene = setScene(loader);
-        ActivateCardLeaderOutput activateCardLeaderOutput=loader.getController();
+        ActivateCardLeaderOutputController activateCardLeaderOutput=loader.getController();
         // New window (Selection)
             showStage(secondScene);
         if (resources==null){
