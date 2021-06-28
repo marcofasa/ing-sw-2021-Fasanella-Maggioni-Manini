@@ -154,6 +154,8 @@ public class Server {
             switch (arg) {
                 case "--h" -> {
                     System.out.println("--d to start in debug");
+                    System.out.println("--no-timeout to run server with no timeouts");
+                    System.out.println("--port to specify the port the server should be listening on");
                     return;
                 }
                 case "--d" -> {
@@ -180,7 +182,6 @@ public class Server {
                         exit(1);
                     }
                     System.out.println("selected port " + port);
-                    debug = true;
                 }
             }
         }

@@ -279,7 +279,7 @@ public class Client {
             switch (arg) {
                 case "--h" -> {
                     System.out.println("--d to start in debug");
-                    System.out.println("--g to start in GUI");
+                    System.out.println("--c to start in CLI");
                     return;
                 }
                 case "--d" -> {
