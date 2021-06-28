@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.view.gui;
+import it.polimi.ingsw.communication.client.requests.RequestActivateCardLeader;
 import it.polimi.ingsw.communication.client.requests.RequestDiscardCardLeader;
 import it.polimi.ingsw.model.CardLeader;
+import it.polimi.ingsw.model.CardLeaderProduction;
+import it.polimi.ingsw.model.CardLeaderType;
 import it.polimi.ingsw.model.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -143,7 +146,7 @@ public class CardLeaderController extends StandardStage {
     }
 
     public void activateCardLeader(ActionEvent actionEvent) {
-        if(production){
+        if (production) {
         FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
         Scene secondScene = setScene(loader);
         ActivateCardLeaderOutputController activateCardLeaderOutput=loader.getController();
@@ -157,12 +160,18 @@ public class CardLeaderController extends StandardStage {
         }
         else resources[1]=activateCardLeaderOutput.getResource();
 
-        setDialogPane("Card Leader activated",PlayerBoardController.dialog);
+        setDialogPane("Card Leader added to selection",PlayerBoardController.dialog);
 
         setProduction(false);
-        closeStage(actionEvent);}
-        else{
-            setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog);
+        closeStage(actionEvent);
+        }
+        else {
+            //setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog);
+            if (cardsLeaderArray.get(lastClick).getDescription() != CardLeaderType.Production) {
+                GUI.sendMessage(new RequestActivateCardLeader(cardsLeaderArray.get(lastClick)));
+            } else {
+                setDialogPane("Production Leader Cards must be activated from the Production panel!", PlayerBoardController.dialog);
+            }
         }
     }
 }
