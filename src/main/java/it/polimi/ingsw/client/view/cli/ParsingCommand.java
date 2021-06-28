@@ -14,11 +14,11 @@ public class ParsingCommand {
 
     /**
      * Constructor of Parsing Command
-     * @param utils
-     * @param cli
-     * @param out
-     * @param in
-     * @param debug
+     * @param utils Instance of Utils class to be used for utility methods.
+     * @param cli Instance of CLI class that is associated with this instance of ParsingCommand.
+     * @param out Instance of PrintWriter class to print to console.
+     * @param in Instance of Scanner class to read from console.
+     * @param debug boolean to set debug-mode.
      */
     public ParsingCommand(Utils utils, CLI cli, PrintWriter out, Scanner in, Boolean debug){
         this.utils=utils;
@@ -47,7 +47,7 @@ public class ParsingCommand {
 
     /**
      * Reads a user command during the turn
-     * @return
+     * @return false is player has executed a final move or passed the turn, true otherwise.
      */
     private boolean readPlayerCommand(GamePhase gamePhase){
         String command = utils.readString();

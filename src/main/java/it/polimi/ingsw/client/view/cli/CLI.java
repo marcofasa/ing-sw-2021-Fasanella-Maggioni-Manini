@@ -24,15 +24,16 @@ public class CLI implements ViewInterface {
     private boolean open = false;
 
     /**
-     * Constructor of CLI
-     * @param client
-     * @param debug
+     * Constructor of CLI.
+     *
+     * @param client Client instance that instantiated this CLI instance.
+     * @param debug  boolean to set CLI in debug-mode.
      */
-    public CLI(Client client, Boolean debug){
-        this.client=client;
+    public CLI(Client client, Boolean debug) {
+        this.client = client;
         this.lightFaithTrail = new LightFaithTrail(client);
-        this.utils=new Utils(out,in);
-        this.parsingCommand=new ParsingCommand(utils,this,out,in, debug);
+        this.utils = new Utils(out, in);
+        this.parsingCommand = new ParsingCommand(utils, this, out, in, debug);
     }
 
 
@@ -49,7 +50,7 @@ public class CLI implements ViewInterface {
         utils.printWelcomeMessage();
         ConnectionInfo connectionInfo = new ConnectionInfo();
         boolean invalid = true;
-        while(invalid) {
+        while (invalid) {
             try {
                 connectionInfo.setNickname(askNickName());
                 invalid = false;
@@ -58,7 +59,7 @@ public class CLI implements ViewInterface {
             }
         }
         invalid = true;
-        while(invalid) {
+        while (invalid) {
             try {
                 connectionInfo.setAddress(askIP());
                 invalid = false;
@@ -67,7 +68,7 @@ public class CLI implements ViewInterface {
             }
         }
         invalid = true;
-        while(invalid) {
+        while (invalid) {
             try {
                 connectionInfo.setPort(askPortNumber());
                 invalid = false;
@@ -107,7 +108,7 @@ public class CLI implements ViewInterface {
     @Override
     public void displayResourceMarket() {
         ArrayList<ArrayList<MarbleType>> marketClone = getLightModel().getMarket();
-        utils.printMarket(marketClone,getLightModel().getSpareMarble());
+        utils.printMarket(marketClone, getLightModel().getSpareMarble());
     }
 
     @Override
@@ -161,16 +162,15 @@ public class CLI implements ViewInterface {
     @Override
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
         //utils.clearScreen();
-        if (currentPlayer.equals(getLightModel().getNickname())){
-            if(open){
+        if (currentPlayer.equals(getLightModel().getNickname())) {
+            if (open) {
                 System.out.println("There is a console opened already! Exploding...");
                 throw new RuntimeException("There is a console opened already!");
             }
             open = true;
             parsingCommand.PlayerMenu(gamePhase);
             open = false;
-        }
-        else {
+        } else {
             displayWaitingOpponent(currentPlayer);
             out.println();
             out.println();
@@ -183,7 +183,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayWaitingOpponent(String currentPlayer) {
-        out.println("Wait for your move, "+currentPlayer+" is now playing...");
+        out.println("Wait for your move, " + currentPlayer + " is now playing...");
     }
 
     @Override
@@ -228,11 +228,12 @@ public class CLI implements ViewInterface {
     @Override
     public int askPlayerNumber() {
         out.println("How many players?");
-        return utils.readNumberWithBounds(1,4);
+        return utils.readNumberWithBounds(1, 4);
     }
 
     /**
      * Let player select which resources to discard
+     *
      * @param choice HashMap of available resources
      * @return HashMap of selected resources
      */
@@ -240,8 +241,7 @@ public class CLI implements ViewInterface {
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         HashMap<Resource, Integer> temp = new HashMap<>(choice);
         HashMap<Resource, Integer> selection = new HashMap<>();
-        boolean firstCall= true;
-        boolean loop=true;
+        boolean loop = true;
 
         //Read resources
         out.println("Ops, there's not enough space:");
@@ -253,31 +253,21 @@ public class CLI implements ViewInterface {
         utils.printListResource(choice);
         do {
             Resource resource = utils.readResource(false);
-            if (temp.get(resource)>0) {
+            if (temp.get(resource) > 0) {
                 int i = temp.get(resource);
-                if(!selection.containsKey(resource)){
-                    selection.put(resource,1);
-                }
-                else {
-                    int r=selection.get(resource);
+                if (!selection.containsKey(resource)) {
+                    selection.put(resource, 1);
+                } else {
+                    int r = selection.get(resource);
                     selection.replace(resource, r + 1);
                 }
-                temp.replace(resource,i-1);
-                if(utils.checkEmptyResourceMap(temp)){
+                temp.replace(resource, i - 1);
+                if (utils.checkEmptyResourceMap(temp)) {
                     break;
                 }
                 out.println("Discard another resource?");
-                loop=utils.readYesOrNo(false);
-            }
-            else{
-                    /*
-
-                    if(firstCall) {
-                        firstCall=false;
-                        continue;
-                    }
-
-                     */
+                loop = utils.readYesOrNo(false);
+            } else {
                 out.println("You can't discard this resource, try with another.");
                 out.println("Here's a list of available resources to discard:");
                 utils.printListResource(temp);
@@ -286,7 +276,6 @@ public class CLI implements ViewInterface {
 
         return selection;
     }
-
 
 
     @Override
@@ -307,11 +296,10 @@ public class CLI implements ViewInterface {
             int leaderIndex = utils.printAndGetCardLeaderIndex(getLightModel().getCardsLeader());
 
             if (leaderIndex >= 0) {
-                client.sendAndWait(new RequestDiscardCardLeader(leaderIndex),-1);
+                client.sendAndWait(new RequestDiscardCardLeader(leaderIndex), -1);
             }
 
-        }
-        catch (RequestTimedOutException e){
+        } catch (RequestTimedOutException e) {
             e.printStackTrace();
         }
     }
@@ -329,15 +317,14 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayScoreBoard(HashMap<String, Integer> showScoreBoard) {
-        int maxPoints=utils.checkWinner(showScoreBoard);
-        String nickName=getLightModel().getNickname();
-        if(showScoreBoard.get(nickName)==maxPoints){
+        int maxPoints = utils.checkWinner(showScoreBoard);
+        String nickName = getLightModel().getNickname();
+        if (showScoreBoard.get(nickName) == maxPoints) {
             displayWin();
-        }
-        else {
+        } else {
             displayLost();
         }
-        utils.printScoreBoard(showScoreBoard,nickName);
+        utils.printScoreBoard(showScoreBoard, nickName);
     }
 
     @Override
@@ -423,21 +410,21 @@ public class CLI implements ViewInterface {
         String key;
         int message;
         out.println("Choose row or column (type r/c):");
-        rowcolumn=utils.chooseRowOrColumn();
+        rowcolumn = utils.chooseRowOrColumn();
         /*
         rowcolumn=1 -> row
         rowcolumn=0 -> column
          */
-        if (rowcolumn==1) key= "row";
-        else key="column";
-        out.println("Now type the "+key+" number:");
-        if(rowcolumn==1) message=utils.readNumberWithBounds(1,3);
-        else message=utils.readNumberWithBounds(1,4);
+        if (rowcolumn == 1) key = "row";
+        else key = "column";
+        out.println("Now type the " + key + " number:");
+        if (rowcolumn == 1) message = utils.readNumberWithBounds(1, 3);
+        else message = utils.readNumberWithBounds(1, 4);
         /*
         1 arg: row=1 or col=0
         2 arg: number of row/column
          */
-        client.send(new RequestMarketUse(message,key));
+        client.send(new RequestMarketUse(message, key));
     }
 
     @Override
@@ -449,30 +436,30 @@ public class CLI implements ViewInterface {
         out.println("Type the number in the round brackets of the corresponding card that you want to buy");
         s = utils.readString();
         char[] array = s.toCharArray();
-        while (array.length!=2 || (!Character.isDigit(s.charAt(0)) || !Character.isDigit(s.charAt(1))) || (0>Integer.parseInt(String.valueOf(array[0])) || Integer.parseInt(String.valueOf(array[0]))>2) || (0>Integer.parseInt(String.valueOf(array[1])) || Integer.parseInt(String.valueOf(array[1]))>3)){
+        while (array.length != 2 || (!Character.isDigit(s.charAt(0)) || !Character.isDigit(s.charAt(1))) || (0 > Integer.parseInt(String.valueOf(array[0])) || Integer.parseInt(String.valueOf(array[0])) > 2) || (0 > Integer.parseInt(String.valueOf(array[1])) || Integer.parseInt(String.valueOf(array[1])) > 3)) {
             out.println("Invalid input. Type only the the two digits in the round brackets!");
             s = utils.readString();
             array = s.toCharArray();
         }
-        Integer rowIndex= Integer.parseInt(String.valueOf(array[0]));
-        Integer columnIndex=Integer.parseInt(String.valueOf(array[1]));
+        Integer rowIndex = Integer.parseInt(String.valueOf(array[0]));
+        Integer columnIndex = Integer.parseInt(String.valueOf(array[1]));
 
         out.println("In which slot would you like to place your new card? Possible selection are {0 ,1 ,2}");
         s = utils.readNumberWithBoundsToString(0, 2);
 
         Integer placementIndex = Integer.parseInt(s);
 
-        client.send(new RequestBuyDevelopmentCard(rowIndex,columnIndex,placementIndex));
+        client.send(new RequestBuyDevelopmentCard(rowIndex, columnIndex, placementIndex));
     }
 
     @Override
     public void askProductionActivation() {
-        ProductionSelection productionSelection= new ProductionSelection();
+        ProductionSelection productionSelection = new ProductionSelection();
 
         //Ask for basic production
         out.println("Do you want to activate basic production?");
         productionSelection.setBasicProduction(utils.readYesOrNo(false));
-        if (productionSelection.getBasicProduction()){
+        if (productionSelection.getBasicProduction()) {
             productionSelection.setBasicProdInfo(utils.getBasicProduction());
         }
 
@@ -480,12 +467,11 @@ public class CLI implements ViewInterface {
         out.println("Do you want to activate Card Development production?");
         if (utils.readYesOrNo(false)) {
             productionSelection.setCardDevelopmentSlotActive(utils.getCardDevelopmentActivation(getLightModel().getCardsDevelopment()));
-        }
-        else {
-            Boolean[] falseArray =new Boolean[3];
-            falseArray[0]=false;
-            falseArray[1]=false;
-            falseArray[2]=false;
+        } else {
+            Boolean[] falseArray = new Boolean[3];
+            falseArray[0] = false;
+            falseArray[1] = false;
+            falseArray[2] = false;
             productionSelection.setCardDevelopmentSlotActive(falseArray);
         }
 
@@ -494,20 +480,19 @@ public class CLI implements ViewInterface {
         out.println("Do you want to activate Card Leader production?");
         if (utils.readYesOrNo(false)) {
             CardLeader[] cardLeaders;
-            cardLeaders=utils.activationCardLeaderForProduction(getLightModel().getCardsLeader());
+            cardLeaders = utils.activationCardLeaderForProduction(getLightModel().getCardsLeader());
             productionSelection.setCardLeadersToActivate(cardLeaders);
             Resource[] resourcesOutput;
-            resourcesOutput=utils.getCardLeaderOutputs(productionSelection.getCardLeadersToActivate());
+            resourcesOutput = utils.getCardLeaderOutputs(productionSelection.getCardLeadersToActivate());
             productionSelection.setCardLeaderProdOutputs(resourcesOutput);
-        }
-        else {
-            CardLeader[] cardLeaders=new CardLeader[2];
-            cardLeaders[0]=null;
-            cardLeaders[1]=null;
+        } else {
+            CardLeader[] cardLeaders = new CardLeader[2];
+            cardLeaders[0] = null;
+            cardLeaders[1] = null;
             productionSelection.setCardLeadersToActivate(cardLeaders);
             Resource[] cardLeaderProdOutputs = new Resource[2];
-            cardLeaderProdOutputs[0]=null;
-            cardLeaderProdOutputs[1]=null;
+            cardLeaderProdOutputs[0] = null;
+            cardLeaderProdOutputs[1] = null;
             productionSelection.setCardLeaderProdOutputs(cardLeaderProdOutputs);
         }
 
@@ -519,7 +504,7 @@ public class CLI implements ViewInterface {
     public void askCardLeaderActivation() {
         out.println("Choose which card leader to activate:");
         try {
-            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(getLightModel().getCardsLeader())),-1);
+            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(getLightModel().getCardsLeader())), -1);
         } catch (RequestTimedOutException e) {
             displayTimeOut();
             e.printStackTrace();
@@ -563,9 +548,10 @@ public class CLI implements ViewInterface {
 
 
     /**
-     * Ask to select two cards leader at the beginning of the game
-     * @param cardLeaders deck of card
-     * @return
+     * Ask to select two cards leader at the beginning of the game.
+     *
+     * @param cardLeaders deck of leader cards from which the player can choose.
+     * @return ArrayList of selected leader cards.
      */
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
@@ -585,14 +571,14 @@ public class CLI implements ViewInterface {
             return;
         }
 
-        while (!client.getPlayersNickname().contains(nickname) || client.getNickname().equals(nickname)){
+        while (!client.getPlayersNickname().contains(nickname) || client.getNickname().equals(nickname)) {
             out.println("Insert the player's nickname");
             nickname = utils.readString();
-            if(client.getNickname().equals(nickname))
+            if (client.getNickname().equals(nickname))
                 out.println("You can't checkout yourself!");
         }
         BriefModel briefModel = client.getModelByNickname(nickname);
-        if (briefModel.isEmpty()){
+        if (briefModel.isEmpty()) {
             out.println("This player have not played yet, his player board is empty");
             return;
         }

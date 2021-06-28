@@ -41,8 +41,8 @@ public class Utils {
     /**
      * Constructor
      *
-     * @param out
-     * @param in
+     * @param out Instance of PrintWriter to print to console.
+     * @param in Instance of Scanner to read from console.
      */
     public Utils(PrintWriter out, Scanner in) {
         this.in = in;
@@ -53,7 +53,7 @@ public class Utils {
     /**
      * Print List of given Resources
      *
-     * @param list
+     * @param list HashMap of Resource -> amount of the list to be printed.
      */
     public void printListResource(HashMap<Resource, Integer> list) {
         for (Resource resource : list.keySet()) {
@@ -72,7 +72,7 @@ public class Utils {
     /**
      * Print a single given Resource in ANSI Colors
      *
-     * @param resource
+     * @param resource Resource to be printed.
      */
     private void printResourceColored(Resource resource) {
         if (resource == Resource.Coins) out.printf(YELLOW + "Coins" + RESET);
@@ -85,8 +85,8 @@ public class Utils {
     /**
      * Print Marble Market
      *
-     * @param market
-     * @param spareMarble
+     * @param market Matrix of MarbleType which describes the structure of the Market.
+     * @param spareMarble The 13th marble which isn't in the market matrix.
      */
     public void printMarket(ArrayList<ArrayList<MarbleType>> market, MarbleType spareMarble) {
         out.println("---MARKET---");
@@ -110,7 +110,7 @@ public class Utils {
     /**
      * Print a single given Marble
      *
-     * @param marble
+     * @param marble MarbleType to be printed
      */
     private void printMarble(MarbleType marble) {
         if (marble == MarbleType.MarbleBlue) out.printf(" B ");
@@ -124,7 +124,7 @@ public class Utils {
     /**
      * Print a single given Marble (ANSI Color)
      *
-     * @param marble
+     * @param marble MarbleType to be printed.
      */
     private void printMarbleColored(MarbleType marble) {
         if (marble == MarbleType.MarbleBlue) out.printf(BACKGROUND_BLUE + " B " + RESET);
@@ -155,12 +155,11 @@ public class Utils {
     }
 
     /**
-     * Read and check a number between
+     * Keep reading a number from input, until given input is between {@param min} and {@param max}
      *
-     * @param min minimum bound
-     *            and
-     * @param max maximum value
-     * @return
+     * @param min lower bound.
+     * @param max upper bound.
+     * @return the player's input number, once it respects the given bounds.
      */
     public int readNumberWithBounds(int min, int max) {
         synchronized (in) {
@@ -178,23 +177,6 @@ public class Utils {
      * Print Colored Welcome message in ANSI
      */
     public void printANSIWelcome() {
-        /*System.out.println(BACKGROUND_BLACK + BLUE +"    ...     ..      ..                    .x+=:.        s                                                            ..      ...                                             .       .x+=:.      .x+=:.                                                  \n" +
-                "  x*8888x.:*8888: -\"888:                 z`    ^%      :8                                             oec :       :~\"8888x :\"%888x                                          @88>    z`    ^%    z`    ^%                                                 \n" +
-                " X   48888X `8888H  8888                    .   <k    .88                  .u    .             u.    @88888      8    8888Xf  8888>                u.    u.                 %8P        .   <k      .   <k                u.    u.                        \n" +
-                "X8x.  8888X  8888X  !888>        u        .@8Ned8\"   :888ooo      .u     .d88B :@8c      ...ue888b   8\"*88%     X88x. ?8888k  8888X       .u     x@88k u@88c.       u        .       .@8Ned8\"    .@8Ned8\"       u      x@88k u@88c.       .        .u    \n" +
-                "X8888 X8888  88888   \"*8%-    us888u.   .@^%8888\"  -*8888888   ud8888.  =\"8888f8888r     888R Y888r  8b.        '8888L'8888X  '%88X    ud8888.  ^\"8888\"\"8888\"    us888u.   .@88u   .@^%8888\"   .@^%8888\"     us888u.  ^\"8888\"\"8888\"  .udR88N    ud8888.  \n" +
-                "'*888!X8888> X8888  xH8>   .@88 \"8888\" x88:  `)8b.   8888    :888'8888.   4888>'88\"      888R I888> u888888>     \"888X 8888X:xnHH(`` :888'8888.   8888  888R  .@88 \"8888\" ''888E` x88:  `)8b. x88:  `)8b. .@88 \"8888\"   8888  888R  <888'888k :888'8888. \n" +
-                "  `?8 `8888  X888X X888>   9888  9888  8888N=*8888   8888    d888 '88%\"   4888> '        888R I888>  8888R         ?8~ 8888X X8888   d888 '88%\"   8888  888R  9888  9888    888E  8888N=*8888 8888N=*8888 9888  9888    8888  888R  9888 'Y\"  d888 '88%\" \n" +
-                "  -^  '888\"  X888  8888>   9888  9888   %8\"    R88   8888    8888.+\"      4888>          888R I888>  8888P       -~`   8888> X8888   8888.+\"      8888  888R  9888  9888    888E   %8\"    R88  %8\"    R88 9888  9888    8888  888R  9888      8888.+\"    \n" +
-                "   dx '88~x. !88~  8888>   9888  9888    @8Wou 9%   .8888Lu= 8888L       .d888L .+      u8888cJ888   *888>       :H8x  8888  X8888   8888L        8888  888R  9888  9888    888E    @8Wou 9%    @8Wou 9%  9888  9888    8888  888R  9888      8888L      \n" +
-                " .8888Xf.888x:!    X888X.: 9888  9888  .888888P`    ^%888*   '8888c. .+  ^\"8888*\"        \"*888*P\"    4888        8888> 888~  X8888   '8888c. .+  \"*88*\" 8888\" 9888  9888    888&  .888888P`   .888888P`   9888  9888   \"*88*\" 8888\" ?8888u../ '8888c. .+ \n" +
-                ":\"\"888\":~\"888\"     `888*\"  \"888*\"\"888\" `   ^\"F        'Y\"     \"88888%       \"Y\"            'Y\"       '888        48\"` '8*~   `8888!`  \"88888%      \"\"   'Y\"   \"888*\"\"888\"   R888\" `   ^\"F     `   ^\"F     \"888*\"\"888\"    \"\"   'Y\"    \"8888P'   \"88888%   \n" +
-                "    \"~'    \"~        \"\"     ^Y\"   ^Y'                           \"YP'                                  88R         ^-==\"\"      `\"\"       \"YP'                   ^Y\"   ^Y'     \"\"                            ^Y\"   ^Y'                   \"P'       \"YP'    \n" +
-                "                                                                                                      88>                                                                                                                                                \n" +
-                "                                                                                                      48                                                                                                                                                 \n" +
-                "                                                                                                      '8                                                                                                                                                 \n"+ RESET);
-
-         */
         out.println(BACKGROUND_BLACK + BLUE + "███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ ███████╗     ██████╗ ███████╗    ██████╗ ███████╗███╗   ██╗ █████╗ ██╗███████╗███████╗ █████╗ ███╗   ██╗ ██████╗███████╗\n" +
                 "████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝    ██╔═══██╗██╔════╝    ██╔══██╗██╔════╝████╗  ██║██╔══██╗██║██╔════╝██╔════╝██╔══██╗████╗  ██║██╔════╝██╔════╝\n" +
                 "██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝███████╗    ██║   ██║█████╗      ██████╔╝█████╗  ██╔██╗ ██║███████║██║███████╗███████╗███████║██╔██╗ ██║██║     █████╗  \n" +
@@ -225,9 +207,9 @@ public class Utils {
     }
 
     /**
-     * Reads a string from stdin
+     * Reads a string from stdin.
      *
-     * @return
+     * @return String given from Scanner.
      */
     public String readString() {
         synchronized (in) {
@@ -270,13 +252,13 @@ public class Utils {
     }
 
     /**
-     * Prints tile statuses
+     * Prints tile statuses.
      *
-     * @param tileStatuses
+     * @param tileStatus FaithTileStatus to be printed.
      */
-    private void printTile(FaithTileStatus tileStatuses) {
-        if (tileStatuses == FaithTileStatus.Reached) out.printf("reached;");
-        if (tileStatuses == FaithTileStatus.Discarded) out.printf("discarded;");
+    private void printTile(FaithTileStatus tileStatus) {
+        if (tileStatus == FaithTileStatus.Reached) out.printf("reached;");
+        if (tileStatus == FaithTileStatus.Discarded) out.printf("discarded;");
         else out.printf("not reached;");
     }
 
@@ -284,7 +266,7 @@ public class Utils {
     /**
      * Prints Faith Trail in ASCII Art
      *
-     * @param tileStatuses
+     * @param tileStatuses ArrayList of FaithTileStatuses to be printed.
      */
     public void printFaithTrailASCII(ArrayList<FaithTileStatus> tileStatuses) {
         int col = 18;
@@ -478,10 +460,10 @@ public class Utils {
     }
 
     /**
-     * Prints and asks the Card Leader from the list
+     * Prints and asks the Card Leader from the list.
      *
-     * @param cardLeaders
-     * @return arraylist of chosen Card Leader
+     * @param cardLeaders ArrayList of leader cards to be printed.
+     * @return ArrayList of chosen leader cards.
      */
     public ArrayList<CardLeader> printAndGetCardLeaderFirstSelection(ArrayList<CardLeader> cardLeaders) {
         //Print Card Leader Deck
@@ -509,8 +491,8 @@ public class Utils {
     /**
      * Print and Get a single Card Leader from Deck
      *
-     * @param cardLeaders
-     * @return
+     * @param cardLeaders ArrayList of leader cards to be printed.
+     * @return CardLeader instance of selected card.
      */
     public CardLeader printAndGetCardLeader(ArrayList<CardLeader> cardLeaders) {
         //Print Card Leader Deck
@@ -544,7 +526,7 @@ public class Utils {
     /**
      * Prints a given Card Leader Deck
      *
-     * @param cardLeaders
+     * @param cardLeaders ArrayList of leader cards to be printed.
      */
     public void printCardLeaderDeck(ArrayList<CardLeader> cardLeaders) {
         int index = 1;
@@ -562,7 +544,7 @@ public class Utils {
     /**
      * Prints a Card Leader with production requirements and victory points
      *
-     * @param cardLeader
+     * @param cardLeader CardLeader instance to be printed.
      */
     private void printCardLeader(CardLeader cardLeader) {
         int victoryPoints = cardLeader.getVictoryPointsValue();
@@ -602,7 +584,7 @@ public class Utils {
     /**
      * Prints card leader types
      *
-     * @param description
+     * @param description CardLeaderType to be printed.
      */
     private void printCardLeaderType(CardLeaderType description) {
         String s = description.toString();
@@ -636,7 +618,8 @@ public class Utils {
     /**
      * Prints Colors
      *
-     * @param key
+     * @param key Either "Yellow", "Green", "Purple" or "Blue"; any other given {@param key} will trigger
+     *            a {@code printErrorMessage()}
      */
     private void printCardColor(String key) {
         switch (key) {
@@ -759,7 +742,7 @@ public class Utils {
     /**
      * Prints the Card Development Market
      *
-     * @param cardDevelopmentMarket
+     * @param cardDevelopmentMarket matrix of development cards to be printed.
      */
     public void printDevelopmentCardMarket(ArrayList<ArrayList<CardDevelopment>> cardDevelopmentMarket) {
         for (int i = 0; i < cardDevelopmentMarket.size(); i++) {
@@ -773,9 +756,9 @@ public class Utils {
     /**
      * Print Card Development Description in Market
      *
-     * @param cardDevelopment
-     * @param i
-     * @param j
+     * @param cardDevelopment Instance of CardDevelopment to be printed.
+     * @param i {@param cardDevelopment}'s row index within CardDevelopmentMarket matrix.
+     * @param j {@param cardDevelopment}'s column index within CardDevelopmentMarket matrix.
      */
     private void printCardDevelopmentForMarket(CardDevelopment cardDevelopment, int i, int j) {
 
@@ -794,7 +777,7 @@ public class Utils {
     /**
      * Prints a given card development
      *
-     * @param cardDevelopment
+     * @param cardDevelopment development card to be printed.
      */
     private void printCardDevelopment(CardDevelopment cardDevelopment) {
         out.println(
@@ -844,7 +827,7 @@ public class Utils {
      * Reads input of resource selection:
      * Coins, Stones, Servants, Shields
      *
-     * @param firstCall
+     * @param firstCall boolean which indicates if it's the first time this method is called in a sequence of calls.
      */
     public Resource readResource(boolean firstCall) {
         Resource resource;
@@ -880,8 +863,8 @@ public class Utils {
     /**
      * Ask for yes or not answer
      *
-     * @param firstCall
-     * @return true if "yes"
+     * @param firstCall boolean which indicates if it's the first time this method is called in a sequence of calls.
+     * @return true if "yes", false if "no".
      */
     public boolean readYesOrNo(boolean firstCall) {
         String s;
@@ -1016,14 +999,14 @@ public class Utils {
     /**
      * Prints a given Card Development Deck
      *
-     * @param cardDevelopment
+     * @param cardDevelopmentList ArrayList of development cards to be printed.
      */
-    public void printCardDevelopmentDeck(ArrayList<CardDevelopment> cardDevelopment) {
-        for (int i = 0; i < cardDevelopment.size(); i++) {
+    public void printCardDevelopmentDeck(ArrayList<CardDevelopment> cardDevelopmentList) {
+        for (int i = 0; i < cardDevelopmentList.size(); i++) {
 
-            if (cardDevelopment.get(i) != null) {
+            if (cardDevelopmentList.get(i) != null) {
                 System.out.print("Slot number " + i + " holds the following as the top card: ");
-                printCardDevelopment(cardDevelopment.get(i));
+                printCardDevelopment(cardDevelopmentList.get(i));
             } else {
                 System.out.println("Slot number " + i + " is empty! ");
             }
@@ -1093,8 +1076,9 @@ public class Utils {
     /**
      * Check what's the highest score
      *
-     * @param showScoreBoard
-     * @return the maximum points (of winner)
+     * @param showScoreBoard HashMap of String -> Integer which holds each player's nickname as a key, and the
+     *                       total victory points achieved.
+     * @return the maximum points (of winner).
      */
     public Integer checkWinner(HashMap<String, Integer> showScoreBoard) {
         Integer maxValue = 0;
@@ -1158,10 +1142,10 @@ public class Utils {
     }
 
     /**
-     * Checks if a given Resource HashMap is empty
+     * Checks if a given Resource HashMap is empty.
      *
-     * @param temp
-     * @return
+     * @param temp HashMap of Resource -> Integer to be checked if it's empty.
+     * @return true if all values in {@param temp} are 0, false otherwise
      */
     public boolean checkEmptyResourceMap(HashMap<Resource, Integer> temp) {
         for (Resource resource : temp.keySet()) {
@@ -1180,10 +1164,10 @@ public class Utils {
     }
 
     /**
-     * Prints the content of Deposit Leader Respurces
+     * Prints the content of Deposit Leader Resources
      *
-     * @param depositLeaderResources
-     * @param depositLeaderContent
+     * @param depositLeaderResources ArrayList of the resources the leader deposit can hold.
+     * @param depositLeaderContent HashMap of the content of the leader deposit.
      */
     public void printLeaderDeposit(ArrayList<Resource> depositLeaderResources, HashMap<Resource, Integer> depositLeaderContent) {
 
