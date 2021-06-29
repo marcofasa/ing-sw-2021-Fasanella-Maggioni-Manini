@@ -45,9 +45,9 @@ public class DiscardResourceController extends StandardStage {
 
     public void discard_button(ActionEvent actionEvent) {
         if (nStone == 0 && nCoin == 0 && nServant == 0 & nShield == 0) {
-            setDialogPane("Select at least one resource!", PlayerBoardController.dialog);
+            GUI.displayMessage("Select at least one resource!");
         } else {
-            setDialogPane("Resources discarded", PlayerBoardController.dialog);
+            GUI.displayMessage("Resources discarded");
             if (discardList == null) {
                 discardList = new HashMap<>();
             }

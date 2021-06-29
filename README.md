@@ -43,6 +43,7 @@ In order to change on which port the socket server will listen for incoming conn
 | --d | Enable debug mode |
 | --no-timeout | Disable heart-beat verification |
 | --port port| Change port from 51214 |
+| --h| Display help menu |
 
 
 ## Running the client
@@ -54,6 +55,7 @@ The default interface is GUI
 |:-----------------------|:------------------------------------:|
 | --d | Enable debug mode |
 | --c | Start Client in Command Line Interface |
+| --h| Display help menu |
 
 ####Lobby
 When a player connects to the server, a checka whether the lobby has been already setup or not is run, in which case the player

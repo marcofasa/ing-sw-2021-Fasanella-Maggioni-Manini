@@ -160,7 +160,7 @@ public class CardLeaderController extends StandardStage {
         }
         else resources[1]=activateCardLeaderOutput.getResource();
 
-        setDialogPane("Card Leader added to selection",PlayerBoardController.dialog);
+        GUI.displayMessage("Card Leader added to selection");
 
         setProduction(false);
         closeStage(actionEvent);
@@ -170,7 +170,7 @@ public class CardLeaderController extends StandardStage {
             if (cardsLeaderArray.get(lastClick).getDescription() != CardLeaderType.Production) {
                 GUI.sendMessage(new RequestActivateCardLeader(cardsLeaderArray.get(lastClick)));
             } else {
-                setDialogPane("Production Leader Cards must be activated from the Production panel!", PlayerBoardController.dialog);
+                GUI.displayMessage("Production Leader Cards must be activated from the Production panel!");
             }
         }
     }
