@@ -101,14 +101,14 @@ public class CardDevelopmentMarketController extends StandardStage {
      */
     public void buyCardDevelopment(ActionEvent actionEvent) {
         if(viewOnly){
-            setDialogPane("Action not admitted. View only mode!",PlayerBoardController.dialog);
+            GUI.displayMessage("Action not admitted. View only mode!");
         }
         else{
         if(pos<0 || buyRow<0 || buyCol<0){
-            setDialogPane("Position still not selected or Card not Picked",PlayerBoardController.dialog);
+            GUI.displayMessage("Position still not selected or Card not Picked");
         }
         else{
-            setDialogPane("Card Development purchased",PlayerBoardController.dialog);
+            GUI.displayMessage("Card Development purchased");
             GUI.sendMessage(new RequestBuyDevelopmentCard(buyRow,buyCol,pos));
             closeStage(actionEvent);
         }}
