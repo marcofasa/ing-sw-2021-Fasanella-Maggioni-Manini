@@ -158,10 +158,10 @@ public class ActionController {
 
            if (_discardSelection.containsKey(res)) {
                tempDepositClone.put(res, tempDepositClone.get(res) - _discardSelection.get(res));
+               if (tempDepositClone.get(res) < 0) return _player.getTempDeposit();
            }
 
        }
-
        //Try adding the obtained resources
        if (_player.tryAddResources(tempDepositClone) == null) {
 
