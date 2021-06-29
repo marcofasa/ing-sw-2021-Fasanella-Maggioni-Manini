@@ -169,6 +169,7 @@ public class CardLeaderController extends StandardStage {
             //setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog);
             if (cardsLeaderArray.get(lastClick).getDescription() != CardLeaderType.Production) {
                 GUI.sendMessage(new RequestActivateCardLeader(cardsLeaderArray.get(lastClick)));
+                GUI.displayMessage("Card leader " + cardsLeaderArray.get(lastClick).getDescription() + " activation requested");
             } else {
                 GUI.displayMessage("Production Leader Cards must be activated from the Production panel!");
             }

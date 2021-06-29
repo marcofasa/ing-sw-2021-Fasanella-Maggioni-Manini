@@ -124,9 +124,16 @@ public class ActionController {
      * @return true if the CardLeader was successfully activated, false if the card could not be activated.
      */
     public boolean activateLeaderCard(PlayerBoard _board, CardLeader _leaderToBeActivated) {
-
-        if (_leaderToBeActivated.canActivate(_board)) {
-            _leaderToBeActivated.activate(_board);
+        int i;
+        for (i = 0; i < _board.getCardsLeader().size(); i++) {
+            // finds the actual card leader from the player's PlayerBoard,
+            // because _leaderToBeActivated is a new object given back by the network
+            if(_leaderToBeActivated.getDescription() == _board.getCardsLeader().get(i).getDescription()
+                    && _leaderToBeActivated.getResource() == _board.getCardsLeader().get(i).getResource())
+                break;
+        }
+        if (_board.getCardsLeader().get(i).canActivate(_board)) {
+            _board.getCardsLeader().get(i).activate(_board);
             return true;
         } else
             return false;

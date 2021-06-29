@@ -12,6 +12,7 @@ public class CardLeaderWhiteMarble extends CardLeader {
         this.resource = resource;
         this.requirements = requirements;
         this.victoryPoints = victoryPoints;
+        active = false;
     }
 
     /**

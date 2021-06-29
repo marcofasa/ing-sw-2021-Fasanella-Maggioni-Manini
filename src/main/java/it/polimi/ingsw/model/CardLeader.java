@@ -10,7 +10,7 @@ public abstract class CardLeader implements Serializable {
 
     protected Integer victoryPoints;
 
-    protected boolean active = false;
+    protected boolean active;
 
     protected Resource resource;
 

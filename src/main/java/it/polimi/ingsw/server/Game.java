@@ -498,7 +498,6 @@ public class Game implements Runnable {
      * @throws NotActivePlayerException : thrown if a player who is not the active player has tried to make this action.
      */
     public boolean activateLeaderCard(VirtualClient _vClient, CardLeader _cardToBeActivated) throws NotActivePlayerException {
-
         String nickname = clientNicknameMap.get(_vClient);
         return controller.activateLeaderCard(nickname, _cardToBeActivated);
 
