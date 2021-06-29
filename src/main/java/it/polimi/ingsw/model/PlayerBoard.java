@@ -198,8 +198,7 @@ public class PlayerBoard {
      */
     public HashMap<Resource, Integer> consumeMarbles(ArrayList<Marble> marbles) {
         resetTemporaryDeposit();
-        for (Marble marble : marbles
-        ) {
+        for (Marble marble : marbles) {
             marble.activate(this);
         }
         return new HashMap<>(tempDeposit);
@@ -213,7 +212,19 @@ public class PlayerBoard {
      * adding the maximum amount to the leader's deposit), null if all the resources have been added
      */
     public HashMap<Resource, Integer> tryAddResources(HashMap<Resource, Integer> resources) {
+
+        //Save initial state of resources map
+        HashMap<Resource, Integer> temp = new HashMap<>(resources);
+
+        //Try to add some resources to the leader deposit.
         getDepositLeaderCardInstance().add(resources);
+
+        //Keep tempDeposit consistent with previous action.
+        for (Resource res : resources.keySet()) {
+            if (!temp.get(res).equals(resources.get(res))) tempDeposit.put(res, resources.get(res));
+        }
+
+        //Try to add remaining resources to Deposit
         if (deposit.tryAdd(resources)) {
             return null;
         } else {
