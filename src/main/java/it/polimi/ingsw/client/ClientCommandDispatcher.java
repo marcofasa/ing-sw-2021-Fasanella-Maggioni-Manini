@@ -191,7 +191,7 @@ public class ClientCommandDispatcher {
     }
 
     public void notifyDisconnectionOf(String nickname) {
-        System.out.println("Client " + nickname + "disconnected, from now on his turns are skipped");
+        System.out.println("Client " + nickname + " disconnected, from now on his turns are skipped");
         client.getView().notifyDisconnectionOf(nickname);
     }
 

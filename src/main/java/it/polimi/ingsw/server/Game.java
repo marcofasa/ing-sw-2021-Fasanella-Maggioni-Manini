@@ -94,7 +94,7 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Game " + this + "has begun");
+        System.out.println("Game " + this + " has begun");
         start();
         solicitInitialSelections();
     }
