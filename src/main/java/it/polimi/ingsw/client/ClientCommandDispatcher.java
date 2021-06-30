@@ -15,6 +15,8 @@ import java.util.HashMap;
  * This class handles the Strategy Pattern for the Client-Server communication, Client side.
  * For every package from the server, a method in this class handles his activation.
  * It may also notify the View of the package received.
+ *
+ * All of its methods are proxies for {@code client.getView()}'s methods.
  */
 public class ClientCommandDispatcher {
 
@@ -32,7 +34,6 @@ public class ClientCommandDispatcher {
         System.out.println("Request Players Number received");
         sendWithTimeoutID(new ResponsePlayersNumber(client.getView().askPlayerNumber()), timeoutID);
     }
-
 
     public void nicknameIsUnavailable(){
         client.getView().displayNickNameUnavailable();

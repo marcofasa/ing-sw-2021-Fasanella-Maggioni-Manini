@@ -140,6 +140,7 @@ public class TurnController {
     }
 
     /**
+     * Overloaded method
      * Getter for a specified PlayerBoard's connection status.
      * @param _board PlayerBoard whose status is of interest.
      * @return true if the corresponding client is connected, false otherwise.
@@ -149,6 +150,7 @@ public class TurnController {
     }
 
     /**
+     * Overloaded method
      * Getter for a specified player's connection status.
      * @param _nickname Player's nickname whose status is of interest.
      * @return true if the corresponding client is connected, false otherwise.
@@ -158,6 +160,7 @@ public class TurnController {
     }
 
     /**
+     * Overloaded method
      * Setter for a specified PlayerBoard's connection status.
      * @param _board PlayerBoard whose status is to be set.
      * @param _newStatus New connection status, either true or false.
@@ -167,6 +170,7 @@ public class TurnController {
     }
 
     /**
+     * Overloaded method
      * Setter for a specified player's connection status.
      * @param _nickname Player's nickname whose status is to be set.
      * @param _newStatus New connection status, either true or false.

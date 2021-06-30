@@ -60,8 +60,8 @@ public class Strongbox implements Serializable {
 
     /**
      * Method that adds resources to strongbox
-     * @param resourcesToBeAdded Map of <Resource,Integer> to be added to content
-     * @return true, because Strongbox's content has no boundaries
+     * @param resourcesToBeAdded Map of Resource -> Integer to be added to content
+     * @return true, because Strongbox's content has no constraints
      */
     public boolean tryAdd(HashMap<Resource, Integer> resourcesToBeAdded) {
 

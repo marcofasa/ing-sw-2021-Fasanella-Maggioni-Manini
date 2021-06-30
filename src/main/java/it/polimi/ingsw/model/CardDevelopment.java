@@ -3,6 +3,10 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 import java.util.HashMap;
 
+/**
+ * This class represents all development cards within the game.
+ * The card-specific data is store in the private enum {@code CardDevelopmentInfo}
+ */
 public class CardDevelopment implements Serializable {
 
     // Development card state
@@ -25,7 +29,6 @@ public class CardDevelopment implements Serializable {
      * @param column index of the market column, must be : column >= 0 && column <= 3
      * @param index number of the card that has to be created within the market stack, must be : index >= 0 && index <= 3
      */
-
     public CardDevelopment(int row, int column, int index) {
         CardDevelopmentInfo information = CardDevelopmentInfo.values()[16 * row + 4 * column + index];
 

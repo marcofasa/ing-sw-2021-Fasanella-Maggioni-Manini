@@ -6,6 +6,10 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This is the package's main class, which holds all PlayerBoards and the common elements between them, such as
+ * the Resource Market and Card Development Market.
+ */
 public class GameTable implements Serializable {
 
     private final ArrayList<PlayerBoard> players;
@@ -262,7 +266,7 @@ public class GameTable implements Serializable {
      * @param bonus1      First bonus resource selected by the player, can be null for playerIndex 0 or 1
      * @param bonus2      Second bonus resource selected by the player, can be null for playerIndex 0 or 1 or 2
      */
-    public void setupHelper(int playerIndex, //TODO non è meglio shiftare da 0->3 a 1->4?
+    public void setupHelper(int playerIndex,
                             @Nullable Resource bonus1,
                             @Nullable Resource bonus2) {
 
@@ -294,6 +298,10 @@ public class GameTable implements Serializable {
         }
     }
 
+    /**
+     * Private method to distribute the initial 4 leader cards, which are store in cardLeaderDeck, to the
+     * PlayerBoard's cardsLeaderBeforeSelecting array.
+     */
     private void distributeLeaderCards() {
 
         for (PlayerBoard player : players) {

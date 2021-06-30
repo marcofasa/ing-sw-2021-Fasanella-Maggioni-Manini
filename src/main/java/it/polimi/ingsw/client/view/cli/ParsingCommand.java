@@ -130,6 +130,9 @@ public class ParsingCommand {
         return true;
     }
 
+    /**
+     * Method to be called when a player tries to pass without having made a move
+     */
     private void printInvalidMovePass() {
         out.println("Invalid move, you need to make a primary action before passing");
     }
@@ -142,10 +145,12 @@ public class ParsingCommand {
         out.println("You can make a secondary action or write 'end turn' to pass");
     }
 
+    /**
+     * Loop for reading commands
+     */
     public void WaitingMenu() {
         while(readWaitingCommand());
     }
-
 
     private boolean readWaitingCommand() {
         String command = utils.readString();

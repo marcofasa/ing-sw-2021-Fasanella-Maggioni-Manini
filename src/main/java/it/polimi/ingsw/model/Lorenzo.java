@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+/**
+ * This class represents the NPC Lorenzo
+ */
 public class Lorenzo {
     private final ActionCardDeck actionCardDeck;
     private final GameTable gameTable;

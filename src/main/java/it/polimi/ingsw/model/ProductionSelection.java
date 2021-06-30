@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * This class is to be instantiated in the Client, populated based on user input when the player
- * desires to activate his production powers and sent to the Server for action exectuion.
+ * desires to activate his production powers and sent to the Server for action execution.
  *
  * The constructor creates an empty, useless instance. It must be populated through the class setters before
  * being sent.
