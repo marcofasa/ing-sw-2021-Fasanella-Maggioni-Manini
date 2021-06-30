@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
 public class CLI implements ViewInterface {
 
     // Attributes
@@ -35,7 +36,6 @@ public class CLI implements ViewInterface {
         this.utils = new Utils(out, in);
         this.parsingCommand = new ParsingCommand(utils, this, out, in, debug);
     }
-
 
     public LightModel getLightModel() {
         return client.getLightModel();
@@ -231,12 +231,6 @@ public class CLI implements ViewInterface {
         return utils.readNumberWithBounds(1, 4);
     }
 
-    /**
-     * Let player select which resources to discard
-     *
-     * @param choice HashMap of available resources
-     * @return HashMap of selected resources
-     */
     @Override
     public HashMap<Resource, Integer> askForResourceToDiscard(HashMap<Resource, Integer> choice) {
         HashMap<Resource, Integer> temp = new HashMap<>(choice);
@@ -378,7 +372,7 @@ public class CLI implements ViewInterface {
 
     @Override
     public void notifyDisconnectionOf(String nickname) {
-
+        out.println("Oops, connection to server was lost!");
     }
 
     @Override
@@ -547,12 +541,6 @@ public class CLI implements ViewInterface {
     }
 
 
-    /**
-     * Ask to select two cards leader at the beginning of the game.
-     *
-     * @param cardLeaders deck of leader cards from which the player can choose.
-     * @return ArrayList of selected leader cards.
-     */
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         return utils.printAndGetCardLeaderFirstSelection(cardLeaders);

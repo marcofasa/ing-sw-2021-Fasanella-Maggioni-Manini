@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.HashMap;
 
+/**
+ * Thi class represent the development card market
+ */
 public class CardDevelopmentMarket {
 
     private final int NUMBER_OF_ROWS = 3;

@@ -182,7 +182,7 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void displayDisconnection() {
-        mainScene("/fxml/CardDevelopmentSelection.fxml");
+
     }
 
     @Override

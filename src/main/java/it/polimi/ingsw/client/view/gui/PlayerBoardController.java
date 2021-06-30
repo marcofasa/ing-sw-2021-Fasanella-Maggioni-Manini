@@ -197,7 +197,6 @@ public class PlayerBoardController extends StandardStage {
 
     }
 
-
     public void production(ActionEvent actionEvent) {
         if (endPhase) {
             setDialogPane("Action not allowed, primary action already taken!", PlayerBoardController.dialog);

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashMap;
 
+/**
+ * This class represent a player's personal board
+ */
 public class PlayerBoard {
 
     private final String nickname;

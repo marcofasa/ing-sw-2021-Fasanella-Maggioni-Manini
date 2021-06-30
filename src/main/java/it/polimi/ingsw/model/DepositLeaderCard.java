@@ -35,7 +35,7 @@ public class DepositLeaderCard {
 
     /**
      * Adds a resource to content
-     * @param resourcesToBeAdded
+     * @param resourcesToBeAdded map of resources -> amount to be added
      */
     public void add(HashMap<Resource, Integer> resourcesToBeAdded) {
         for (Resource resource : resourceTypes) {

@@ -119,6 +119,11 @@ public class CardDevelopmentSelectionController extends StandardStage {
         this.environmentProduction = b;
     }
 
+    /**
+     * Method to draw cards on an ImageView array
+     * @param cardDevelopmentArray target ImageView array
+     * @param finalI index of last clicked card
+     */
     private void drawCards(ImageView[] cardDevelopmentArray, int finalI) {
 
         ColorAdjust monochrome = new ColorAdjust();

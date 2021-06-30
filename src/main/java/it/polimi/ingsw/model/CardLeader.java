@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 
+/**
+ * This class represent the leader cards
+ */
 public abstract class CardLeader implements Serializable {
 
     protected String playerName;
@@ -76,7 +79,7 @@ public abstract class CardLeader implements Serializable {
 
     /**
      * returns victory points value of the card
-     * @return
+     * @return victory points given by this card
      */
     public Integer getVictoryPointsValue(){
         return victoryPoints;

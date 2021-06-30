@@ -213,7 +213,7 @@ public class Client {
     /**
      * Initializes an array of nicknames and associates them with empty BriefModels, to be adjourned
      * every turn from the server.
-     * @param playersNickname
+     * @param playersNickname nicknames of players in the game.
      */
     public void setPlayersNicknames(ArrayList<String> playersNickname) {
         this.playersNickname = playersNickname;

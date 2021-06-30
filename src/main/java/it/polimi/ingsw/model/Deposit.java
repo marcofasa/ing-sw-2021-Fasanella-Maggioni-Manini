@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 import java.util.HashMap;
 
+/**
+ * This class represent the player's deposit.
+ * It extends Strongbox as it is basically a Strongbox with stricter rules for it's structure validity.
+ */
 public class Deposit extends Strongbox {
 
     // Local variables to check if Deposit's invariant is always verified

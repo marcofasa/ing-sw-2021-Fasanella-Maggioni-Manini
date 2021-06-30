@@ -4,6 +4,9 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 import java.util.Stack;
 
+/**
+ * This class represents a slot in which a card development may be placed.
+ */
 public class CardDevelopmentSlot implements Serializable {
 
     final int MAX_SLOT_SIZE = 3;
@@ -12,7 +15,7 @@ public class CardDevelopmentSlot implements Serializable {
 
     /**
      * Constructor
-     * @param _id
+     * @param _id Instace of {@code CardDevelopmentSlotID} enum: id of slot to be created
      */
     public CardDevelopmentSlot(CardDevelopmentSlotID _id) {
         cards = new Stack<>();

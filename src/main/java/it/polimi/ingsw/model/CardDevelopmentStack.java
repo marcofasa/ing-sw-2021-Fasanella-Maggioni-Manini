@@ -62,7 +62,7 @@ public class CardDevelopmentStack {
 
     /**
      * Pushes a given card
-     * @param item
+     * @param item Instance of CardDevelopment to be pushed on the inner stack
      */
     void push(CardDevelopment item) {
         if (cards.size() < MAX_STACK_SIZE) cards.push(item);
