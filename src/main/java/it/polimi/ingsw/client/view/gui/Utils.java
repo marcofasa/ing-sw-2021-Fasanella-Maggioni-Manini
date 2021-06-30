@@ -35,9 +35,9 @@ public class Utils {
     }
 
     /**
-     * Gets Resource Image Path from given Resource Type
-     * @param resource
-     * @return
+     * Gets Resource Image Path from given Resource Type.
+     * @param resource Resource whose image path is of interest.
+     * @return The path to the .png for the specified {@param resource}.
      */
     public String getResourcePath(Resource resource) {
         String stone = "/images/Resources/stone.png";

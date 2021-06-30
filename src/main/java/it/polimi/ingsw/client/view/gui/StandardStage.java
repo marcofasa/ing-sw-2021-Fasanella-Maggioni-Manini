@@ -188,11 +188,11 @@ public class StandardStage {
 
     /**
      * Sets a Standard Matrix of given resource labels
-     * @param deposit HashMap
-     * @param coin_label
-     * @param servant_label
-     * @param shield_label
-     * @param stone_label
+     * @param deposit Hashmap of Resources -> amount to be displayed
+     * @param coin_label text label associated with coin Resource
+     * @param servant_label text label associated with servant Resource
+     * @param shield_label text label associated with shield Resource
+     * @param stone_label text label associated with stone Resource
      */
     static void resourceHandler(HashMap<Resource, Integer> deposit, Label coin_label, Label servant_label, Label shield_label, Label stone_label) {
         for(Resource resource: deposit.keySet()){
@@ -208,10 +208,10 @@ public class StandardStage {
 
     /**
      * Loads and sets Deposit Level and calls loadDepositMatric
-     * @param depositLevel
-     * @param deposit
-     * @param deposit_grid
-     * @param resourceMatrix
+     * @param depositLevel Array of 3 Booleans that indicates the utilization of various deposit shelfs.
+     * @param deposit HashMap of Resource -> amount
+     * @param deposit_grid GridPane to draw Resource images on top of Deposit shelfs.
+     * @param resourceMatrix Matrix of ImageView
      */
    static void loadDepositLevels(Boolean[] depositLevel, HashMap<Resource,Integer> deposit, GridPane deposit_grid, ImageView[][] resourceMatrix ) {
        for (Resource resource : deposit.keySet()) {
@@ -243,12 +243,12 @@ public class StandardStage {
 
     /**
      * Loads resources to Deposit GridPane
-     * @param resource
-     * @param resourceMatrix
-     * @param row
-     * @param startingColumn
-     * @param nResources
-     * @param gridPane
+     * @param resource Resource to be displayed on GridPane
+     * @param resourceMatrix Matrix of ImageViews
+     * @param row index of matrix
+     * @param startingColumn index of matrix
+     * @param nResources amount of {@param resource} to be drawn
+     * @param gridPane target GridPane on which to draw the resources
      */
     private static void loadDepositMatrix(Resource resource, ImageView[][] resourceMatrix, int row, int startingColumn, int nResources, GridPane gridPane) {
         String path = utils.getResourcePath(resource);
@@ -294,8 +294,8 @@ public class StandardStage {
 
     /**
      * Gets corresponding number depending on Card Leader Type
-     * @param cardLeader
-     * @return
+     * @param cardLeader CardLeader whose corresponding type index type is of interest.
+     * @return Based on {@param cardLeader}'s type : 1 if Discount, 2 if Deposit, 3 if WhiteMarble, 4 if Production.
      */
     static Integer getCardLeaderType(CardLeader cardLeader){
         return switch (cardLeader.getDescription()) {
@@ -309,8 +309,8 @@ public class StandardStage {
 
     /**
      * Gets corresponding number depending on Card Leader Color
-     * @param cardLeader
-     * @return
+     * @param cardLeader CardLeader whose corresponding color index type is of interest.
+     * @return Based on {@param cardLeader}'s Resource it uses : 0 if Coins, 1 if Servants, 2 if Shields, 3 if Stones.
      */
     static Integer getCardLeaderColor(CardLeader cardLeader){
         return  switch (cardLeader.getResource()) {

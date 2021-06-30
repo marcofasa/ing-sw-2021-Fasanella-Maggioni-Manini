@@ -601,7 +601,7 @@ public class Utils {
     /**
      * Prints descriptions if CardLeaderRequirementsType==NumberOfDevelopmentCardLevel
      *
-     * @param numberOfDevelopmentCardLevel
+     * @param numberOfDevelopmentCardLevel HashMap of card's activation requirements
      */
     private void printCardLeaderDevelopmentLevel(HashMap<CardDevelopmentType, CardDevelopmentLevel> numberOfDevelopmentCardLevel) {
         for (CardDevelopmentType cardDevelopmentType : numberOfDevelopmentCardLevel.keySet()) {
@@ -634,7 +634,7 @@ public class Utils {
     /**
      * Prints descriptions if CardLeaderRequirementsType==NumberOfDevelopmentCardTypes
      *
-     * @param numberOfDevelopmentCardTypes
+     * @param numberOfDevelopmentCardTypes HashMap of card's activation requirements
      */
     private void printCardLeaderDevelopmentNumber(HashMap<CardDevelopmentType, Integer> numberOfDevelopmentCardTypes) {
         for (CardDevelopmentType cardDevelopmentType : numberOfDevelopmentCardTypes.keySet()) {
@@ -965,8 +965,8 @@ public class Utils {
      * Waiting Message
      *
      * @param timeoutInSeconds timeout
-     * @throws InterruptedException
-     * @throws IOException
+     * @throws InterruptedException thrown if Thread.sleep fails
+     * @throws IOException thrown if System.out.write fails
      */
     public void printWaitingMessage(int timeoutInSeconds) throws InterruptedException, IOException {
         String anim = "|/-\\";
