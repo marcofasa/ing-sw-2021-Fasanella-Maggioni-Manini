@@ -47,6 +47,7 @@ public class CLI implements ViewInterface {
     }
 
     public ConnectionInfo displayWelcome() {
+        utils.setColoredCLI();
         utils.printWelcomeMessage();
         ConnectionInfo connectionInfo = new ConnectionInfo();
         boolean invalid = true;
