@@ -23,25 +23,22 @@ public class ResourceMarketController extends StandardStage {
     public void setCol1(ActionEvent actionEvent) {
         key = "column";
         message = 2;
-        sendSelection(actionEvent);
     }
 
     public void setCol0(ActionEvent actionEvent) {
         key = "column";
         message = 1;
-        sendSelection(actionEvent);
+
     }
 
     public void setRow2(ActionEvent actionEvent) {
         key = "row";
         message = 3;
-        sendSelection(actionEvent);
     }
 
     public void setCol2(ActionEvent actionEvent) {
         key = "column";
         message = 3;
-        sendSelection(actionEvent);
     }
 
     public void ResourceMarketPurchase(ActionEvent actionEvent) {
@@ -59,24 +56,19 @@ public class ResourceMarketController extends StandardStage {
     public void setCol3(ActionEvent actionEvent) {
         key = "column";
         message = 4;
-        sendSelection(actionEvent);
     }
 
     public void setRow1(ActionEvent actionEvent) {
         key = "row";
         message = 2;
-        sendSelection(actionEvent);
     }
 
     public void setRow0(ActionEvent actionEvent) {
         key = "row";
         message = 1;
-        sendSelection(actionEvent);
     }
 
-    public void sendSelection(ActionEvent actionEvent) {
-        System.out.println("Clicked " + key + " number " + message);
-    }
+
 
 
     /**

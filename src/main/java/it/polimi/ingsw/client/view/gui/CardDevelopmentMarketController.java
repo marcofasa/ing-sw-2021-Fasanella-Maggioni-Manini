@@ -89,9 +89,6 @@ public class CardDevelopmentMarketController extends StandardStage {
     public void setBuyClick(int row,int col){
         buyCol=col;
         buyRow=row;
-
-        //DEBUG
-        System.out.println("You have chosen row "+buyRow+" column "+buyCol);
     }
 
 

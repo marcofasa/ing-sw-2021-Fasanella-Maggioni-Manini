@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<AnchorPane prefHeight="299.0" prefWidth="543.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/" fx:controller="it.polimi.ingsw.client.view.gui.CardDevelopmentSelectionController">
+<AnchorPane prefHeight="299.0" prefWidth="543.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="it.polimi.ingsw.client.view.gui.CardDevelopmentSelectionController">
    <children>
       <ImageView fitHeight="312.0" fitWidth="560.0" pickOnBounds="true" preserveRatio="true">
          <image>
