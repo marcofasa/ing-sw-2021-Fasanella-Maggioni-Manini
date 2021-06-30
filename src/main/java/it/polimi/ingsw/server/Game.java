@@ -638,7 +638,7 @@ public class Game implements Runnable {
      * @param cardLeaderIndex The index within the player's cardsLeader array of the card to be discarded,
      *                        must be > 0 and < cardsLeader.length()
      */
-    public void discardCardLeader(VirtualClient virtualClient, Integer cardLeaderIndex) {
+    public void discardCardLeader(VirtualClient virtualClient, Integer cardLeaderIndex) throws NotActivePlayerException {
         controller.discardCardLeader(clientNicknameMap.get(virtualClient), cardLeaderIndex);
     }
 

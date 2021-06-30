@@ -230,6 +230,8 @@ public class VirtualClientCommandDispatcher {
         try{
             virtualClient.getGame().discardCardLeader(virtualClient, cardLeaderIndex);
             sendWithTimeoutID(new ResponseSuccess(), timeoutID);
+        } catch (NotActivePlayerException ex) {
+            send(new ResponseNotActivePlayerError());
         } catch (Exception e) {
             sendWithTimeoutID(new ResponseUnexpectedMove(), timeoutID);
         }

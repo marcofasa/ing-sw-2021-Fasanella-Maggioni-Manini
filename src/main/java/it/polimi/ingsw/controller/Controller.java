@@ -384,7 +384,10 @@ public class Controller {
      * @param nickname the nickname of the player that wishes to discard one of his leader cards.
      * @param cardLeaderIndex index of the card to be discarded, within the cardLeader ArrayList.
      */
-    public void discardCardLeader(String nickname, Integer cardLeaderIndex) {
-        getActionController().discardCardLeader(getPlayerBoardByNickname(nickname), cardLeaderIndex);
+    public void discardCardLeader(String nickname, Integer cardLeaderIndex) throws NotActivePlayerException {
+
+        if (isActivePlayer(nickname))
+            getActionController().discardCardLeader(getPlayerBoardByNickname(nickname), cardLeaderIndex);
+        else throw new NotActivePlayerException(nickname);
     }
 }
