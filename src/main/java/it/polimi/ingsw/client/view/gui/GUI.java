@@ -450,7 +450,7 @@ public class GUI extends Application implements ViewInterface {
 
     @Override
     public void notifyDisconnectionOf(String nickname) {
-        displayMessage("Client " + nickname + "disconnected, from now on his turns are skipped");
+        displayMessage("Client " + nickname + " disconnected, from now on his turns are skipped");
     }
 
     @Override
