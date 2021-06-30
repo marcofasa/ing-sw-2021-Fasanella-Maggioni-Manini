@@ -57,7 +57,7 @@ The default interface is GUI
 | --c | Start Client in Command Line Interface |
 | --h| Display help menu |
 
-####Lobby
+#### Lobby
 When a player connects to the server, a checka whether the lobby has been already setup or not is run, in which case the player
 is inserted in the lobby with the other players waiting. If the lobby dimensions are still unset, meaning that he is the first player of a new Game, the client is asked to set them.
 The game starts when the lobby is full, and a new lobby is made available for other players to join.

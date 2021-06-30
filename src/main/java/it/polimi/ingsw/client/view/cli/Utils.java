@@ -1034,9 +1034,10 @@ public class Utils {
     public void setColoredCLI() {
         try {
             final String os = System.getProperty("os.name");
+            //out.println(os);
             if (os.contains("Windows")) {
                 coloredCLI = false;
-                out.println("Cucumber uses ANSI escape codes to print colored output to the console. This isn’t supported natively in Windows, so you have to install a tool called ANSICON to see colors." +
+                out.println("Cucumber uses ANSI escape codes to print colored output to the console. This is not supported natively in Windows, so you have to install a tool called ANSICON to see colors." +
                         "\n" +
                         "Download and unzip the latest version. Open a command prompt and cd to the folder where you unzipped it. Now, cd into either x86 or x64 (depending on your machine’s processor) and install it globally on your machine:" +
                         "\n" +

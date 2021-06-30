@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
+/**
+ * Main TimeoutHandler class
+ * Handles the sendAndWait of Client and Server
+ */
 class TimeoutHandler {
 
     private final Client client;
@@ -21,6 +25,10 @@ class TimeoutHandler {
     private final HashMap<Integer, Boolean> idIsInTime;
     private final boolean isServerHandler;
 
+    /**
+     * Client side constructor
+     * @param client owner of the class
+     */
     public TimeoutHandler(Client client) {
         this.virtualClient = null;
         this.client = client;
@@ -31,6 +39,10 @@ class TimeoutHandler {
         isServerHandler = false;
     }
 
+    /**
+     * Server side constructor
+     * @param virtualClient owner of the class
+     */
     public TimeoutHandler(VirtualClient virtualClient) {
         this.client = null;
         this.virtualClient = virtualClient;
@@ -41,12 +53,24 @@ class TimeoutHandler {
         isServerHandler = true;
     }
 
+    /**
+     * private method to create a new semaphore
+     * @return the newly created semaphore
+     */
     private Semaphore getNewSemaphore(){
         Semaphore newSem = new Semaphore(0);
         semaphores.add(newSem);
         return newSem;
     }
 
+    /**
+     * tries to stop a timer from running out. This doesn't unlock the thread stuck waiting, it only
+     * stops the timeout from going off while the message received is executed.
+     * This is made to prevent a timeout from running out while the Message is being executed,
+     * potentially breaking the game logic.
+     * @param messageTimeoutID ID to stop
+     * @throws RequestTimedOutException thrown if the timeout has already expired
+     */
     public void tryDisengage(int messageTimeoutID) throws RequestTimedOutException {
         if(messageTimeoutID == -1)
             return;
@@ -58,6 +82,10 @@ class TimeoutHandler {
         }
     }
 
+    /**
+     * unregisters the timeoutID
+     * @param messageTimeoutID to be unregistered
+     */
     private void clearID(int messageTimeoutID) {
         if(messageTimeoutID != -1) {
             semaphoreByID.get(messageTimeoutID).release();
@@ -106,6 +134,15 @@ class TimeoutHandler {
         pauseHandler(timeoutInSeconds, semaphore, messageTimeoutID);
     }
 
+    /**
+     * Core method of the class
+     * This class launches 2 semaphore, the first one is the actual timer, the second one exist to allow the
+     * message to execute and then releases the method
+     * @param timeoutInSeconds timeout to wait
+     * @param semaphore to wait on
+     * @param messageTimeoutID ID of the message to send in the TimeoutException
+     * @throws TimeoutException thrown if timeout is reached
+     */
     private void pauseHandler(int timeoutInSeconds, Semaphore semaphore, int messageTimeoutID) throws TimeoutException {
         if(timeoutInSeconds == -1){
             try {
@@ -133,14 +170,27 @@ class TimeoutHandler {
         }
     }
 
+    /**
+     * definitely removes the timer and releases the waiting thread.
+     * @param timeoutID timeoutID to release
+     */
     public void defuse(int timeoutID) {
         clearID(timeoutID);
     }
 
+    /**
+     * sets the message timeout map to false, when a message containing this timeout is received
+     * an error is thrown
+     * @param messageTimeoutID timeoutID
+     */
     private void timeoutExpired(int messageTimeoutID) {
         idIsInTime.put(messageTimeoutID, false);
     }
 
+    /**
+     * gets a new randomized id
+     * @return timeoutID
+     */
     private int getID(){
         int nextInt = ThreadLocalRandom.current().nextInt();
         while (semaphoreByID.get(nextInt) != null){
@@ -149,49 +199,3 @@ class TimeoutHandler {
         return nextInt;
     }
 }
-
-/*
-OLD:
- public void waitOn(ServerResponse serverMessage, int timeoutInSeconds) throws TimeoutException {
-        Semaphore semaphore = getNewSemaphore();
-        semaphoreMessageMap.put(serverMessage, semaphore);
-        messageIsInTimeMap.put(serverMessage, true);
-        try {
-            executors.submit(() -> {
-                try {
-                    semaphore.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).get(timeoutInSeconds, TimeUnit.SECONDS);
-            semaphore.acquire();
-        } catch (TimeoutException e) {
-            // fai le cose
-            timeoutExpired(serverMessage);
-            throw new TimeoutException();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void timeoutExpired(ServerMessage serverMessage) {
-        messageIsInTimeMap.put(serverMessage, false);
-    }
-
-    public void checkAndSuspend(ServerMessage serverMessage) throws RequestTimeoutException{
-        if(!messageIsInTimeMap.get(serverMessage)){
-            disengage(serverMessage);
-            throw new RequestTimeoutException();
-        }
-        semaphoreMessageMap.get(serverMessage).release();
-    }
-
-    public void disengage(ServerMessage serverMessage) throws RequestTimeoutException{
-        semaphoreMessageMap.get(serverMessage).release();
-        semaphores.remove(semaphoreMessageMap.get(serverMessage));
-        messageIsInTimeMap.remove(serverMessage);
-        semaphoreMessageMap.remove(serverMessage);
-    }
-
- */
