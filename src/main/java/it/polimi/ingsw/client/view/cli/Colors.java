@@ -81,7 +81,7 @@ public enum Colors {
         }
 
         /**
-         * Overriding to return the code string)
+         * Overriding to return the code string
          * @return
          */
         @Override
