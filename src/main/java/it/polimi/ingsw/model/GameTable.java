@@ -218,29 +218,6 @@ public class GameTable implements Serializable {
      * This method should only notify the controller that an EndGame condition has been met.
      */
     public void activateEndGame() {
-
-        /*
-        Appunto di Lucas : Secondo me questo metodo non ha bisogno di prendere un player come parametro. Solo
-        modifichera` lo stato di un suo attributo interno e ci chiamera .update(), notificando al Controller
-        che inizia l'utimo giro di turni.
-         */
-
-        /*
-        Appunto di Marco: ci sono due tipi di endgame:
-        -- Endgame immediato (solo in single player con Lorenzo)
-             (getposition(Lorenzo)== 24  OR Colonna di Carte sviluppo di una certa tipologia è vuota) --> PERSO
-             (getposition(SinglePlayer)== 24 OR Settima carta Sviluppo comprata) --> VINTO
-        -- Endgame normale
-            getposition(Player)== 24
-            Settima carta Sviluppo comprata
-        In entrambi i casi andrebbe controllato se isSinglePlayer è true e terminare o fare l'ultimo giro.
-         */
-
-        try {
-            throw new ExecutionControl.NotImplementedException("Activate Endgame has not been implemented yet");
-        } catch (ExecutionControl.NotImplementedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
