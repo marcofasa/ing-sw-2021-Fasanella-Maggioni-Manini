@@ -1053,10 +1053,10 @@ public class Utils {
                         "Any program that prints ANSI colors will now display properly on your machine." +
                         "\n" +
                         "If you don’t want (or aren’t allowed) to install ANSICON, then you can use the --monochrome option to make the output text only.");
-                out.println("To see colors, type \"colors\" during a normal turn.");
+                out.println("To see colors, type \"colorize\" during a normal turn.");
             } else {
                 coloredCLI = true;
-                out.println("To disable colors, type \"no colors\" during a normal turn.");
+                out.println("To disable colors, type \"colorize\" during a normal turn.");
             }
         } catch (final Exception e) {
             e.printStackTrace();
