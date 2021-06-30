@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.GameTable;
 import it.polimi.ingsw.model.PlayerBoard;
-import it.polimi.ingsw.model.PlayerState;
+import it.polimi.ingsw.model.enums.PlayerState;
 
 import java.util.LinkedHashMap;
 

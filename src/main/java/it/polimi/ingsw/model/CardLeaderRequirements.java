@@ -1,6 +1,10 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.model.enums.CardDevelopmentLevel;
+import it.polimi.ingsw.model.enums.CardDevelopmentType;
+import it.polimi.ingsw.model.enums.CardLeaderRequirementsType;
+import it.polimi.ingsw.model.enums.Resource;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;

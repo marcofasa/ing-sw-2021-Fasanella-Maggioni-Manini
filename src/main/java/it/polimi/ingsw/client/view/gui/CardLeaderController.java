@@ -2,9 +2,8 @@ package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.communication.client.requests.RequestActivateCardLeader;
 import it.polimi.ingsw.communication.client.requests.RequestDiscardCardLeader;
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.CardLeaderProduction;
-import it.polimi.ingsw.model.CardLeaderType;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +35,6 @@ public class CardLeaderController extends StandardStage {
 
     @FXML
     GridPane cardleader_grid;
-
     @FXML
     Label stone_label;
     @FXML

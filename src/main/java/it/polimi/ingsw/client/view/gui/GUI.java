@@ -9,6 +9,8 @@ import it.polimi.ingsw.communication.client.ClientMessage;
 import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.enums.ActionCardEnum;
+import it.polimi.ingsw.model.enums.Resource;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

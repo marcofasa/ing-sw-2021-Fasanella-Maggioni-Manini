@@ -1,5 +1,12 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.*;
+import it.polimi.ingsw.model.enums.CardDevelopmentSlotID;
+import it.polimi.ingsw.model.enums.PlayerState;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.model.marbles.Marble;
+
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashMap;
@@ -158,7 +165,7 @@ public class PlayerBoard {
      *
      * @param resource type of Resource to be added to temporary deposit
      */
-    void addToTemporaryDeposit(Resource resource) {
+    public void addToTemporaryDeposit(Resource resource) {
         Integer numberOfResourcesOrNull = tempDeposit.get(resource);
         if (numberOfResourcesOrNull == null) {
             tempDeposit.putIfAbsent(resource, 1);
@@ -185,8 +192,8 @@ public class PlayerBoard {
      * @deprecated this function doesn't have a reason to exist anymore.
      */
     @Deprecated
-    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelected {
-        if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelected();
+    public void discardFromTemporaryDeposit(Resource resource) throws InvalidResourceSelectedException {
+        if (tempDeposit.get(resource) == 0) throw new InvalidResourceSelectedException();
         //Remove 1 Resource from the temporary deposit
         tempDeposit.replace(resource, tempDeposit.get(resource) - 1);
 
@@ -288,7 +295,7 @@ public class PlayerBoard {
         return whiteEffect;
     }
 
-    void setWhiteEffect(Resource whiteEffect) {
+    public void setWhiteEffect(Resource whiteEffect) {
         this.whiteEffect = whiteEffect;
     }
 
@@ -301,7 +308,7 @@ public class PlayerBoard {
         gameTable.moveFaithTrail(this, i);
     }
 
-    Resource getCardLeaderProductionOutput() {
+    public Resource getCardLeaderProductionOutput() {
         return cardLeaderProductionOutput;
     }
 
@@ -445,7 +452,7 @@ public class PlayerBoard {
 
     }
 
-    void consumeResources(HashMap<Resource, Integer> cost) {
+    public void consumeResources(HashMap<Resource, Integer> cost) {
         // Pay what you can with the depositLeader
         cost = getDepositLeaderCardInstance().tryConsume(cost);
 

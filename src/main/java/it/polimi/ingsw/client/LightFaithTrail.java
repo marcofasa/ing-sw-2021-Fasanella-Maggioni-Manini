@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.communication.client.requests.RequestFaithTrail;
-import it.polimi.ingsw.model.FaithTileStatus;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

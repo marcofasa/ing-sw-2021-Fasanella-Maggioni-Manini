@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.model.faithtrail.FaithCell;
+import it.polimi.ingsw.model.enums.FaithCellType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

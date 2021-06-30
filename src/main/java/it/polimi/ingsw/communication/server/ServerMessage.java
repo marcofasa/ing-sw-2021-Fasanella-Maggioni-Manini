@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.communication.SerializedNetworkMessage;
 
 /**
- * See parent doc
+ * See parent's doc
  */
 public abstract class ServerMessage extends SerializedNetworkMessage {
 

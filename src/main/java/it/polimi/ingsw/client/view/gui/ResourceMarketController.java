@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.communication.client.requests.RequestMarketUse;
-import it.polimi.ingsw.model.MarbleType;
+import it.polimi.ingsw.model.enums.MarbleType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;

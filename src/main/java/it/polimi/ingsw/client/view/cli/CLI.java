@@ -5,6 +5,9 @@ import it.polimi.ingsw.client.view.ViewInterface;
 import it.polimi.ingsw.communication.client.requests.*;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.enums.ActionCardEnum;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.enums.MarbleType;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
+/**
+ * Command Line implementation of ViewInterface
+ */
 public class CLI implements ViewInterface {
 
     // Attributes
@@ -135,9 +140,7 @@ public class CLI implements ViewInterface {
     }
 
     @Override
-    public void displayConnection() {
-
-    }
+    public void displayConnection() {}
 
     @Override
     public void displayWin() {
@@ -158,7 +161,6 @@ public class CLI implements ViewInterface {
     public void displayLeaderRequirementsNotMet() {
         out.println("Ops, requirements for this Card Leader are not met! ");
     }
-
 
     @Override
     public void displayTurn(String currentPlayer, GamePhase gamePhase) {
@@ -272,7 +274,6 @@ public class CLI implements ViewInterface {
         return selection;
     }
 
-
     @Override
     public void displayWaiting(int timeoutInSeconds) {
         try {
@@ -298,7 +299,6 @@ public class CLI implements ViewInterface {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void displayCardDevelopmentMarket() {
@@ -391,7 +391,6 @@ public class CLI implements ViewInterface {
     public void unexpectedMove() {
         System.out.println("A game logic error was encountered, the move has been reverted.");
     }
-
 
     @Override
     public void displayLorenzoActivation(ActionCardEnum actionCardType) {
@@ -531,7 +530,6 @@ public class CLI implements ViewInterface {
         return resources;
     }
 
-
     /**
      * Ask to end turn
      */
@@ -541,12 +539,10 @@ public class CLI implements ViewInterface {
         client.send(new RequestEndTurn());
     }
 
-
     @Override
     public ArrayList<CardLeader> askForLeaderCardSelection(ArrayList<CardLeader> cardLeaders) {
         return utils.printAndGetCardLeaderFirstSelection(cardLeaders);
     }
-
 
     public void colorize() {
         utils.colorize();

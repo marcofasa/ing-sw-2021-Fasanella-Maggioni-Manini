@@ -2,8 +2,8 @@ package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.communication.server.ServerResponse;
-import it.polimi.ingsw.model.Marble;
-import it.polimi.ingsw.model.MarbleType;
+import it.polimi.ingsw.model.marbles.Marble;
+import it.polimi.ingsw.model.enums.MarbleType;
 
 import java.util.ArrayList;
 

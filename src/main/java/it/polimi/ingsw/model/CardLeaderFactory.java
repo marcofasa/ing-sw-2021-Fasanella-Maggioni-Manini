@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
+
 /**
  * Implements Factory Pattern
  */

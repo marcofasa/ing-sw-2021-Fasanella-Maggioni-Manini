@@ -1,5 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.CardDevelopment;
+import it.polimi.ingsw.model.cards.CardDevelopmentSlot;
+import it.polimi.ingsw.model.enums.CardDevelopmentSlotID;
+import it.polimi.ingsw.model.exceptions.FullSlotException;
+import it.polimi.ingsw.model.exceptions.InvalidCardDevelopmentPlacementException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.communication.server.ServerResponse;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.Resource;
 
 import java.util.HashMap;
 

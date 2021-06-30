@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.exceptions.CardLeaderAlreadyDrawnException;
+
 import java.io.Serializable;
 
 /**

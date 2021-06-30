@@ -1,5 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.CardDevelopmentLevel;
+import it.polimi.ingsw.model.enums.CardDevelopmentType;
+import it.polimi.ingsw.model.enums.CardLeaderRequirementsType;
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
+
 import java.util.HashMap;
 
 /**

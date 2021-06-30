@@ -2,6 +2,13 @@ package it.polimi.ingsw.client.view.cli;
 
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.CardDevelopment;
+import it.polimi.ingsw.model.enums.CardDevelopmentLevel;
+import it.polimi.ingsw.model.enums.CardDevelopmentType;
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
+import it.polimi.ingsw.model.enums.MarbleType;
 
 import java.io.IOException;
 import java.io.PrintWriter;

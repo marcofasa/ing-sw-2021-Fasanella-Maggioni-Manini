@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.communication.client.requests.RequestBuyDevelopmentCard;
-import it.polimi.ingsw.model.CardDevelopment;
+import it.polimi.ingsw.model.cards.CardDevelopment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

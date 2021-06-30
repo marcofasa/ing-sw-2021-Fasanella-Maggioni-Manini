@@ -1,5 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.exceptions.CardLeaderRequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.CardLeaderWrongOwnerException;
+
 import java.util.HashMap;
 
 public class CardLeaderProduction extends CardLeader{

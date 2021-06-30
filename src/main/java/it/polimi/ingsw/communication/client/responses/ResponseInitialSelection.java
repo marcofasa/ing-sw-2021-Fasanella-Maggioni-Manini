@@ -2,7 +2,7 @@ package it.polimi.ingsw.communication.client.responses;
 
 import it.polimi.ingsw.communication.client.ClientResponse;
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.Resource;
 import it.polimi.ingsw.server.VirtualClient;
 
 import java.util.ArrayList;

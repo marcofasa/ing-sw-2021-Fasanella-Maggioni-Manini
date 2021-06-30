@@ -4,6 +4,9 @@ import it.polimi.ingsw.communication.server.requests.GamePhase;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ * This class receives, sanitizes and processes user input and acts accordingly.
+ */
 public class ParsingCommand {
 
 

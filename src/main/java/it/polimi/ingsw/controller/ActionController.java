@@ -1,6 +1,13 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.*;
+import it.polimi.ingsw.model.enums.ActionCardEnum;
+import it.polimi.ingsw.model.enums.CardDevelopmentLevel;
+import it.polimi.ingsw.model.enums.CardDevelopmentSlotID;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.model.marbles.Marble;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -111,7 +118,7 @@ public class ActionController {
                 throws
                 InvalidSlotIndexException,
                 NotEnoughResourcesException,
-                CardLeaderRequirementsNotMetException {
+            CardLeaderRequirementsNotMetException {
 
         if (!_player.tryActivateProductions(_productionSelection)) {
             throw new NotEnoughResourcesException(_player.getNickname());

@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.marbles.Marble;
+import it.polimi.ingsw.model.marbles.MarbleFactory;
+import it.polimi.ingsw.model.enums.MarbleType;
+
 import java.util.*;
 
 /**

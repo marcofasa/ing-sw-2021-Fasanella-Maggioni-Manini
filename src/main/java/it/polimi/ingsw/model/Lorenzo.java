@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.ActionCardDeck;
+
 /**
  * This class represents the NPC Lorenzo
  */

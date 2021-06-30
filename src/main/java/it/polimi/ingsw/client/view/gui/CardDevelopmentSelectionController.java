@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
-import it.polimi.ingsw.model.CardDevelopment;
+import it.polimi.ingsw.model.cards.CardDevelopment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.effect.ColorAdjust;
@@ -10,7 +10,6 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 
 public class CardDevelopmentSelectionController extends StandardStage {
-
 
     /*
     IMAGE FORMAT
@@ -24,7 +23,6 @@ public class CardDevelopmentSelectionController extends StandardStage {
     blue=2
     yellow=3
      */
-
 
     @FXML
     GridPane cardDevelopSel_grid;
@@ -105,7 +103,6 @@ public class CardDevelopmentSelectionController extends StandardStage {
             posArray[finalI] = !posArray[finalI];
         }
     }
-
 
     public int getPos(){
         return pos;

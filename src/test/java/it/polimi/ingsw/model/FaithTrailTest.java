@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import it.polimi.ingsw.model.enums.FaithSection;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
+import it.polimi.ingsw.model.faithtrail.FaithTrail;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

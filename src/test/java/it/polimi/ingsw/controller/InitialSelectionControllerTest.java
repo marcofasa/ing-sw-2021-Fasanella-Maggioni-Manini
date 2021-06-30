@@ -3,7 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.GameTable;
 import it.polimi.ingsw.model.PlayerBoard;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.Resource;
 import it.polimi.ingsw.server.Game;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.Test;

@@ -3,9 +3,9 @@ import it.polimi.ingsw.client.ConnectionInfo;
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.client.LightModel;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
-import it.polimi.ingsw.model.ActionCardEnum;
+import it.polimi.ingsw.model.enums.ActionCardEnum;
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;

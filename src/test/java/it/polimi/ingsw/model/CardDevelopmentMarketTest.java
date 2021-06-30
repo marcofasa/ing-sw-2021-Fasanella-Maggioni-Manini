@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.CardDevelopmentMarket;
+import it.polimi.ingsw.model.enums.CardDevelopmentType;
+import it.polimi.ingsw.model.enums.Resource;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

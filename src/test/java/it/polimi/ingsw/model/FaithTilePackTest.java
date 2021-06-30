@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.FaithSection;
+import it.polimi.ingsw.model.faithtrail.FaithTilePack;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

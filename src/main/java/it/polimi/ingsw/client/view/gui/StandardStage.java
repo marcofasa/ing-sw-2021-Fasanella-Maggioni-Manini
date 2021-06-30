@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.view.gui;
 
 
 import it.polimi.ingsw.model.CardLeader;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

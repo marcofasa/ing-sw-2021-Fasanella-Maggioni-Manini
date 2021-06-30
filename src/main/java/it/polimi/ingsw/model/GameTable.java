@@ -1,5 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.CardDevelopmentMarket;
+import it.polimi.ingsw.model.enums.CardDevelopmentType;
+import it.polimi.ingsw.model.enums.PlayerState;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.exceptions.GameIsFullException;
+import it.polimi.ingsw.model.faithtrail.FaithTrail;
 import jdk.jshell.spi.ExecutionControl;
 import org.jetbrains.annotations.Nullable;
 
@@ -201,7 +207,7 @@ public class GameTable implements Serializable {
      *
      * @param discardType type of development card
      */
-    void discardDevelopmentCardFromSlot(CardDevelopmentType discardType) {
+    public void discardDevelopmentCardFromSlot(CardDevelopmentType discardType) {
 
         getCardDevelopmentMarketInstance().discardCards(discardType);
 

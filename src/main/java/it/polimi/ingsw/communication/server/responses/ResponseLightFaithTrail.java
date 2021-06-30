@@ -2,7 +2,7 @@ package it.polimi.ingsw.communication.server.responses;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.communication.server.ServerResponse;
-import it.polimi.ingsw.model.FaithTileStatus;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

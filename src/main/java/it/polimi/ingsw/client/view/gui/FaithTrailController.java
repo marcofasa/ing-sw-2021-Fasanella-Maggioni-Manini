@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.LightFaithTrail;
 import it.polimi.ingsw.model.BriefModel;
-import it.polimi.ingsw.model.FaithTileStatus;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

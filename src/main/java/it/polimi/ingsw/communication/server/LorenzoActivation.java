@@ -1,7 +1,7 @@
 package it.polimi.ingsw.communication.server;
 
 import it.polimi.ingsw.client.ClientCommandDispatcher;
-import it.polimi.ingsw.model.ActionCardEnum;
+import it.polimi.ingsw.model.enums.ActionCardEnum;
 
 public class LorenzoActivation extends ServerMessage {
     public LorenzoActivation(ActionCardEnum actionCardType) {

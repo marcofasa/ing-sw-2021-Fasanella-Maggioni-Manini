@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.CardLeaderType;
+import it.polimi.ingsw.model.enums.Resource;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;

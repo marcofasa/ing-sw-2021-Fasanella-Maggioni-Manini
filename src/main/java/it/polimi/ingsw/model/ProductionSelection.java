@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.Resource;
+
 import java.io.Serializable;
 
 /**

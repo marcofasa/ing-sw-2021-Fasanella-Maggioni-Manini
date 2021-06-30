@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.communication.client.requests.RequestActivateProduction;
-import it.polimi.ingsw.model.CardDevelopment;
+import it.polimi.ingsw.model.cards.CardDevelopment;
 import it.polimi.ingsw.model.CardLeader;
 import it.polimi.ingsw.model.ProductionSelection;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.enums.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

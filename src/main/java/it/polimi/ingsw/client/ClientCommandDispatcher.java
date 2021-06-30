@@ -7,6 +7,12 @@ import it.polimi.ingsw.communication.client.responses.ResponseInitialSelection;
 import it.polimi.ingsw.communication.client.responses.ResponsePlayersNumber;
 import it.polimi.ingsw.communication.server.requests.GamePhase;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.enums.ActionCardEnum;
+import it.polimi.ingsw.model.cards.CardDevelopment;
+import it.polimi.ingsw.model.enums.Resource;
+import it.polimi.ingsw.model.enums.FaithTileStatus;
+import it.polimi.ingsw.model.marbles.Marble;
+import it.polimi.ingsw.model.enums.MarbleType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
