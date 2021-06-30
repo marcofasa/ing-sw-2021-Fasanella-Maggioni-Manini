@@ -3,6 +3,9 @@ package it.polimi.ingsw.communication.server;
 import it.polimi.ingsw.client.ClientCommandDispatcher;
 import it.polimi.ingsw.communication.SerializedNetworkMessage;
 
+/**
+ * See parent doc
+ */
 public abstract class ServerMessage extends SerializedNetworkMessage {
 
     private final String message;

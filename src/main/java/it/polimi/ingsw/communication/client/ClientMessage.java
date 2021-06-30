@@ -3,6 +3,9 @@ package it.polimi.ingsw.communication.client;
 import it.polimi.ingsw.communication.SerializedNetworkMessage;
 import it.polimi.ingsw.server.VirtualClient;
 
+/**
+ * See parent doc
+ */
 public abstract class ClientMessage extends SerializedNetworkMessage {
 
     private final String message;
