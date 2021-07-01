@@ -503,11 +503,15 @@ public class Utils {
      */
     public CardLeader printAndGetCardLeader(ArrayList<CardLeader> cardLeaders) {
         //Print Card Leader Deck
-        printCardLeaderDeck(cardLeaders);
+        if (cardLeaders.size() > 0) {
+            printCardLeaderDeck(cardLeaders);
 
-        //Selection
-        out.println("Type the corresponding number in the list");
-        return cardLeaders.get(readNumberWithBounds(1, cardLeaders.size()) - 1);
+            //Selection
+            out.println("Type the corresponding number in the list");
+            return cardLeaders.get(readNumberWithBounds(1, cardLeaders.size()) - 1);
+        } else {
+            return null;
+        }
     }
 
     /**

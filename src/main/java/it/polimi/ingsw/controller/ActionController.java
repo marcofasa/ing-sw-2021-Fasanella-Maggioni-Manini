@@ -118,7 +118,7 @@ public class ActionController {
                 throws
                 InvalidSlotIndexException,
                 NotEnoughResourcesException,
-            CardLeaderRequirementsNotMetException {
+                CardLeaderRequirementsNotMetException {
 
         if (!_player.tryActivateProductions(_productionSelection)) {
             throw new NotEnoughResourcesException(_player.getNickname());

@@ -498,7 +498,14 @@ public class CLI implements ViewInterface {
     public void askCardLeaderActivation() {
         out.println("Choose which card leader to activate:");
         try {
-            client.sendAndWait(new RequestActivateCardLeader(utils.printAndGetCardLeader(getLightModel().getCardsLeader())), -1);
+            CardLeader selection = utils.printAndGetCardLeader(getLightModel().getCardsLeader());
+
+            if (selection != null) {
+                client.sendAndWait(new RequestActivateCardLeader(selection), -1);
+            } else {
+                out.println("You have no leader cards!");
+            }
+
         } catch (RequestTimedOutException e) {
             displayTimeOut();
             e.printStackTrace();

@@ -583,14 +583,10 @@ public class PlayerBoard {
 
             // Activate leader card production powers
             for (int i = 0; i < 2; i++) {
-
                 if (productionSelection.getCardLeadersToActivate()[i] != null) {
-
                     activateLeaderProduction(
                             productionSelection.getCardLeadersToActivate()[i],
                             productionSelection.getCardLeaderProdOutputs()[i]);
-
-
                 }
             }
             return true;
