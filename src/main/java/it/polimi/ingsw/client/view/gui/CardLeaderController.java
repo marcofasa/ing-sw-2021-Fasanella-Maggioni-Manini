@@ -145,23 +145,26 @@ public class CardLeaderController extends StandardStage {
 
     public void activateCardLeader(ActionEvent actionEvent) {
         if (production) {
-        FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
-        Scene secondScene = setScene(loader);
-        ActivateCardLeaderOutputController activateCardLeaderOutput=loader.getController();
-        // New window (Selection)
+            if (cardsLeaderArray.get(lastClick).getDescription() != CardLeaderType.Production) {
+                return;
+            }
+            FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
+            Scene secondScene = setScene(loader);
+            ActivateCardLeaderOutputController activateCardLeaderOutput=loader.getController();
+            // New window (Selection)
             showStage(secondScene);
-        if (resources==null){
-            resources=new Resource[2];
-        }
-        if (resources[0]==null){
-            resources[0]=activateCardLeaderOutput.getResource();
-        }
-        else resources[1]=activateCardLeaderOutput.getResource();
+            if (resources==null){
+                resources=new Resource[2];
+            }
+            if (resources[0]==null){
+                resources[0]=activateCardLeaderOutput.getResource();
+            }
+            else resources[1]=activateCardLeaderOutput.getResource();
 
-        GUI.displayMessage("Card Leader added to selection");
+            GUI.displayMessage("Card Leader added to selection");
 
-        setProduction(false);
-        closeStage(actionEvent);
+            setProduction(false);
+            closeStage(actionEvent);
         }
         else {
             //setDialogPane("Card leader can be activated only in Production action",PlayerBoardController.dialog);
