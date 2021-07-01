@@ -146,6 +146,7 @@ public class CardLeaderController extends StandardStage {
     public void activateCardLeader(ActionEvent actionEvent) {
         if (production) {
             if (cardsLeaderArray.get(lastClick).getDescription() != CardLeaderType.Production) {
+                GUI.displayMessage("Only Card Leader Production can be activated from this panel");
                 return;
             }
             FXMLLoader loader = load("/fxml/ActivateCardLeaderOutput.fxml");
