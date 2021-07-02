@@ -57,6 +57,8 @@ public class PlayerBoard {
         cardSlotArray = new CardDevelopmentSlot[3];
 
         for (int i = 0; i < 3; i++) cardSlotArray[i] = new CardDevelopmentSlot(CardDevelopmentSlotID.values()[i]);
+
+        resetTemporaryDeposit();
     }
 
     public String getNickname() {
