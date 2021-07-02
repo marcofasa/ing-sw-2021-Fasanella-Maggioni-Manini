@@ -60,7 +60,7 @@ public class CardLeaderDeckTest {
             if(resource != Resource.Coins)
                 assertEquals(deposit.get(resource),playerBoard.getDepositInstance().getContent().get(resource));
             else {
-                assertEquals(Integer.valueOf(deposit.get(resource) + 1),playerBoard.getDepositInstance().getContent().get(resource));
+                assertEquals(deposit.get(resource),playerBoard.getDepositInstance().getContent().get(resource));
             }
         }
     }

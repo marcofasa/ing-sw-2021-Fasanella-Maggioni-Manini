@@ -8,13 +8,13 @@
 ## Implemented Functionalities
 | Functionality | Status |
 |:-----------------------|:------------------------------------:|
-| Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model) |
-| Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model) |
-| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/server) |
-| GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/client/gui) |
-| CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/client/cli) |
-| Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/blob/master/src/main/java/it/polimi/ingsw/server/Server.java)|
-| Persistence | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model/player/gods/advancedgods) |
+| Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/main/src/main/java/it/polimi/ingsw/model) |
+| Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/main/src/main/java/it/polimi/ingsw/model) |
+| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/main/src/main/java/it/polimi/ingsw/server/Server.java) |
+| GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/main/src/main/java/it/polimi/ingsw/) |
+| CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/main/src/main/java/it/polimi/ingsw/) |
+| Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/blob/main/src/main/java/it/polimi/ingsw/server/Server.java)|
+| Persistence | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/main/src/main/java/it/polimi/ingsw/server/Server.java/) |
 | Local Games | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
 | Load Games from storage | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
 | Parameters modifier | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
@@ -42,7 +42,7 @@ In order to change on which port the socket server will listen for incoming conn
 |:-----------------------|:------------------------------------:|
 | --d | Enable debug mode |
 | --no-timeout | Disable heart-beat verification |
-| --port port| Change port from 51214 |
+| --port [port]| Change port from 51214 |
 | --h| Display help menu |
 
 
