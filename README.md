@@ -10,7 +10,7 @@
 |:-----------------------|:------------------------------------:|
 | Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model) |
 | Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/model) |
-| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/server) |
+| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/server/Server.java) |
 | GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/) |
 | CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/tree/master/src/main/java/it/polimi/ingsw/) |
 | Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/marcofasa/ing-sw-2021-Fasanella-Maggioni-Manini/blob/master/src/main/java/it/polimi/ingsw/server/Server.java)|
