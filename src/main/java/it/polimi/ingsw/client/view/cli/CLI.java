@@ -358,7 +358,6 @@ public class CLI implements ViewInterface {
 
     @Override
     public void displayServerUnreachable() {
-        getConnectionInfo();
     }
 
     @Override

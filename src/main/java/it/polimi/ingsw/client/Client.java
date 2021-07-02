@@ -294,7 +294,6 @@ public class Client {
         client.parametersSetup(CLI);
         while (client.running) {
             try {
-                boolean finalCLI = CLI;
                 client.executors.submit(() -> {
                     try {
                         client.startConnectionAndListen(client.ip, client.port, client.nickname);
@@ -302,7 +301,6 @@ public class Client {
                         client.getView().displayConnectionError();
                         Client.connected = false;
                         client.getView().displayServerUnreachable();
-                        client.parametersSetup(finalCLI);
                     }
                 }).get();
             } catch (InterruptedException | ExecutionException e) {
