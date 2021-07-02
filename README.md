@@ -42,7 +42,7 @@ In order to change on which port the socket server will listen for incoming conn
 |:-----------------------|:------------------------------------:|
 | --d | Enable debug mode |
 | --no-timeout | Disable heart-beat verification |
-| --port port| Change port from 51214 |
+| --port [port]| Change port from 51214 |
 | --h| Display help menu |
 
 
