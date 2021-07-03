@@ -36,7 +36,7 @@ In order to create the jar files, it's sufficient to invoke the maven goal packa
 In order to run the server application the latest version of Java must be used.
 From the command line, setting the current working directory to the directory containing the jar, to run the server the command ```java -jar PSP08-Server.jar``` must be used.
 This will create a server application listening on ports 51214.
-In order to change on which port the socket server will listen for incoming connections, the ```-SOCKET='port number'``` command line argument can be used.
+In order to change on which port the socket server will listen for incoming connections, the ```--port='port number'``` command line argument can be used.
 
 | TAG | Effect |
 |:-----------------------|:------------------------------------:|
