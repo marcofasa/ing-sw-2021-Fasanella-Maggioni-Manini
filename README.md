@@ -1,7 +1,7 @@
 # ing-sw-2021-Fasanella-Maggioni-Manini
 ## Gruppo 08
 
-- ###   10617541    Marco Fasanela ([@marcofasa](https://github.com/marcofasa))<br>marco.fasanella@mail.polimi.it
+- ###   10617541    Marco Fasanella ([@marcofasa](https://github.com/marcofasa))<br>marco.fasanella@mail.polimi.it
 - ###   10610008    Elia Maggioni ([@Eliaxie](https://github.com/Eliaxie))<br>elia.maggioni@mail.polimi.it
 - ###   10625965    Lucas Manini ([@lmanini](https://github.com/lmanini))<br>lucasjose.manini@mail.polimi.it
 
